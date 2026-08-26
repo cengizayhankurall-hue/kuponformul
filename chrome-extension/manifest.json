@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "ST Formül - Otomatik Oynama",
+  "version": "1.0.0",
+  "description": "ST Formül üzerinden hesaplanan Spor Toto kuponlarını Nesine.com'a otomatik aktarır.",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://localhost/*",
+    "*://*.stformul.com/*",
+    "*://*.nesine.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://localhost/*",
+        "*://*.stformul.com/*"
+      ],
+      "js": ["content_injector.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://*.nesine.com/*"
+      ],
+      "js": ["content_nesine.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "ST Formül Aktarım Botu"
+  }
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "edf3c88e-d1d5-419c-9c36-68a695489209",
+    "user_id": "aa034837-ac65-443a-a43e-79430ba497b1",
+    "email": "yapaybir2dunya@gmail.com",
+    "round_id": "2025/2026 49. Hafta",
+    "predictions": [
+      [
+        "1"
+      ],
+      [
+        "X"
+      ],
+      [
+        "1",
+        "X"
+      ],
+      [
+        "2"
+      ],
+      [
+        "2"
+      ],
+      [
+        "1"
+      ],
+      [
+        "1"
+      ],
+      [
+        "1",
+        "2"
+      ],
+      [
+        "1"
+      ],
+      [
+        "1",
+        "X"
+      ],
+      [
+        "X"
+      ],
+      [
+        "1"
+      ],
+      [
+        "1"
+      ],
+      [
+        "1",
+        "X"
+      ],
+      [
+        "2",
+        "X"
+      ]
+    ],
+    "columns_count": 6,
+    "guarantee_level": 14,
+    "payout_tier_won": null,
+    "created_at": "2026-07-06T08:16:40.455082+00:00",
+    "generated_columns": [],
+    "matches_data": null
+  }
+]

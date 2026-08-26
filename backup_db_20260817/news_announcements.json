@@ -1,0 +1,28 @@
+[
+  {
+    "id": "bc821395-1a5d-418e-b8f6-cd06b0460218",
+    "title": "Yeni Haftanın Bülteni Yayında",
+    "description": "totoda dev devir",
+    "badge_text": "DUYURU",
+    "button_text": "İncele",
+    "button_action": "none",
+    "bg_image_url": null,
+    "is_active": true,
+    "sort_order": 2,
+    "created_at": "2026-07-06T13:17:55.928545+00:00",
+    "target_page": "spor-toto"
+  },
+  {
+    "id": "99ace2fa-0778-48f5-9e5b-b178c36a197a",
+    "title": "ST FORMÜL SİHİRBAZI KILAVUZU",
+    "description": "Spor Toto kupon maliyetlerinizi düşürmek için formül ve filtrelerin nasıl kullanılacağını adım adım öğrenin. 15, 14 ve 13 garanti sistemlerinin çalışma prensiplerini detaylı video eğitimimizi izleyerek hemen keşfedin.",
+    "badge_text": "Kılavuz & İpuçları",
+    "button_text": "Eğitim Videosunu İzle",
+    "button_action": "modal:video",
+    "bg_image_url": "http://localhost:3000/nasil-kullanilir",
+    "is_active": true,
+    "sort_order": 1,
+    "created_at": "2026-07-06T12:32:28.846831+00:00",
+    "target_page": "iddaa"
+  }
+]
