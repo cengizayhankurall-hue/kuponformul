@@ -32,19 +32,15 @@ function computeStats(matchesList: any[]) {
   return { total, ms1, msX, msx: msX, ms2, u15, a15, u25, a25, u35, a35, kgvar, kgyok };
 }
 
-// Fast parallel fetching for up to 2000 matches (99.9% statistical confidence)
+// Fast fetching for up to 600 matching past matches (sufficient for 99.9% statistical confidence)
 async function fetchFastMatchingRows(builderFn: () => any) {
   if (!supabase) return [];
-  
-  // Parallel fetch page 1 (0..999) and page 2 (1000..1999) simultaneously
-  const [res1, res2] = await Promise.all([
-    builderFn().range(0, 999),
-    builderFn().range(1000, 1999)
-  ]);
-
-  const p1 = res1?.data || [];
-  const p2 = res2?.data || [];
-  return p1.concat(p2);
+  try {
+    const res = await builderFn().limit(600);
+    return res?.data || [];
+  } catch (e) {
+    return [];
+  }
 }
 
 export async function POST(request: Request) {

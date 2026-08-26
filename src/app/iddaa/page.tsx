@@ -218,67 +218,65 @@ export default function IddaaPage() {
     setLoadingAnalysis(true);
     setAnalysisData(null);
     try {
-      // 1. Fetch detailed odds from Mackolik oddspopup
       const eventId = match.eventId || match.id;
-      const oddsRes = await fetch(`/api/fetch-match-odds?id=${eventId}`);
-      let detailedOdds = [];
-      if (oddsRes.ok) {
-        const resData = await oddsRes.json();
-        if (resData.success && resData.data?.data?.matches?.[0]) {
-          const bookies = resData.data.data.matches[0].bookies || [];
-          const iddaaBookie = bookies.find((b: any) => b.name === 'İddaa') || bookies[0];
-          if (iddaaBookie && iddaaBookie.markets) {
-            detailedOdds = iddaaBookie.markets;
-          }
+
+      // 1. Start fetching detailed popup odds and analyze request in PARALLEL
+      const oddsPromise = fetch(`/api/fetch-match-odds?id=${eventId}`)
+        .then(r => r.ok ? r.json() : null)
+        .catch(() => null);
+
+      const analyzePromise = fetch('/api/analyze-odds', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ match })
+      }).then(r => r.json());
+
+      const [oddsResData, analyzeData] = await Promise.all([oddsPromise, analyzePromise]);
+
+      if (oddsResData && oddsResData.success && oddsResData.data?.data?.matches?.[0]) {
+        const bookies = oddsResData.data.data.matches[0].bookies || [];
+        const iddaaBookie = bookies.find((b: any) => b.name === 'İddaa') || bookies[0];
+        if (iddaaBookie && iddaaBookie.markets) {
+          const detailedOdds = iddaaBookie.markets;
+          const getOdd = (marketNames: string[], outcomeSearch: string) => {
+            const normalize = (n: string) => n.toLowerCase().replace(/,/g, '.').replace(/\s+/g, '').replace(/gol/g, '').replace(/ü/g, 'u').replace(/ı/g, 'i');
+            const market = detailedOdds.find((m: any) => {
+              const mName = normalize(m.name);
+              return marketNames.some(s => {
+                const sName = normalize(s);
+                return mName === sName;
+              }) && m.outcomes?.some((o:any) => normalize(o.name) === normalize(outcomeSearch) || normalize(o.name).includes(normalize(outcomeSearch)));
+            });
+            return market?.outcomes?.find((o:any) => normalize(o.name) === normalize(outcomeSearch) || normalize(o.name).includes(normalize(outcomeSearch)))?.value || null;
+          };
+
+          const enrichedMatch = {
+            ...match,
+            cs1X: getOdd(['Çifte Şans', 'Cifte Sans'], '1-X') || getOdd(['Çifte Şans', 'Cifte Sans'], '1X') || match.cs1X,
+            cs12: getOdd(['Çifte Şans', 'Cifte Sans'], '1-2') || getOdd(['Çifte Şans', 'Cifte Sans'], '12') || match.cs12,
+            csX2: getOdd(['Çifte Şans', 'Cifte Sans'], 'X-2') || getOdd(['Çifte Şans', 'Cifte Sans'], 'X2') || match.csX2,
+            alt25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Alt') || match.alt25,
+            ust25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Üst') || match.ust25,
+            alt15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Alt') || match.alt15,
+            ust15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Üst') || match.ust15,
+            alt35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Alt') || match.alt35,
+            ust35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Üst') || match.ust35,
+            iy_alt15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Alt') || match.iy_alt15 || match.iyAlt15,
+            iy_ust15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Üst') || match.iy_ust15 || match.iyUst15,
+            iy1: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '1') || match.iy1,
+            iyX: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], 'X') || match.iyX,
+            iy2: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '2') || match.iy2,
+            kgVar: getOdd(['Karşılıklı Gol'], 'Var') || match.kgVar,
+            kgYok: getOdd(['Karşılıklı Gol'], 'Yok') || match.kgYok,
+          };
+          setAnalysisMatch(enrichedMatch);
         }
       }
 
-      // 2. Extract specific odds to send to backend and show in UI
-      const getOdd = (marketNames: string[], outcomeSearch: string) => {
-        const normalize = (n: string) => n.toLowerCase().replace(/,/g, '.').replace(/\s+/g, '').replace(/gol/g, '').replace(/ü/g, 'u').replace(/ı/g, 'i');
-        const market = detailedOdds.find((m: any) => {
-          const mName = normalize(m.name);
-          return marketNames.some(s => {
-            const sName = normalize(s);
-            return mName === sName;
-          }) && m.outcomes?.some((o:any) => normalize(o.name) === normalize(outcomeSearch) || normalize(o.name).includes(normalize(outcomeSearch)));
-        });
-        return market?.outcomes?.find((o:any) => normalize(o.name) === normalize(outcomeSearch) || normalize(o.name).includes(normalize(outcomeSearch)))?.value || null;
-      };
-
-      const enrichedMatch = {
-        ...match,
-        cs1X: getOdd(['Çifte Şans', 'Cifte Sans'], '1-X') || getOdd(['Çifte Şans', 'Cifte Sans'], '1X') || match.cs1X,
-        cs12: getOdd(['Çifte Şans', 'Cifte Sans'], '1-2') || getOdd(['Çifte Şans', 'Cifte Sans'], '12') || match.cs12,
-        csX2: getOdd(['Çifte Şans', 'Cifte Sans'], 'X-2') || getOdd(['Çifte Şans', 'Cifte Sans'], 'X2') || match.csX2,
-        alt25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Alt') || match.alt25,
-        ust25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Üst') || match.ust25,
-        alt15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Alt') || match.alt15,
-        ust15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Üst') || match.ust15,
-        alt35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Alt') || match.alt35,
-        ust35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Üst') || match.ust35,
-        iy_alt15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Alt') || match.iy_alt15 || match.iyAlt15,
-        iy_ust15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Üst') || match.iy_ust15 || match.iyUst15,
-        iy1: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '1') || match.iy1,
-        iyX: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], 'X') || match.iyX,
-        iy2: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '2') || match.iy2,
-        kgVar: getOdd(['Karşılıklı Gol'], 'Var') || match.kgVar,
-        kgYok: getOdd(['Karşılıklı Gol'], 'Yok') || match.kgYok,
-      };
-      
-      setAnalysisMatch(enrichedMatch);
-
-      // 3. Request analysis
-      const res = await fetch('/api/analyze-odds', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ match: enrichedMatch })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setAnalysisData(data.stats);
+      if (analyzeData && analyzeData.success) {
+        setAnalysisData(analyzeData.stats);
       } else {
-        setAnalysisData({ error: data.message || data.error });
+        setAnalysisData({ error: analyzeData?.message || analyzeData?.error || 'Analiz verisi alınamadı' });
       }
     } catch (err: any) {
       setAnalysisData({ error: err.message });
@@ -1188,7 +1186,9 @@ export default function IddaaPage() {
         ) : (
           /* BULLETIN TABLE PANEL */
           <div className={`border rounded-2xl overflow-hidden shadow-xl transition-colors duration-200 ${isDark ? 'bg-slate-900/25 border-slate-800/80' : 'bg-white border-slate-200/80'}`}>
-            <div className="overflow-x-auto">
+            
+            {/* DESKTOP TABLE VIEW (hidden on mobile) */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-sm border-collapse text-left">
                 <thead>
                   <tr className={`border-b text-[11px] font-bold uppercase tracking-wider select-none transition-colors duration-200 ${isDark ? 'border-slate-850 text-slate-500 bg-slate-900/40' : 'border-slate-200 text-slate-500 bg-slate-100/50'}`}>
@@ -1217,8 +1217,6 @@ export default function IddaaPage() {
                               : 'border-slate-100 text-slate-700 hover:bg-slate-50/85'
                           }`}
                         >
-                          {/* Match Code removed */}
-                          
                           {/* Date & League */}
                           <td className="py-4 px-4 text-xs space-y-1">
                             <div className={`flex items-center gap-1.5 font-medium transition ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
@@ -1295,9 +1293,9 @@ export default function IddaaPage() {
                                 ? 'bg-[#0f172a]/65 border-slate-800/40' 
                                 : 'bg-slate-100/80 border-slate-200/60'
                             }`}>
-                              <div className={`flex-1 text-center py-1 text-[9px] font-bold rounded transition ${isDark ? 'bg-slate-900/50 text-slate-500' : 'bg-slate-200/50 text-slate-500'}`}>1-X<span className={`block text-xs font-extrabold mt-0.5 transition ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{match.cs1X}</span></div>
-                              <div className={`flex-1 text-center py-1 text-[9px] font-bold rounded transition ${isDark ? 'bg-slate-900/50 text-slate-500' : 'bg-slate-200/50 text-slate-500'}`}>1-2<span className={`block text-xs font-extrabold mt-0.5 transition ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{match.cs12}</span></div>
-                              <div className={`flex-1 text-center py-1 text-[9px] font-bold rounded transition ${isDark ? 'bg-slate-900/50 text-slate-500' : 'bg-slate-200/50 text-slate-500'}`}>X-2<span className={`block text-xs font-extrabold mt-0.5 transition ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{match.csX2}</span></div>
+                              <div onClick={(e) => { e.stopPropagation(); toggleCartItem(match, 'ÇŞ 1-X', match.cs1X); }} className={`flex-1 text-center py-1 text-[9px] font-bold rounded transition cursor-pointer ${cart.find(c => c.matchId === match.id && c.pickLabel === 'ÇŞ 1-X') ? 'bg-emerald-500 text-white' : isDark ? 'bg-slate-900/50 text-slate-500 hover:bg-slate-800' : 'bg-slate-200/50 text-slate-500 hover:bg-slate-300'}`}>1-X<span className={`block text-xs font-extrabold mt-0.5 transition ${cart.find(c => c.matchId === match.id && c.pickLabel === 'ÇŞ 1-X') ? 'text-white' : isDark ? 'text-slate-300' : 'text-slate-800'}`}>{match.cs1X}</span></div>
+                              <div onClick={(e) => { e.stopPropagation(); toggleCartItem(match, 'ÇŞ 1-2', match.cs12); }} className={`flex-1 text-center py-1 text-[9px] font-bold rounded transition cursor-pointer ${cart.find(c => c.matchId === match.id && c.pickLabel === 'ÇŞ 1-2') ? 'bg-emerald-500 text-white' : isDark ? 'bg-slate-900/50 text-slate-500 hover:bg-slate-800' : 'bg-slate-200/50 text-slate-500 hover:bg-slate-300'}`}>1-2<span className={`block text-xs font-extrabold mt-0.5 transition ${cart.find(c => c.matchId === match.id && c.pickLabel === 'ÇŞ 1-2') ? 'text-white' : isDark ? 'text-slate-300' : 'text-slate-800'}`}>{match.cs12}</span></div>
+                              <div onClick={(e) => { e.stopPropagation(); toggleCartItem(match, 'ÇŞ X-2', match.csX2); }} className={`flex-1 text-center py-1 text-[9px] font-bold rounded transition cursor-pointer ${cart.find(c => c.matchId === match.id && c.pickLabel === 'ÇŞ X-2') ? 'bg-emerald-500 text-white' : isDark ? 'bg-slate-900/50 text-slate-500 hover:bg-slate-800' : 'bg-slate-200/50 text-slate-500 hover:bg-slate-300'}`}>X-2<span className={`block text-xs font-extrabold mt-0.5 transition ${cart.find(c => c.matchId === match.id && c.pickLabel === 'ÇŞ X-2') ? 'text-white' : isDark ? 'text-slate-300' : 'text-slate-800'}`}>{match.csX2}</span></div>
                             </div>
                           </td>
   
@@ -1317,13 +1315,172 @@ export default function IddaaPage() {
                     })
                   ) : (
                     <tr>
-                      <td colSpan={6} className="py-12 text-center text-slate-500 font-medium">
+                      <td colSpan={5} className="py-12 text-center text-slate-500 font-medium">
                         Aranan kriterlere uygun maç bulunamadı.
                       </td>
                     </tr>
                   )}
                 </tbody>
               </table>
+            </div>
+
+            {/* MOBILE MATCH CARDS VIEW (Clean, Native Mobile App Layout) */}
+            <div className="md:hidden divide-y divide-slate-800/40">
+              {filteredMatches.length > 0 ? (
+                filteredMatches.map((match, idx) => {
+                  const matchStatus = getMatchStatus(match.date, match.time, match.isLive, match.liveStatus);
+                  return (
+                    <div 
+                      key={`mob-${match.id || match.code}-${idx}`} 
+                      className={`p-3 space-y-2.5 transition ${isDark ? 'bg-[#0f172a]/40 hover:bg-slate-850/40' : 'bg-white hover:bg-slate-50'}`}
+                    >
+                      {/* Top meta row */}
+                      <div className="flex items-center justify-between text-xs gap-1.5">
+                        <div className="flex items-center gap-1.5 font-medium text-slate-400 min-w-0">
+                          <Clock className="w-3 h-3 text-slate-500 shrink-0" />
+                          <span className="text-[11px] whitespace-nowrap">{match.date} {match.time}</span>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 font-bold uppercase truncate max-w-[100px]">
+                            {match.league}
+                          </span>
+                          {matchStatus === 'LIVE' && (
+                            <span className="px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 font-black text-[9px] border border-red-500/30 whitespace-nowrap shrink-0">
+                              CANLI {match.liveStatus ? `• ${match.liveStatus}` : ''}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            onClick={() => setSelectedMatch(match)}
+                            className="px-2 py-1 rounded-md text-[10px] font-extrabold bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/30 transition cursor-pointer"
+                          >
+                            + Oranlar
+                          </button>
+                          <button
+                            onClick={() => openAnalysisModal(match)}
+                            className="px-2 py-1 rounded-md text-[10px] font-extrabold bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 transition cursor-pointer flex items-center gap-1"
+                          >
+                            <Activity className="w-3 h-3" />
+                            Analiz
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Teams & Score Row */}
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <div className={`truncate text-xs sm:text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{match.homeTeam}</div>
+                          <div className={`truncate text-xs font-semibold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{match.awayTeam}</div>
+                        </div>
+                        {matchStatus === 'LIVE' && match.score && (
+                          <div className="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-black text-xs border border-red-500/40 shrink-0">
+                            {match.score}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Odds Row 1: MS 1 | MS X | MS 2 */}
+                      <div className="grid grid-cols-3 gap-1.5">
+                        <button
+                          onClick={() => toggleCartItem(match, 'MS 1', match.ms1)}
+                          className={`py-1.5 px-1 rounded-lg border text-center transition cursor-pointer ${
+                            cart.some(c => c.matchId === match.id && c.pickLabel === 'MS 1')
+                              ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
+                              : isDark ? 'bg-slate-900/80 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                          }`}
+                        >
+                          <div className="text-[10px] font-bold opacity-70">1 (MS)</div>
+                          <div className="text-xs font-black">{match.ms1}</div>
+                        </button>
+                        <button
+                          onClick={() => toggleCartItem(match, 'MS X', match.msX)}
+                          className={`py-1.5 px-1 rounded-lg border text-center transition cursor-pointer ${
+                            cart.some(c => c.matchId === match.id && c.pickLabel === 'MS X')
+                              ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
+                              : isDark ? 'bg-slate-900/80 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                          }`}
+                        >
+                          <div className="text-[10px] font-bold opacity-70">X (Ber)</div>
+                          <div className="text-xs font-black">{match.msX}</div>
+                        </button>
+                        <button
+                          onClick={() => toggleCartItem(match, 'MS 2', match.ms2)}
+                          className={`py-1.5 px-1 rounded-lg border text-center transition cursor-pointer ${
+                            cart.some(c => c.matchId === match.id && c.pickLabel === 'MS 2')
+                              ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
+                              : isDark ? 'bg-slate-900/80 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                          }`}
+                        >
+                          <div className="text-[10px] font-bold opacity-70">2 (MS)</div>
+                          <div className="text-xs font-black">{match.ms2}</div>
+                        </button>
+                      </div>
+
+                      {/* Odds Row 2: 2.5 Alt | 2.5 Üst | ÇŞ 1-X | ÇŞ 1-2 | ÇŞ X-2 */}
+                      <div className="grid grid-cols-5 gap-1 pt-0.5">
+                        <button
+                          onClick={() => toggleCartItem(match, '2.5 ALT', match.alt25)}
+                          className={`py-1 px-0.5 rounded-lg border text-center transition cursor-pointer ${
+                            cart.some(c => c.matchId === match.id && c.pickLabel === '2.5 ALT')
+                              ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
+                              : isDark ? 'bg-slate-900/50 border-slate-800/80 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                          }`}
+                        >
+                          <div className="text-[9px] font-semibold opacity-70">2.5 Alt</div>
+                          <div className="text-[11px] font-black text-rose-400">{match.alt25}</div>
+                        </button>
+                        <button
+                          onClick={() => toggleCartItem(match, '2.5 ÜST', match.ust25)}
+                          className={`py-1 px-0.5 rounded-lg border text-center transition cursor-pointer ${
+                            cart.some(c => c.matchId === match.id && c.pickLabel === '2.5 ÜST')
+                              ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
+                              : isDark ? 'bg-slate-900/50 border-slate-800/80 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                          }`}
+                        >
+                          <div className="text-[9px] font-semibold opacity-70">2.5 Üst</div>
+                          <div className="text-[11px] font-black text-emerald-400">{match.ust25}</div>
+                        </button>
+                        <button
+                          onClick={() => toggleCartItem(match, 'ÇŞ 1-X', match.cs1X)}
+                          className={`py-1 px-0.5 rounded-lg border text-center transition cursor-pointer ${
+                            cart.some(c => c.matchId === match.id && c.pickLabel === 'ÇŞ 1-X')
+                              ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
+                              : isDark ? 'bg-slate-900/50 border-slate-800/80 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                          }`}
+                        >
+                          <div className="text-[9px] font-semibold opacity-70">1-X</div>
+                          <div className="text-[11px] font-black">{match.cs1X}</div>
+                        </button>
+                        <button
+                          onClick={() => toggleCartItem(match, 'ÇŞ 1-2', match.cs12)}
+                          className={`py-1 px-0.5 rounded-lg border text-center transition cursor-pointer ${
+                            cart.some(c => c.matchId === match.id && c.pickLabel === 'ÇŞ 1-2')
+                              ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
+                              : isDark ? 'bg-slate-900/50 border-slate-800/80 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                          }`}
+                        >
+                          <div className="text-[9px] font-semibold opacity-70">1-2</div>
+                          <div className="text-[11px] font-black">{match.cs12}</div>
+                        </button>
+                        <button
+                          onClick={() => toggleCartItem(match, 'ÇŞ X-2', match.csX2)}
+                          className={`py-1 px-0.5 rounded-lg border text-center transition cursor-pointer ${
+                            cart.some(c => c.matchId === match.id && c.pickLabel === 'ÇŞ X-2')
+                              ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
+                              : isDark ? 'bg-slate-900/50 border-slate-800/80 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                          }`}
+                        >
+                          <div className="text-[9px] font-semibold opacity-70">X-2</div>
+                          <div className="text-[11px] font-black">{match.csX2}</div>
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="py-12 text-center text-slate-500 font-medium text-xs">
+                  Aranan kriterlere uygun maç bulunamadı.
+                </div>
+              )}
             </div>
 
           </div>
