@@ -1378,39 +1378,39 @@ export default function HomePage() {
               
               {/* Table Utility Toolbar */}
               {!loadingMatches && !selectedRoundId && (
-                <div className="flex items-center justify-between border-b border-slate-700/40 bg-[#1e293b]/40 px-4 py-3 flex-wrap gap-2.5">
-                  <span className="text-xs font-bold text-slate-400 tracking-wide">Tahmin Yardımcısı</span>
-                  <div className="flex gap-2 flex-wrap">
+                <div className="flex items-center justify-between border-b border-slate-700/40 bg-[#1e293b]/40 px-2 sm:px-4 py-2 sm:py-3 flex-wrap gap-1.5 sm:gap-2">
+                  <span className="text-xs font-bold text-slate-400 tracking-wide hidden md:inline">Tahmin Yardımcısı</span>
+                  <div className="flex gap-1 sm:gap-2 flex-wrap w-full md:w-auto justify-between md:justify-end items-center">
                     <button
                       onClick={handleFetchNesineRates}
-                      className="px-2.5 py-1.5 text-[10px] font-extrabold bg-sky-500 text-black hover:bg-sky-400 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-[0_0_8px_rgba(56,189,248,0.2)]"
+                      className="px-2 sm:px-2.5 py-1.5 text-[10px] sm:text-[11px] font-extrabold bg-sky-500 text-black hover:bg-sky-400 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-[0_0_8px_rgba(56,189,248,0.2)]"
                     >
                       <Activity className="h-3 w-3" />
-                      Canlı Oranları Güncelle
+                      <span>Canlı Oranlar</span>
                     </button>
                     <button
                       onClick={handleSelectBankos}
-                      className="px-2.5 py-1.5 text-[10px] font-bold bg-[#0f172a] hover:bg-slate-800 text-white rounded-lg border border-slate-700/45 hover:border-sky-500/50 hover:text-sky-400 transition cursor-pointer shadow-sm"
+                      className="px-2 sm:px-2.5 py-1.5 text-[10px] sm:text-[11px] font-bold bg-[#0f172a] hover:bg-slate-800 text-white rounded-lg border border-slate-700/45 hover:border-sky-500/50 hover:text-sky-400 transition cursor-pointer shadow-sm"
                     >
-                      Bankoları Doldur
+                      Bankolar
                     </button>
                     <button
                       onClick={() => handleRandomFill(1)}
-                      className="px-2.5 py-1.5 text-[10px] font-bold bg-[#0f172a] hover:bg-slate-800 text-white rounded-lg border border-slate-700/45 hover:border-sky-500/50 hover:text-sky-400 transition cursor-pointer shadow-sm"
+                      className="px-2 sm:px-2.5 py-1.5 text-[10px] sm:text-[11px] font-bold bg-[#0f172a] hover:bg-slate-800 text-white rounded-lg border border-slate-700/45 hover:border-sky-500/50 hover:text-sky-400 transition cursor-pointer shadow-sm"
                     >
-                      Rastgele Oyna (Tekli)
+                      Rastgele (1)
                     </button>
                     <button
                       onClick={() => handleRandomFill(2)}
-                      className="px-2.5 py-1.5 text-[10px] font-bold bg-[#0f172a] hover:bg-slate-800 text-white rounded-lg border border-slate-700/45 hover:border-sky-500/50 hover:text-sky-400 transition cursor-pointer shadow-sm"
+                      className="px-2 sm:px-2.5 py-1.5 text-[10px] sm:text-[11px] font-bold bg-[#0f172a] hover:bg-slate-800 text-white rounded-lg border border-slate-700/45 hover:border-sky-500/50 hover:text-sky-400 transition cursor-pointer shadow-sm"
                     >
-                      Rastgele Oyna (Çiftli)
+                      Rastgele (2)
                     </button>
                     <button
                       onClick={handleClearAll}
-                      className="px-2.5 py-1.5 text-[10px] font-bold border border-red-500/20 hover:border-red-500/40 bg-red-500/5 hover:bg-red-500/10 text-red-400 rounded-lg transition cursor-pointer"
+                      className="px-2 sm:px-2.5 py-1.5 text-[10px] sm:text-[11px] font-bold border border-red-500/20 hover:border-red-500/40 bg-red-500/5 hover:bg-red-500/10 text-red-400 rounded-lg transition cursor-pointer"
                     >
-                      Seçimleri Temizle
+                      Temizle
                     </button>
                   </div>
                 </div>
@@ -1422,12 +1422,12 @@ export default function HomePage() {
                 <div className="overflow-x-auto font-sans">
                   <table className="w-full border-collapse">
                     <thead>
-                      <tr className={`border-b text-xs font-bold uppercase tracking-wider ${
+                      <tr className={`border-b text-[11px] sm:text-xs font-bold uppercase tracking-wider ${
                         isDark ? 'border-slate-800 bg-[#1e293b]/20 text-slate-400' : 'border-slate-200 bg-slate-100 text-slate-655'
                       }`}>
-                        <th className="py-2.5 pl-4 text-center w-12">NU.</th>
-                        <th className="py-2.5 text-center">TERCİH</th>
-                        {selectedRoundId && <th className="py-2.5 text-center w-20">SONUÇ</th>}
+                        <th className="py-2 px-1 sm:px-2 text-center w-7 sm:w-12">NU.</th>
+                        <th className="py-2 px-1 sm:px-3 text-center">TERCİH</th>
+                        {selectedRoundId && <th className="py-2 text-center w-16 sm:w-20">SONUÇ</th>}
                       </tr>
                     </thead>
                     <tbody className={`divide-y ${isDark ? 'divide-slate-800/30' : 'divide-slate-200/75'}`}>
@@ -1440,21 +1440,21 @@ export default function HomePage() {
                             isDark ? 'hover:bg-slate-800/10' : 'hover:bg-slate-50'
                           }`}>
                             {/* Nu */}
-                            <td className={`py-1 text-center font-extrabold w-12 border-r ${
+                            <td className={`py-1 text-center font-extrabold w-7 sm:w-12 text-xs sm:text-sm border-r ${
                               isDark ? 'text-slate-500 bg-slate-900/40 border-slate-850' : 'text-slate-500 bg-slate-100/50 border-slate-200'
                             }`}>
                               {match.matchIndex + 1}
                             </td>
                             
                             {/* Selection Row: [ Home Team ] [ X ] [ Away Team ] */}
-                            <td className="py-1.5 px-3">
-                              <div className="flex items-center gap-1.5 w-full max-w-2xl mx-auto">
+                            <td className="py-1 sm:py-1.5 px-1 sm:px-3">
+                              <div className="flex items-center gap-1 sm:gap-1.5 w-full max-w-2xl mx-auto">
                                 
                                 {/* Home Team Button (1) */}
                                 <button
                                   onClick={() => toggleSelection(idx, '1')}
                                   disabled={!!selectedRoundId}
-                                  className={`flex-1 flex flex-col items-center justify-center py-1 px-2.5 rounded-lg border text-xs font-bold transition duration-150 ${
+                                  className={`flex-1 min-w-0 flex flex-col items-center justify-center py-1 sm:py-1.5 px-1 sm:px-2 rounded-lg border text-xs font-bold transition duration-150 ${
                                     selectedRoundId ? 'cursor-default' : 'cursor-pointer'
                                   } ${
                                     sel.includes('1')
@@ -1466,8 +1466,8 @@ export default function HomePage() {
                                           : (isDark ? 'bg-slate-900/65 text-slate-200 border-slate-700/45 hover:border-sky-500/50 hover:bg-slate-800' : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-sky-500/50 hover:bg-slate-100'))
                                   }`}
                                 >
-                                  <span className="truncate max-w-[135px]">{match.homeTeam}</span>
-                                  <span className={`text-[10px] ${useIddaaOddsMode ? 'text-amber-400 font-bold' : 'font-normal opacity-70'}`}>
+                                  <span className="truncate w-full text-center text-[11px] sm:text-xs font-semibold sm:font-bold leading-tight">{match.homeTeam}</span>
+                                  <span className={`text-[9px] sm:text-[10px] leading-tight mt-0.5 whitespace-nowrap ${useIddaaOddsMode ? 'text-amber-400 font-bold' : 'font-normal opacity-70'}`}>
                                     % {matchProbs[0]} {match.odds && match.odds[0] ? `(${match.odds[0]})` : ''}
                                   </span>
                                 </button>
@@ -1476,7 +1476,7 @@ export default function HomePage() {
                                 <button
                                   onClick={() => toggleSelection(idx, 'X')}
                                   disabled={!!selectedRoundId}
-                                  className={`w-20 flex flex-col items-center justify-center py-1 rounded-lg border text-xs font-black transition duration-150 ${
+                                  className={`w-11 sm:w-20 shrink-0 flex flex-col items-center justify-center py-1 sm:py-1.5 px-0.5 sm:px-1 rounded-lg border text-xs font-black transition duration-150 ${
                                     selectedRoundId ? 'cursor-default' : 'cursor-pointer'
                                   } ${
                                     sel.includes('X')
@@ -1488,8 +1488,8 @@ export default function HomePage() {
                                           : (isDark ? 'bg-slate-900/65 text-slate-200 border-slate-700/45 hover:border-sky-500/50 hover:bg-slate-800' : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-sky-500/50 hover:bg-slate-100'))
                                   }`}
                                 >
-                                  <span>X</span>
-                                  <span className={`text-[10px] ${useIddaaOddsMode ? 'text-amber-400 font-bold' : 'font-normal opacity-70'}`}>
+                                  <span className="text-[11px] sm:text-xs font-black">X</span>
+                                  <span className={`text-[9px] sm:text-[10px] leading-tight mt-0.5 whitespace-nowrap ${useIddaaOddsMode ? 'text-amber-400 font-bold' : 'font-normal opacity-70'}`}>
                                     % {matchProbs[1]} {match.odds && match.odds[1] ? `(${match.odds[1]})` : ''}
                                   </span>
                                 </button>
@@ -1498,7 +1498,7 @@ export default function HomePage() {
                                 <button
                                   onClick={() => toggleSelection(idx, '2')}
                                   disabled={!!selectedRoundId}
-                                  className={`flex-1 flex flex-col items-center justify-center py-1 px-2.5 rounded-lg border text-xs font-bold transition duration-150 ${
+                                  className={`flex-1 min-w-0 flex flex-col items-center justify-center py-1 sm:py-1.5 px-1 sm:px-2 rounded-lg border text-xs font-bold transition duration-150 ${
                                     selectedRoundId ? 'cursor-default' : 'cursor-pointer'
                                   } ${
                                     sel.includes('2')
@@ -1510,8 +1510,8 @@ export default function HomePage() {
                                           : (isDark ? 'bg-slate-900/65 text-slate-200 border-slate-700/45 hover:border-sky-500/50 hover:bg-slate-800' : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-sky-500/50 hover:bg-slate-100'))
                                   }`}
                                 >
-                                  <span className="truncate max-w-[135px]">{match.awayTeam}</span>
-                                  <span className={`text-[10px] ${useIddaaOddsMode ? 'text-amber-400 font-bold' : 'font-normal opacity-70'}`}>
+                                  <span className="truncate w-full text-center text-[11px] sm:text-xs font-semibold sm:font-bold leading-tight">{match.awayTeam}</span>
+                                  <span className={`text-[9px] sm:text-[10px] leading-tight mt-0.5 whitespace-nowrap ${useIddaaOddsMode ? 'text-amber-400 font-bold' : 'font-normal opacity-70'}`}>
                                     % {matchProbs[2]} {match.odds && match.odds[2] ? `(${match.odds[2]})` : ''}
                                   </span>
                                 </button>
@@ -1519,7 +1519,7 @@ export default function HomePage() {
                               </div>
                             </td>
                             {selectedRoundId && (
-                              <td className={`py-1.5 px-3 text-center border-l w-20 font-black text-sm ${
+                              <td className={`py-1.5 px-1 sm:px-3 text-center border-l w-16 sm:w-20 font-black text-xs sm:text-sm ${
                                 isDark ? 'border-slate-800/60 text-sky-400 bg-slate-900/10' : 'border-slate-200 text-slate-800 bg-slate-100/30'
                               }`}>
                                 {(match as any).outcome || '-'}

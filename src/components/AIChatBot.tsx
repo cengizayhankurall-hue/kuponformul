@@ -142,12 +142,12 @@ export default function AIChatBot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-[200] group flex items-center justify-center gap-2.5 p-3.5 md:px-4 md:py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black rounded-full md:rounded-2xl shadow-xl shadow-emerald-500/20 hover:scale-105 active:scale-95 transition-all duration-300 border border-emerald-400/40"
+          className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-[200] group flex items-center justify-center gap-2 p-2.5 sm:p-3.5 md:px-4 md:py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black rounded-full md:rounded-2xl shadow-xl shadow-emerald-500/20 hover:scale-105 active:scale-95 transition-all duration-300 border border-emerald-400/40"
         >
           <div className="relative">
-            <Bot className="w-6 h-6 text-slate-950" />
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-400 rounded-full animate-ping" />
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-400 rounded-full" />
+            <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-slate-950" />
+            <span className="absolute -top-1 -right-1 w-2 sm:w-2.5 h-2 sm:h-2.5 bg-amber-400 rounded-full animate-ping" />
+            <span className="absolute -top-1 -right-1 w-2 sm:w-2.5 h-2 sm:h-2.5 bg-amber-400 rounded-full" />
           </div>
           <span className="hidden md:block text-xs tracking-wide">Yapay Zeka Asistanı</span>
         </button>
@@ -155,7 +155,7 @@ export default function AIChatBot() {
 
       {/* Chat Window Panel */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-[200] w-[90vw] sm:w-[420px] h-[580px] max-h-[85vh] bg-slate-900/95 backdrop-blur-2xl border border-slate-700/60 rounded-3xl shadow-2xl shadow-black/80 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300">
+        <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-[200] w-[calc(100vw-24px)] sm:w-[420px] h-[540px] sm:h-[580px] max-h-[88vh] bg-slate-900/95 backdrop-blur-2xl border border-slate-700/60 rounded-3xl shadow-2xl shadow-black/80 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300">
           
           {/* Header */}
           <div className="shrink-0 px-5 py-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
