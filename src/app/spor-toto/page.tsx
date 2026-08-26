@@ -2473,9 +2473,8 @@ export default function HomePage() {
                 )}
               </button>
 
-              {/* ST Extra tarzı Chrome Eklentisi ile Tek Tıkla Gönderme */}
+              {/* Chrome Eklentisi ile Tek Tıkla Gönderme */}
               <div className="pt-2 border-t border-slate-200 dark:border-slate-800 text-center space-y-2">
-                <p className="text-[11px] text-slate-400 font-medium">⚡ ST Extra Yöntemi (Şifresiz / Kotsuz / Anında):</p>
                 <button
                   type="button"
                   onClick={() => {
