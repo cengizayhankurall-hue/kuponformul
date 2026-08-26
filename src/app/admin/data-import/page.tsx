@@ -77,13 +77,13 @@ export default function DataImportPage() {
   };
 
   return (
-    <div className="p-8 max-w-5xl mx-auto text-slate-100 space-y-8">
+    <div className="max-w-5xl mx-auto text-slate-100 space-y-6 sm:space-y-8">
       <div>
-        <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
-          <Database className="w-8 h-8 text-red-500" />
-          Veri & Maç Sonuçları Yönetimi
+        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
+          <Database className="w-6 h-6 sm:w-8 sm:h-8 text-red-500 shrink-0" />
+          <span>Veri & Maç Sonuçları Yönetimi</span>
         </h1>
-        <p className="text-neutral-400 text-sm mt-1">
+        <p className="text-neutral-400 text-xs sm:text-sm mt-1">
           Geçmiş Excel arşivlerini yükleyebilir veya biten maç sonuçlarını tek tıkla Maçkolik üzerinden veritabanına eşitleyebilirsiniz.
         </p>
       </div>

@@ -51,7 +51,8 @@ export default function AdminUsersPage() {
         </div>
       </div>
 
-      <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden shadow-xl">
+      {/* DESKTOP TABLE VIEW (hidden on mobile) */}
+      <div className="hidden md:block bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-neutral-800">
             <thead className="bg-neutral-950/50">
@@ -134,6 +135,58 @@ export default function AdminUsersPage() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* MOBILE USERS CARD VIEW */}
+      <div className="md:hidden space-y-3">
+        {loading ? (
+          <div className="p-8 text-center text-neutral-500 bg-neutral-900 border border-neutral-800 rounded-xl">
+            Kullanıcılar yükleniyor...
+          </div>
+        ) : filteredUsers.length === 0 ? (
+          <div className="p-8 text-center text-neutral-500 bg-neutral-900 border border-neutral-800 rounded-xl">
+            Kayıtlı kullanıcı bulunamadı.
+          </div>
+        ) : (
+          filteredUsers.map((user) => (
+            <div 
+              key={`mob-user-${user.id}`} 
+              className="p-4 bg-neutral-900 border border-neutral-800 rounded-xl space-y-2.5 shadow-md"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="h-9 w-9 rounded-full bg-neutral-800 flex items-center justify-center shrink-0 border border-neutral-700">
+                    <User className="h-4 w-4 text-neutral-300" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-sm font-bold text-white truncate">{user.full_name || 'İsimsiz Kullanıcı'}</div>
+                    <div className="text-xs text-neutral-400 truncate">{user.email}</div>
+                  </div>
+                </div>
+                {user.is_admin ? (
+                  <span className="px-2 py-0.5 text-[10px] font-bold rounded bg-red-500/10 text-red-400 border border-red-500/20 shrink-0">
+                    Admin
+                  </span>
+                ) : (
+                  <span className="px-2 py-0.5 text-[10px] font-medium rounded bg-neutral-800 text-neutral-400 shrink-0">
+                    Üye
+                  </span>
+                )}
+              </div>
+
+              <div className="pt-2 border-t border-neutral-800/80 flex items-center justify-between text-xs text-neutral-400">
+                <div className="flex items-center gap-1.5">
+                  <Phone className="h-3.5 w-3.5 text-neutral-500" />
+                  <span>{user.phone || <span className="text-neutral-600 italic">Telefon yok</span>}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="h-3.5 w-3.5 text-neutral-500" />
+                  <span>{new Date(user.created_at).toLocaleDateString('tr-TR')}</span>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
