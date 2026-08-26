@@ -219,59 +219,63 @@ export default function IddaaPage() {
     setAnalysisData(null);
     try {
       const eventId = match.eventId || match.id;
+      let enrichedMatch = { ...match };
 
-      // 1. Start fetching detailed popup odds and analyze request in PARALLEL
-      const oddsPromise = fetch(`/api/fetch-match-odds?id=${eventId}`)
-        .then(r => r.ok ? r.json() : null)
-        .catch(() => null);
+      // 1. Fetch detailed odds to enrich all markets (3.5 A/Ü, KG, İY, ÇŞ vb.)
+      try {
+        const oddsRes = await fetch(`/api/fetch-match-odds?id=${eventId}`);
+        if (oddsRes.ok) {
+          const oddsResData = await oddsRes.json();
+          if (oddsResData.success && oddsResData.data?.data?.matches?.[0]) {
+            const bookies = oddsResData.data.data.matches[0].bookies || [];
+            const iddaaBookie = bookies.find((b: any) => b.name === 'İddaa') || bookies[0];
+            if (iddaaBookie && iddaaBookie.markets) {
+              const detailedOdds = iddaaBookie.markets;
+              const getOdd = (marketNames: string[], outcomeSearch: string) => {
+                const normalize = (n: string) => n.toLowerCase().replace(/,/g, '.').replace(/\s+/g, '').replace(/gol/g, '').replace(/ü/g, 'u').replace(/ı/g, 'i');
+                const market = detailedOdds.find((m: any) => {
+                  const mName = normalize(m.name);
+                  return marketNames.some(s => {
+                    const sName = normalize(s);
+                    return mName === sName;
+                  }) && m.outcomes?.some((o:any) => normalize(o.name) === normalize(outcomeSearch) || normalize(o.name).includes(normalize(outcomeSearch)));
+                });
+                return market?.outcomes?.find((o:any) => normalize(o.name) === normalize(outcomeSearch) || normalize(o.name).includes(normalize(outcomeSearch)))?.value || null;
+              };
 
-      const analyzePromise = fetch('/api/analyze-odds', {
+              enrichedMatch = {
+                ...match,
+                cs1X: getOdd(['Çifte Şans', 'Cifte Sans'], '1-X') || getOdd(['Çifte Şans', 'Cifte Sans'], '1X') || match.cs1X,
+                cs12: getOdd(['Çifte Şans', 'Cifte Sans'], '1-2') || getOdd(['Çifte Şans', 'Cifte Sans'], '12') || match.cs12,
+                csX2: getOdd(['Çifte Şans', 'Cifte Sans'], 'X-2') || getOdd(['Çifte Şans', 'Cifte Sans'], 'X2') || match.csX2,
+                alt25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Alt') || match.alt25,
+                ust25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Üst') || match.ust25,
+                alt15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Alt') || match.alt15,
+                ust15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Üst') || match.ust15,
+                alt35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Alt') || match.alt35,
+                ust35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Üst') || match.ust35,
+                iy_alt15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Alt') || match.iy_alt15 || match.iyAlt15,
+                iy_ust15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Üst') || match.iy_ust15 || match.iyUst15,
+                iy1: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '1') || match.iy1,
+                iyX: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], 'X') || match.iyX,
+                iy2: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '2') || match.iy2,
+                kgVar: getOdd(['Karşılıklı Gol'], 'Var') || match.kgVar,
+                kgYok: getOdd(['Karşılıklı Gol'], 'Yok') || match.kgYok,
+              };
+            }
+          }
+        }
+      } catch (e) {}
+
+      setAnalysisMatch(enrichedMatch);
+
+      // 2. Perform fast backend statistical analysis on all enriched markets
+      const res = await fetch('/api/analyze-odds', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ match })
-      }).then(r => r.json());
-
-      const [oddsResData, analyzeData] = await Promise.all([oddsPromise, analyzePromise]);
-
-      if (oddsResData && oddsResData.success && oddsResData.data?.data?.matches?.[0]) {
-        const bookies = oddsResData.data.data.matches[0].bookies || [];
-        const iddaaBookie = bookies.find((b: any) => b.name === 'İddaa') || bookies[0];
-        if (iddaaBookie && iddaaBookie.markets) {
-          const detailedOdds = iddaaBookie.markets;
-          const getOdd = (marketNames: string[], outcomeSearch: string) => {
-            const normalize = (n: string) => n.toLowerCase().replace(/,/g, '.').replace(/\s+/g, '').replace(/gol/g, '').replace(/ü/g, 'u').replace(/ı/g, 'i');
-            const market = detailedOdds.find((m: any) => {
-              const mName = normalize(m.name);
-              return marketNames.some(s => {
-                const sName = normalize(s);
-                return mName === sName;
-              }) && m.outcomes?.some((o:any) => normalize(o.name) === normalize(outcomeSearch) || normalize(o.name).includes(normalize(outcomeSearch)));
-            });
-            return market?.outcomes?.find((o:any) => normalize(o.name) === normalize(outcomeSearch) || normalize(o.name).includes(normalize(outcomeSearch)))?.value || null;
-          };
-
-          const enrichedMatch = {
-            ...match,
-            cs1X: getOdd(['Çifte Şans', 'Cifte Sans'], '1-X') || getOdd(['Çifte Şans', 'Cifte Sans'], '1X') || match.cs1X,
-            cs12: getOdd(['Çifte Şans', 'Cifte Sans'], '1-2') || getOdd(['Çifte Şans', 'Cifte Sans'], '12') || match.cs12,
-            csX2: getOdd(['Çifte Şans', 'Cifte Sans'], 'X-2') || getOdd(['Çifte Şans', 'Cifte Sans'], 'X2') || match.csX2,
-            alt25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Alt') || match.alt25,
-            ust25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Üst') || match.ust25,
-            alt15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Alt') || match.alt15,
-            ust15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Üst') || match.ust15,
-            alt35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Alt') || match.alt35,
-            ust35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Üst') || match.ust35,
-            iy_alt15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Alt') || match.iy_alt15 || match.iyAlt15,
-            iy_ust15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Üst') || match.iy_ust15 || match.iyUst15,
-            iy1: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '1') || match.iy1,
-            iyX: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], 'X') || match.iyX,
-            iy2: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '2') || match.iy2,
-            kgVar: getOdd(['Karşılıklı Gol'], 'Var') || match.kgVar,
-            kgYok: getOdd(['Karşılıklı Gol'], 'Yok') || match.kgYok,
-          };
-          setAnalysisMatch(enrichedMatch);
-        }
-      }
+        body: JSON.stringify({ match: enrichedMatch })
+      });
+      const analyzeData = await res.json();
 
       if (analyzeData && analyzeData.success) {
         setAnalysisData(analyzeData.stats);
