@@ -112,10 +112,15 @@ async function doFetch(): Promise<any[]> {
             const liveStatus = state === 1 ? '1. Yarı' : state === 2 ? 'Devre Arası' : state === 3 ? '2. Yarı' : (isLive ? 'Canlı' : undefined);
             const liveMinute = isLive ? (m[10] || m[11] || (state === 2 ? 'DA' : undefined)) : undefined;
 
+            const iddaaEventId = String(m[50] || m[14] || m[0]);
+            const iddaaCode = String(m[49] || m[4] || String(m[0]).slice(0, 5));
+
             parsedMap.set(String(m[0]), {
               id: String(m[0]),
-              eventId: String(m[0]),
-              code: String(m[4] || String(m[0]).slice(0, 5)),
+              matchId: String(m[0]),
+              eventId: iddaaEventId,
+              iddaaEventId,
+              code: iddaaCode,
               league: String(m[26] || 'Diğer').trim(),
               date: String(m[7] || '').trim(),
               time: String(m[6] || '').trim(),
@@ -207,12 +212,24 @@ async function doFetch(): Promise<any[]> {
             existing.score = liveScore;
             existing.liveStatus = liveStatus;
             existing.liveMinute = liveMinute;
+            if (m[14] && m[14] !== 0) {
+              existing.eventId = String(m[14]);
+              existing.iddaaEventId = String(m[14]);
+            }
+            if (m[3]) {
+              existing.code = String(m[3]);
+            }
           } else {
             const matchDate = m[35] ? String(m[35]).replace(/\//g, '.') : todayStr.replace(/\//g, '.');
+            const iddaaEventId = String(m[14] || matchId);
+            const iddaaCode = String(m[3] || matchId.slice(0, 5));
+
             parsedMap.set(matchId, {
               id: matchId,
-              eventId: matchId,
-              code: matchId.slice(0, 5),
+              matchId,
+              eventId: iddaaEventId,
+              iddaaEventId,
+              code: iddaaCode,
               league: String(leagueName).trim(),
               date: matchDate,
               time: String(m[16] || '').trim(),

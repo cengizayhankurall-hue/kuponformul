@@ -226,9 +226,10 @@ export default function IddaaPage() {
         const oddsRes = await fetch(`/api/fetch-match-odds?id=${eventId}`);
         if (oddsRes.ok) {
           const oddsResData = await oddsRes.json();
-          if (oddsResData.success && oddsResData.data?.data?.matches?.[0]) {
-            const bookies = oddsResData.data.data.matches[0].bookies || [];
-            const iddaaBookie = bookies.find((b: any) => b.name === 'İddaa') || bookies[0];
+          const matchesArr = oddsResData.data?.data?.matches || oddsResData.data?.matches || [];
+          if (oddsResData.success && matchesArr.length > 0) {
+            const bookies = matchesArr[0].bookies || [];
+            const iddaaBookie = bookies.find((b: any) => b.name === 'İddaa' || b.name === 'Nesine') || bookies[0];
             if (iddaaBookie && iddaaBookie.markets) {
               const detailedOdds = iddaaBookie.markets;
               const getOdd = (marketNames: string[], outcomeSearch: string) => {
@@ -248,14 +249,14 @@ export default function IddaaPage() {
                 cs1X: getOdd(['Çifte Şans', 'Cifte Sans'], '1-X') || getOdd(['Çifte Şans', 'Cifte Sans'], '1X') || match.cs1X,
                 cs12: getOdd(['Çifte Şans', 'Cifte Sans'], '1-2') || getOdd(['Çifte Şans', 'Cifte Sans'], '12') || match.cs12,
                 csX2: getOdd(['Çifte Şans', 'Cifte Sans'], 'X-2') || getOdd(['Çifte Şans', 'Cifte Sans'], 'X2') || match.csX2,
-                alt25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Alt') || match.alt25,
-                ust25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5'], 'Üst') || match.ust25,
-                alt15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Alt') || match.alt15,
-                ust15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Üst') || match.ust15,
-                alt35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Alt') || match.alt35,
-                ust35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Üst') || match.ust35,
-                iy_alt15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Alt') || match.iy_alt15 || match.iyAlt15,
-                iy_ust15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Üst') || match.iy_ust15 || match.iyUst15,
+                alt15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5', '1,5 Alt/Üst'], 'Alt') || match.alt15,
+                ust15: getOdd(['1.5 Alt/Üst', 'Alt/Üst 1.5', '1,5 Alt/Üst'], 'Üst') || match.ust15,
+                alt25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5', '2,5 Alt/Üst'], 'Alt') || match.alt25,
+                ust25: getOdd(['2.5 Alt/Üst', 'Alt/Üst 2.5', '2,5 Alt/Üst'], 'Üst') || match.ust25,
+                alt35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5', '3,5 Alt/Üst'], 'Alt') || match.alt35,
+                ust35: getOdd(['3.5 Alt/Üst', 'Alt/Üst 3.5', '3,5 Alt/Üst'], 'Üst') || match.ust35,
+                iy_alt15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst', '1. Yarı 1,5 Alt/Üst'], 'Alt') || match.iy_alt15 || match.iyAlt15,
+                iy_ust15: getOdd(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst', '1. Yarı 1,5 Alt/Üst'], 'Üst') || match.iy_ust15 || match.iyUst15,
                 iy1: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '1') || match.iy1,
                 iyX: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], 'X') || match.iyX,
                 iy2: getOdd(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '2') || match.iy2,
@@ -312,9 +313,10 @@ export default function IddaaPage() {
           return;
         }
         const resData = await res.json();
-        if (resData.success && resData.data && resData.data.data && resData.data.data.matches && resData.data.data.matches[0]) {
-          const bookies = resData.data.data.matches[0].bookies || [];
-          const iddaaBookie = bookies.find((b: any) => b.name === 'İddaa') || bookies[0];
+        const matchesArr = resData.data?.data?.matches || resData.data?.matches || [];
+        if (resData.success && matchesArr.length > 0) {
+          const bookies = matchesArr[0].bookies || [];
+          const iddaaBookie = bookies.find((b: any) => b.name === 'İddaa' || b.name === 'Nesine') || bookies[0];
           if (iddaaBookie && iddaaBookie.markets) {
             setDetailedOdds(iddaaBookie.markets);
             
@@ -335,17 +337,22 @@ export default function IddaaPage() {
             const enriched = {
               ...selectedMatch,
               _enriched: true,
-              alt15: getOddFromMarkets(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Alt') || selectedMatch.alt15,
-              ust15: getOddFromMarkets(['1.5 Alt/Üst', 'Alt/Üst 1.5'], 'Üst') || selectedMatch.ust15,
-              alt35: getOddFromMarkets(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Alt') || selectedMatch.alt35,
-              ust35: getOddFromMarkets(['3.5 Alt/Üst', 'Alt/Üst 3.5'], 'Üst') || selectedMatch.ust35,
-              iy_alt15: getOddFromMarkets(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Alt') || selectedMatch.iy_alt15 || selectedMatch.iyAlt15,
-              iy_ust15: getOddFromMarkets(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst'], 'Üst') || selectedMatch.iy_ust15 || selectedMatch.iyUst15,
+              alt15: getOddFromMarkets(['1.5 Alt/Üst', 'Alt/Üst 1.5', '1,5 Alt/Üst'], 'Alt') || selectedMatch.alt15,
+              ust15: getOddFromMarkets(['1.5 Alt/Üst', 'Alt/Üst 1.5', '1,5 Alt/Üst'], 'Üst') || selectedMatch.ust15,
+              alt25: getOddFromMarkets(['2.5 Alt/Üst', 'Alt/Üst 2.5', '2,5 Alt/Üst'], 'Alt') || selectedMatch.alt25,
+              ust25: getOddFromMarkets(['2.5 Alt/Üst', 'Alt/Üst 2.5', '2,5 Alt/Üst'], 'Üst') || selectedMatch.ust25,
+              alt35: getOddFromMarkets(['3.5 Alt/Üst', 'Alt/Üst 3.5', '3,5 Alt/Üst'], 'Alt') || selectedMatch.alt35,
+              ust35: getOddFromMarkets(['3.5 Alt/Üst', 'Alt/Üst 3.5', '3,5 Alt/Üst'], 'Üst') || selectedMatch.ust35,
+              iy_alt15: getOddFromMarkets(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst', '1. Yarı 1,5 Alt/Üst'], 'Alt') || selectedMatch.iy_alt15 || selectedMatch.iyAlt15,
+              iy_ust15: getOddFromMarkets(['1. Yarı 1.5 Alt/Üst', 'İlk Yarı 1.5 Alt/Üst', '1. Yarı 1,5 Alt/Üst'], 'Üst') || selectedMatch.iy_ust15 || selectedMatch.iyUst15,
               iy1: getOddFromMarkets(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '1') || selectedMatch.iy1,
               iyX: getOddFromMarkets(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], 'X') || selectedMatch.iyX,
               iy2: getOddFromMarkets(['1. Yarı Sonucu', 'İlk Yarı Sonucu'], '2') || selectedMatch.iy2,
               kgVar: getOddFromMarkets(['Karşılıklı Gol'], 'Var') || selectedMatch.kgVar,
               kgYok: getOddFromMarkets(['Karşılıklı Gol'], 'Yok') || selectedMatch.kgYok,
+              cs1X: getOddFromMarkets(['Çifte Şans', 'Cifte Sans'], '1-X') || getOddFromMarkets(['Çifte Şans', 'Cifte Sans'], '1X') || selectedMatch.cs1X,
+              cs12: getOddFromMarkets(['Çifte Şans', 'Cifte Sans'], '1-2') || getOddFromMarkets(['Çifte Şans', 'Cifte Sans'], '12') || selectedMatch.cs12,
+              csX2: getOddFromMarkets(['Çifte Şans', 'Cifte Sans'], 'X-2') || getOddFromMarkets(['Çifte Şans', 'Cifte Sans'], 'X2') || selectedMatch.csX2,
             };
             setSelectedMatch(enriched);
             
@@ -536,14 +543,14 @@ export default function IddaaPage() {
     detailedOdds.forEach(m => {
       if (!m.outcomes || m.outcomes.length === 0) return;
       const name = m.name.toLowerCase();
-      if (name.includes('oyuncu') || name.includes('şut') || name.includes('korner') || name.includes('kart') || name.includes('faul') || name.includes('pas') || name.includes('ofsayt')) {
+      if (name.includes('oyuncu') || name.includes('şut') || name.includes('korner') || name.includes('kart') || name.includes('faul') || name.includes('pas') || name.includes('ofsayt') || name.includes('kaleci') || name.includes('asist') || name.includes('taç') || name.includes('kurtarış')) {
         players.push(m);
-      } else if (name.includes('gol') || name.includes('alt') || name.includes('üst') || name.includes('skor') || name.includes('handikap')) {
-        goals.push(m);
-      } else if (name.includes('yarı') || name.includes('devre') || name.includes('periyot') || name.includes('dakika')) {
-        halves.push(m);
-      } else if (name.includes('&') || name.includes('ve') || name.includes('kombinasyon') || name.includes('/') || name.includes('yarı/maç') || name.includes('iy/ms')) {
+      } else if (name.includes(' ve ') || name.includes('kombinasyon') || name.includes('yarı/maç') || name.includes('iy/ms') || name.includes('ilk yarı/maç') || name.includes('ilk yarı / maç') || name.includes('kombi') || name.includes('kg &') || name.includes('ms &')) {
         combos.push(m);
+      } else if (name.includes('1. yarı') || name.includes('2. yarı') || name.includes('1.yarı') || name.includes('2.yarı') || name.includes('ilk yarı') || name.includes('yarıda') || name.includes('yarı kazanır') || name.includes('iki yarı') || name.includes('devre') || name.includes('en çok gol olacak yarı')) {
+        halves.push(m);
+      } else if (name.includes('gol') || name.includes('alt') || name.includes('üst') || name.includes('skor') || name.includes('handikap') || name.includes('tek/çift') || name.includes('farkla')) {
+        goals.push(m);
       } else {
         main.push(m);
       }
