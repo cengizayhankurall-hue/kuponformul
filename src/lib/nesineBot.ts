@@ -136,26 +136,41 @@ async function launchBrowser(): Promise<Browser> {
     process.env.FONTCONFIG_PATH = '/tmp/fonts';
     process.env.HOME = '/tmp';
 
-    return await puppeteer.launch({
-      args: [
-        ...((chromium as any).args || []),
-        '--disable-blink-features=AutomationControlled',
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-gpu',
-        '--disable-dev-shm-usage',
-        '--single-process'
-      ],
-      defaultViewport: { width: 1920, height: 1080 },
-      executablePath: execPath,
-      headless: true,
-      env: {
-        ...process.env,
-        LD_LIBRARY_PATH: ldPath,
-        FONTCONFIG_PATH: '/tmp/fonts',
-        HOME: '/tmp'
-      }
-    });
+    console.log('[NesineBot] Launching Chromium with LD_LIBRARY_PATH:', ldPath);
+    console.log('[NesineBot] /tmp contents:', fs.existsSync(tmpDir) ? fs.readdirSync(tmpDir).join(', ') : 'none');
+    if (fs.existsSync(path.join(tmpDir, 'al2023'))) {
+      console.log('[NesineBot] /tmp/al2023 contents:', fs.readdirSync(path.join(tmpDir, 'al2023')).join(', '));
+    }
+    if (fs.existsSync(al2023LibPath)) {
+      console.log('[NesineBot] /tmp/al2023/lib contents:', fs.readdirSync(al2023LibPath).join(', '));
+    }
+
+    try {
+      return await puppeteer.launch({
+        args: [
+          ...((chromium as any).args || []),
+          '--disable-blink-features=AutomationControlled',
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+          '--single-process'
+        ],
+        defaultViewport: { width: 1920, height: 1080 },
+        executablePath: execPath,
+        headless: true,
+        env: {
+          ...process.env,
+          LD_LIBRARY_PATH: ldPath,
+          FONTCONFIG_PATH: '/tmp/fonts',
+          HOME: '/tmp'
+        }
+      });
+    } catch (err: any) {
+      const tmpFiles = fs.existsSync(tmpDir) ? fs.readdirSync(tmpDir) : [];
+      const al2023LibFiles = fs.existsSync(al2023LibPath) ? fs.readdirSync(al2023LibPath) : [];
+      throw new Error(`Browser launch error: ${err.message} | /tmp files: [${tmpFiles.join(', ')}] | /tmp/al2023/lib files: [${al2023LibFiles.join(', ')}] | LD_LIBRARY_PATH: ${ldPath}`);
+    }
   } else {
     const candidatePaths = [
       'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
