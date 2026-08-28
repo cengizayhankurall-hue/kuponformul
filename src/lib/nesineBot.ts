@@ -1,9 +1,11 @@
 import puppeteer, { Browser, Page } from 'puppeteer-core';
-import chromium, { inflate, setupLambdaEnvironment } from '@sparticuz/chromium-min';
+import chromium, { setupLambdaEnvironment } from '@sparticuz/chromium-min';
 import crypto from 'crypto';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import zlib from 'zlib';
+import tarFs from 'tar-fs';
 
 interface SessionEntry {
   browser: Browser;
@@ -13,31 +15,51 @@ interface SessionEntry {
 
 const CHROMIUM_PACK_URL = 'https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar';
 
+function extractTarBrotli(tarBrPath: string, destDir: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    try {
+      if (!fs.existsSync(destDir)) {
+        fs.mkdirSync(destDir, { recursive: true });
+      }
+      const readStream = fs.createReadStream(tarBrPath);
+      const decompressor = zlib.createBrotliDecompress({ chunkSize: 2 ** 21 });
+      const extractStream = tarFs.extract(destDir);
+
+      extractStream.once('finish', () => resolve());
+      extractStream.once('error', (err) => reject(err));
+      decompressor.once('error', (err) => reject(err));
+      readStream.once('error', (err) => reject(err));
+
+      readStream.pipe(decompressor).pipe(extractStream);
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
 async function launchBrowser(): Promise<Browser> {
   const isVercel = !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NODE_ENV === 'production';
 
   if (isVercel) {
     const tmpDir = os.tmpdir();
     const chromiumBin = path.join(tmpDir, 'chromium');
-    const al2023LibPath = path.join(tmpDir, 'al2023', 'lib');
+    const al2023Dir = path.join(tmpDir, 'al2023');
+    const al2023LibPath = path.join(al2023Dir, 'lib');
     const nss3File = path.join(al2023LibPath, 'libnss3.so');
-
-    // If chromium was previously extracted without al2023 libraries, clean it up
-    if (fs.existsSync(chromiumBin) && !fs.existsSync(nss3File)) {
-      try { fs.unlinkSync(chromiumBin); } catch {}
-    }
 
     process.env.AWS_EXECUTION_ENV = 'AWS_Lambda_nodejs20.x';
     (chromium as any).setGraphicsMode = false;
 
     const execPath = await (chromium as any).executablePath(CHROMIUM_PACK_URL);
 
+    // Extract AL2023 shared libraries (libnss3.so, libnspr4.so, etc.)
     const al2023BrPath = path.join(tmpDir, 'chromium-pack', 'al2023.tar.br');
     if (fs.existsSync(al2023BrPath) && !fs.existsSync(nss3File)) {
       try {
-        await inflate(al2023BrPath);
+        await extractTarBrotli(al2023BrPath, al2023Dir);
+        console.log('[NesineBot] Extracted AL2023 libraries successfully to:', al2023Dir);
       } catch (e) {
-        console.warn('[NesineBot] al2023 inflate:', e);
+        console.warn('[NesineBot] Error extracting AL2023 libraries:', e);
       }
     }
 
@@ -45,9 +67,7 @@ async function launchBrowser(): Promise<Browser> {
       setupLambdaEnvironment(al2023LibPath);
     } catch {}
 
-    const ldPath = process.env.LD_LIBRARY_PATH
-      ? `${al2023LibPath}:${process.env.LD_LIBRARY_PATH}`
-      : `${al2023LibPath}:/usr/lib64:/lib64:/usr/lib`;
+    const ldPath = `${al2023LibPath}:${al2023Dir}:${tmpDir}:/usr/lib64:/lib64:/usr/lib`;
 
     process.env.LD_LIBRARY_PATH = ldPath;
     process.env.FONTCONFIG_PATH = '/tmp/fonts';
