@@ -15,6 +15,7 @@ async function launchBrowser(): Promise<Browser> {
   const isVercel = !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NODE_ENV === 'production';
 
   if (isVercel) {
+    process.env.AWS_EXECUTION_ENV = 'AWS_Lambda_nodejs20.x';
     (chromium as any).setGraphicsMode = false;
     const execPath = await (chromium as any).executablePath(CHROMIUM_PACK_URL);
     return await puppeteer.launch({
@@ -22,7 +23,9 @@ async function launchBrowser(): Promise<Browser> {
         ...((chromium as any).args || []),
         '--disable-blink-features=AutomationControlled',
         '--no-sandbox',
-        '--disable-setuid-sandbox'
+        '--disable-setuid-sandbox',
+        '--disable-gpu',
+        '--disable-dev-shm-usage'
       ],
       defaultViewport: { width: 1920, height: 1080 },
       executablePath: execPath,
