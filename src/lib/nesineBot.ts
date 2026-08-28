@@ -75,7 +75,46 @@ async function ensureServerlessChromium(): Promise<string> {
     });
   }
 
-  // 3. Inflate al2.tar.br fallback -> /tmp/al2
+  // 3. Inflate swiftshader.tar.br -> /tmp (provides libGLESv2.so and libEGL.so)
+  const swiftshaderBrPath = path.join(packDir, 'swiftshader.tar.br');
+  if (fs.existsSync(swiftshaderBrPath) && !fs.existsSync(path.join(tmpDir, 'libGLESv2.so'))) {
+    try {
+      await new Promise<void>((resolve, reject) => {
+        const src = fs.createReadStream(swiftshaderBrPath);
+        const brotli = zlib.createBrotliDecompress({ chunkSize: 2 ** 21 });
+        const extract = tarFs.extract(tmpDir);
+        extract.once('finish', () => resolve());
+        extract.once('error', reject);
+        brotli.once('error', reject);
+        src.once('error', reject);
+        src.pipe(brotli).pipe(extract);
+      });
+    } catch (e) {
+      console.warn('[NesineBot] swiftshader inflate:', e);
+    }
+  }
+
+  // 4. Inflate fonts.tar.br -> /tmp/fonts
+  const fontsBrPath = path.join(packDir, 'fonts.tar.br');
+  const fontsDir = path.join(tmpDir, 'fonts');
+  if (fs.existsSync(fontsBrPath) && !fs.existsSync(fontsDir)) {
+    try {
+      await new Promise<void>((resolve, reject) => {
+        const src = fs.createReadStream(fontsBrPath);
+        const brotli = zlib.createBrotliDecompress({ chunkSize: 2 ** 21 });
+        const extract = tarFs.extract(fontsDir);
+        extract.once('finish', () => resolve());
+        extract.once('error', reject);
+        brotli.once('error', reject);
+        src.once('error', reject);
+        src.pipe(brotli).pipe(extract);
+      });
+    } catch (e) {
+      console.warn('[NesineBot] fonts inflate:', e);
+    }
+  }
+
+  // 5. Inflate al2.tar.br fallback -> /tmp/al2
   const al2BrPath = path.join(packDir, 'al2.tar.br');
   const al2Dir = path.join(tmpDir, 'al2');
   if (fs.existsSync(al2BrPath)) {
@@ -93,7 +132,7 @@ async function ensureServerlessChromium(): Promise<string> {
     } catch {}
   }
 
-  // 4. Copy all shared libraries (.so) directly to /tmp root
+  // 6. Copy all shared libraries (.so) directly to /tmp root
   const searchDirs = [
     path.join(al2023Dir, 'lib'),
     al2023Dir,
