@@ -1,3 +1,5 @@
+process.env.AWS_EXECUTION_ENV = 'AWS_Lambda_nodejs20.x';
+
 import { NextResponse } from 'next/server';
 import { saveNesineCouponWithSession } from '@/lib/nesineBot';
 
