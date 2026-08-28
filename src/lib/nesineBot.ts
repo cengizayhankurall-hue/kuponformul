@@ -564,32 +564,71 @@ export async function saveNesineCouponWithSession(
       let modalInputFound = false;
       for (let attempt = 1; attempt <= 20; attempt++) {
         modalInputFound = await page.evaluate(() => {
-          const visibleInputs = Array.from(document.querySelectorAll('input[type="text"], input:not([type])'))
-            .filter(el => (el as HTMLElement).offsetParent !== null);
-          return visibleInputs.length > 0;
+          const isVisible = (el: Element) => {
+            const style = window.getComputedStyle(el);
+            if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return false;
+            const rect = el.getBoundingClientRect();
+            return rect.width > 0 && rect.height > 0;
+          };
+
+          const textInputs = Array.from(document.querySelectorAll('input')).filter(i => {
+            if (i.type === 'hidden' || i.type === 'checkbox' || i.type === 'radio') return false;
+            return isVisible(i);
+          });
+          return textInputs.length > 0;
         });
 
         if (modalInputFound) break;
 
-        // Click disk button
+        // Click disk button with multiple robust strategies
         await page.evaluate(() => {
-          const visibleBtns = Array.from(document.querySelectorAll('a, button'))
-            .filter(el => (el as HTMLElement).offsetParent !== null) as HTMLElement[];
-          const playIndex = visibleBtns.findIndex(el => (el.innerText || '').trim().toLowerCase() === 'hemen oyna');
-          
-          let diskBtn: HTMLElement | null = null;
-          if (playIndex >= 1) {
-            diskBtn = visibleBtns[playIndex - 1];
+          const isVisible = (el: Element) => {
+            const style = window.getComputedStyle(el);
+            if (style.display === 'none' || style.visibility === 'hidden') return false;
+            const rect = el.getBoundingClientRect();
+            return rect.width > 0 && rect.height > 0;
+          };
+
+          const allElements = Array.from(document.querySelectorAll('button, a, div, span, i, svg')) as HTMLElement[];
+          const visibleEls = allElements.filter(isVisible);
+
+          // 1. Title / aria attribute
+          const titleBtn = visibleEls.find(b => 
+            (b.getAttribute('title') || '').toLowerCase().includes('kaydet') || 
+            (b.getAttribute('aria-label') || '').toLowerCase().includes('kaydet')
+          );
+          if (titleBtn) {
+            titleBtn.click();
+            return;
           }
-          if (!diskBtn) {
-            diskBtn = (document.querySelector('button[title="Kaydet"]') ||
-              document.querySelector('.ni-save')?.closest('button') ||
-              document.querySelector('.ni-save')?.parentElement) as HTMLElement | null;
+
+          // 2. Icon class name
+          const saveIcon = visibleEls.find(b => {
+            const cls = typeof b.className === 'string' ? b.className.toLowerCase() : '';
+            return cls.includes('ni-save') || cls.includes('save') || cls.includes('disk');
+          });
+          if (saveIcon) {
+            const clickable = saveIcon.closest('button, a, div') as HTMLElement || saveIcon;
+            clickable.click();
+            return;
           }
-          if (diskBtn) diskBtn.click();
+
+          // 3. Hemen Oyna predecessor or sibling in betting bar
+          const playBtn = visibleEls.find(b => (b.innerText || '').trim().toLowerCase() === 'hemen oyna');
+          if (playBtn) {
+            const parent = playBtn.parentElement;
+            if (parent) {
+              const siblings = Array.from(parent.querySelectorAll('button, a')) as HTMLElement[];
+              const disk = siblings.find(s => s !== playBtn);
+              if (disk) {
+                disk.click();
+                return;
+              }
+            }
+          }
         });
 
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise(r => setTimeout(r, 400));
       }
 
       if (!modalInputFound) {
@@ -607,11 +646,25 @@ export async function saveNesineCouponWithSession(
       console.log(`[NesineBot] Batch ${batchIdx + 1}: Setting coupon name "${cName}"...`);
 
       const inputFilled = await page.evaluate((name) => {
-        const modalInputs = Array.from(document.querySelectorAll('input[type="text"], input:not([type])'))
-          .filter(el => (el as HTMLElement).offsetParent !== null) as HTMLInputElement[];
+        const isVisible = (el: Element) => {
+          const style = window.getComputedStyle(el);
+          if (style.display === 'none' || style.visibility === 'hidden') return false;
+          const rect = el.getBoundingClientRect();
+          return rect.width > 0 && rect.height > 0;
+        };
+
+        const modalInputs = Array.from(document.querySelectorAll('input')).filter(i => {
+          if (i.type === 'hidden' || i.type === 'checkbox' || i.type === 'radio') return false;
+          return isVisible(i);
+        }) as HTMLInputElement[];
         
         if (modalInputs.length === 0) return false;
-        const nameInput = modalInputs[modalInputs.length - 1];
+        const nameInput = modalInputs.find(i => 
+          (i.placeholder || '').toLowerCase().includes('kupon') || 
+          (i.placeholder || '').toLowerCase().includes('ad') ||
+          (i.getAttribute('name') || '').toLowerCase().includes('coupon') ||
+          (i.getAttribute('name') || '').toLowerCase().includes('name')
+        ) || modalInputs[modalInputs.length - 1];
 
         // Fill value with React-compatible setter
         const nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
@@ -629,12 +682,19 @@ export async function saveNesineCouponWithSession(
         throw new Error('Kupon adı giriş kutusu bulunamadı.');
       }
 
-      // Wait 400ms for React state update before clicking Kaydet button
-      await new Promise(r => setTimeout(r, 400));
+      // Wait 350ms for React state update before clicking Kaydet button
+      await new Promise(r => setTimeout(r, 350));
 
       const saveBtnClicked = await page.evaluate(() => {
+        const isVisible = (el: Element) => {
+          const style = window.getComputedStyle(el);
+          if (style.display === 'none' || style.visibility === 'hidden') return false;
+          const rect = el.getBoundingClientRect();
+          return rect.width > 0 && rect.height > 0;
+        };
+
         const allVisibleEls = Array.from(document.querySelectorAll('button, a, span, div, input[type="button"], input[type="submit"]'))
-          .filter(el => (el as HTMLElement).offsetParent !== null && (el as HTMLElement).innerText) as HTMLElement[];
+          .filter(isVisible) as HTMLElement[];
         
         const kaydetBtn = allVisibleEls.find(btn => {
           const t = (btn.innerText || btn.getAttribute('value') || '').trim().toLowerCase();
@@ -664,7 +724,7 @@ export async function saveNesineCouponWithSession(
         console.log(`[NesineBot] Save API HTTP ${saveRes.status()}: ${resText.slice(0, 300)}`);
       }
 
-      await new Promise(r => setTimeout(r, 1500));
+      await new Promise(r => setTimeout(r, 1200));
       savedCount += currentBatch.length;
 
       // If there are more batches remaining, dismiss popup
