@@ -42,24 +42,50 @@ async function launchBrowser(): Promise<Browser> {
 
   if (isVercel) {
     const tmpDir = os.tmpdir();
-    const chromiumBin = path.join(tmpDir, 'chromium');
     const al2023Dir = path.join(tmpDir, 'al2023');
     const al2023LibPath = path.join(al2023Dir, 'lib');
-    const nss3File = path.join(al2023LibPath, 'libnss3.so');
+    const al2Dir = path.join(tmpDir, 'al2');
+    const al2LibPath = path.join(al2Dir, 'lib');
+    const nss3File = path.join(tmpDir, 'libnss3.so');
 
     process.env.AWS_EXECUTION_ENV = 'AWS_Lambda_nodejs20.x';
     (chromium as any).setGraphicsMode = false;
 
     const execPath = await (chromium as any).executablePath(CHROMIUM_PACK_URL);
 
-    // Extract AL2023 shared libraries (libnss3.so, libnspr4.so, etc.)
+    // Extract AL2023 libraries
     const al2023BrPath = path.join(tmpDir, 'chromium-pack', 'al2023.tar.br');
-    if (fs.existsSync(al2023BrPath) && !fs.existsSync(nss3File)) {
+    if (fs.existsSync(al2023BrPath)) {
       try {
         await extractTarBrotli(al2023BrPath, al2023Dir);
-        console.log('[NesineBot] Extracted AL2023 libraries successfully to:', al2023Dir);
       } catch (e) {
-        console.warn('[NesineBot] Error extracting AL2023 libraries:', e);
+        console.warn('[NesineBot] AL2023 extraction error:', e);
+      }
+    }
+
+    // Extract AL2 libraries fallback
+    const al2BrPath = path.join(tmpDir, 'chromium-pack', 'al2.tar.br');
+    if (fs.existsSync(al2BrPath)) {
+      try {
+        await extractTarBrotli(al2BrPath, al2Dir);
+      } catch (e) {}
+    }
+
+    // Copy all .so files from al2023/lib and al2/lib directly into /tmp ($ORIGIN)
+    for (const libFolder of [al2023LibPath, al2LibPath, al2023Dir, al2Dir]) {
+      if (fs.existsSync(libFolder)) {
+        try {
+          const files = fs.readdirSync(libFolder);
+          for (const file of files) {
+            if (file.endsWith('.so') || file.includes('.so.')) {
+              const src = path.join(libFolder, file);
+              const dst = path.join(tmpDir, file);
+              if (!fs.existsSync(dst)) {
+                fs.copyFileSync(src, dst);
+              }
+            }
+          }
+        } catch {}
       }
     }
 
@@ -67,7 +93,7 @@ async function launchBrowser(): Promise<Browser> {
       setupLambdaEnvironment(al2023LibPath);
     } catch {}
 
-    const ldPath = `${al2023LibPath}:${al2023Dir}:${tmpDir}:/usr/lib64:/lib64:/usr/lib`;
+    const ldPath = `${tmpDir}:${al2023LibPath}:${al2LibPath}:/usr/lib64:/lib64:/usr/lib`;
 
     process.env.LD_LIBRARY_PATH = ldPath;
     process.env.FONTCONFIG_PATH = '/tmp/fonts';
