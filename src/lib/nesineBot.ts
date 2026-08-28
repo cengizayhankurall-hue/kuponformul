@@ -1,10 +1,57 @@
 import puppeteer, { Browser, Page } from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 import crypto from 'crypto';
+import fs from 'fs';
 
 interface SessionEntry {
   browser: Browser;
   page: Page;
   createdAt: number;
+}
+
+async function launchBrowser(): Promise<Browser> {
+  const isVercel = !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+
+  if (isVercel) {
+    (chromium as any).setGraphicsMode = false;
+    const execPath = await chromium.executablePath();
+    return await puppeteer.launch({
+      args: [
+        ...((chromium as any).args || []),
+        '--disable-blink-features=AutomationControlled',
+        '--no-sandbox',
+        '--disable-setuid-sandbox'
+      ],
+      defaultViewport: { width: 1920, height: 1080 },
+      executablePath: execPath,
+      headless: (chromium as any).headless ?? true,
+    });
+  } else {
+    const candidatePaths = [
+      'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Users\\' + (process.env.USERNAME || '') + '\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe',
+      '/usr/bin/google-chrome',
+      '/usr/bin/chromium-browser',
+      '/usr/bin/chromium',
+      process.env.LOCAL_CHROME_PATH || ''
+    ].filter(Boolean);
+
+    let foundPath = candidatePaths.find(p => {
+      try { return fs.existsSync(p); } catch { return false; }
+    }) || candidatePaths[0];
+
+    return await puppeteer.launch({
+      executablePath: foundPath,
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-blink-features=AutomationControlled',
+        '--window-size=1280,800'
+      ]
+    });
+  }
 }
 
 // Global persistent session store across Next.js API route invocations
@@ -27,16 +74,7 @@ setInterval(async () => {
 export async function getNesineCaptchaSession(): Promise<{ sessionId: string; captchaImage: string }> {
   const sessionId = crypto.randomUUID();
 
-  const browser = await puppeteer.launch({
-    executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-blink-features=AutomationControlled',
-      '--window-size=1280,800'
-    ]
-  });
+  const browser = await launchBrowser();
 
   try {
     const page = await browser.newPage();
