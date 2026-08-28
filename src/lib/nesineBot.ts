@@ -45,13 +45,13 @@ async function launchBrowser(): Promise<Browser> {
       setupLambdaEnvironment(al2023LibPath);
     } catch {}
 
-    if (process.env.LD_LIBRARY_PATH) {
-      if (!process.env.LD_LIBRARY_PATH.includes(al2023LibPath)) {
-        process.env.LD_LIBRARY_PATH = `${al2023LibPath}:${process.env.LD_LIBRARY_PATH}`;
-      }
-    } else {
-      process.env.LD_LIBRARY_PATH = al2023LibPath;
-    }
+    const ldPath = process.env.LD_LIBRARY_PATH
+      ? `${al2023LibPath}:${process.env.LD_LIBRARY_PATH}`
+      : `${al2023LibPath}:/usr/lib64:/lib64:/usr/lib`;
+
+    process.env.LD_LIBRARY_PATH = ldPath;
+    process.env.FONTCONFIG_PATH = '/tmp/fonts';
+    process.env.HOME = '/tmp';
 
     return await puppeteer.launch({
       args: [
@@ -66,6 +66,12 @@ async function launchBrowser(): Promise<Browser> {
       defaultViewport: { width: 1920, height: 1080 },
       executablePath: execPath,
       headless: (chromium as any).headless ?? true,
+      env: {
+        ...process.env,
+        LD_LIBRARY_PATH: ldPath,
+        FONTCONFIG_PATH: '/tmp/fonts',
+        HOME: '/tmp'
+      }
     });
   } else {
     const candidatePaths = [
