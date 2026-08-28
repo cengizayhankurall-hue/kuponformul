@@ -9,19 +9,14 @@ interface SessionEntry {
   createdAt: number;
 }
 
-const CHROMIUM_PACK_URL = 'https://github.com/Sparticuz/chromium/releases/download/v149.0.0/chromium-v149.0.0-pack.tar';
+const CHROMIUM_PACK_URL = 'https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar';
 
 async function launchBrowser(): Promise<Browser> {
   const isVercel = !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NODE_ENV === 'production';
 
   if (isVercel) {
     (chromium as any).setGraphicsMode = false;
-    let execPath: string;
-    try {
-      execPath = await (chromium as any).executablePath(CHROMIUM_PACK_URL);
-    } catch {
-      execPath = await (chromium as any).executablePath();
-    }
+    const execPath = await (chromium as any).executablePath(CHROMIUM_PACK_URL);
     return await puppeteer.launch({
       args: [
         ...((chromium as any).args || []),
