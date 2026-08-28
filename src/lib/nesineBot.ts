@@ -517,97 +517,79 @@ export async function saveNesineCouponWithSession(
     for (let batchIdx = 0; batchIdx < totalBatches; batchIdx++) {
       const currentBatch = columns.slice(batchIdx * 4, (batchIdx + 1) * 4);
 
-      // 1. Clear existing checkboxes in a single evaluate call
+      // 1. Clear existing checkboxes
       await page.evaluate(() => {
-        // Dismiss any left-over modal/popup first
+        const checked = Array.from(document.querySelectorAll('input[type="checkbox"][id^="m-c-"]:checked')) as HTMLInputElement[];
+        checked.forEach(c => c.click());
+      });
+      await new Promise(r => setTimeout(r, 300));
+
+      // 2. Fill batch columns
+      for (let colIdx = 0; colIdx < currentBatch.length; colIdx++) {
+        const column = currentBatch[colIdx];
+        for (let matchIdx = 0; matchIdx < 15; matchIdx++) {
+          if (matchIdx >= column.length) break;
+          const pred = String(column[matchIdx]).toUpperCase();
+          const choices: number[] = [];
+          if (pred.includes('1')) choices.push(0);
+          if (pred.includes('X') || pred.includes('0')) choices.push(1);
+          if (pred.includes('2')) choices.push(2);
+
+          for (const choiceIdx of choices) {
+            const inputId = `m-c-${matchIdx}-${colIdx}-${choiceIdx}`;
+            await page.evaluate((id) => {
+              const el = document.getElementById(id) as HTMLInputElement;
+              if (el && !el.checked) el.click();
+            }, inputId);
+          }
+        }
+      }
+
+      await new Promise(r => setTimeout(r, 600));
+
+      // Dismiss any warning modal (Tamam/Kapat)
+      await page.evaluate(() => {
         const modalBtns = Array.from(document.querySelectorAll('button, a')).filter(btn => {
           const t = ((btn as HTMLElement).innerText || '').trim().toLowerCase();
           return t === 'tamam' || t === 'kapat' || t === 'vazgeç';
         }) as HTMLElement[];
         modalBtns.forEach(btn => btn.click());
-
-        const checked = Array.from(document.querySelectorAll('input[type="checkbox"][id^="m-c-"]:checked')) as HTMLInputElement[];
-        checked.forEach(c => c.click());
       });
 
-      await new Promise(r => setTimeout(r, 200));
-
-      // 2. Fill batch columns in a SINGLE fast evaluate call
-      await page.evaluate((batch) => {
-        batch.forEach((column: string[], colIdx: number) => {
-          for (let matchIdx = 0; matchIdx < 15; matchIdx++) {
-            if (matchIdx >= column.length) break;
-            const pred = String(column[matchIdx]).toUpperCase();
-            const choices: number[] = [];
-            if (pred.includes('1')) choices.push(0);
-            if (pred.includes('X') || pred.includes('0')) choices.push(1);
-            if (pred.includes('2')) choices.push(2);
-
-            choices.forEach(choiceIdx => {
-              const inputId = `m-c-${matchIdx}-${colIdx}-${choiceIdx}`;
-              const el = document.getElementById(inputId) as HTMLInputElement;
-              if (el && !el.checked) el.click();
-            });
-          }
-        });
-      }, currentBatch);
-
-      // Allow 400ms for Nesine coupon sidebar to recalculate total and enable Save button
       await new Promise(r => setTimeout(r, 400));
 
       // 3. Find and click Disk/Save button
       console.log(`[NesineBot] Finding disk button and opening modal for batch ${batchIdx + 1}/${totalBatches}...`);
-
+      
       let modalInputFound = false;
       for (let attempt = 1; attempt <= 20; attempt++) {
         modalInputFound = await page.evaluate(() => {
           const visibleInputs = Array.from(document.querySelectorAll('input[type="text"], input:not([type])'))
-            .filter(el => {
-              const s = window.getComputedStyle(el);
-              return s.display !== 'none' && s.visibility !== 'hidden' && (el as HTMLElement).offsetWidth > 0;
-            });
+            .filter(el => (el as HTMLElement).offsetParent !== null);
           return visibleInputs.length > 0;
         });
 
         if (modalInputFound) break;
 
+        // Click disk button
         await page.evaluate(() => {
-          const trigger = (el: HTMLElement) => {
-            el.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
-            el.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
-            el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-            if (typeof el.click === 'function') el.click();
-          };
-
-          // Try 1: Search by icon/class
-          const iconBtn = document.querySelector('.ni-save')?.closest('button, a') ||
-                          document.querySelector('[class*="save"]')?.closest('button, a') ||
-                          document.querySelector('button[title*="Kaydet"]') ||
-                          document.querySelector('button[aria-label*="Kaydet"]');
-          if (iconBtn) {
-            trigger(iconBtn as HTMLElement);
-            return;
-          }
-
-          // Try 2: Find button before 'Hemen Oyna'
           const visibleBtns = Array.from(document.querySelectorAll('a, button'))
-            .filter(el => {
-              const s = window.getComputedStyle(el);
-              return s.display !== 'none' && s.visibility !== 'hidden' && (el as HTMLElement).offsetWidth > 0;
-            }) as HTMLElement[];
+            .filter(el => (el as HTMLElement).offsetParent !== null) as HTMLElement[];
           const playIndex = visibleBtns.findIndex(el => (el.innerText || '').trim().toLowerCase() === 'hemen oyna');
+          
+          let diskBtn: HTMLElement | null = null;
           if (playIndex >= 1) {
-            trigger(visibleBtns[playIndex - 1]);
-            return;
+            diskBtn = visibleBtns[playIndex - 1];
           }
-
-          // Try 3: Look for any disk or save button in coupon panel
-          const panel = document.querySelector('.coupon-container, .coupon, #coupon, .bulten-coupon') || document.body;
-          const saveInPanel = panel.querySelector('button:not([disabled]), a:not([disabled])') as HTMLElement;
-          if (saveInPanel) trigger(saveInPanel);
+          if (!diskBtn) {
+            diskBtn = (document.querySelector('button[title="Kaydet"]') ||
+              document.querySelector('.ni-save')?.closest('button') ||
+              document.querySelector('.ni-save')?.parentElement) as HTMLElement | null;
+          }
+          if (diskBtn) diskBtn.click();
         });
 
-        await new Promise(r => setTimeout(r, 350));
+        await new Promise(r => setTimeout(r, 500));
       }
 
       if (!modalInputFound) {
@@ -617,7 +599,7 @@ export async function saveNesineCouponWithSession(
       // 4. Set up listener for the actual Nesine Save Coupon network response
       const saveResponsePromise = page.waitForResponse(
         res => (res.url().includes('SavedCoupon') || res.url().includes('Save')) && res.request().method() === 'POST',
-        { timeout: 6000 }
+        { timeout: 8000 }
       ).catch(() => null);
 
       // Fill Coupon Name & Click the Yellow Kaydet button inside visible modal
@@ -626,10 +608,7 @@ export async function saveNesineCouponWithSession(
 
       const inputFilled = await page.evaluate((name) => {
         const modalInputs = Array.from(document.querySelectorAll('input[type="text"], input:not([type])'))
-          .filter(el => {
-            const s = window.getComputedStyle(el);
-            return s.display !== 'none' && s.visibility !== 'hidden' && (el as HTMLElement).offsetWidth > 0;
-          }) as HTMLInputElement[];
+          .filter(el => (el as HTMLElement).offsetParent !== null) as HTMLInputElement[];
         
         if (modalInputs.length === 0) return false;
         const nameInput = modalInputs[modalInputs.length - 1];
@@ -643,7 +622,6 @@ export async function saveNesineCouponWithSession(
         }
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
         nameInput.dispatchEvent(new Event('change', { bubbles: true }));
-        nameInput.dispatchEvent(new Event('blur', { bubbles: true }));
         return true;
       }, cName);
 
@@ -651,14 +629,12 @@ export async function saveNesineCouponWithSession(
         throw new Error('Kupon adı giriş kutusu bulunamadı.');
       }
 
-      await new Promise(r => setTimeout(r, 200));
+      // Wait 400ms for React state update before clicking Kaydet button
+      await new Promise(r => setTimeout(r, 400));
 
       const saveBtnClicked = await page.evaluate(() => {
         const allVisibleEls = Array.from(document.querySelectorAll('button, a, span, div, input[type="button"], input[type="submit"]'))
-          .filter(el => {
-            const s = window.getComputedStyle(el);
-            return s.display !== 'none' && s.visibility !== 'hidden' && (el as HTMLElement).offsetWidth > 0 && (el as HTMLElement).innerText;
-          }) as HTMLElement[];
+          .filter(el => (el as HTMLElement).offsetParent !== null && (el as HTMLElement).innerText) as HTMLElement[];
         
         const kaydetBtn = allVisibleEls.find(btn => {
           const t = (btn.innerText || btn.getAttribute('value') || '').trim().toLowerCase();
@@ -669,10 +645,7 @@ export async function saveNesineCouponWithSession(
         });
 
         if (kaydetBtn) {
-          kaydetBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
-          kaydetBtn.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
-          kaydetBtn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-          if (typeof kaydetBtn.click === 'function') kaydetBtn.click();
+          kaydetBtn.click();
           return true;
         }
         return false;
@@ -682,22 +655,29 @@ export async function saveNesineCouponWithSession(
         throw new Error('Modal içerisindeki "Kaydet" butonuna basılamadı.');
       }
 
-      console.log(`[NesineBot] Kaydet button clicked for batch ${batchIdx + 1}.`);
+      console.log(`[NesineBot] Kaydet button clicked for batch ${batchIdx + 1}. Awaiting save API response...`);
 
-      // 5. Await network confirmation
-      await saveResponsePromise;
-      await new Promise(r => setTimeout(r, 600));
+      // 5. Await actual Save network response from Nesine server
+      const saveRes = await saveResponsePromise;
+      if (saveRes) {
+        const resText = await saveRes.text().catch(() => '');
+        console.log(`[NesineBot] Save API HTTP ${saveRes.status()}: ${resText.slice(0, 300)}`);
+      }
 
-      // Dismiss any success modal (Tamam/Kapat)
-      await page.evaluate(() => {
-        const modalBtns = Array.from(document.querySelectorAll('button, a')).filter(btn => {
-          const t = ((btn as HTMLElement).innerText || '').trim().toLowerCase();
-          return t === 'tamam' || t === 'kapat' || t === 'vazgeç';
-        }) as HTMLElement[];
-        modalBtns.forEach(btn => btn.click());
-      });
-
+      await new Promise(r => setTimeout(r, 1500));
       savedCount += currentBatch.length;
+
+      // If there are more batches remaining, dismiss popup
+      if (batchIdx + 1 < totalBatches) {
+        await page.evaluate(() => {
+          const modalBtns = Array.from(document.querySelectorAll('button, a')).filter(btn => {
+            const t = ((btn as HTMLElement).innerText || '').trim().toLowerCase();
+            return t === 'tamam' || t === 'kapat' || t === 'vazgeç';
+          }) as HTMLElement[];
+          modalBtns.forEach(btn => btn.click());
+        });
+        await new Promise(r => setTimeout(r, 500));
+      }
     }
 
     sessions.delete(sessionId);
