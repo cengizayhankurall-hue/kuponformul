@@ -1,7 +1,9 @@
 import puppeteer, { Browser, Page } from 'puppeteer-core';
-import chromium from '@sparticuz/chromium-min';
+import chromium, { inflate, setupLambdaEnvironment } from '@sparticuz/chromium-min';
 import crypto from 'crypto';
 import fs from 'fs';
+import os from 'os';
+import path from 'path';
 
 interface SessionEntry {
   browser: Browser;
@@ -17,7 +19,32 @@ async function launchBrowser(): Promise<Browser> {
   if (isVercel) {
     process.env.AWS_EXECUTION_ENV = 'AWS_Lambda_nodejs20.x';
     (chromium as any).setGraphicsMode = false;
+
     const execPath = await (chromium as any).executablePath(CHROMIUM_PACK_URL);
+
+    const al2023BrPath = path.join(os.tmpdir(), 'chromium-pack', 'al2023.tar.br');
+    const al2023LibPath = path.join(os.tmpdir(), 'al2023', 'lib');
+
+    try {
+      if (fs.existsSync(al2023BrPath) && !fs.existsSync(path.join(al2023LibPath, 'libnss3.so'))) {
+        await inflate(al2023BrPath);
+      }
+    } catch (e) {
+      console.warn('[NesineBot] al2023 inflate:', e);
+    }
+
+    try {
+      setupLambdaEnvironment(al2023LibPath);
+    } catch {}
+
+    if (process.env.LD_LIBRARY_PATH) {
+      if (!process.env.LD_LIBRARY_PATH.includes(al2023LibPath)) {
+        process.env.LD_LIBRARY_PATH = `${al2023LibPath}:${process.env.LD_LIBRARY_PATH}`;
+      }
+    } else {
+      process.env.LD_LIBRARY_PATH = al2023LibPath;
+    }
+
     return await puppeteer.launch({
       args: [
         ...((chromium as any).args || []),
@@ -25,7 +52,8 @@ async function launchBrowser(): Promise<Browser> {
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-gpu',
-        '--disable-dev-shm-usage'
+        '--disable-dev-shm-usage',
+        '--single-process'
       ],
       defaultViewport: { width: 1920, height: 1080 },
       executablePath: execPath,
