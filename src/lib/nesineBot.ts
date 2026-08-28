@@ -17,20 +17,28 @@ async function launchBrowser(): Promise<Browser> {
   const isVercel = !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NODE_ENV === 'production';
 
   if (isVercel) {
+    const tmpDir = os.tmpdir();
+    const chromiumBin = path.join(tmpDir, 'chromium');
+    const al2023LibPath = path.join(tmpDir, 'al2023', 'lib');
+    const nss3File = path.join(al2023LibPath, 'libnss3.so');
+
+    // If chromium was previously extracted without al2023 libraries, clean it up
+    if (fs.existsSync(chromiumBin) && !fs.existsSync(nss3File)) {
+      try { fs.unlinkSync(chromiumBin); } catch {}
+    }
+
     process.env.AWS_EXECUTION_ENV = 'AWS_Lambda_nodejs20.x';
     (chromium as any).setGraphicsMode = false;
 
     const execPath = await (chromium as any).executablePath(CHROMIUM_PACK_URL);
 
-    const al2023BrPath = path.join(os.tmpdir(), 'chromium-pack', 'al2023.tar.br');
-    const al2023LibPath = path.join(os.tmpdir(), 'al2023', 'lib');
-
-    try {
-      if (fs.existsSync(al2023BrPath) && !fs.existsSync(path.join(al2023LibPath, 'libnss3.so'))) {
+    const al2023BrPath = path.join(tmpDir, 'chromium-pack', 'al2023.tar.br');
+    if (fs.existsSync(al2023BrPath) && !fs.existsSync(nss3File)) {
+      try {
         await inflate(al2023BrPath);
+      } catch (e) {
+        console.warn('[NesineBot] al2023 inflate:', e);
       }
-    } catch (e) {
-      console.warn('[NesineBot] al2023 inflate:', e);
     }
 
     try {
