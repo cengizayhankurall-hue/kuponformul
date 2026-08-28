@@ -517,52 +517,48 @@ export async function saveNesineCouponWithSession(
     for (let batchIdx = 0; batchIdx < totalBatches; batchIdx++) {
       const currentBatch = columns.slice(batchIdx * 4, (batchIdx + 1) * 4);
 
-      // 1. Clear existing checkboxes
+      // 1. Clear existing checkboxes in a single evaluate call
       await page.evaluate(() => {
-        const checked = Array.from(document.querySelectorAll('input[type="checkbox"][id^="m-c-"]:checked')) as HTMLInputElement[];
-        checked.forEach(c => c.click());
-      });
-      await new Promise(r => setTimeout(r, 300));
-
-      // 2. Fill batch columns
-      for (let colIdx = 0; colIdx < currentBatch.length; colIdx++) {
-        const column = currentBatch[colIdx];
-        for (let matchIdx = 0; matchIdx < 15; matchIdx++) {
-          if (matchIdx >= column.length) break;
-          const pred = String(column[matchIdx]).toUpperCase();
-          const choices: number[] = [];
-          if (pred.includes('1')) choices.push(0);
-          if (pred.includes('X') || pred.includes('0')) choices.push(1);
-          if (pred.includes('2')) choices.push(2);
-
-          for (const choiceIdx of choices) {
-            const inputId = `m-c-${matchIdx}-${colIdx}-${choiceIdx}`;
-            await page.evaluate((id) => {
-              const el = document.getElementById(id) as HTMLInputElement;
-              if (el && !el.checked) el.click();
-            }, inputId);
-          }
-        }
-      }
-
-      await new Promise(r => setTimeout(r, 600));
-
-      // Dismiss any warning modal (Tamam/Kapat)
-      await page.evaluate(() => {
+        // Dismiss any left-over modal/popup first
         const modalBtns = Array.from(document.querySelectorAll('button, a')).filter(btn => {
           const t = ((btn as HTMLElement).innerText || '').trim().toLowerCase();
           return t === 'tamam' || t === 'kapat' || t === 'vazgeç';
         }) as HTMLElement[];
         modalBtns.forEach(btn => btn.click());
+
+        const checked = Array.from(document.querySelectorAll('input[type="checkbox"][id^="m-c-"]:checked')) as HTMLInputElement[];
+        checked.forEach(c => c.click());
       });
 
-      await new Promise(r => setTimeout(r, 400));
+      await new Promise(r => setTimeout(r, 150));
+
+      // 2. Fill batch columns in a SINGLE fast evaluate call
+      await page.evaluate((batch) => {
+        batch.forEach((column: string[], colIdx: number) => {
+          for (let matchIdx = 0; matchIdx < 15; matchIdx++) {
+            if (matchIdx >= column.length) break;
+            const pred = String(column[matchIdx]).toUpperCase();
+            const choices: number[] = [];
+            if (pred.includes('1')) choices.push(0);
+            if (pred.includes('X') || pred.includes('0')) choices.push(1);
+            if (pred.includes('2')) choices.push(2);
+
+            choices.forEach(choiceIdx => {
+              const inputId = `m-c-${matchIdx}-${colIdx}-${choiceIdx}`;
+              const el = document.getElementById(inputId) as HTMLInputElement;
+              if (el && !el.checked) el.click();
+            });
+          }
+        });
+      }, currentBatch);
+
+      await new Promise(r => setTimeout(r, 200));
 
       // 3. Find and click Disk/Save button
       console.log(`[NesineBot] Finding disk button and opening modal for batch ${batchIdx + 1}/${totalBatches}...`);
-      
+
       let modalInputFound = false;
-      for (let attempt = 1; attempt <= 20; attempt++) {
+      for (let attempt = 1; attempt <= 10; attempt++) {
         modalInputFound = await page.evaluate(() => {
           const visibleInputs = Array.from(document.querySelectorAll('input[type="text"], input:not([type])'))
             .filter(el => (el as HTMLElement).offsetParent !== null);
@@ -571,7 +567,6 @@ export async function saveNesineCouponWithSession(
 
         if (modalInputFound) break;
 
-        // Click disk button
         await page.evaluate(() => {
           const visibleBtns = Array.from(document.querySelectorAll('a, button'))
             .filter(el => (el as HTMLElement).offsetParent !== null) as HTMLElement[];
@@ -589,7 +584,7 @@ export async function saveNesineCouponWithSession(
           if (diskBtn) diskBtn.click();
         });
 
-        await new Promise(r => setTimeout(r, 600));
+        await new Promise(r => setTimeout(r, 250));
       }
 
       if (!modalInputFound) {
@@ -599,7 +594,7 @@ export async function saveNesineCouponWithSession(
       // 4. Set up listener for the actual Nesine Save Coupon network response
       const saveResponsePromise = page.waitForResponse(
         res => (res.url().includes('SavedCoupon') || res.url().includes('Save')) && res.request().method() === 'POST',
-        { timeout: 8000 }
+        { timeout: 5000 }
       ).catch(() => null);
 
       // Fill Coupon Name & Click the Yellow Kaydet button inside visible modal
@@ -629,8 +624,7 @@ export async function saveNesineCouponWithSession(
         throw new Error('Kupon adı giriş kutusu bulunamadı.');
       }
 
-      // Wait 500ms for React state update before clicking Kaydet button
-      await new Promise(r => setTimeout(r, 500));
+      await new Promise(r => setTimeout(r, 150));
 
       const saveBtnClicked = await page.evaluate(() => {
         const allVisibleEls = Array.from(document.querySelectorAll('button, a, span, div, input[type="button"], input[type="submit"]'))
@@ -655,30 +649,22 @@ export async function saveNesineCouponWithSession(
         throw new Error('Modal içerisindeki "Kaydet" butonuna basılamadı.');
       }
 
-      console.log(`[NesineBot] Kaydet button clicked for batch ${batchIdx + 1}. Awaiting save API response...`);
+      console.log(`[NesineBot] Kaydet button clicked for batch ${batchIdx + 1}.`);
 
-      // 5. Await actual Save network response from Nesine server
-      const saveRes = await saveResponsePromise;
-      if (saveRes) {
-        const resText = await saveRes.text().catch(() => '');
-        console.log(`[NesineBot] Save API HTTP ${saveRes.status()}: ${resText.slice(0, 300)}`);
-      } else {
-        console.log('[NesineBot] No SavedCoupon response intercepted within timeout, waiting confirmation...');
-      }
+      // 5. Await network confirmation
+      await saveResponsePromise;
+      await new Promise(r => setTimeout(r, 600));
 
-      await new Promise(r => setTimeout(r, 3000));
+      // Dismiss any success modal (Tamam/Kapat)
+      await page.evaluate(() => {
+        const modalBtns = Array.from(document.querySelectorAll('button, a')).filter(btn => {
+          const t = ((btn as HTMLElement).innerText || '').trim().toLowerCase();
+          return t === 'tamam' || t === 'kapat' || t === 'vazgeç';
+        }) as HTMLElement[];
+        modalBtns.forEach(btn => btn.click());
+      });
+
       savedCount += currentBatch.length;
-
-      // If there are more batches remaining, reload the page to clear the success popup
-      if (batchIdx + 1 < totalBatches) {
-        console.log(`[NesineBot] Batch ${batchIdx + 1} done. Refreshing Spor Toto page for batch ${batchIdx + 2}...`);
-        await page.goto('https://www.nesine.com/sportoto', { waitUntil: 'domcontentloaded', timeout: 25000 });
-        for (let i = 0; i < 30; i++) {
-          const ready = await page.evaluate(() => !!document.getElementById('m-c-0-0-0'));
-          if (ready) break;
-          await new Promise(r => setTimeout(r, 250));
-        }
-      }
     }
 
     sessions.delete(sessionId);

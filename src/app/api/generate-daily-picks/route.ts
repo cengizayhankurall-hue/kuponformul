@@ -46,10 +46,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'No matches provided' }, { status: 400 });
     }
 
-    const candidateMatches = matches.filter(m => {
+    const rawMatches = matches.filter(m => {
       if (leagueFilter && m.league !== leagueFilter) return false;
       return true;
     });
+
+    const candidateMatches = rawMatches.slice(0, 80);
 
     const cacheKey = `picks_${candidateMatches.map(m => m.id || m.code).join('_').slice(0, 100)}_${leagueFilter || 'all'}`;
     const cachedData = cache.get(cacheKey);
@@ -150,8 +152,8 @@ export async function POST(request: Request) {
         const au35Stats = computeStats(au35Res?.data || []);
         const kgStats = computeStats(kgRes?.data || []);
 
-        const MIN_MATCH_COUNT = 50;
-        // Tüm geçerli havuzlar (en az 50 maçlık veri içerenler)
+        const MIN_MATCH_COUNT = 30;
+        // Tüm geçerli havuzlar (en az 30 maçlık veri içerenler)
         const reliablePools = [msStats, au15Stats, au25Stats, au35Stats, kgStats].filter(s => s && s.total >= MIN_MATCH_COUNT);
 
         const getBestPoolOutcome = (getter: (s: any) => number) => {

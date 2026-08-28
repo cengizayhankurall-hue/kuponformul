@@ -445,7 +445,7 @@ export default function IddaaPage() {
   // PREFETCH: Sayfa yüklendiğinde arkaplanda Günün ve Dünün tahminlerini çek
   useEffect(() => {
     if (matches && matches.length > 0 && dailyPicks === null && !loadingDailyPicks) {
-      const validMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
+      const validMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-').slice(0, 80);
       if (validMatches.length > 0) {
         setLoadingDailyPicks(true);
         fetch('/api/generate-daily-picks', {
@@ -455,19 +455,14 @@ export default function IddaaPage() {
         })
           .then(res => res.json())
           .then(data => {
-            if (data.success) {
+            if (data.success && (data.picks || data.bankoPicks)) {
                setDailyPicks(data.picks || { banko: data.bankoPicks || [], value: data.valuePicks || [] });
-            } else {
-               setDailyPicks({ banko: [], value: [] });
             }
           })
           .catch((err) => {
-             console.error(err);
-             setDailyPicks({ banko: [], value: [] }); // Set empty object to avoid infinite loop
+             console.error('Prefetch picks error:', err);
           })
           .finally(() => setLoadingDailyPicks(false));
-      } else {
-        setDailyPicks({ banko: [], value: [] });
       }
     }
   }, [matches, dailyPicks, loadingDailyPicks]);
@@ -504,19 +499,19 @@ export default function IddaaPage() {
 
     if (matches.length === 0) return;
     
-    // Eğer daha önce arkaplanda yüklendiyse veya hala yükleniyorsa, tekrar istek atma!
-    if (dailyPicks !== null || loadingDailyPicks) return;
+    // Eğer daha önce yüklendiyse ve tahminler varsa tekrar yükleme yapma
+    if (dailyPicks && (dailyPicks.banko?.length > 0 || dailyPicks.value?.length > 0)) return;
+    if (loadingDailyPicks) return;
     
     setLoadingDailyPicks(true);
     setDailyPicksError(null);
-    setDailyPicks(null);
     
     try {
-      const validMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
+      const validMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-').slice(0, 80);
       const res = await fetch('/api/generate-daily-picks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ matches: validMatches })
+        body: JSON.stringify({ matches: validMatches, league: league || undefined })
       });
       const data = await res.json();
       if (data.success) {

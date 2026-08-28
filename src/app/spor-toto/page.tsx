@@ -217,12 +217,19 @@ export default function HomePage() {
         })
       });
 
-      const data = await res.json();
-      if (data.success) {
+      const resText = await res.text();
+      let data: any = null;
+      try {
+        data = JSON.parse(resText);
+      } catch {
+        throw new Error(res.status === 504 || res.status === 500 ? 'Sunucu işlem zaman aşımına uğradı, lütfen tekrar deneyin.' : resText.slice(0, 100));
+      }
+
+      if (data && data.success) {
         setNesineSaveResult({ success: true, message: data.message });
       } else {
         setNesineCaptcha('');
-        setNesineSaveResult({ success: false, message: data.error || 'Kaydetme işlemi başarısız oldu.' });
+        setNesineSaveResult({ success: false, message: data?.error || 'Kaydetme işlemi başarısız oldu.' });
         fetchNesineCaptcha();
       }
     } catch (err: any) {
