@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { saveNesineCouponWithSession } from '@/lib/nesineBot';
 
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
