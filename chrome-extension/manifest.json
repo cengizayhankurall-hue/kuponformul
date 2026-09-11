@@ -8,9 +8,7 @@
     "tabs"
   ],
   "host_permissions": [
-    "*://localhost/*",
-    "*://*.stformul.com/*",
-    "*://*.nesine.com/*"
+    "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js"
@@ -18,8 +16,10 @@
   "content_scripts": [
     {
       "matches": [
-        "*://localhost/*",
-        "*://*.stformul.com/*"
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://*.nesine.com/*"
       ],
       "js": ["content_injector.js"],
       "run_at": "document_idle"

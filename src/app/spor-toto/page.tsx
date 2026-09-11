@@ -2487,7 +2487,10 @@ export default function HomePage() {
                   onClick={() => {
                     if (results && results.columns) {
                       window.postMessage({ type: "ST_PLAY_COUPON", payload: results.columns }, "*");
-                      setShowNesineModal(false);
+                      setNesineSaveResult({
+                        success: true,
+                        message: "Kupon verileri Chrome Eklentisine gönderildi! Yeni Nesine sekmesi açılıyor. (Eğer açılmıyorsa Chrome Eklentinizin yüklü ve aktif olduğundan emin olun)."
+                      });
                     }
                   }}
                   className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-yellow-400 font-bold text-xs rounded-xl border border-yellow-500/30 transition flex items-center justify-center gap-2 cursor-pointer"
