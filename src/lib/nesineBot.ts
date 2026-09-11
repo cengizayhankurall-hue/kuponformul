@@ -517,53 +517,45 @@ export async function saveNesineCouponWithSession(
     for (let batchIdx = 0; batchIdx < totalBatches; batchIdx++) {
       const currentBatch = columns.slice(batchIdx * 4, (batchIdx + 1) * 4);
 
-      // 1. Clear existing checkboxes
-      await page.evaluate(() => {
+      // 1. Bulk Clear & Fill checkboxes in a single page.evaluate call
+      await page.evaluate((batch: string[][]) => {
+        // Clear all checked
         const checked = Array.from(document.querySelectorAll('input[type="checkbox"][id^="m-c-"]:checked')) as HTMLInputElement[];
         checked.forEach(c => c.click());
-      });
-      await new Promise(r => setTimeout(r, 300));
 
-      // 2. Fill batch columns
-      for (let colIdx = 0; colIdx < currentBatch.length; colIdx++) {
-        const column = currentBatch[colIdx];
-        for (let matchIdx = 0; matchIdx < 15; matchIdx++) {
-          if (matchIdx >= column.length) break;
-          const pred = String(column[matchIdx]).toUpperCase();
-          const choices: number[] = [];
-          if (pred.includes('1')) choices.push(0);
-          if (pred.includes('X') || pred.includes('0')) choices.push(1);
-          if (pred.includes('2')) choices.push(2);
+        // Check required
+        for (let colIdx = 0; colIdx < batch.length; colIdx++) {
+          const column = batch[colIdx];
+          for (let matchIdx = 0; matchIdx < 15; matchIdx++) {
+            if (matchIdx >= column.length) break;
+            const pred = String(column[matchIdx]).toUpperCase();
+            const choices: number[] = [];
+            if (pred.includes('1')) choices.push(0);
+            if (pred.includes('X') || pred.includes('0')) choices.push(1);
+            if (pred.includes('2')) choices.push(2);
 
-          for (const choiceIdx of choices) {
-            const inputId = `m-c-${matchIdx}-${colIdx}-${choiceIdx}`;
-            await page.evaluate((id) => {
-              const el = document.getElementById(id) as HTMLInputElement;
+            for (const choiceIdx of choices) {
+              const inputId = `m-c-${matchIdx}-${colIdx}-${choiceIdx}`;
+              const el = document.getElementById(inputId) as HTMLInputElement;
               if (el && !el.checked) el.click();
-            }, inputId);
+            }
           }
         }
-      }
 
-      await new Promise(r => setTimeout(r, 600));
-
-      // Dismiss any warning modal (Tamam/Kapat)
-      await page.evaluate(() => {
+        // Dismiss any initial modal
         const modalBtns = Array.from(document.querySelectorAll('button, a')).filter(btn => {
           const t = ((btn as HTMLElement).innerText || '').trim().toLowerCase();
           return t === 'tamam' || t === 'kapat' || t === 'vazgeç';
         }) as HTMLElement[];
         modalBtns.forEach(btn => btn.click());
-      });
+      }, currentBatch);
 
-      await new Promise(r => setTimeout(r, 400));
+      await new Promise(r => setTimeout(r, 200));
 
-      // 3. Find and click Disk/Save button
-      console.log(`[NesineBot] Finding disk button and opening modal for batch ${batchIdx + 1}/${totalBatches}...`);
-      
-      let modalInputFound = false;
-      for (let attempt = 1; attempt <= 20; attempt++) {
-        modalInputFound = await page.evaluate(() => {
+      // 2. Click Disk/Save button to open modal
+      let modalOpened = false;
+      for (let attempt = 1; attempt <= 15; attempt++) {
+        modalOpened = await page.evaluate(() => {
           const isVisible = (el: Element) => {
             const style = window.getComputedStyle(el);
             if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return false;
@@ -575,34 +567,18 @@ export async function saveNesineCouponWithSession(
             if (i.type === 'hidden' || i.type === 'checkbox' || i.type === 'radio') return false;
             return isVisible(i);
           });
-          return textInputs.length > 0;
-        });
+          if (textInputs.length > 0) return true;
 
-        if (modalInputFound) break;
-
-        // Click disk button with multiple robust strategies
-        await page.evaluate(() => {
-          const isVisible = (el: Element) => {
-            const style = window.getComputedStyle(el);
-            if (style.display === 'none' || style.visibility === 'hidden') return false;
-            const rect = el.getBoundingClientRect();
-            return rect.width > 0 && rect.height > 0;
-          };
-
+          // Click disk / save icon
           const allElements = Array.from(document.querySelectorAll('button, a, div, span, i, svg')) as HTMLElement[];
           const visibleEls = allElements.filter(isVisible);
 
-          // 1. Title / aria attribute
           const titleBtn = visibleEls.find(b => 
             (b.getAttribute('title') || '').toLowerCase().includes('kaydet') || 
             (b.getAttribute('aria-label') || '').toLowerCase().includes('kaydet')
           );
-          if (titleBtn) {
-            titleBtn.click();
-            return;
-          }
+          if (titleBtn) { titleBtn.click(); return false; }
 
-          // 2. Icon class name
           const saveIcon = visibleEls.find(b => {
             const cls = typeof b.className === 'string' ? b.className.toLowerCase() : '';
             return cls.includes('ni-save') || cls.includes('save') || cls.includes('disk');
@@ -610,42 +586,37 @@ export async function saveNesineCouponWithSession(
           if (saveIcon) {
             const clickable = saveIcon.closest('button, a, div') as HTMLElement || saveIcon;
             clickable.click();
-            return;
+            return false;
           }
 
-          // 3. Hemen Oyna predecessor or sibling in betting bar
           const playBtn = visibleEls.find(b => (b.innerText || '').trim().toLowerCase() === 'hemen oyna');
-          if (playBtn) {
-            const parent = playBtn.parentElement;
-            if (parent) {
-              const siblings = Array.from(parent.querySelectorAll('button, a')) as HTMLElement[];
-              const disk = siblings.find(s => s !== playBtn);
-              if (disk) {
-                disk.click();
-                return;
-              }
-            }
+          if (playBtn && playBtn.parentElement) {
+            const siblings = Array.from(playBtn.parentElement.querySelectorAll('button, a')) as HTMLElement[];
+            const disk = siblings.find(s => s !== playBtn);
+            if (disk) { disk.click(); return false; }
           }
+          return false;
         });
 
-        await new Promise(r => setTimeout(r, 400));
+        if (modalOpened) break;
+        await new Promise(r => setTimeout(r, 200));
       }
 
-      if (!modalInputFound) {
+      if (!modalOpened) {
         throw new Error('Nesine kupon kaydetme ("Kupon Adı") penceresi açılamadı. Lütfen tekrar deneyin.');
       }
 
-      // 4. Set up listener for the actual Nesine Save Coupon network response
+      // 3. Set up listener for Save response
       const saveResponsePromise = page.waitForResponse(
         res => (res.url().includes('SavedCoupon') || res.url().includes('Save')) && res.request().method() === 'POST',
-        { timeout: 8000 }
+        { timeout: 6000 }
       ).catch(() => null);
 
-      // Fill Coupon Name & Click the Yellow Kaydet button inside visible modal
+      // 4. Fill Coupon Name & Click Kaydet
       const cName = totalBatches > 1 ? `ST_${runId}_${batchIdx + 1}` : `ST_${runId}`;
-      console.log(`[NesineBot] Batch ${batchIdx + 1}: Setting coupon name "${cName}"...`);
+      console.log(`[NesineBot] Batch ${batchIdx + 1}/${totalBatches}: Saving "${cName}"...`);
 
-      const inputFilled = await page.evaluate((name) => {
+      const saved = await page.evaluate((name) => {
         const isVisible = (el: Element) => {
           const style = window.getComputedStyle(el);
           if (style.display === 'none' || style.visibility === 'hidden') return false;
@@ -666,7 +637,6 @@ export async function saveNesineCouponWithSession(
           (i.getAttribute('name') || '').toLowerCase().includes('name')
         ) || modalInputs[modalInputs.length - 1];
 
-        // Fill value with React-compatible setter
         const nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
         if (nativeSetter) {
           nativeSetter.call(nameInput, name);
@@ -675,24 +645,8 @@ export async function saveNesineCouponWithSession(
         }
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
         nameInput.dispatchEvent(new Event('change', { bubbles: true }));
-        return true;
-      }, cName);
 
-      if (!inputFilled) {
-        throw new Error('Kupon adı giriş kutusu bulunamadı.');
-      }
-
-      // Wait 350ms for React state update before clicking Kaydet button
-      await new Promise(r => setTimeout(r, 350));
-
-      const saveBtnClicked = await page.evaluate(() => {
-        const isVisible = (el: Element) => {
-          const style = window.getComputedStyle(el);
-          if (style.display === 'none' || style.visibility === 'hidden') return false;
-          const rect = el.getBoundingClientRect();
-          return rect.width > 0 && rect.height > 0;
-        };
-
+        // Click Kaydet button
         const allVisibleEls = Array.from(document.querySelectorAll('button, a, span, div, input[type="button"], input[type="submit"]'))
           .filter(isVisible) as HTMLElement[];
         
@@ -709,25 +663,17 @@ export async function saveNesineCouponWithSession(
           return true;
         }
         return false;
-      });
+      }, cName);
 
-      if (!saveBtnClicked) {
-        throw new Error('Modal içerisindeki "Kaydet" butonuna basılamadı.');
+      if (!saved) {
+        throw new Error('Kupon adı kutusu veya Kaydet butonuna ulaşılamadı.');
       }
 
-      console.log(`[NesineBot] Kaydet button clicked for batch ${batchIdx + 1}. Awaiting save API response...`);
-
-      // 5. Await actual Save network response from Nesine server
-      const saveRes = await saveResponsePromise;
-      if (saveRes) {
-        const resText = await saveRes.text().catch(() => '');
-        console.log(`[NesineBot] Save API HTTP ${saveRes.status()}: ${resText.slice(0, 300)}`);
-      }
-
-      await new Promise(r => setTimeout(r, 1200));
+      await saveResponsePromise;
+      await new Promise(r => setTimeout(r, 400));
       savedCount += currentBatch.length;
 
-      // If there are more batches remaining, dismiss popup
+      // Dismiss confirmation dialog if more batches remain
       if (batchIdx + 1 < totalBatches) {
         await page.evaluate(() => {
           const modalBtns = Array.from(document.querySelectorAll('button, a')).filter(btn => {
@@ -736,7 +682,7 @@ export async function saveNesineCouponWithSession(
           }) as HTMLElement[];
           modalBtns.forEach(btn => btn.click());
         });
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise(r => setTimeout(r, 150));
       }
     }
 
