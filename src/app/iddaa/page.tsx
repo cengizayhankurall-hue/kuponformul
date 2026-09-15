@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState, useMemo } from 'react';
 import { Search, RefreshCw, AlertTriangle, TrendingUp, ChevronLeft, ChevronRight, Clock, Sparkles, Activity, X, Sun, Moon, Bot, Award, CheckCircle, XCircle, Check, ArrowRightLeft, Calendar, Filter, Flame, Zap, BarChart3, TrendingDown } from 'lucide-react';
 import { supabase, dbService } from '@/lib/supabase';
