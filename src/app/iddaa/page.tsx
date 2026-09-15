@@ -868,6 +868,8 @@ export default function IddaaPage() {
   const [turnaroundMonth, setTurnaroundMonth] = useState<string>('Tümü');
   const [turnaroundLeague, setTurnaroundLeague] = useState<string>('Tümü');
   const [turnaroundSearch, setTurnaroundSearch] = useState<string>('');
+  const [turnaroundPage, setTurnaroundPage] = useState<number>(1);
+  const TURNAROUND_PAGE_SIZE = 16;
 
   const turnaroundStats = useMemo(() => getTurnaroundStats(), []);
 
@@ -899,6 +901,17 @@ export default function IddaaPage() {
       );
     }
     return list;
+  }, [turnaroundType, turnaroundMonth, turnaroundLeague, turnaroundSearch]);
+
+  const totalTurnaroundPages = Math.ceil(filteredTurnarounds.length / TURNAROUND_PAGE_SIZE) || 1;
+  const paginatedTurnarounds = useMemo(() => {
+    const start = (turnaroundPage - 1) * TURNAROUND_PAGE_SIZE;
+    return filteredTurnarounds.slice(start, start + TURNAROUND_PAGE_SIZE);
+  }, [filteredTurnarounds, turnaroundPage]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setTurnaroundPage(1);
   }, [turnaroundType, turnaroundMonth, turnaroundLeague, turnaroundSearch]);
 
   const handleAnalyzeLeague = () => {
@@ -1198,132 +1211,187 @@ export default function IddaaPage() {
 
             {/* MATCHES LIST / CARDS */}
             {filteredTurnarounds.length > 0 ? (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {filteredTurnarounds.map((match) => {
-                  const is1to2 = match.type === '1/2';
-                  return (
-                    <div
-                      key={match.id}
-                      className={`p-5 rounded-2xl border transition-all hover:shadow-xl relative overflow-hidden ${
-                        isDark
-                          ? is1to2
-                            ? 'bg-gradient-to-br from-slate-900/90 via-[#0b1329]/70 to-slate-900/90 border-emerald-500/30 hover:border-emerald-500/60'
-                            : 'bg-gradient-to-br from-slate-900/90 via-[#170e2b]/70 to-slate-900/90 border-purple-500/30 hover:border-purple-500/60'
-                          : is1to2
-                            ? 'bg-gradient-to-br from-white to-emerald-50/40 border-emerald-200 hover:border-emerald-400 shadow-sm'
-                            : 'bg-gradient-to-br from-white to-purple-50/40 border-purple-200 hover:border-purple-400 shadow-sm'
-                      }`}
-                    >
-                      {/* Top Bar: Date, League, Badge */}
-                      <div className="flex items-center justify-between gap-2 mb-3">
-                        <div className="flex items-center gap-2">
-                          <span className={`px-2.5 py-1 rounded-lg text-[11px] font-black uppercase tracking-wider ${
-                            is1to2
-                              ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                              : 'bg-purple-500/20 text-purple-400 border border-purple-500/40'
-                          }`}>
-                            {is1to2 ? '🟢 1\'DEN 2 (1/2)' : '🟣 2\'DEN 1 (2/1)'}
-                          </span>
-                          <span className={`text-xs font-semibold ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                            {match.date} • {match.time}
-                          </span>
-                        </div>
+              <>
+                <div className="flex items-center justify-between text-xs font-bold text-slate-400 px-1">
+                  <span>Toplam <strong className="text-amber-400">{filteredTurnarounds.length}</strong> maçtan <strong>{(turnaroundPage - 1) * TURNAROUND_PAGE_SIZE + 1} - {Math.min(turnaroundPage * TURNAROUND_PAGE_SIZE, filteredTurnarounds.length)}</strong> arası gösteriliyor</span>
+                  <span>Sayfa {turnaroundPage} / {totalTurnaroundPages}</span>
+                </div>
 
-                        <div className="text-right">
-                          <span className={`text-[11px] font-black uppercase tracking-wider truncate block max-w-[170px] ${
-                            isDark ? 'text-sky-400' : 'text-sky-600'
-                          }`} title={match.league}>
-                            {match.league}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Teams & Score Flip Section */}
-                      <div className="flex items-center justify-between gap-4 my-4 p-4 rounded-xl bg-black/20 dark:bg-black/40 border border-white/5">
-                        <div className="flex-1 space-y-1">
-                          <div className={`text-sm md:text-base font-black truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            {match.homeTeam}
-                          </div>
-                          <div className={`text-sm md:text-base font-black truncate ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                            {match.awayTeam}
-                          </div>
-                        </div>
-
-                        {/* Visual Score Flip Badge */}
-                        <div className="flex flex-col items-center gap-1.5 shrink-0">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {paginatedTurnarounds.map((match) => {
+                    const is1to2 = match.type === '1/2';
+                    return (
+                      <div
+                        key={match.id}
+                        className={`p-5 rounded-2xl border transition-all hover:shadow-xl relative overflow-hidden ${
+                          isDark
+                            ? is1to2
+                              ? 'bg-gradient-to-br from-slate-900/90 via-[#0b1329]/70 to-slate-900/90 border-emerald-500/30 hover:border-emerald-500/60'
+                              : 'bg-gradient-to-br from-slate-900/90 via-[#170e2b]/70 to-slate-900/90 border-purple-500/30 hover:border-purple-500/60'
+                            : is1to2
+                              ? 'bg-gradient-to-br from-white to-emerald-50/40 border-emerald-200 hover:border-emerald-400 shadow-sm'
+                              : 'bg-gradient-to-br from-white to-purple-50/40 border-purple-200 hover:border-purple-400 shadow-sm'
+                        }`}
+                      >
+                        {/* Top Bar: Date, League, Badge */}
+                        <div className="flex items-center justify-between gap-2 mb-3">
                           <div className="flex items-center gap-2">
-                            <span className="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-bold text-xs border border-slate-700">
-                              İY: {match.iyScore}
-                            </span>
-                            <ArrowRightLeft className={`w-4 h-4 ${is1to2 ? 'text-emerald-400' : 'text-purple-400'} animate-pulse`} />
-                            <span className={`px-3 py-1 rounded-lg font-black text-sm border shadow-md ${
+                            <span className={`px-2.5 py-1 rounded-lg text-[11px] font-black uppercase tracking-wider ${
                               is1to2
-                                ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-emerald-500/20'
-                                : 'bg-purple-500 text-white border-purple-400 shadow-purple-500/20'
+                                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                                : 'bg-purple-500/20 text-purple-400 border border-purple-500/40'
                             }`}>
-                              MS: {match.msScore}
+                              {is1to2 ? '🟢 1\'DEN 2 (1/2)' : '🟣 2\'DEN 1 (2/1)'}
+                            </span>
+                            <span className={`text-xs font-semibold ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                              {match.date} • {match.time}
                             </span>
                           </div>
-                          <span className="text-[10px] font-bold text-amber-400/90 tracking-wide uppercase">
-                            {is1to2 ? 'İY Önde Kapattı ➡️ Maçı Kaybetti' : 'İY Geride Kapattı ➡️ Maçı Kazandı'}
-                          </span>
+
+                          <div className="text-right">
+                            <span className={`text-[11px] font-black uppercase tracking-wider truncate block max-w-[170px] ${
+                              isDark ? 'text-sky-400' : 'text-sky-600'
+                            }`} title={match.league}>
+                              {match.league}
+                            </span>
+                          </div>
                         </div>
+
+                        {/* Teams & Score Flip Section */}
+                        <div className="flex items-center justify-between gap-4 my-4 p-4 rounded-xl bg-black/20 dark:bg-black/40 border border-white/5">
+                          <div className="flex-1 space-y-1">
+                            <div className={`text-sm md:text-base font-black truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                              {match.homeTeam}
+                            </div>
+                            <div className={`text-sm md:text-base font-black truncate ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                              {match.awayTeam}
+                            </div>
+                          </div>
+
+                          {/* Visual Score Flip Badge */}
+                          <div className="flex flex-col items-center gap-1.5 shrink-0">
+                            <div className="flex items-center gap-2">
+                              <span className="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-bold text-xs border border-slate-700">
+                                İY: {match.iyScore}
+                              </span>
+                              <ArrowRightLeft className={`w-4 h-4 ${is1to2 ? 'text-emerald-400' : 'text-purple-400'} animate-pulse`} />
+                              <span className={`px-3 py-1 rounded-lg font-black text-sm border shadow-md ${
+                                is1to2
+                                  ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-emerald-500/20'
+                                  : 'bg-purple-500 text-white border-purple-400 shadow-purple-500/20'
+                              }`}>
+                                MS: {match.msScore}
+                              </span>
+                            </div>
+                            <span className="text-[10px] font-bold text-amber-400/90 tracking-wide uppercase">
+                              {is1to2 ? 'İY Önde Kapattı ➡️ Maçı Kaybetti' : 'İY Geride Kapattı ➡️ Maçı Kazandı'}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Odds Section */}
+                        <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/5 text-center">
+                          <div className={`p-2 rounded-lg border ${
+                            isDark ? 'bg-amber-500/10 border-amber-500/30' : 'bg-amber-50 border-amber-200'
+                          }`}>
+                            <span className="block text-[10px] font-bold text-amber-500 uppercase">
+                              {is1to2 ? '1/2 Oranı' : '2/1 Oranı'}
+                            </span>
+                            <span className="text-sm font-black text-amber-400">
+                              {match.odds.turnaroundOdd}
+                            </span>
+                          </div>
+
+                          <div className={`p-2 rounded-lg border ${
+                            isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
+                          }`}>
+                            <span className="block text-[10px] font-bold text-slate-500">MS 1</span>
+                            <span className={`text-xs font-black ${isDark ? 'text-white' : 'text-slate-800'}`}>
+                              {match.odds.ms1}
+                            </span>
+                          </div>
+
+                          <div className={`p-2 rounded-lg border ${
+                            isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
+                          }`}>
+                            <span className="block text-[10px] font-bold text-slate-500">MS X</span>
+                            <span className={`text-xs font-black ${isDark ? 'text-white' : 'text-slate-800'}`}>
+                              {match.odds.msX}
+                            </span>
+                          </div>
+
+                          <div className={`p-2 rounded-lg border ${
+                            isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
+                          }`}>
+                            <span className="block text-[10px] font-bold text-slate-500">MS 2</span>
+                            <span className={`text-xs font-black ${isDark ? 'text-white' : 'text-slate-800'}`}>
+                              {match.odds.ms2}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Details / Note Footer */}
+                        {match.details?.note && (
+                          <div className={`mt-3 pt-2 text-xs flex items-center gap-2 border-t border-dashed ${
+                            isDark ? 'border-slate-800 text-slate-400' : 'border-slate-200 text-slate-600'
+                          }`}>
+                            <span className="text-amber-400">⚡</span>
+                            <span className="italic">{match.details.note}</span>
+                          </div>
+                        )}
                       </div>
+                    );
+                  })}
+                </div>
 
-                      {/* Odds Section */}
-                      <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/5 text-center">
-                        <div className={`p-2 rounded-lg border ${
-                          isDark ? 'bg-amber-500/10 border-amber-500/30' : 'bg-amber-50 border-amber-200'
-                        }`}>
-                          <span className="block text-[10px] font-bold text-amber-500 uppercase">
-                            {is1to2 ? '1/2 Oranı' : '2/1 Oranı'}
-                          </span>
-                          <span className="text-sm font-black text-amber-400">
-                            {match.odds.turnaroundOdd}
-                          </span>
-                        </div>
+                {/* Pagination Bar */}
+                {totalTurnaroundPages > 1 && (
+                  <div className={`flex items-center justify-between p-4 rounded-2xl border ${
+                    isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+                  }`}>
+                    <button
+                      onClick={() => setTurnaroundPage(p => Math.max(1, p - 1))}
+                      disabled={turnaroundPage === 1}
+                      className="px-4 py-2 rounded-xl text-xs font-bold border transition disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed flex items-center gap-1.5"
+                    >
+                      ← Önceki Sayfa
+                    </button>
 
-                        <div className={`p-2 rounded-lg border ${
-                          isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
-                        }`}>
-                          <span className="block text-[10px] font-bold text-slate-500">MS 1</span>
-                          <span className={`text-xs font-black ${isDark ? 'text-white' : 'text-slate-800'}`}>
-                            {match.odds.ms1}
-                          </span>
-                        </div>
-
-                        <div className={`p-2 rounded-lg border ${
-                          isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
-                        }`}>
-                          <span className="block text-[10px] font-bold text-slate-500">MS X</span>
-                          <span className={`text-xs font-black ${isDark ? 'text-white' : 'text-slate-800'}`}>
-                            {match.odds.msX}
-                          </span>
-                        </div>
-
-                        <div className={`p-2 rounded-lg border ${
-                          isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
-                        }`}>
-                          <span className="block text-[10px] font-bold text-slate-500">MS 2</span>
-                          <span className={`text-xs font-black ${isDark ? 'text-white' : 'text-slate-800'}`}>
-                            {match.odds.ms2}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Details / Note Footer */}
-                      {match.details?.note && (
-                        <div className={`mt-3 pt-2 text-xs flex items-center gap-2 border-t border-dashed ${
-                          isDark ? 'border-slate-800 text-slate-400' : 'border-slate-200 text-slate-600'
-                        }`}>
-                          <span className="text-amber-400">⚡</span>
-                          <span className="italic">{match.details.note}</span>
-                        </div>
-                      )}
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: Math.min(7, totalTurnaroundPages) }, (_, i) => {
+                        let pageNum = i + 1;
+                        if (totalTurnaroundPages > 7 && turnaroundPage > 4) {
+                          pageNum = turnaroundPage - 3 + i;
+                          if (pageNum > totalTurnaroundPages) pageNum = totalTurnaroundPages - (6 - i);
+                        }
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => setTurnaroundPage(pageNum)}
+                            className={`w-8 h-8 rounded-lg text-xs font-bold transition cursor-pointer ${
+                              turnaroundPage === pageNum
+                                ? 'bg-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/20'
+                                : isDark
+                                  ? 'hover:bg-slate-800 text-slate-400'
+                                  : 'hover:bg-slate-100 text-slate-600'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
                     </div>
-                  );
-                })}
-              </div>
+
+                    <button
+                      onClick={() => setTurnaroundPage(p => Math.min(totalTurnaroundPages, p + 1))}
+                      disabled={turnaroundPage === totalTurnaroundPages}
+                      className="px-4 py-2 rounded-xl text-xs font-bold border transition disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed flex items-center gap-1.5"
+                    >
+                      Sonraki Sayfa →
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className={`text-center py-16 rounded-2xl border ${isDark ? 'bg-slate-900/30 border-slate-800' : 'bg-white border-slate-200'}`}>
                 <ArrowRightLeft className="w-10 h-10 text-slate-500 mx-auto mb-3 opacity-50" />
