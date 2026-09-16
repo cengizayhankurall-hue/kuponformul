@@ -1,26 +1,21 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import Link from 'next/link';
 import {
   Flame,
   AlertTriangle,
   Search,
-  Filter,
   Calendar,
   Zap,
   TrendingDown,
   BarChart3,
   Sun,
   Moon,
-  ChevronRight,
   ShieldAlert,
-  ArrowRightLeft,
-  X,
-  Sparkles
+  X
 } from 'lucide-react';
 
-interface BustedMatch {
+interface FavoriteMatch {
   id: string;
   date: string;
   time: string;
@@ -31,8 +26,9 @@ interface BustedMatch {
   iyScore: string;
   favoriteType: 'MS 1 (Ev Sahibi)' | 'MS 2 (Deplasman)';
   favoriteOdd: number;
+  isBusted: boolean;
   actualResult: string;
-  outcomeType: '0' | 'reverse';
+  outcomeType: '0' | 'reverse' | 'won';
   odds: {
     ms1: string;
     ms0: string;
@@ -47,26 +43,17 @@ interface BustedMatch {
   };
 }
 
-interface SummaryData {
-  totalMatchesInPool: number;
-  totalFavoritesCount: number;
-  totalBustedCount: number;
-  overallBustedRate: string;
-  minOdd: number;
-  maxOdd: number;
-  dateStats: Record<string, { total: number; favorites: number; busted: number }>;
-}
-
 export default function PatlayanOranlarPage() {
   const [isDark, setIsDark] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [summary, setSummary] = useState<SummaryData | null>(null);
-  const [matches, setMatches] = useState<BustedMatch[]>([]);
+  const [allFavorites, setAllFavorites] = useState<FavoriteMatch[]>([]);
+  const [datePoolCounts, setDatePoolCounts] = useState<Record<string, number>>({});
+  const [totalPoolCount, setTotalPoolCount] = useState<number>(0);
   
   // Filters
   const [selectedDate, setSelectedDate] = useState<string>('all');
   const [outcomeFilter, setOutcomeFilter] = useState<'all' | '0' | 'reverse'>('all');
-  const [oddRangeFilter, setOddRangeFilter] = useState<'all' | 'ultra' | 'mid'>('all'); // all: 1.05-1.45, ultra: 1.05-1.25, mid: 1.25-1.45
+  const [oddRangeFilter, setOddRangeFilter] = useState<'all' | 'ultra' | 'mid'>('all'); // all: 1.05-1.45, ultra: 1.05-1.25, mid: 1.26-1.45
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLeague, setSelectedLeague] = useState<string>('all');
 
@@ -77,11 +64,12 @@ export default function PatlayanOranlarPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/patlayan-oranlar?dates=2026-09-11,2026-09-12,2026-09-13&min_odd=1.05&max_odd=1.45');
+      const res = await fetch('/api/patlayan-oranlar?dates=2026-09-11,2026-09-12,2026-09-13');
       const data = await res.json();
       if (data.success) {
-        setSummary(data.summary);
-        setMatches(data.matches || []);
+        setAllFavorites(data.favorites || []);
+        setDatePoolCounts(data.datePoolCounts || {});
+        setTotalPoolCount(data.totalMatchesInPool || 0);
       }
     } catch (err) {
       console.error('Veri çekme hatası:', err);
@@ -97,15 +85,61 @@ export default function PatlayanOranlarPage() {
   // Distinct leagues for filter
   const availableLeagues = useMemo(() => {
     const set = new Set<string>();
-    matches.forEach(m => {
+    allFavorites.forEach(m => {
       if (m.league) set.add(m.league);
     });
     return ['all', ...Array.from(set).sort()];
-  }, [matches]);
+  }, [allFavorites]);
 
-  // Filtered matches
-  const filteredMatches = useMemo(() => {
-    return matches.filter(m => {
+  // DYNAMIC STATS COMPUTATION BASED ON ACTIVE DATE & ODD RANGE FILTERS
+  const dynamicStats = useMemo(() => {
+    // 1. Taranan Toplam Maç (Pool)
+    let poolTotal = 0;
+    if (selectedDate === 'all') {
+      poolTotal = totalPoolCount;
+    } else {
+      poolTotal = datePoolCounts[selectedDate] || 0;
+    }
+
+    // 2. Filter matches by Date and Odd Range
+    const matchingFavorites = allFavorites.filter(m => {
+      if (selectedDate !== 'all' && m.date !== selectedDate) return false;
+      if (oddRangeFilter === 'ultra' && (m.favoriteOdd < 1.05 || m.favoriteOdd > 1.25)) return false;
+      if (oddRangeFilter === 'mid' && (m.favoriteOdd <= 1.25 || m.favoriteOdd > 1.45)) return false;
+      return true;
+    });
+
+    const totalFavCount = matchingFavorites.length;
+    const bustedFavorites = matchingFavorites.filter(m => m.isBusted);
+    const totalBustedCount = bustedFavorites.length;
+    const bustedRate = totalFavCount > 0 ? ((totalBustedCount / totalFavCount) * 100).toFixed(1) : '0';
+
+    let rangeLabel = '1.05 - 1.45';
+    if (oddRangeFilter === 'ultra') rangeLabel = '1.05 - 1.25 (Ağır Favori)';
+    if (oddRangeFilter === 'mid') rangeLabel = '1.26 - 1.45';
+
+    let dateLabel = 'Tüm Günler (11-13 Eylül)';
+    if (selectedDate === '2026-09-11') dateLabel = '11 Eylül (Cuma)';
+    if (selectedDate === '2026-09-12') dateLabel = '12 Eylül (Cumartesi)';
+    if (selectedDate === '2026-09-13') dateLabel = '13 Eylül (Pazar)';
+
+    return {
+      poolTotal,
+      totalFavCount,
+      totalBustedCount,
+      bustedRate,
+      rangeLabel,
+      dateLabel,
+      favPercentage: poolTotal > 0 ? Math.round((totalFavCount / poolTotal) * 100) : 0
+    };
+  }, [allFavorites, selectedDate, oddRangeFilter, totalPoolCount, datePoolCounts]);
+
+  // Filtered Busted Matches for the Card List
+  const filteredBustedMatches = useMemo(() => {
+    return allFavorites.filter(m => {
+      // Must be busted
+      if (!m.isBusted) return false;
+
       // Date filter
       if (selectedDate !== 'all' && m.date !== selectedDate) return false;
 
@@ -130,7 +164,27 @@ export default function PatlayanOranlarPage() {
 
       return true;
     });
-  }, [matches, selectedDate, outcomeFilter, oddRangeFilter, selectedLeague, searchTerm]);
+  }, [allFavorites, selectedDate, outcomeFilter, oddRangeFilter, selectedLeague, searchTerm]);
+
+  // Counts for Date pills based on current oddRangeFilter
+  const datePillCounts = useMemo(() => {
+    const calcForDate = (d: string) => {
+      return allFavorites.filter(m => {
+        if (!m.isBusted) return false;
+        if (d !== 'all' && m.date !== d) return false;
+        if (oddRangeFilter === 'ultra' && (m.favoriteOdd < 1.05 || m.favoriteOdd > 1.25)) return false;
+        if (oddRangeFilter === 'mid' && (m.favoriteOdd <= 1.25 || m.favoriteOdd > 1.45)) return false;
+        return true;
+      }).length;
+    };
+
+    return {
+      all: calcForDate('all'),
+      '2026-09-11': calcForDate('2026-09-11'),
+      '2026-09-12': calcForDate('2026-09-12'),
+      '2026-09-13': calcForDate('2026-09-13'),
+    };
+  }, [allFavorites, oddRangeFilter]);
 
   return (
     <div className={`min-h-screen transition-colors duration-200 ${isDark ? 'bg-[#0B0F17] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
@@ -177,54 +231,59 @@ export default function PatlayanOranlarPage() {
             </div>
           </div>
 
-          {/* STATS OVERVIEW CARDS */}
-          {summary && (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-8">
-              <div className={`p-4 rounded-2xl border ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'}`}>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-400">Taranan Toplam Maç</span>
-                  <BarChart3 className="w-4 h-4 text-sky-400" />
-                </div>
-                <div className="text-2xl md:text-3xl font-black mt-2 text-sky-400">
-                  {summary.totalMatchesInPool} <span className="text-xs font-medium text-slate-400">Maç</span>
-                </div>
-                <div className="text-[11px] text-slate-500 mt-1">11-13 Eylül Bülteni</div>
+          {/* STATS OVERVIEW CARDS (DINAMIK OLARAK GÜNCELLENIR) */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-8">
+            
+            {/* Card 1: Taranan Toplam Maç */}
+            <div className={`p-4 rounded-2xl border transition-all ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'}`}>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-400">Taranan Toplam Maç</span>
+                <BarChart3 className="w-4 h-4 text-sky-400" />
               </div>
-
-              <div className={`p-4 rounded-2xl border ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'}`}>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-amber-400">Favori Maç (1.05 - 1.45)</span>
-                  <Zap className="w-4 h-4 text-amber-400" />
-                </div>
-                <div className="text-2xl md:text-3xl font-black mt-2 text-amber-400">
-                  {summary.totalFavoritesCount} <span className="text-xs font-medium text-slate-400">Maç</span>
-                </div>
-                <div className="text-[11px] text-slate-500 mt-1">Toplamın %{Math.round((summary.totalFavoritesCount / summary.totalMatchesInPool) * 100)}'i</div>
+              <div className="text-2xl md:text-3xl font-black mt-2 text-sky-400">
+                {dynamicStats.poolTotal} <span className="text-xs font-medium text-slate-400">Maç</span>
               </div>
+              <div className="text-[11px] text-slate-500 mt-1 truncate">{dynamicStats.dateLabel}</div>
+            </div>
 
-              <div className={`p-4 rounded-2xl border ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'}`}>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-rose-400">Patlayan Favoriler</span>
-                  <TrendingDown className="w-4 h-4 text-rose-400" />
-                </div>
-                <div className="text-2xl md:text-3xl font-black mt-2 text-rose-400">
-                  {summary.totalBustedCount} <span className="text-xs font-medium text-slate-400">Maç</span>
-                </div>
-                <div className="text-[11px] text-slate-500 mt-1">Berabere veya Sürpriz</div>
+            {/* Card 2: Favori Maç */}
+            <div className={`p-4 rounded-2xl border transition-all ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'}`}>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-amber-400 truncate">Favori ({dynamicStats.rangeLabel})</span>
+                <Zap className="w-4 h-4 text-amber-400 shrink-0" />
               </div>
+              <div className="text-2xl md:text-3xl font-black mt-2 text-amber-400">
+                {dynamicStats.totalFavCount} <span className="text-xs font-medium text-slate-400">Maç</span>
+              </div>
+              <div className="text-[11px] text-slate-500 mt-1">Havuzun %{dynamicStats.favPercentage}'si</div>
+            </div>
 
-              <div className={`p-4 rounded-2xl border ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'}`}>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-purple-400">Genel Patlama Oranı</span>
-                  <AlertTriangle className="w-4 h-4 text-purple-400" />
-                </div>
-                <div className="text-2xl md:text-3xl font-black mt-2 text-purple-400">
-                  %{summary.overallBustedRate}
-                </div>
-                <div className="text-[11px] text-slate-500 mt-1">Her 3 favoriden 1'i patladı</div>
+            {/* Card 3: Patlayan Favoriler */}
+            <div className={`p-4 rounded-2xl border transition-all ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'}`}>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-rose-400">Patlayan Favoriler</span>
+                <TrendingDown className="w-4 h-4 text-rose-400" />
+              </div>
+              <div className="text-2xl md:text-3xl font-black mt-2 text-rose-400">
+                {dynamicStats.totalBustedCount} <span className="text-xs font-medium text-slate-400">Maç</span>
+              </div>
+              <div className="text-[11px] text-slate-500 mt-1">Berabere veya Sürpriz</div>
+            </div>
+
+            {/* Card 4: Genel Patlama Oranı */}
+            <div className={`p-4 rounded-2xl border transition-all ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'}`}>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-purple-400">Filtre Patlama Oranı</span>
+                <AlertTriangle className="w-4 h-4 text-purple-400" />
+              </div>
+              <div className="text-2xl md:text-3xl font-black mt-2 text-purple-400">
+                %{dynamicStats.bustedRate}
+              </div>
+              <div className="text-[11px] text-slate-500 mt-1">
+                {dynamicStats.totalFavCount > 0 ? `${dynamicStats.totalFavCount} favoriden ${dynamicStats.totalBustedCount}'i patladı` : 'Veri yok'}
               </div>
             </div>
-          )}
+          </div>
         </div>
 
         {/* CONTROLS & FILTER BAR */}
@@ -258,10 +317,10 @@ export default function PatlayanOranlarPage() {
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             <span className="text-xs font-bold text-slate-500 shrink-0 mr-1">Tarih:</span>
             {[
-              { id: 'all', label: 'Tüm Günler (3 Gün)', count: matches.length },
-              { id: '2026-09-11', label: '11 Eylül (Cuma)', count: summary?.dateStats['2026-09-11']?.busted || 0 },
-              { id: '2026-09-12', label: '12 Eylül (Cumartesi)', count: summary?.dateStats['2026-09-12']?.busted || 0 },
-              { id: '2026-09-13', label: '13 Eylül (Pazar)', count: summary?.dateStats['2026-09-13']?.busted || 0 },
+              { id: 'all', label: 'Tüm Günler (3 Gün)', count: datePillCounts.all },
+              { id: '2026-09-11', label: '11 Eylül (Cuma)', count: datePillCounts['2026-09-11'] },
+              { id: '2026-09-12', label: '12 Eylül (Cumartesi)', count: datePillCounts['2026-09-12'] },
+              { id: '2026-09-13', label: '13 Eylül (Pazar)', count: datePillCounts['2026-09-13'] },
             ].map(d => (
               <button
                 key={d.id}
@@ -285,7 +344,7 @@ export default function PatlayanOranlarPage() {
             ))}
           </div>
 
-          {/* Outcome Filter (0 Beraberlik / Ters Galibiyet) & Odd Range */}
+          {/* Outcome Filter & Odd Range */}
           <div className="flex flex-wrap items-center gap-3">
             {/* Outcome Filter */}
             <div className="flex items-center gap-1.5 bg-slate-900/40 dark:bg-slate-900/40 p-1 rounded-xl border border-slate-800">
@@ -322,7 +381,7 @@ export default function PatlayanOranlarPage() {
               </button>
             </div>
 
-            {/* Odd Range Filter */}
+            {/* Odd Range Filter (Seçilince üstteki istatistikler ve liste dinamik değişir) */}
             <div className="flex items-center gap-1.5 bg-slate-900/40 dark:bg-slate-900/40 p-1 rounded-xl border border-slate-800">
               <span className="text-[11px] font-bold text-slate-500 px-2">Oran Aralığı:</span>
               <button
@@ -381,14 +440,16 @@ export default function PatlayanOranlarPage() {
             <div className="w-12 h-12 border-4 border-rose-500/20 border-t-rose-500 rounded-full animate-spin mb-4" />
             <span className="text-sm font-bold text-slate-400">Patlayan favori maçlar taranıyor...</span>
           </div>
-        ) : filteredMatches.length > 0 ? (
+        ) : filteredBustedMatches.length > 0 ? (
           <>
             <div className="flex items-center justify-between text-xs font-bold text-slate-400 mb-4 px-1">
-              <span>Toplam <strong className="text-rose-400">{filteredMatches.length}</strong> patlayan maç listeleniyor</span>
+              <span>
+                Filtreye uygun <strong className="text-rose-400">{filteredBustedMatches.length}</strong> patlayan maç listeleniyor
+              </span>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {filteredMatches.map((m) => {
+              {filteredBustedMatches.map((m) => {
                 const isHomeFav = m.favoriteType.includes('Ev Sahibi');
                 const isDraw = m.outcomeType === '0';
 
