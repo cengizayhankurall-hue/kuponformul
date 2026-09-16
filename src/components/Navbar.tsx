@@ -80,6 +80,7 @@ export default function Navbar() {
     { name: 'Nasıl Kullanılır?', href: '/nasil-kullanilir' },
     { name: 'Spor Toto Formül', href: '/spor-toto' },
     { name: 'İddaa & Yapay Zeka', href: '/iddaa' },
+    { name: '💥 Patlayan Oranlar', href: '/patlayan-oranlar' },
     ...(user ? [
       { name: 'Canlı Takip', href: '/kupon-takip' },
       { name: 'Hesabım', href: '/dashboard' }
