@@ -7,14 +7,33 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const dateParam = searchParams.get('dates') || '2026-09-11,2026-09-12,2026-09-13';
-    const targetDates = dateParam.split(',').map(d => d.trim()).filter(Boolean);
+    const dateParam = searchParams.get('dates');
 
     if (!supabaseUrl || !supabaseKey) {
       return NextResponse.json({ error: 'Supabase credentials missing' }, { status: 500 });
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey);
+
+    let targetDates: string[] = [];
+
+    if (dateParam && dateParam !== 'latest_3_days' && dateParam !== 'all') {
+      targetDates = dateParam.split(',').map(d => d.trim()).filter(Boolean);
+    } else {
+      // Dinamik olarak veritabanındaki son 3 günü tespit et
+      const { data: latestDateRows, error: dateErr } = await supabase
+        .from('past_matches')
+        .select('match_date')
+        .order('match_date', { ascending: false })
+        .limit(2000);
+
+      if (dateErr) {
+        console.error('Tarih çekme hatası:', dateErr);
+      }
+
+      const distinct = Array.from(new Set(latestDateRows?.map(r => r.match_date).filter(Boolean) || []));
+      targetDates = distinct.slice(0, 3);
+    }
 
     let allMatches: any[] = [];
     let from = 0;
@@ -25,7 +44,7 @@ export async function GET(request: Request) {
         .from('past_matches')
         .select('*');
 
-      if (targetDates.length > 0 && !targetDates.includes('all')) {
+      if (targetDates.length > 0) {
         query = query.in('match_date', targetDates);
       }
 
@@ -43,11 +62,10 @@ export async function GET(request: Request) {
     }
 
     // Pool counts per date
-    const datePoolCounts: Record<string, number> = {
-      '2026-09-11': 0,
-      '2026-09-12': 0,
-      '2026-09-13': 0,
-    };
+    const datePoolCounts: Record<string, number> = {};
+    for (const d of targetDates) {
+      datePoolCounts[d] = 0;
+    }
 
     const favoriteMatches: any[] = [];
 
@@ -157,6 +175,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       success: true,
+      distinctDates: targetDates,
       totalMatchesInPool: allMatches.length,
       datePoolCounts,
       favorites: favoriteMatches
