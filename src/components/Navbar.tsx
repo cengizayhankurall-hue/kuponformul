@@ -81,6 +81,7 @@ export default function Navbar() {
     { name: 'Spor Toto Formül', href: '/spor-toto' },
     { name: 'İddaa & Yapay Zeka', href: '/iddaa' },
     { name: '💥 Patlayan Oranlar', href: '/patlayan-oranlar' },
+    { name: '🔥 4.5 & İki Yarı 1.5', href: '/gol-analizi' },
     ...(user ? [
       { name: 'Canlı Takip', href: '/kupon-takip' },
       { name: 'Hesabım', href: '/dashboard' }
