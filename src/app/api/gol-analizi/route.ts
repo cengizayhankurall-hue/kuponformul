@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import https from 'https';
+import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -46,9 +48,24 @@ interface CachedData {
   };
 }
 
-let cache: CachedData | null = null;
+const CACHE_FILE = path.join(process.cwd(), 'data', 'gol_analizi_cache.json');
+const CACHE_TTL_MS = 2.5 * 60 * 1000; // 2.5 dakika
+
+let memoryCache: CachedData | null = null;
 let inProgressPromise: Promise<CachedData> | null = null;
-const CACHE_TTL_MS = 3 * 60 * 1000; // 3 dakika cache
+
+// Try to load cache from disk on startup
+try {
+  if (fs.existsSync(CACHE_FILE)) {
+    const raw = fs.readFileSync(CACHE_FILE, 'utf-8');
+    const parsed = JSON.parse(raw);
+    if (parsed && Array.isArray(parsed.matches) && parsed.matches.length > 0) {
+      memoryCache = parsed;
+    }
+  }
+} catch (e) {
+  // ignore startup cache read error
+}
 
 const agent = new https.Agent({
   rejectUnauthorized: false,
@@ -76,7 +93,7 @@ function normalizeText(str: string): string {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
-function httpsGet(urlStr: string, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Programi', timeoutMs = 5000): Promise<{ status: number; text: string }> {
+function httpsGet(urlStr: string, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Programi', timeoutMs = 4500): Promise<{ status: number; text: string }> {
   return new Promise((resolve) => {
     try {
       const u = new URL(urlStr);
@@ -152,7 +169,7 @@ async function scanUpcomingMatches(): Promise<CachedData> {
 
   const seenEventIds = new Set<string>();
 
-  // 1. Fetch unplayed matches across dates
+  // 1. Fetch unplayed matches across dates in parallel
   await Promise.all(dates.map(async (dayStr) => {
     try {
       const url = `https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dayStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`;
@@ -196,7 +213,7 @@ async function scanUpcomingMatches(): Promise<CachedData> {
   }));
 
   const results: GoalMatch[] = [];
-  const concurrency = 25;
+  const concurrency = 30;
   let cursor = 0;
 
   async function worker() {
@@ -291,7 +308,7 @@ async function scanUpcomingMatches(): Promise<CachedData> {
           });
         }
       } catch (err) {
-        // match parse error, ignore and continue
+        // ignore and continue
       }
     }
   }
@@ -327,8 +344,27 @@ async function scanUpcomingMatches(): Promise<CachedData> {
     }
   };
 
-  cache = data;
+  memoryCache = data;
+
+  // Persist cache to disk for instant zero-lag loading across server restarts
+  try {
+    const dir = path.dirname(CACHE_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(CACHE_FILE, JSON.stringify(data), 'utf-8');
+  } catch (e) {
+    // ignore disk write errors
+  }
+
   return data;
+}
+
+// Background refresher helper
+function triggerBackgroundRefresh() {
+  if (!inProgressPromise) {
+    inProgressPromise = scanUpcomingMatches().finally(() => {
+      inProgressPromise = null;
+    });
+  }
 }
 
 export async function GET(request: Request) {
@@ -337,26 +373,39 @@ export async function GET(request: Request) {
     const forceRefresh = searchParams.get('refresh') === 'true';
     const now = Date.now();
 
-    let data: CachedData;
+    // 1. If we have memory cache:
+    if (memoryCache && memoryCache.matches.length > 0) {
+      const isStale = now - memoryCache.timestamp > CACHE_TTL_MS;
 
-    if (!forceRefresh && cache && (now - cache.timestamp < CACHE_TTL_MS) && cache.matches.length > 0) {
-      data = cache;
-    } else {
-      if (!inProgressPromise) {
-        inProgressPromise = scanUpcomingMatches().finally(() => {
-          inProgressPromise = null;
-        });
+      // If user forced refresh or cache is stale, trigger background refresh
+      if (forceRefresh || isStale) {
+        triggerBackgroundRefresh();
       }
-      data = await inProgressPromise;
+
+      // Return memory cache immediately with 0ms delay (Stale-While-Revalidate)
+      return NextResponse.json({
+        success: true,
+        cachedAt: new Date(memoryCache.timestamp).toISOString(),
+        isRefreshing: !!inProgressPromise,
+        stats: memoryCache.stats,
+        availableDates: memoryCache.dates,
+        availableLeagues: memoryCache.leagues,
+        matches: memoryCache.matches
+      });
     }
+
+    // 2. If no cache yet (first run ever), perform scan or wait for ongoing scan
+    triggerBackgroundRefresh();
+    const freshData = await inProgressPromise!;
 
     return NextResponse.json({
       success: true,
-      cachedAt: new Date(data.timestamp).toISOString(),
-      stats: data.stats,
-      availableDates: data.dates,
-      availableLeagues: data.leagues,
-      matches: data.matches
+      cachedAt: new Date(freshData.timestamp).toISOString(),
+      isRefreshing: false,
+      stats: freshData.stats,
+      availableDates: freshData.dates,
+      availableLeagues: freshData.leagues,
+      matches: freshData.matches
     });
   } catch (error: any) {
     console.error('Gol Analizi API Hatası:', error);

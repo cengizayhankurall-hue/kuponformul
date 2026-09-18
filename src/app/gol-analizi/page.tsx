@@ -56,6 +56,7 @@ interface ApiResponse {
   availableLeagues: string[];
   matches: GoalMatch[];
   cachedAt: string;
+  isRefreshing?: boolean;
 }
 
 function formatTurkishDate(dateStr: string) {
@@ -93,11 +94,21 @@ export default function GolAnaliziPage() {
 
   useEffect(() => {
     fetchData();
+
+    // 90 saniyede bir arka planda sessizce taze veriyi kontrol et
+    const interval = setInterval(() => {
+      fetchData(false, true);
+    }, 90000);
+
+    return () => clearInterval(interval);
   }, []);
 
-  const fetchData = async (forceRefresh = false) => {
-    if (forceRefresh) setRefreshing(true);
-    else setLoading(true);
+  const fetchData = async (forceRefresh = false, isSilent = false) => {
+    if (forceRefresh) {
+      setRefreshing(true);
+    } else if (!isSilent && !data) {
+      setLoading(true);
+    }
 
     try {
       const url = forceRefresh ? '/api/gol-analizi?refresh=true' : '/api/gol-analizi';
@@ -105,6 +116,13 @@ export default function GolAnaliziPage() {
       const json: ApiResponse = await res.json();
       if (json.success) {
         setData(json);
+
+        // Eğer sunucuda arka plan taraması devam ediyorsa, 8 saniye sonra güncel sonucu sessizce al
+        if (json.isRefreshing) {
+          setTimeout(() => {
+            fetchData(false, true);
+          }, 8000);
+        }
       }
     } catch (err) {
       console.error('Veri çekme hatası:', err);
