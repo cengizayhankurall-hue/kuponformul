@@ -46,5 +46,14 @@ Bu dosya, projenin mimari kararlarını, kullanıcı tercihlerini ve geliştiril
 - `src/app/api/fetch-matches/route.ts`: Toto maçları ve oran eşleştirme.
 - `src/app/api/fetch-iddaa/route.ts`: 7 günlük İddaa bülteni + Canlı veri çekme.
 - `src/app/api/analyze-odds/route.ts`: Geçmiş oran analiz motoru.
-- Kök dizindeki scriptler (`check_all_tables.js`, `sync_matches.js`, `fix_29.js` vb.): Manuel senkronizasyon araçları.
+- Kök dizindeki scriptler (`check_all_tables.js`, `sync_matches.js`, `sync_gol_analizi.js`, `fix_29.js` vb.): Manuel senkronizasyon araçları.
 - `.env.local`: Supabase bağlantı anahtarları.
+
+---
+
+## 5. GOL ANALİZİ MOTORU (`/gol-analizi`)
+- **Korelasyon:** `4.5 Üst` oranı ile `Her İki Yarı da 1.5 Üst` oran farkı (Fark $\le 0.20$, Fark $\le 0.10$, Eşit 0.00).
+- **Gelecek Bülten:** 7 günlük (`i=0..6`) geniş bülteni dinamik tarar, `DD.MM.YYYY` normalize tarih formatıyla sunar.
+- **Geçmiş Biten Maçlar:** Son 3-4 günün tamamlanan maçlarının skor ve ilk yarı istatistikleri doğrulaması (2.5 Üst, 3.5 Üst, 4.5 Üst, 2Y 1.5 Üst, KG Var başarı oranları).
+- **Önbellek & Canlılık:** Disk (`data/gol_analizi_cache.json` & `data/gol_analizi_past_cache.json`) ve bellek önbelleği. Eski tarihli önbellek tespiti yapıldığında otomatik canlı bülten yenileme.
+

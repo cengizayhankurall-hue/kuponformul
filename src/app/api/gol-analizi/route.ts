@@ -33,6 +33,18 @@ interface GoalMatch {
   };
 }
 
+interface PastGoalMatch extends GoalMatch {
+  score?: string;
+  halfTimeScore?: string;
+  status?: string;
+  totalGoals?: number;
+  isUst45Won?: boolean;
+  isHerIkiYari15UstWon?: boolean;
+  isUst25Won?: boolean;
+  isUst35Won?: boolean;
+  isKgVarWon?: boolean;
+}
+
 interface CachedData {
   timestamp: number;
   unplayedCount: number;
@@ -50,7 +62,10 @@ interface CachedData {
 
 const CACHE_FILE = path.join(process.cwd(), 'data', 'gol_analizi_cache.json');
 const PUBLIC_CACHE_FILE = path.join(process.cwd(), 'public', 'data', 'gol_analizi_cache.json');
-const CACHE_TTL_MS = 2.5 * 60 * 1000; // 2.5 dakika
+const PAST_CACHE_FILE = path.join(process.cwd(), 'data', 'gol_analizi_past_cache.json');
+const PUBLIC_PAST_CACHE_FILE = path.join(process.cwd(), 'public', 'data', 'gol_analizi_past_cache.json');
+
+const CACHE_TTL_MS = 3 * 60 * 1000; // 3 dakika
 
 let memoryCache: CachedData | null = null;
 let inProgressPromise: Promise<CachedData> | null = null;
@@ -75,8 +90,19 @@ function loadCacheFromDisk(): CachedData | null {
   return null;
 }
 
-// Initial check on file load
-memoryCache = loadCacheFromDisk();
+function loadPastCacheFromDisk(): any {
+  try {
+    if (fs.existsSync(PAST_CACHE_FILE)) {
+      const raw = fs.readFileSync(PAST_CACHE_FILE, 'utf-8');
+      return JSON.parse(raw);
+    }
+    if (fs.existsSync(PUBLIC_PAST_CACHE_FILE)) {
+      const raw = fs.readFileSync(PUBLIC_PAST_CACHE_FILE, 'utf-8');
+      return JSON.parse(raw);
+    }
+  } catch (e) {}
+  return null;
+}
 
 const agent = new https.Agent({
   rejectUnauthorized: false,
@@ -148,9 +174,14 @@ const cleanOdds = (val: any) => {
   return String(val).replace(',', '.');
 };
 
+function formatDateStr(dStr: string): string {
+  if (!dStr) return '';
+  return dStr.replace(/\//g, '.').trim();
+}
+
 async function scanUpcomingMatches(): Promise<CachedData> {
   const dates: string[] = [];
-  for (let i = 0; i <= 3; i++) {
+  for (let i = 0; i <= 6; i++) {
     const d = new Date();
     d.setDate(d.getDate() + i);
     const dd = String(d.getDate()).padStart(2, '0');
@@ -180,7 +211,7 @@ async function scanUpcomingMatches(): Promise<CachedData> {
 
   const seenEventIds = new Set<string>();
 
-  // 1. Fetch unplayed matches across dates in parallel
+  // 1. Fetch unplayed matches across 7 dates in parallel
   await Promise.all(dates.map(async (dayStr) => {
     try {
       const url = `https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dayStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`;
@@ -195,6 +226,7 @@ async function scanUpcomingMatches(): Promise<CachedData> {
               const eventId = String(m[50]);
               if (!seenEventIds.has(eventId)) {
                 seenEventIds.add(eventId);
+                const rawDate = String(m[7] || dayStr).trim();
                 unplayedMatches.push({
                   id: String(m[0]),
                   matchId: String(m[0]),
@@ -202,7 +234,7 @@ async function scanUpcomingMatches(): Promise<CachedData> {
                   homeTeam: String(m[1]).trim(),
                   awayTeam: String(m[3]).trim(),
                   league: String(m[26] || 'Diğer').trim(),
-                  date: String(m[7] || dayStr).trim(),
+                  date: formatDateStr(rawDate),
                   time: String(m[6] || '').trim(),
                   code: String(m[49] || m[4] || String(m[0]).slice(0, 5)),
                   ms1: cleanOdds(m[16]),
@@ -286,7 +318,6 @@ async function scanUpcomingMatches(): Promise<CachedData> {
           }
         });
 
-        // Both odds must exist
         if (odd45Ust !== null && oddHerIkiYari15Ust !== null) {
           const diff = Math.abs(odd45Ust - oddHerIkiYari15Ust);
           const diffRounded = parseFloat(diff.toFixed(2));
@@ -330,10 +361,23 @@ async function scanUpcomingMatches(): Promise<CachedData> {
   // Sort by lowest diff first, then date & time
   results.sort((a, b) => {
     if (a.diff !== b.diff) return a.diff - b.diff;
+    if (a.date !== b.date) {
+      const [d1, m1, y1] = a.date.split('.').map(Number);
+      const [d2, m2, y2] = b.date.split('.').map(Number);
+      const t1 = new Date(y1, m1 - 1, d1).getTime();
+      const t2 = new Date(y2, m2 - 1, d2).getTime();
+      if (t1 !== t2) return t1 - t2;
+    }
     return a.time.localeCompare(b.time);
   });
 
   const availableDates = Array.from(new Set(results.map(m => m.date).filter(Boolean)));
+  availableDates.sort((a, b) => {
+    const [d1, m1, y1] = a.split('.').map(Number);
+    const [d2, m2, y2] = b.split('.').map(Number);
+    return new Date(y1, m1 - 1, d1).getTime() - new Date(y2, m2 - 1, d2).getTime();
+  });
+
   const availableLeagues = Array.from(new Set(results.map(m => m.league).filter(Boolean))).sort();
 
   const diff020Count = results.filter(m => m.diff <= 0.20).length;
@@ -361,11 +405,11 @@ async function scanUpcomingMatches(): Promise<CachedData> {
   try {
     const dir = path.dirname(CACHE_FILE);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(CACHE_FILE, JSON.stringify(data), 'utf-8');
+    fs.writeFileSync(CACHE_FILE, JSON.stringify(data, null, 2), 'utf-8');
 
     const pubDir = path.dirname(PUBLIC_CACHE_FILE);
     if (!fs.existsSync(pubDir)) fs.mkdirSync(pubDir, { recursive: true });
-    fs.writeFileSync(PUBLIC_CACHE_FILE, JSON.stringify(data), 'utf-8');
+    fs.writeFileSync(PUBLIC_CACHE_FILE, JSON.stringify(data, null, 2), 'utf-8');
   } catch (e) {
     // ignore disk write errors
   }
@@ -388,33 +432,64 @@ export async function GET(request: Request) {
     const forceRefresh = searchParams.get('refresh') === 'true';
     const now = Date.now();
 
-    // Check disk if memoryCache is empty
+    // Check disk if memoryCache is empty or outdated
     if (!memoryCache) {
       memoryCache = loadCacheFromDisk();
     }
 
-    // 1. If we have cache:
-    if (memoryCache && memoryCache.matches && memoryCache.matches.length > 0) {
-      const isStale = now - memoryCache.timestamp > CACHE_TTL_MS;
+    const pastData = loadPastCacheFromDisk();
 
-      // If user forced refresh or cache is stale, trigger background refresh asynchronously
-      if (forceRefresh || isStale) {
-        triggerBackgroundRefresh();
-      }
-
-      // Return cache immediately (0ms response)
+    // If forceRefresh requested, await fresh scan
+    if (forceRefresh) {
+      triggerBackgroundRefresh();
+      const freshData = await inProgressPromise!;
       return NextResponse.json({
         success: true,
-        cachedAt: new Date(memoryCache.timestamp).toISOString(),
-        isRefreshing: !!inProgressPromise,
-        stats: memoryCache.stats,
-        availableDates: memoryCache.dates,
-        availableLeagues: memoryCache.leagues,
-        matches: memoryCache.matches
+        cachedAt: new Date(freshData.timestamp).toISOString(),
+        isRefreshing: false,
+        stats: freshData.stats,
+        availableDates: freshData.dates,
+        availableLeagues: freshData.leagues,
+        matches: freshData.matches,
+        pastStats: pastData?.stats?.overallRates,
+        pastMatches: pastData?.matches || []
       });
     }
 
-    // 2. If no cache yet (first run ever), perform scan
+    // 1. If we have fresh valid cache:
+    if (memoryCache && memoryCache.matches && memoryCache.matches.length > 0) {
+      const isStale = now - memoryCache.timestamp > CACHE_TTL_MS;
+
+      // Check if cache contains current or upcoming dates
+      const today = new Date();
+      const todayStr = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`;
+      const hasCurrentOrFuture = (memoryCache.dates || []).some(d => {
+        const [day, month, year] = d.split('.').map(Number);
+        const matchTime = new Date(year, month - 1, day, 23, 59, 59).getTime();
+        return matchTime >= today.setHours(0, 0, 0, 0);
+      });
+
+      if (isStale || !hasCurrentOrFuture) {
+        triggerBackgroundRefresh();
+      }
+
+      // If cache has upcoming dates, return immediately
+      if (hasCurrentOrFuture) {
+        return NextResponse.json({
+          success: true,
+          cachedAt: new Date(memoryCache.timestamp).toISOString(),
+          isRefreshing: !!inProgressPromise,
+          stats: memoryCache.stats,
+          availableDates: memoryCache.dates,
+          availableLeagues: memoryCache.leagues,
+          matches: memoryCache.matches,
+          pastStats: pastData?.stats?.overallRates,
+          pastMatches: pastData?.matches || []
+        });
+      }
+    }
+
+    // 2. If no valid cache or cache only had old past dates, perform scan and await
     triggerBackgroundRefresh();
     const freshData = await inProgressPromise!;
 
@@ -425,7 +500,9 @@ export async function GET(request: Request) {
       stats: freshData.stats,
       availableDates: freshData.dates,
       availableLeagues: freshData.leagues,
-      matches: freshData.matches
+      matches: freshData.matches,
+      pastStats: pastData?.stats?.overallRates,
+      pastMatches: pastData?.matches || []
     });
   } catch (error: any) {
     console.error('Gol Analizi API Hatası:', error);
