@@ -57,11 +57,13 @@ interface PastGoalMatch extends GoalMatch {
   halfTimeScore?: string;
   status?: string;
   totalGoals?: number;
-  isUst45Won?: boolean;
-  isHerIkiYari15UstWon?: boolean;
   isUst25Won?: boolean;
   isUst35Won?: boolean;
+  isUst45Won?: boolean;
+  isUst55Won?: boolean;
+  isUst65Won?: boolean;
   isKgVarWon?: boolean;
+  isHerIkiYari15UstWon?: boolean;
 }
 
 interface ApiResponse {
@@ -84,6 +86,10 @@ interface ApiResponse {
     ust35Rate: number;
     ust45Won: number;
     ust45Rate: number;
+    ust55Won?: number;
+    ust55Rate?: number;
+    ust65Won?: number;
+    ust65Rate?: number;
     herIkiYari15Won: number;
     herIkiYari15Rate: number;
     kgVarWon: number;
@@ -236,7 +242,7 @@ export default function GolAnaliziPage() {
     });
   }, [data, diffFilter, selectedPastDate, selectedLeague, searchTerm]);
 
-  // Dynamic success rates for filtered past matches
+  // Dynamic success rates for filtered past matches (2.5, 3.5, 4.5, 5.5, +6 goals, KG Var, etc.)
   const pastStatsDynamic = useMemo(() => {
     const list = filteredPastMatches;
     const total = list.length;
@@ -249,17 +255,23 @@ export default function GolAnaliziPage() {
         ust35Rate: 0,
         ust45Won: 0,
         ust45Rate: 0,
+        ust55Won: 0,
+        ust55Rate: 0,
+        ust65Won: 0,
+        ust65Rate: 0,
         herIkiYari15Won: 0,
         herIkiYari15Rate: 0,
         kgVarWon: 0,
         kgVarRate: 0,
-        avgGoals: 0
+        avgGoals: '0.00'
       };
     }
 
-    const ust25Won = list.filter(m => m.isUst25Won).length;
-    const ust35Won = list.filter(m => m.isUst35Won).length;
-    const ust45Won = list.filter(m => m.isUst45Won).length;
+    const ust25Won = list.filter(m => (m.totalGoals || 0) >= 3).length;
+    const ust35Won = list.filter(m => (m.totalGoals || 0) >= 4).length;
+    const ust45Won = list.filter(m => (m.totalGoals || 0) >= 5).length;
+    const ust55Won = list.filter(m => (m.totalGoals || 0) >= 6).length;
+    const ust65Won = list.filter(m => (m.totalGoals || 0) >= 7).length;
     const herIkiYari15Won = list.filter(m => m.isHerIkiYari15UstWon).length;
     const kgVarWon = list.filter(m => m.isKgVarWon).length;
     const totalGoals = list.reduce((sum, m) => sum + (m.totalGoals || 0), 0);
@@ -272,11 +284,15 @@ export default function GolAnaliziPage() {
       ust35Rate: Math.round((ust35Won / total) * 100),
       ust45Won,
       ust45Rate: Math.round((ust45Won / total) * 100),
+      ust55Won,
+      ust55Rate: Math.round((ust55Won / total) * 100),
+      ust65Won,
+      ust65Rate: Math.round((ust65Won / total) * 100),
       herIkiYari15Won,
       herIkiYari15Rate: Math.round((herIkiYari15Won / total) * 100),
       kgVarWon,
       kgVarRate: Math.round((kgVarWon / total) * 100),
-      avgGoals: Number((totalGoals / total).toFixed(2))
+      avgGoals: (totalGoals / total).toFixed(2)
     };
   }, [filteredPastMatches]);
 
@@ -333,13 +349,6 @@ export default function GolAnaliziPage() {
 
     return counts;
   }, [data, diffFilter]);
-
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <div className={`min-h-screen transition-colors duration-200 ${isDark ? 'bg-[#0B0F17] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
@@ -463,68 +472,87 @@ export default function GolAnaliziPage() {
             </button>
           </div>
 
-          {/* SUMMARY STATS ROW */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mt-6">
-            {/* Card 1: Gelecek Bülten */}
-            <div className={`p-4 rounded-2xl border transition-all cursor-pointer ${
-              isDark ? 'bg-slate-950/60 border-slate-800 hover:border-emerald-500/40' : 'bg-white border-slate-200 shadow-sm hover:border-emerald-400'
-            }`} onClick={() => scrollToSection('section-upcoming')}>
-              <div className="flex items-center justify-between">
-                <span className={`text-xs font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>Gelecek Bülten</span>
-                <Clock className="w-4 h-4 text-emerald-500" />
-              </div>
-              <div className="text-2xl md:text-3xl font-black mt-2 text-emerald-500">
-                {data?.stats?.diff020Count || 0} <span className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Maç (Fark ≤ 0.20)</span>
-              </div>
-              <div className={`text-[11px] mt-1 font-semibold ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
-                23 - 26 Eylül Programı
-              </div>
+          {/* SON 3 GÜNÜN DETAYLI GOL BAŞARI KARNESİ (2.5, 3.5, 4.5, 5.5, +6, KG VAR) */}
+          <div className="mt-6 pt-5 border-t border-slate-800/40">
+            <div className="flex items-center justify-between mb-3 px-1">
+              <span className={`text-xs font-black uppercase tracking-wider flex items-center gap-1.5 ${isDark ? 'text-amber-400' : 'text-amber-700'}`}>
+                <Award className="w-4 h-4 text-amber-500" />
+                Son 3 Günün Gol İstatistik Karnesi (Fark ≤ 0.20 Olan {pastStatsDynamic.totalPlayed} Biten Maç)
+              </span>
+              <span className={`text-xs font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                Ortalama: <strong className="text-emerald-400 text-sm">{pastStatsDynamic.avgGoals}</strong> Gol / Maç
+              </span>
             </div>
 
-            {/* Card 2: Son 3 Günün Sonuçları */}
-            <div className={`p-4 rounded-2xl border transition-all cursor-pointer ${
-              isDark ? 'bg-amber-950/20 border-amber-900/30 hover:border-amber-500/50' : 'bg-amber-50 border-amber-200 shadow-sm hover:border-amber-400'
-            }`} onClick={() => scrollToSection('section-past')}>
-              <div className="flex items-center justify-between">
-                <span className={`text-xs font-bold ${isDark ? 'text-amber-400' : 'text-amber-800'}`}>Son 3 Gün Biten</span>
-                <History className="w-4 h-4 text-amber-500" />
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 md:gap-3">
+              {/* 2.5 Üst */}
+              <div className={`p-3.5 rounded-2xl border text-center transition-all ${
+                isDark ? 'bg-emerald-950/30 border-emerald-900/40' : 'bg-emerald-50 border-emerald-200 shadow-sm'
+              }`}>
+                <div className="text-[11px] font-bold text-emerald-400 mb-1">2.5 Gol Üst</div>
+                <div className="text-2xl font-black text-emerald-400">%{pastStatsDynamic.ust25Rate}</div>
+                <div className={`text-[10px] mt-1 font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {pastStatsDynamic.ust25Won} / {pastStatsDynamic.totalPlayed} Kazandı
+                </div>
               </div>
-              <div className="text-2xl md:text-3xl font-black mt-2 text-amber-400">
-                {data?.pastMatches?.filter(m => m.diff <= 0.20)?.length || 0} <span className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Maç Bitti</span>
-              </div>
-              <div className={`text-[11px] mt-1 font-bold ${isDark ? 'text-amber-500/90' : 'text-amber-700'}`}>
-                20 - 22 Eylül Doğrulaması
-              </div>
-            </div>
 
-            {/* Card 3: 2.5 ÜST Başarısı */}
-            <div className={`p-4 rounded-2xl border transition-all ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-              <div className="flex items-center justify-between">
-                <span className={`text-xs font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>2.5 Gol Üst Başarısı</span>
-                <TrendingUp className="w-4 h-4 text-emerald-500" />
+              {/* 3.5 Üst */}
+              <div className={`p-3.5 rounded-2xl border text-center transition-all ${
+                isDark ? 'bg-teal-950/30 border-teal-900/40' : 'bg-teal-50 border-teal-200 shadow-sm'
+              }`}>
+                <div className="text-[11px] font-bold text-teal-400 mb-1">3.5 Gol Üst</div>
+                <div className="text-2xl font-black text-teal-400">%{pastStatsDynamic.ust35Rate}</div>
+                <div className={`text-[10px] mt-1 font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {pastStatsDynamic.ust35Won} / {pastStatsDynamic.totalPlayed} Kazandı
+                </div>
               </div>
-              <div className="text-2xl md:text-3xl font-black mt-2 text-emerald-500">
-                %{pastStatsDynamic.ust25Rate}
-              </div>
-              <div className={`text-[11px] mt-1 font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                {pastStatsDynamic.ust25Won} / {pastStatsDynamic.totalPlayed} Kazandı
-              </div>
-            </div>
 
-            {/* Card 4: KG Var Başarısı */}
-            <div className={`p-4 rounded-2xl border transition-all ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
-              <div className="flex items-center justify-between">
-                <span className={`text-xs font-bold ${isDark ? 'text-sky-400' : 'text-sky-700'}`}>KG Var Başarısı</span>
-                <Target className="w-4 h-4 text-sky-500" />
+              {/* 4.5 Üst */}
+              <div className={`p-3.5 rounded-2xl border text-center transition-all ${
+                isDark ? 'bg-amber-950/30 border-amber-900/40' : 'bg-amber-50 border-amber-200 shadow-sm'
+              }`}>
+                <div className="text-[11px] font-bold text-amber-400 mb-1">4.5 Gol Üst</div>
+                <div className="text-2xl font-black text-amber-400">%{pastStatsDynamic.ust45Rate}</div>
+                <div className={`text-[10px] mt-1 font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {pastStatsDynamic.ust45Won} / {pastStatsDynamic.totalPlayed} Kazandı
+                </div>
               </div>
-              <div className="text-2xl md:text-3xl font-black mt-2 text-sky-400">
-                %{pastStatsDynamic.kgVarRate}
+
+              {/* 5.5 Üst */}
+              <div className={`p-3.5 rounded-2xl border text-center transition-all ${
+                isDark ? 'bg-orange-950/30 border-orange-900/40' : 'bg-orange-50 border-orange-200 shadow-sm'
+              }`}>
+                <div className="text-[11px] font-bold text-orange-400 mb-1">5.5 Gol Üst</div>
+                <div className="text-2xl font-black text-orange-400">%{pastStatsDynamic.ust55Rate}</div>
+                <div className={`text-[10px] mt-1 font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {pastStatsDynamic.ust55Won} / {pastStatsDynamic.totalPlayed} Kazandı
+                </div>
               </div>
-              <div className={`text-[11px] mt-1 font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                {pastStatsDynamic.kgVarWon} / {pastStatsDynamic.totalPlayed} Kazandı (Ort. {pastStatsDynamic.avgGoals} Gol)
+
+              {/* +6 Gol / 6.5 Üst */}
+              <div className={`p-3.5 rounded-2xl border text-center transition-all ${
+                isDark ? 'bg-purple-950/30 border-purple-900/40' : 'bg-purple-50 border-purple-200 shadow-sm'
+              }`}>
+                <div className="text-[11px] font-bold text-purple-400 mb-1">+6 Gol (6.5 Üst)</div>
+                <div className="text-2xl font-black text-purple-400">%{pastStatsDynamic.ust65Rate}</div>
+                <div className={`text-[10px] mt-1 font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {pastStatsDynamic.ust65Won} / {pastStatsDynamic.totalPlayed} Kazandı
+                </div>
+              </div>
+
+              {/* KG Var */}
+              <div className={`p-3.5 rounded-2xl border text-center transition-all ${
+                isDark ? 'bg-sky-950/30 border-sky-900/40' : 'bg-sky-50 border-sky-200 shadow-sm'
+              }`}>
+                <div className="text-[11px] font-bold text-sky-400 mb-1">KG Var</div>
+                <div className="text-2xl font-black text-sky-400">%{pastStatsDynamic.kgVarRate}</div>
+                <div className={`text-[10px] mt-1 font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {pastStatsDynamic.kgVarWon} / {pastStatsDynamic.totalPlayed} Kazandı
+                </div>
               </div>
             </div>
           </div>
+
         </div>
 
         {/* CONTROLS & FILTER BAR */}
@@ -641,40 +669,45 @@ export default function GolAnaliziPage() {
             {/* ======================================================== */}
             {(viewMode === 'all' || viewMode === 'upcoming') && (
               <section id="section-upcoming" className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-800/60">
-                  <div className="flex items-center gap-2.5">
-                    <span className="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                      <Clock className="w-5 h-5" />
-                    </span>
-                    <div>
-                      <h2 className="text-lg sm:text-xl font-black flex items-center gap-2">
-                        <span>🟢 Gelecek Oynanmamış Bülten</span>
-                        <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-500 text-slate-950">
-                          {filteredUpcomingMatches.length} Maç
-                        </span>
-                      </h2>
-                      <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                        23 - 26 Eylül tarihleri arasındaki oynanmamış maçlar (En düşük farktan yükseğe sıralı)
-                      </p>
+                
+                {/* Section Header (Cleanly Structured) */}
+                <div className="p-4 rounded-2xl border bg-slate-900/40 border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-2.5">
+                      <span className="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                        <Clock className="w-5 h-5" />
+                      </span>
+                      <div>
+                        <h2 className="text-lg sm:text-xl font-black flex items-center gap-2">
+                          <span>🟢 Gelecek Oynanmamış Bülten</span>
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-500 text-slate-950">
+                            {filteredUpcomingMatches.length} Maç
+                          </span>
+                        </h2>
+                        <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                          23 - 26 Eylül tarihleri arasındaki oynanmamış maçlar (En düşük farktan yükseğe sıralı)
+                        </p>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Upcoming Date Pills */}
-                  <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+                  {/* Upcoming Date Pills (Full Width, Wrap, No truncation) */}
+                  <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-slate-800/40">
+                    <span className={`text-xs font-bold mr-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Tarih Seç:</span>
                     <button
                       onClick={() => setSelectedUpcomingDate('all')}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
+                      className={`px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
                         selectedUpcomingDate === 'all'
                           ? isDark
                             ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 shadow-sm'
                             : 'bg-emerald-600 text-white border-emerald-600 shadow-md'
                           : isDark
-                            ? 'bg-slate-900/40 text-slate-400 border-slate-800 hover:bg-slate-800/40'
+                            ? 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800/60'
                             : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100 shadow-sm font-bold'
                       }`}
                     >
                       <span>Tüm Günler</span>
-                      <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                      <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
                         selectedUpcomingDate === 'all' 
                           ? isDark ? 'bg-emerald-500 text-slate-950 font-black' : 'bg-white/30 text-white font-black'
                           : isDark ? 'bg-slate-500/10 text-slate-500' : 'bg-slate-100 text-slate-700 font-bold'
@@ -687,18 +720,19 @@ export default function GolAnaliziPage() {
                       <button
                         key={d}
                         onClick={() => setSelectedUpcomingDate(d)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
+                        className={`px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
                           selectedUpcomingDate === d
                             ? isDark
                               ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 shadow-sm'
                               : 'bg-emerald-600 text-white border-emerald-600 shadow-md'
                             : isDark
-                              ? 'bg-slate-900/40 text-slate-400 border-slate-800 hover:bg-slate-800/40'
+                              ? 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800/60'
                               : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100 shadow-sm font-bold'
                         }`}
                       >
+                        <Calendar className="w-3.5 h-3.5 opacity-70" />
                         <span>{formatTurkishDate(d)}</span>
-                        <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                        <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
                           selectedUpcomingDate === d
                             ? isDark ? 'bg-emerald-500 text-slate-950 font-black' : 'bg-white/30 text-white font-black'
                             : isDark ? 'bg-slate-500/10 text-slate-500' : 'bg-slate-100 text-slate-700 font-bold'
@@ -866,40 +900,45 @@ export default function GolAnaliziPage() {
             {/* ======================================================== */}
             {(viewMode === 'all' || viewMode === 'past') && (
               <section id="section-past" className="space-y-4 pt-6 border-t-2 border-dashed border-amber-500/20">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-800/60">
-                  <div className="flex items-center gap-2.5">
-                    <span className="p-2 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30">
-                      <History className="w-5 h-5" />
-                    </span>
-                    <div>
-                      <h2 className="text-lg sm:text-xl font-black flex items-center gap-2">
-                        <span>🏆 Son 3 Günün Biten Sonuçları & Doğrulama Karnesi</span>
-                        <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-amber-500 text-slate-950">
-                          {filteredPastMatches.length} Maç Bitti
-                        </span>
-                      </h2>
-                      <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                        20, 21, 22 Eylül tarihlerinde bu kıstasa uyan maçların gerçek maç skorları ve başarı durumları
-                      </p>
+                
+                {/* Section Header (Cleanly Structured) */}
+                <div className="p-4 rounded-2xl border bg-slate-900/40 border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-2.5">
+                      <span className="p-2 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                        <History className="w-5 h-5" />
+                      </span>
+                      <div>
+                        <h2 className="text-lg sm:text-xl font-black flex items-center gap-2">
+                          <span>🏆 Son 3 Günün Biten Sonuçları & Doğrulama Karnesi</span>
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-amber-500 text-slate-950">
+                            {filteredPastMatches.length} Maç Bitti
+                          </span>
+                        </h2>
+                        <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                          20, 21, 22 Eylül tarihlerinde bu kıstasa uyan maçların gerçek maç skorları ve başarı durumları
+                        </p>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Past Date Pills */}
-                  <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+                  {/* Past Date Pills (Full Width, Wrap, No truncation) */}
+                  <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-slate-800/40">
+                    <span className={`text-xs font-bold mr-1 ${isDark ? 'text-amber-400' : 'text-amber-700'}`}>Biten Gün Seç:</span>
                     <button
                       onClick={() => setSelectedPastDate('all')}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
+                      className={`px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
                         selectedPastDate === 'all'
                           ? isDark
                             ? 'bg-amber-500/20 text-amber-400 border-amber-500/40 shadow-sm'
                             : 'bg-amber-500 text-slate-950 border-amber-500 shadow-md font-black'
                           : isDark
-                            ? 'bg-slate-900/40 text-slate-400 border-slate-800 hover:bg-slate-800/40'
+                            ? 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800/60'
                             : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100 shadow-sm font-bold'
                       }`}
                     >
                       <span>Tüm Son 3 Gün</span>
-                      <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                      <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
                         selectedPastDate === 'all' 
                           ? 'bg-amber-500 text-slate-950 font-black'
                           : isDark ? 'bg-slate-500/10 text-slate-500' : 'bg-slate-100 text-slate-700 font-bold'
@@ -912,18 +951,19 @@ export default function GolAnaliziPage() {
                       <button
                         key={d}
                         onClick={() => setSelectedPastDate(d)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
+                        className={`px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
                           selectedPastDate === d
                             ? isDark
                               ? 'bg-amber-500/20 text-amber-400 border-amber-500/40 shadow-sm'
                               : 'bg-amber-500 text-slate-950 border-amber-500 shadow-md font-black'
                             : isDark
-                              ? 'bg-slate-900/40 text-slate-400 border-slate-800 hover:bg-slate-800/40'
+                              ? 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800/60'
                               : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100 shadow-sm font-bold'
                         }`}
                       >
+                        <History className="w-3.5 h-3.5 opacity-70" />
                         <span>{formatTurkishDate(d)}</span>
-                        <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                        <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
                           selectedPastDate === d
                             ? 'bg-amber-500 text-slate-950 font-black'
                             : isDark ? 'bg-slate-500/10 text-slate-500' : 'bg-slate-100 text-slate-700 font-bold'
@@ -950,7 +990,7 @@ export default function GolAnaliziPage() {
                               : 'bg-white border-slate-200 hover:border-amber-400 shadow-md'
                           }`}
                         >
-                          {/* TOP INFO BAR */}
+                          {/* TOP INFO BAR (BÜLTENLE BİREBİR AYNI) */}
                           <div className="flex items-center justify-between gap-2 mb-3">
                             <div className="flex items-center gap-2 flex-wrap">
                               <span className={`px-2.5 py-1 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1 ${
@@ -964,14 +1004,16 @@ export default function GolAnaliziPage() {
                                 <span>FARK: {m.diff.toFixed(2)}</span>
                               </span>
 
-                              <span className={`px-2.5 py-1 rounded-xl text-[11px] font-black uppercase tracking-wider ${
-                                isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-800 font-bold'
-                              }`}>
-                                MS: {m.score || 'Bitti'}
-                              </span>
+                              {m.code && (
+                                <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black ${
+                                  isDark ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-slate-100 text-slate-700 border border-slate-300'
+                                }`}>
+                                  Kod: {m.code}
+                                </span>
+                              )}
 
                               <span className={`text-xs font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                                {m.date}
+                                {m.date} {m.time ? `• ${m.time}` : ''}
                               </span>
                             </div>
 
@@ -984,23 +1026,31 @@ export default function GolAnaliziPage() {
                             </div>
                           </div>
 
-                          {/* TEAMS WITH FINAL SCORE */}
+                          {/* TEAMS WITH PROMINENT FINAL SCORE BOX (BÜLTEN TASARIMI) */}
                           <div className={`p-4 rounded-2xl border my-3 ${
                             isDark ? 'bg-black/30 border-white/5' : 'bg-slate-50 border-slate-200/90'
                           }`}>
                             <div className="flex items-center justify-between gap-3">
                               <div className="space-y-1.5 flex-1 min-w-0">
-                                <div className={`text-base md:text-lg font-black truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                  {m.homeTeam}
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className={`text-base md:text-lg font-black truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                    {m.homeTeam || 'Ev Sahibi'}
+                                  </span>
+                                  <span className={`text-xs font-bold ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Ev</span>
                                 </div>
-                                <div className={`text-base md:text-lg font-black truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-                                  {m.awayTeam}
+
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className={`text-base md:text-lg font-black truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                                    {m.awayTeam || 'Deplasman'}
+                                  </span>
+                                  <span className={`text-xs font-bold ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Dep</span>
                                 </div>
                               </div>
 
-                              <div className="text-center px-4 py-2 rounded-2xl bg-black/40 border border-white/10 shrink-0">
+                              {/* SCORE BADGE */}
+                              <div className="text-center px-4 py-2.5 rounded-2xl bg-black/50 border border-white/10 shrink-0 min-w-[90px]">
                                 <div className="text-xl md:text-2xl font-black text-amber-400 tracking-wider">
-                                  {m.score || '-'}
+                                  {m.score || 'MS'}
                                 </div>
                                 {m.halfTimeScore && (
                                   <div className="text-[10px] text-slate-400 font-bold mt-0.5">
@@ -1008,76 +1058,97 @@ export default function GolAnaliziPage() {
                                   </div>
                                 )}
                                 <div className="text-[10px] text-emerald-400 font-extrabold mt-0.5">
-                                  {m.totalGoals} Gol
+                                  {m.totalGoals || 0} Gol
                                 </div>
                               </div>
                             </div>
                           </div>
 
-                          {/* RESULT OUTCOMES PILLS (4.5 ÜST, 2Y 1.5 ÜST, 2.5 ÜST, KG VAR) */}
-                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-                            {/* 4.5 Üst Outcome */}
-                            <div className={`p-2.5 rounded-xl border flex items-center justify-between text-xs font-black ${
-                              m.isUst45Won
-                                ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400'
-                                : 'bg-rose-500/10 border-rose-500/20 text-rose-400 opacity-70'
-                            }`}>
-                              <div className="flex items-center gap-1.5">
-                                {m.isUst45Won ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-rose-400" />}
-                                <span>4.5 Üst ({m.odd45Ust.toFixed(2)})</span>
+                          {/* COMPARISON BOX (BÜLTENLE BİREBİR AYNI + KAZANDI/KAYBETTİ ROZETLERİ) */}
+                          <div className={`p-3.5 rounded-2xl border mb-3 ${
+                            isDark 
+                              ? 'bg-gradient-to-r from-emerald-950/20 via-slate-900/60 to-teal-950/20 border-slate-800' 
+                              : 'bg-gradient-to-r from-emerald-50 via-slate-50 to-teal-50 border-emerald-200'
+                          }`}>
+                            <div className="grid grid-cols-2 gap-3">
+                              {/* 4.5 Üst Box */}
+                              <div className={`p-3 rounded-xl border text-center transition ${
+                                m.isUst45Won
+                                  ? isDark ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400' : 'bg-emerald-100 border-emerald-300 text-emerald-900'
+                                  : isDark ? 'bg-slate-900/80 border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-600'
+                              }`}>
+                                <div className="flex items-center justify-center gap-1 text-[10px] font-black uppercase tracking-wider mb-1">
+                                  {m.isUst45Won ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <XCircle className="w-3.5 h-3.5 text-rose-400" />}
+                                  <span>⚽ Toplam 4.5 Üst</span>
+                                </div>
+                                <div className={`text-2xl font-black ${m.isUst45Won ? 'text-emerald-400' : 'text-slate-300'}`}>
+                                  {m.odd45Ust.toFixed(2)}
+                                </div>
+                                <div className={`text-[10px] font-black mt-0.5 ${m.isUst45Won ? 'text-emerald-400' : 'text-rose-400/80'}`}>
+                                  {m.isUst45Won ? '✅ KAZANDI (5+ Gol)' : '❌ Gelmedi'}
+                                </div>
                               </div>
-                            </div>
 
-                            {/* Her İki Yarı 1.5 Üst Outcome */}
-                            <div className={`p-2.5 rounded-xl border flex items-center justify-between text-xs font-black ${
-                              m.isHerIkiYari15UstWon
-                                ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400'
-                                : 'bg-rose-500/10 border-rose-500/20 text-rose-400 opacity-70'
-                            }`}>
-                              <div className="flex items-center gap-1.5">
-                                {m.isHerIkiYari15UstWon ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-rose-400" />}
-                                <span>2Y 1.5 Üst ({m.oddHerIkiYari15Ust.toFixed(2)})</span>
-                              </div>
-                            </div>
-
-                            {/* 2.5 Üst Outcome */}
-                            <div className={`p-2.5 rounded-xl border flex items-center justify-between text-xs font-black ${
-                              m.isUst25Won
-                                ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400'
-                                : 'bg-rose-500/10 border-rose-500/20 text-rose-400 opacity-70'
-                            }`}>
-                              <div className="flex items-center gap-1.5">
-                                {m.isUst25Won ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-rose-400" />}
-                                <span>2.5 Üst ({m.odds.ust25})</span>
-                              </div>
-                            </div>
-
-                            {/* KG Var Outcome */}
-                            <div className={`p-2.5 rounded-xl border flex items-center justify-between text-xs font-black ${
-                              m.isKgVarWon
-                                ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400'
-                                : 'bg-rose-500/10 border-rose-500/20 text-rose-400 opacity-70'
-                            }`}>
-                              <div className="flex items-center gap-1.5">
-                                {m.isKgVarWon ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-rose-400" />}
-                                <span>KG Var ({m.odds.kgVar})</span>
+                              {/* Her İki Yarı 1.5 Üst Box */}
+                              <div className={`p-3 rounded-xl border text-center transition ${
+                                m.isHerIkiYari15UstWon
+                                  ? isDark ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400' : 'bg-emerald-100 border-emerald-300 text-emerald-900'
+                                  : isDark ? 'bg-slate-900/80 border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-600'
+                              }`}>
+                                <div className="flex items-center justify-center gap-1 text-[10px] font-black uppercase tracking-wider mb-1">
+                                  {m.isHerIkiYari15UstWon ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <XCircle className="w-3.5 h-3.5 text-rose-400" />}
+                                  <span>⏱️ 2Y 1.5 Üst</span>
+                                </div>
+                                <div className={`text-2xl font-black ${m.isHerIkiYari15UstWon ? 'text-emerald-400' : 'text-slate-300'}`}>
+                                  {m.oddHerIkiYari15Ust.toFixed(2)}
+                                </div>
+                                <div className={`text-[10px] font-black mt-0.5 ${m.isHerIkiYari15UstWon ? 'text-emerald-400' : 'text-rose-400/80'}`}>
+                                  {m.isHerIkiYari15UstWon ? '✅ KAZANDI' : '❌ Gelmedi'}
+                                </div>
                               </div>
                             </div>
                           </div>
 
-                          {/* ODDS COMPARISON BOX */}
-                          <div className={`p-3 rounded-2xl border ${
-                            isDark ? 'bg-black/20 border-slate-800' : 'bg-slate-100 border-slate-200'
-                          }`}>
-                            <div className="flex items-center justify-between text-xs font-bold">
-                              <span className={`${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                                Açılış Oranları: 4.5 Üst: <strong className="text-emerald-400">{m.odd45Ust.toFixed(2)}</strong> | 2Y 1.5 Üst: <strong className="text-teal-400">{m.oddHerIkiYari15Ust.toFixed(2)}</strong>
-                              </span>
-                              <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black ${
-                                isExact ? 'bg-amber-500 text-slate-950' : 'bg-emerald-500/20 text-emerald-400'
-                              }`}>
-                                Fark: {m.diff.toFixed(2)}
-                              </span>
+                          {/* OUTCOME MARKET PILLS (2.5 Üst, 3.5 Üst, KG Var) */}
+                          <div className="grid grid-cols-4 gap-1.5 text-center text-[11px]">
+                            {/* 2.5 Üst */}
+                            <div className={`p-1.5 rounded-lg border font-black flex items-center justify-center gap-1 ${
+                              m.isUst25Won
+                                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+                                : 'bg-slate-900/50 border-slate-800 text-slate-500 opacity-60'
+                            }`}>
+                              {m.isUst25Won ? <Check className="w-3 h-3 text-emerald-400" /> : <X className="w-3 h-3 text-slate-600" />}
+                              <span>2.5 ÜST</span>
+                            </div>
+
+                            {/* 3.5 Üst */}
+                            <div className={`p-1.5 rounded-lg border font-black flex items-center justify-center gap-1 ${
+                              m.isUst35Won
+                                ? 'bg-teal-500/20 border-teal-500/40 text-teal-400'
+                                : 'bg-slate-900/50 border-slate-800 text-slate-500 opacity-60'
+                            }`}>
+                              {m.isUst35Won ? <Check className="w-3 h-3 text-teal-400" /> : <X className="w-3 h-3 text-slate-600" />}
+                              <span>3.5 ÜST</span>
+                            </div>
+
+                            {/* KG Var */}
+                            <div className={`p-1.5 rounded-lg border font-black flex items-center justify-center gap-1 ${
+                              m.isKgVarWon
+                                ? 'bg-sky-500/20 border-sky-500/40 text-sky-400'
+                              : 'bg-slate-900/50 border-slate-800 text-slate-500 opacity-60'
+                            }`}>
+                              {m.isKgVarWon ? <Check className="w-3 h-3 text-sky-400" /> : <X className="w-3 h-3 text-slate-600" />}
+                              <span>KG VAR</span>
+                            </div>
+
+                            {/* 5.5 Üst */}
+                            <div className={`p-1.5 rounded-lg border font-black flex items-center justify-center gap-1 ${
+                              m.isUst55Won
+                                ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
+                                : 'bg-slate-900/50 border-slate-800 text-slate-500 opacity-60'
+                            }`}>
+                              {m.isUst55Won ? <Check className="w-3 h-3 text-orange-400" /> : <X className="w-3 h-3 text-slate-600" />}
+                              <span>5.5 ÜST</span>
                             </div>
                           </div>
 

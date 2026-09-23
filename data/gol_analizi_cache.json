@@ -1,5 +1,5 @@
 {
-  "timestamp": 1790170646273,
+  "timestamp": 1790171437793,
   "unplayedCount": 111,
   "matches": [
     {
@@ -81,6 +81,32 @@
       }
     },
     {
+      "id": "4419492",
+      "matchId": "4419492",
+      "eventId": "3153474",
+      "code": "71894",
+      "date": "24.09.2026",
+      "time": "04:30",
+      "league": "ABD",
+      "homeTeam": "Seattle",
+      "awayTeam": "Salt Lake",
+      "odd45Ust": 3.64,
+      "odd45Alt": 1.11,
+      "oddHerIkiYari15Ust": 3.57,
+      "oddHerIkiYari15Alt": 3.05,
+      "diff": 0.07,
+      "isCloseDiff": true,
+      "odds": {
+        "ms1": "1.56",
+        "ms0": "3.65",
+        "ms2": "3.82",
+        "alt25": "2.23",
+        "ust25": "1.37",
+        "kgVar": "1.94",
+        "kgYok": "2.76"
+      }
+    },
+    {
       "id": "4445145",
       "matchId": "4445145",
       "eventId": "3153361",
@@ -124,37 +150,11 @@
       "isCloseDiff": true,
       "odds": {
         "ms1": "17.50",
-        "ms0": "9.93",
+        "ms0": "9.63",
         "ms2": "1.00",
         "alt25": "2.28",
         "ust25": "1.36",
         "kgVar": "1.93",
-        "kgYok": "2.76"
-      }
-    },
-    {
-      "id": "4419492",
-      "matchId": "4419492",
-      "eventId": "3153474",
-      "code": "71894",
-      "date": "24.09.2026",
-      "time": "04:30",
-      "league": "ABD",
-      "homeTeam": "Seattle",
-      "awayTeam": "Salt Lake",
-      "odd45Ust": 3.65,
-      "odd45Alt": 1.11,
-      "oddHerIkiYari15Ust": 3.57,
-      "oddHerIkiYari15Alt": 3.05,
-      "diff": 0.08,
-      "isCloseDiff": true,
-      "odds": {
-        "ms1": "1.62",
-        "ms0": "3.58",
-        "ms2": "3.60",
-        "alt25": "2.23",
-        "ust25": "1.37",
-        "kgVar": "1.94",
         "kgYok": "2.76"
       }
     },
@@ -185,32 +185,6 @@
       }
     },
     {
-      "id": "4560836",
-      "matchId": "4560836",
-      "eventId": "3207997",
-      "code": "74154",
-      "date": "23.09.2026",
-      "time": "22:00",
-      "league": "ŞMP-K",
-      "homeTeam": "Chelsea (K)",
-      "awayTeam": "Austria Wien (K",
-      "odd45Ust": 1.71,
-      "odd45Alt": 1.57,
-      "oddHerIkiYari15Ust": 1.82,
-      "oddHerIkiYari15Alt": 5.55,
-      "diff": 0.11,
-      "isCloseDiff": true,
-      "odds": {
-        "ms1": "1.00",
-        "ms0": "12.70",
-        "ms2": "17.50",
-        "alt25": "3.54",
-        "ust25": "1.08",
-        "kgVar": "2.84",
-        "kgYok": "2.23"
-      }
-    },
-    {
       "id": "4560833",
       "matchId": "4560833",
       "eventId": "3207969",
@@ -237,6 +211,32 @@
       }
     },
     {
+      "id": "4560836",
+      "matchId": "4560836",
+      "eventId": "3207997",
+      "code": "74154",
+      "date": "23.09.2026",
+      "time": "22:00",
+      "league": "ŞMP-K",
+      "homeTeam": "Chelsea (K)",
+      "awayTeam": "Austria Wien (K",
+      "odd45Ust": 1.74,
+      "odd45Alt": 1.54,
+      "oddHerIkiYari15Ust": 1.86,
+      "oddHerIkiYari15Alt": 5.43,
+      "diff": 0.12,
+      "isCloseDiff": true,
+      "odds": {
+        "ms1": "1.00",
+        "ms0": "12.50",
+        "ms2": "17.50",
+        "alt25": "3.54",
+        "ust25": "1.08",
+        "kgVar": "2.83",
+        "kgYok": "2.23"
+      }
+    },
+    {
       "id": "4565371",
       "matchId": "4565371",
       "eventId": "3243365",
@@ -246,20 +246,20 @@
       "league": "HAZ",
       "homeTeam": "Çin",
       "awayTeam": "Maldivler",
-      "odd45Ust": 1.62,
-      "odd45Alt": 1.65,
-      "oddHerIkiYari15Ust": 1.74,
-      "oddHerIkiYari15Alt": 5.98,
+      "odd45Ust": 1.73,
+      "odd45Alt": 1.55,
+      "oddHerIkiYari15Ust": 1.85,
+      "oddHerIkiYari15Alt": 5.47,
       "diff": 0.12,
       "isCloseDiff": true,
       "odds": {
         "ms1": "1.00",
-        "ms0": "13.05",
+        "ms0": "12.65",
         "ms2": "17.50",
         "alt25": "-",
         "ust25": "-",
-        "kgVar": "3.09",
-        "kgYok": "2.24"
+        "kgVar": "2.85",
+        "kgYok": "2.23"
       }
     },
     {
@@ -766,20 +766,20 @@
       "league": "AVUL",
       "homeTeam": "Lihtenştayn",
       "awayTeam": "Litvanya",
-      "odd45Ust": 7.62,
+      "odd45Ust": 7.91,
       "odd45Alt": null,
-      "oddHerIkiYari15Ust": 6.68,
-      "oddHerIkiYari15Alt": 1.94,
-      "diff": 0.94,
+      "oddHerIkiYari15Ust": 6.87,
+      "oddHerIkiYari15Alt": 1.92,
+      "diff": 1.04,
       "isCloseDiff": false,
       "odds": {
         "ms1": "9.93",
         "ms0": "4.58",
         "ms2": "1.16",
-        "alt25": "1.51",
-        "ust25": "1.93",
+        "alt25": "1.50",
+        "ust25": "1.97",
         "kgVar": "1.77",
-        "kgYok": "4.26"
+        "kgYok": "4.37"
       }
     },
     {
@@ -903,9 +903,9 @@
       "diff": 1.99,
       "isCloseDiff": false,
       "odds": {
-        "ms1": "2.97",
-        "ms0": "2.85",
-        "ms2": "1.87",
+        "ms1": "3.17",
+        "ms0": "2.89",
+        "ms2": "1.79",
         "alt25": "1.45",
         "ust25": "1.87",
         "kgVar": "1.72",

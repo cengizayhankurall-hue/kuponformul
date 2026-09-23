@@ -255,7 +255,6 @@ async function syncUpcoming() {
   });
 
   const availableDates = Array.from(new Set(results.map(m => m.date).filter(Boolean)));
-  // sort availableDates chronologically
   availableDates.sort((a, b) => {
     const [d1, m1, y1] = a.split('.').map(Number);
     const [d2, m2, y2] = b.split('.').map(Number);
@@ -359,13 +358,13 @@ async function syncPast() {
         let oddHerIkiYari15Alt = null;
 
         const odds = {
-          ms1: '-',
-          ms0: '-',
-          ms2: '-',
-          alt25: '-',
-          ust25: '-',
-          kgVar: '-',
-          kgYok: '-'
+          ms1: cleanOdds(m[18] || '-'),
+          ms0: cleanOdds(m[19] || '-'),
+          ms2: cleanOdds(m[20] || '-'),
+          alt25: cleanOdds(m[21] || '-'),
+          ust25: cleanOdds(m[22] || '-'),
+          kgVar: cleanOdds(m[24] || '-'),
+          kgYok: cleanOdds(m[25] || '-')
         };
 
         bookie.markets.forEach((mkt) => {
@@ -398,8 +397,8 @@ async function syncPast() {
           if ((normName.includes('2,5') || normName.includes('2.5')) && normName.includes('alt/ust') && !normName.includes('korner') && !normName.includes('kart') && !normName.includes('1. yari')) {
             (mkt.outcomes || []).forEach((o) => {
               const oName = normalizeText(o.name);
-              if (oName === 'alt' || o.key === '-2.5') odds.alt25 = String(o.value || '-').replace(',', '.');
-              if (oName === 'ust' || o.key === '+2.5') odds.ust25 = String(o.value || '-').replace(',', '.');
+              if (oName === 'alt' || o.key === '-2.5') odds.alt25 = cleanOdds(o.value);
+              if (oName === 'ust' || o.key === '+2.5') odds.ust25 = cleanOdds(o.value);
             });
           }
 
@@ -407,8 +406,8 @@ async function syncPast() {
           if (normName.includes('karsilikli gol') || normName.includes('kg')) {
             (mkt.outcomes || []).forEach((o) => {
               const oName = normalizeText(o.name);
-              if (oName === 'var') odds.kgVar = String(o.value || '-').replace(',', '.');
-              if (oName === 'yok') odds.kgYok = String(o.value || '-').replace(',', '.');
+              if (oName === 'var') odds.kgVar = cleanOdds(o.value);
+              if (oName === 'yok') odds.kgYok = cleanOdds(o.value);
             });
           }
         });
@@ -431,18 +430,25 @@ async function syncPast() {
           const isOver25 = totalGoals >= 3;
           const isOver35 = totalGoals >= 4;
           const isOver45 = totalGoals >= 5;
+          const isOver55 = totalGoals >= 6;
+          const isOver65 = totalGoals >= 7;
           const isKgVar = msHome > 0 && msAway > 0;
+
+          const homeTeam = String(m[2] || '').trim();
+          const awayTeam = String(m[4] || '').trim();
+          const league = Array.isArray(m[36]) ? String(m[36][1] || 'Diğer').trim() : 'Diğer';
+          const matchTime = String(m[16] || '').trim();
 
           results.push({
             id: String(m[0]),
             matchId: String(m[0]),
             eventId,
-            code: String(m[21] || m[0]),
+            code: String(m[0]).slice(0, 5),
             date: formattedDate,
-            time: String(m[3] || ''),
-            league: String(m[2] || 'Diğer').trim(),
-            homeTeam: String(m[6] || '').trim(),
-            awayTeam: String(m[8] || '').trim(),
+            time: matchTime,
+            league,
+            homeTeam,
+            awayTeam,
             odd45Ust,
             odd45Alt,
             oddHerIkiYari15Ust,
@@ -454,11 +460,13 @@ async function syncPast() {
             halfTimeScore: `${iyHome} - ${iyAway}`,
             status: 'MS',
             totalGoals,
-            isUst45Won: isOver45,
-            isHerIkiYari15UstWon: isBothHalves15Ust,
             isUst25Won: isOver25,
             isUst35Won: isOver35,
-            isKgVarWon: isKgVar
+            isUst45Won: isOver45,
+            isUst55Won: isOver55,
+            isUst65Won: isOver65,
+            isKgVarWon: isKgVar,
+            isHerIkiYari15UstWon: isBothHalves15Ust
           });
         }
       } catch (e) {
@@ -482,10 +490,12 @@ async function syncPast() {
 
   const calculateRates = (list) => {
     const total = list.length;
-    if (total === 0) return { total: 0, ust25Rate: 0, ust35Rate: 0, ust45Rate: 0, herIkiYari15Rate: 0, kgVarRate: 0, avgGoals: 0 };
+    if (total === 0) return { total: 0, ust25Rate: 0, ust35Rate: 0, ust45Rate: 0, ust55Rate: 0, ust65Rate: 0, herIkiYari15Rate: 0, kgVarRate: 0, avgGoals: 0 };
     const u25 = list.filter(m => m.isUst25Won).length;
     const u35 = list.filter(m => m.isUst35Won).length;
     const u45 = list.filter(m => m.isUst45Won).length;
+    const u55 = list.filter(m => m.isUst55Won).length;
+    const u65 = list.filter(m => m.isUst65Won).length;
     const hy15 = list.filter(m => m.isHerIkiYari15UstWon).length;
     const kg = list.filter(m => m.isKgVarWon).length;
     const totalG = list.reduce((acc, m) => acc + (m.totalGoals || 0), 0);
@@ -497,6 +507,10 @@ async function syncPast() {
       ust35Rate: Math.round((u35 / total) * 100),
       ust45Won: u45,
       ust45Rate: Math.round((u45 / total) * 100),
+      ust55Won: u55,
+      ust55Rate: Math.round((u55 / total) * 100),
+      ust65Won: u65,
+      ust65Rate: Math.round((u65 / total) * 100),
       herIkiYari15Won: hy15,
       herIkiYari15Rate: Math.round((hy15 / total) * 100),
       kgVarWon: kg,
