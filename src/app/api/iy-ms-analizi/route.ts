@@ -1,17 +1,15 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { fetchMackolikMatches } from '../fetch-iddaa/route';
-import NodeCache from 'node-cache';
+import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
-const iyMsCache = new NodeCache({ stdTTL: 300, checkperiod: 60 }); // 5 minutes cache
-
 export interface IyMsOutcomeStats {
-  key: string; // '1/1', 'X/1', '2/1', '1/X', 'X/X', '2/X', '1/2', 'X/2', '2/2'
+  key: string;
   label: string;
   count: number;
-  rate: number; // 0 - 100
+  rate: number;
   isTopChoice?: boolean;
   isSurpriseValue?: boolean;
 }
@@ -24,7 +22,7 @@ export interface PastSimilarMatch {
   league: string;
   msScore: string;
   iyScore: string;
-  outcome: string; // '1/1', etc.
+  outcome: string;
   ms1: number;
   ms0: number;
   ms2: number;
@@ -61,6 +59,23 @@ export interface MatchIyMsAnalysis {
   topOutcome: IyMsOutcomeStats | null;
   surpriseOutcome: IyMsOutcomeStats | null;
   recentMatches: PastSimilarMatch[];
+}
+
+const CACHE_FILE = path.join(process.cwd(), 'data', 'iy_ms_cache.json');
+const PUBLIC_CACHE_FILE = path.join(process.cwd(), 'public', 'data', 'iy_ms_cache.json');
+
+function loadCacheFromDisk() {
+  try {
+    if (fs.existsSync(CACHE_FILE)) {
+      const raw = fs.readFileSync(CACHE_FILE, 'utf-8');
+      return JSON.parse(raw);
+    }
+    if (fs.existsSync(PUBLIC_CACHE_FILE)) {
+      const raw = fs.readFileSync(PUBLIC_CACHE_FILE, 'utf-8');
+      return JSON.parse(raw);
+    }
+  } catch (e) {}
+  return null;
 }
 
 const OUTCOME_KEYS = ['1/1', 'X/1', '2/1', '1/X', 'X/X', '2/X', '1/2', 'X/2', '2/2'];
@@ -122,7 +137,6 @@ async function analyzeOddsPattern(odds: { ms1: number; ms0: number; ms2: number;
     const tolMS = 0.08;
     const tolIY = 0.16;
 
-    // Step 1: Query database for matches with similar MS odds (indexed and fast)
     let q = supabase
       .from('past_matches')
       .select('id, match_date, home_team, away_team, league, ms_score, iy_score, ms_1_odd, ms_0_odd, ms_2_odd, iy_1_odd, iy_0_odd, iy_2_odd')
@@ -133,7 +147,7 @@ async function analyzeOddsPattern(odds: { ms1: number; ms0: number; ms2: number;
     if (ms0 > 0) q = q.gte('ms_0_odd', ms0 - tolMS).lte('ms_0_odd', ms0 + tolMS);
     if (ms2 > 0) q = q.gte('ms_2_odd', ms2 - tolMS).lte('ms_2_odd', ms2 + tolMS);
 
-    const { data: rawMsData, error } = await q.order('match_date', { ascending: false }).limit(350);
+    const { data: rawMsData, error } = await q.order('match_date', { ascending: false }).limit(300);
 
     if (error || !rawMsData || rawMsData.length === 0) {
       return {
@@ -146,7 +160,6 @@ async function analyzeOddsPattern(odds: { ms1: number; ms0: number; ms2: number;
       };
     }
 
-    // Filter by İY odds in memory
     const exactMsIy: any[] = [];
     const closeMsIy: any[] = [];
 
@@ -177,13 +190,13 @@ async function analyzeOddsPattern(odds: { ms1: number; ms0: number; ms2: number;
     let targetMatches: any[] = [];
     let matchTier: 'exact_ms_iy' | 'close_ms_iy' | 'ms_only' | 'no_history' = 'no_history';
 
-    if (exactMsIy.length >= 6) {
+    if (exactMsIy.length >= 5) {
       targetMatches = exactMsIy;
       matchTier = 'exact_ms_iy';
-    } else if (closeMsIy.length >= 5) {
+    } else if (closeMsIy.length >= 4) {
       targetMatches = closeMsIy;
       matchTier = 'close_ms_iy';
-    } else if (rawMsData.length > 0) {
+    } else {
       targetMatches = rawMsData;
       matchTier = 'ms_only';
     }
@@ -204,7 +217,7 @@ async function analyzeOddsPattern(odds: { ms1: number; ms0: number; ms2: number;
       counts[outcome]++;
       validCount++;
 
-      if (recentMatchesList.length < 15) {
+      if (recentMatchesList.length < 10) {
         recentMatchesList.push({
           id: m.id || `${m.home_team}-${m.match_date}`,
           date: m.match_date,
@@ -245,7 +258,6 @@ async function analyzeOddsPattern(odds: { ms1: number; ms0: number; ms2: number;
         topChoice = item;
       }
 
-      // High odds surprise choices: 1/X, 2/X, 1/2, 2/1
       const isSurprise = ['1/X', '2/X', '1/2', '2/1'].includes(key);
       if (isSurprise && rate >= 12 && cnt >= 2 && rate > maxSurpriseRate) {
         maxSurpriseRate = rate;
@@ -271,7 +283,6 @@ async function analyzeOddsPattern(odds: { ms1: number; ms0: number; ms2: number;
       recentMatches: recentMatchesList
     };
   } catch (err) {
-    console.error('Error analyzing odds pattern:', err);
     return {
       sampleSize: 0,
       matchTier: 'no_history',
@@ -285,134 +296,24 @@ async function analyzeOddsPattern(odds: { ms1: number; ms0: number; ms2: number;
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const dateFilter = searchParams.get('date') || 'all';
-    const refresh = searchParams.get('refresh') === 'true';
-
-    const cacheKey = `iy_ms_bulletin_${dateFilter}`;
-    if (!refresh) {
-      const cached = iyMsCache.get<any>(cacheKey);
-      if (cached) {
-        return NextResponse.json(cached);
-      }
+    const cachedData = loadCacheFromDisk();
+    if (cachedData && cachedData.matches && cachedData.matches.length > 0) {
+      return NextResponse.json(cachedData);
     }
 
-    // 1. Fetch current live bulletin matches
-    const rawMatches = await fetchMackolikMatches();
-    if (!rawMatches || rawMatches.length === 0) {
-      return NextResponse.json({
-        success: true,
-        matches: [],
-        availableDates: [],
-        availableLeagues: [],
-        stats: { totalAnalyzed: 0, highConfidenceCount: 0, surpriseCount: 0 }
-      });
-    }
-
-    // Filter football matches with available odds
-    const matchesWithOdds = rawMatches.filter((m: any) => {
-      const ms1 = parseFloat(String(m.ms1 || '').replace(',', '.')) || 0;
-      const ms0 = parseFloat(String(m.msX || m.ms0 || '').replace(',', '.')) || 0;
-      const ms2 = parseFloat(String(m.ms2 || '').replace(',', '.')) || 0;
-      return ms1 > 0 && ms0 > 0 && ms2 > 0;
-    });
-
-    // Extract unique dates & leagues
-    const dateSet = new Set<string>();
-    const leagueSet = new Set<string>();
-
-    matchesWithOdds.forEach((m: any) => {
-      if (m.date) dateSet.add(m.date);
-      if (m.league) leagueSet.add(m.league);
-    });
-
-    const availableDates = Array.from(dateSet);
-    const availableLeagues = Array.from(leagueSet).sort();
-
-    // 2. Process analyses in concurrent chunks
-    const analyzedMatches: MatchIyMsAnalysis[] = [];
-    const concurrency = 15;
-    let cursor = 0;
-
-    async function worker() {
-      while (cursor < matchesWithOdds.length) {
-        const m = matchesWithOdds[cursor++];
-        if (!m) break;
-
-        const ms1 = parseFloat(String(m.ms1 || '').replace(',', '.')) || 0;
-        const ms0 = parseFloat(String(m.msX || m.ms0 || '').replace(',', '.')) || 0;
-        const ms2 = parseFloat(String(m.ms2 || '').replace(',', '.')) || 0;
-        const iy1 = parseFloat(String(m.iy1 || m.iy_1 || '').replace(',', '.')) || 0;
-        const iy0 = parseFloat(String(m.iyX || m.iy_0 || '').replace(',', '.')) || 0;
-        const iy2 = parseFloat(String(m.iy2 || m.iy_2 || '').replace(',', '.')) || 0;
-
-        const oddsObj = { ms1, ms0, ms2, iy1, iy0, iy2 };
-        const analysis = await analyzeOddsPattern(oddsObj);
-
-        analyzedMatches.push({
-          id: String(m.id || m.code || `${m.homeTeam}-${m.awayTeam}`),
-          code: String(m.code || ''),
-          homeTeam: m.homeTeam || 'Ev Sahibi',
-          awayTeam: m.awayTeam || 'Deplasman',
-          league: m.league || 'Lig',
-          date: m.date || '',
-          time: m.time || '',
-          status: m.status || 'MS',
-          score: m.msScore || m.score || '',
-          odds: {
-            ...oddsObj,
-            alt25: m.alt25 || m.alt,
-            ust25: m.ust25 || m.ust,
-            kgVar: m.kgVar,
-            kgYok: m.kgYok
-          },
-          sampleSize: analysis.sampleSize,
-          matchTier: analysis.matchTier,
-          stats: analysis.stats,
-          topOutcome: analysis.topOutcome,
-          surpriseOutcome: analysis.surpriseOutcome,
-          recentMatches: analysis.recentMatches
-        });
-      }
-    }
-
-    const workers = Array(concurrency).fill(null).map(() => worker());
-    await Promise.all(workers);
-
-    // Sort: Matches with highest top rate or highest sample size first
-    analyzedMatches.sort((a, b) => {
-      const rateA = a.topOutcome?.rate || 0;
-      const rateB = b.topOutcome?.rate || 0;
-      if (rateB !== rateA) return rateB - rateA;
-      return (b.sampleSize || 0) - (a.sampleSize || 0);
-    });
-
-    const highConfidenceCount = analyzedMatches.filter(m => (m.topOutcome?.rate || 0) >= 45).length;
-    const surpriseCount = analyzedMatches.filter(m => !m.surpriseOutcome).length;
-
-    const responsePayload = {
+    return NextResponse.json({
       success: true,
       timestamp: Date.now(),
-      availableDates,
-      availableLeagues,
-      stats: {
-        totalAnalyzed: analyzedMatches.length,
-        highConfidenceCount,
-        surpriseCount
-      },
-      matches: analyzedMatches
-    };
-
-    iyMsCache.set(cacheKey, responsePayload);
-
-    return NextResponse.json(responsePayload);
+      availableDates: [],
+      availableLeagues: [],
+      stats: { totalAnalyzed: 0, highConfidenceCount: 0, surpriseCount: 0 },
+      matches: []
+    });
   } catch (error: any) {
-    console.error('İY/MS Analysis Route Error:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
 
-// POST endpoint to analyze a custom match odds input (Manuel Analiz / Oran Simülatörü)
 export async function POST(request: Request) {
   try {
     const body = await request.json();
