@@ -501,7 +501,7 @@ export default function GolAnaliziPage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 md:gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 md:gap-3">
               {/* 1. İlk Yarı 1.5 Üst */}
               <div className={`p-3.5 rounded-2xl border text-center transition-all ${
                 isDark ? 'bg-cyan-950/30 border-cyan-900/40' : 'bg-cyan-50 border-cyan-200 shadow-sm'
@@ -516,7 +516,21 @@ export default function GolAnaliziPage() {
                 </div>
               </div>
 
-              {/* 2. 2.5 Üst */}
+              {/* 2. Her İki Yarı 1.5 Üst */}
+              <div className={`p-3.5 rounded-2xl border text-center transition-all ${
+                isDark ? 'bg-indigo-950/30 border-indigo-900/40' : 'bg-indigo-50 border-indigo-200 shadow-sm'
+              }`}>
+                <div className="text-[11px] font-bold text-indigo-400 mb-1 flex items-center justify-center gap-1">
+                  <Flame className="w-3.5 h-3.5" />
+                  2Y 1.5 Üst
+                </div>
+                <div className="text-2xl font-black text-indigo-400">%{pastStatsDynamic.herIkiYari15Rate}</div>
+                <div className={`text-[10px] mt-1 font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {pastStatsDynamic.herIkiYari15Won} / {pastStatsDynamic.totalPlayed} Kazandı
+                </div>
+              </div>
+
+              {/* 3. 2.5 Üst */}
               <div className={`p-3.5 rounded-2xl border text-center transition-all ${
                 isDark ? 'bg-emerald-950/30 border-emerald-900/40' : 'bg-emerald-50 border-emerald-200 shadow-sm'
               }`}>
@@ -527,7 +541,7 @@ export default function GolAnaliziPage() {
                 </div>
               </div>
 
-              {/* 3. 3.5 Üst */}
+              {/* 4. 3.5 Üst */}
               <div className={`p-3.5 rounded-2xl border text-center transition-all ${
                 isDark ? 'bg-teal-950/30 border-teal-900/40' : 'bg-teal-50 border-teal-200 shadow-sm'
               }`}>
@@ -538,7 +552,7 @@ export default function GolAnaliziPage() {
                 </div>
               </div>
 
-              {/* 4. 4.5 Üst */}
+              {/* 5. 4.5 Üst */}
               <div className={`p-3.5 rounded-2xl border text-center transition-all ${
                 isDark ? 'bg-amber-950/30 border-amber-900/40' : 'bg-amber-50 border-amber-200 shadow-sm'
               }`}>
@@ -549,7 +563,7 @@ export default function GolAnaliziPage() {
                 </div>
               </div>
 
-              {/* 5. 5.5 Üst */}
+              {/* 6. 5.5 Üst */}
               <div className={`p-3.5 rounded-2xl border text-center transition-all ${
                 isDark ? 'bg-orange-950/30 border-orange-900/40' : 'bg-orange-50 border-orange-200 shadow-sm'
               }`}>
@@ -560,7 +574,7 @@ export default function GolAnaliziPage() {
                 </div>
               </div>
 
-              {/* 6. +6 Gol / 6.5 Üst */}
+              {/* 7. +6 Gol / 6.5 Üst */}
               <div className={`p-3.5 rounded-2xl border text-center transition-all ${
                 isDark ? 'bg-purple-950/30 border-purple-900/40' : 'bg-purple-50 border-purple-200 shadow-sm'
               }`}>
@@ -571,7 +585,7 @@ export default function GolAnaliziPage() {
                 </div>
               </div>
 
-              {/* 7. KG Var */}
+              {/* 8. KG Var */}
               <div className={`p-3.5 rounded-2xl border text-center transition-all ${
                 isDark ? 'bg-sky-950/30 border-sky-900/40' : 'bg-sky-50 border-sky-200 shadow-sm'
               }`}>
@@ -1149,8 +1163,8 @@ export default function GolAnaliziPage() {
                             </div>
                           </div>
 
-                          {/* OUTCOME MARKET PILLS: İY 1.5, 2.5 Üst, 3.5 Üst, KG Var, 5.5 Üst */}
-                          <div className="grid grid-cols-5 gap-1 text-center text-[10px] sm:text-[11px]">
+                          {/* OUTCOME MARKET PILLS: İY 1.5, 2Y 1.5, 2.5 Üst, 3.5 Üst, KG Var, 5.5 Üst */}
+                          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 text-center text-[10px] sm:text-[11px]">
                             {/* İY 1.5 Üst */}
                             <div className={`p-1.5 rounded-lg border font-black flex items-center justify-center gap-0.5 ${
                               isHtOver15
@@ -1158,7 +1172,17 @@ export default function GolAnaliziPage() {
                                 : 'bg-slate-900/50 border-slate-800 text-slate-500 opacity-60'
                             }`}>
                               {isHtOver15 ? <Check className="w-3 h-3 text-cyan-400" /> : <X className="w-3 h-3 text-slate-600" />}
-                              <span>İY 1.5 ÜST</span>
+                              <span>İY 1.5</span>
+                            </div>
+
+                            {/* Her İki Yarı 1.5 Üst */}
+                            <div className={`p-1.5 rounded-lg border font-black flex items-center justify-center gap-0.5 ${
+                              m.isHerIkiYari15UstWon
+                                ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-400'
+                                : 'bg-slate-900/50 border-slate-800 text-slate-500 opacity-60'
+                            }`}>
+                              {m.isHerIkiYari15UstWon ? <Check className="w-3 h-3 text-indigo-400" /> : <X className="w-3 h-3 text-slate-600" />}
+                              <span>2Y 1.5</span>
                             </div>
 
                             {/* 2.5 Üst */}
