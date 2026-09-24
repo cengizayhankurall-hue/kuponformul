@@ -287,7 +287,17 @@ export default function GolAnaliziPage() {
     const ust45Won = list.filter(m => (m.totalGoals || 0) >= 5).length;
     const ust55Won = list.filter(m => (m.totalGoals || 0) >= 6).length;
     const ust65Won = list.filter(m => (m.totalGoals || 0) >= 7).length;
-    const herIkiYari15Won = list.filter(m => m.isHerIkiYari15UstWon).length;
+    const herIkiYari15Won = list.filter(m => {
+      if (m.isHerIkiYari15UstWon !== undefined) return m.isHerIkiYari15UstWon;
+      if (m.score && m.halfTimeScore) {
+        const [msH, msA] = m.score.split('-').map(Number);
+        const [iyH, iyA] = m.halfTimeScore.split('-').map(Number);
+        const ht = (iyH + iyA) >= 2;
+        const sh = (msH - iyH) + (msA - iyA) >= 2;
+        return ht && sh;
+      }
+      return false;
+    }).length;
     const kgVarWon = list.filter(m => m.isKgVarWon).length;
     const totalGoals = list.reduce((sum, m) => sum + (m.totalGoals || 0), 0);
 

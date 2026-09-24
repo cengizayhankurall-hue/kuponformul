@@ -1,5 +1,5 @@
 {
-  "timestamp": 1790237795387,
+  "timestamp": 1790238548496,
   "dateRange": [
     "23.09.2026"
   ],
@@ -11,8 +11,8 @@
     "exactMatchCount": 0,
     "overallRates": {
       "totalPlayed": 9,
-      "ht15Won": 0,
-      "ht15Rate": 0,
+      "ht15Won": 3,
+      "ht15Rate": 33,
       "ust25Won": 6,
       "ust25Rate": 67,
       "ust35Won": 5,
@@ -23,16 +23,16 @@
       "ust55Rate": 22,
       "ust65Won": 2,
       "ust65Rate": 22,
-      "herIkiYari15Won": 0,
-      "herIkiYari15Rate": 0,
+      "herIkiYari15Won": 2,
+      "herIkiYari15Rate": 22,
       "kgVarWon": 4,
       "kgVarRate": 44,
       "avgGoals": 3.78
     },
     "diff020Rates": {
       "totalPlayed": 7,
-      "ht15Won": 0,
-      "ht15Rate": 0,
+      "ht15Won": 2,
+      "ht15Rate": 29,
       "ust25Won": 6,
       "ust25Rate": 86,
       "ust35Won": 5,
@@ -43,8 +43,8 @@
       "ust55Rate": 29,
       "ust65Won": 2,
       "ust65Rate": 29,
-      "herIkiYari15Won": 0,
-      "herIkiYari15Rate": 0,
+      "herIkiYari15Won": 2,
+      "herIkiYari15Rate": 29,
       "kgVarWon": 3,
       "kgVarRate": 43,
       "avgGoals": 4.57
@@ -97,7 +97,7 @@
         "kgYok": "1.26"
       },
       "score": "4 - 0",
-      "halfTimeScore": "0 - 0",
+      "halfTimeScore": "1 - 0",
       "status": "MS",
       "totalGoals": 4,
       "isHtOver15": false,
@@ -135,7 +135,7 @@
         "kgYok": "1.09"
       },
       "score": "3 - 1",
-      "halfTimeScore": "0 - 0",
+      "halfTimeScore": "1 - 0",
       "status": "MS",
       "totalGoals": 4,
       "isHtOver15": false,
@@ -173,7 +173,7 @@
         "kgYok": "1.19"
       },
       "score": "2 - 1",
-      "halfTimeScore": "0 - 0",
+      "halfTimeScore": "1 - 0",
       "status": "MS",
       "totalGoals": 3,
       "isHtOver15": false,
@@ -211,7 +211,7 @@
         "kgYok": "1.26"
       },
       "score": "5 - 0",
-      "halfTimeScore": "0 - 0",
+      "halfTimeScore": "1 - 0",
       "status": "MS",
       "totalGoals": 5,
       "isHtOver15": false,
@@ -249,7 +249,7 @@
         "kgYok": "0.0"
       },
       "score": "1 - 0",
-      "halfTimeScore": "0 - 0",
+      "halfTimeScore": "1 - 0",
       "status": "MS",
       "totalGoals": 1,
       "isHtOver15": false,
@@ -287,17 +287,17 @@
         "kgYok": "0.0"
       },
       "score": "0 - 8",
-      "halfTimeScore": "0 - 0",
+      "halfTimeScore": "0 - 4",
       "status": "MS",
       "totalGoals": 8,
-      "isHtOver15": false,
+      "isHtOver15": true,
       "isUst25Won": true,
       "isUst35Won": true,
       "isUst45Won": true,
       "isUst55Won": true,
       "isUst65Won": true,
       "isKgVarWon": false,
-      "isHerIkiYari15UstWon": false
+      "isHerIkiYari15UstWon": true
     },
     {
       "id": "4560835",
@@ -325,17 +325,17 @@
         "kgYok": "0.0"
       },
       "score": "5 - 2",
-      "halfTimeScore": "0 - 0",
+      "halfTimeScore": "4 - 1",
       "status": "MS",
       "totalGoals": 7,
-      "isHtOver15": false,
+      "isHtOver15": true,
       "isUst25Won": true,
       "isUst35Won": true,
       "isUst45Won": true,
       "isUst55Won": true,
       "isUst65Won": true,
       "isKgVarWon": true,
-      "isHerIkiYari15UstWon": false
+      "isHerIkiYari15UstWon": true
     },
     {
       "id": "4493558",
@@ -363,10 +363,10 @@
         "kgYok": "-"
       },
       "score": "1 - 1",
-      "halfTimeScore": "0 - 0",
+      "halfTimeScore": "1 - 1",
       "status": "MS",
       "totalGoals": 2,
-      "isHtOver15": false,
+      "isHtOver15": true,
       "isUst25Won": false,
       "isUst35Won": false,
       "isUst45Won": false,

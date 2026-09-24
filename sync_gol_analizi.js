@@ -418,11 +418,21 @@ async function syncPast() {
 
           const msHome = typeof m[12] === 'number' ? m[12] : parseInt(m[12]) || 0;
           const msAway = typeof m[13] === 'number' ? m[13] : parseInt(m[13]) || 0;
-          const iyHome = typeof m[10] === 'number' ? m[10] : parseInt(m[10]) || 0;
-          const iyAway = typeof m[11] === 'number' ? m[11] : parseInt(m[11]) || 0;
+
+          // Parse First Half (İY) Score from m[7] ("4-1") or m[31]/m[32]
+          let iyHome = 0;
+          let iyAway = 0;
+          if (m[7] && String(m[7]).includes('-')) {
+            const parts = String(m[7]).split('-').map(p => parseInt(p.trim()) || 0);
+            iyHome = parts[0] || 0;
+            iyAway = parts[1] || 0;
+          } else if (m[31] !== undefined || m[32] !== undefined) {
+            iyHome = parseInt(String(m[31])) || 0;
+            iyAway = parseInt(String(m[32])) || 0;
+          }
 
           const htGoals = iyHome + iyAway;
-          const shGoals = (msHome - iyHome) + (msAway - iyAway);
+          const shGoals = Math.max(0, msHome - iyHome) + Math.max(0, msAway - iyAway);
           const totalGoals = msHome + msAway;
 
           const isHtOver15 = htGoals >= 2;

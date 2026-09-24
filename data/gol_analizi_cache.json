@@ -1,5 +1,5 @@
 {
-  "timestamp": 1790237790992,
+  "timestamp": 1790238543187,
   "unplayedCount": 402,
   "matches": [
     {
@@ -46,12 +46,12 @@
       "isCloseDiff": true,
       "odds": {
         "ms1": "1.00",
-        "ms0": "6.79",
-        "ms2": "13.75",
-        "alt25": "2.41",
-        "ust25": "1.31",
-        "kgVar": "2.00",
-        "kgYok": "2.66"
+        "ms0": "6.90",
+        "ms2": "14.25",
+        "alt25": "2.45",
+        "ust25": "1.30",
+        "kgVar": "2.01",
+        "kgYok": "2.63"
       }
     },
     {
@@ -731,29 +731,29 @@
       }
     },
     {
-      "id": "4514952",
-      "matchId": "4514952",
-      "eventId": "3158326",
-      "code": "73630",
-      "date": "26.09.2026",
-      "time": "17:00",
-      "league": "İBSL",
-      "homeTeam": "Worthing",
-      "awayTeam": "Halifax",
-      "odd45Ust": 3.57,
-      "odd45Alt": 1.06,
-      "oddHerIkiYari15Ust": 3.47,
-      "oddHerIkiYari15Alt": 2.71,
-      "diff": 0.1,
+      "id": "4419755",
+      "matchId": "4419755",
+      "eventId": "3162692",
+      "code": "71894",
+      "date": "27.09.2026",
+      "time": "05:30",
+      "league": "ABD",
+      "homeTeam": "Los Angeles",
+      "awayTeam": "Colorado",
+      "odd45Ust": 3.82,
+      "odd45Alt": 1.09,
+      "oddHerIkiYari15Ust": 3.73,
+      "oddHerIkiYari15Alt": 2.96,
+      "diff": 0.09,
       "isCloseDiff": true,
       "odds": {
-        "ms1": "1.86",
-        "ms0": "3.25",
-        "ms2": "2.65",
-        "alt25": "2.02",
-        "ust25": "1.37",
-        "kgVar": "1.86",
-        "kgYok": "2.77"
+        "ms1": "1.97",
+        "ms0": "3.40",
+        "ms2": "2.66",
+        "alt25": "2.16",
+        "ust25": "1.40",
+        "kgVar": "1.92",
+        "kgYok": "2.82"
       }
     },
     {
@@ -887,6 +887,32 @@
       }
     },
     {
+      "id": "4514952",
+      "matchId": "4514952",
+      "eventId": "3158326",
+      "code": "73630",
+      "date": "26.09.2026",
+      "time": "17:00",
+      "league": "İBSL",
+      "homeTeam": "Worthing",
+      "awayTeam": "Halifax",
+      "odd45Ust": 3.65,
+      "odd45Alt": 1.05,
+      "oddHerIkiYari15Ust": 3.54,
+      "oddHerIkiYari15Alt": 2.67,
+      "diff": 0.11,
+      "isCloseDiff": true,
+      "odds": {
+        "ms1": "1.86",
+        "ms0": "3.25",
+        "ms2": "2.65",
+        "alt25": "2.02",
+        "ust25": "1.37",
+        "kgVar": "1.86",
+        "kgYok": "2.77"
+      }
+    },
+    {
       "id": "4481867",
       "matchId": "4481867",
       "eventId": "3158847",
@@ -956,12 +982,38 @@
       "isCloseDiff": true,
       "odds": {
         "ms1": "1.00",
-        "ms0": "13.30",
+        "ms0": "13.35",
         "ms2": "17.50",
         "alt25": "-",
         "ust25": "-",
         "kgVar": "3.19",
         "kgYok": "2.25"
+      }
+    },
+    {
+      "id": "4508438",
+      "matchId": "4508438",
+      "eventId": "3157897",
+      "code": "73576",
+      "date": "26.09.2026",
+      "time": "16:30",
+      "league": "GAL",
+      "homeTeam": "Trefelin",
+      "awayTeam": "The New Saints",
+      "odd45Ust": 1.86,
+      "odd45Alt": 1.46,
+      "oddHerIkiYari15Ust": 1.98,
+      "oddHerIkiYari15Alt": 5.08,
+      "diff": 0.12,
+      "isCloseDiff": true,
+      "odds": {
+        "ms1": "17.50",
+        "ms0": "11.75",
+        "ms2": "1.00",
+        "alt25": "-",
+        "ust25": "-",
+        "kgVar": "2.65",
+        "kgYok": "2.23"
       }
     },
     {
@@ -1300,6 +1352,32 @@
         "ust25": "1.48",
         "kgVar": "1.79",
         "kgYok": "3.04"
+      }
+    },
+    {
+      "id": "4489876",
+      "matchId": "4489876",
+      "eventId": "3158028",
+      "code": "73421",
+      "date": "26.09.2026",
+      "time": "17:00",
+      "league": "İN2",
+      "homeTeam": "Rotherham",
+      "awayTeam": "Crewe",
+      "odd45Ust": 4.16,
+      "odd45Alt": null,
+      "oddHerIkiYari15Ust": 3.96,
+      "oddHerIkiYari15Alt": 2.43,
+      "diff": 0.2,
+      "isCloseDiff": true,
+      "odds": {
+        "ms1": "1.84",
+        "ms0": "3.15",
+        "ms2": "2.77",
+        "alt25": "1.83",
+        "ust25": "1.48",
+        "kgVar": "1.79",
+        "kgYok": "3.03"
       }
     },
     {
@@ -1839,9 +1917,9 @@
       "diff": 0.34,
       "isCloseDiff": false,
       "odds": {
-        "ms1": "2.21",
+        "ms1": "2.34",
         "ms0": "2.91",
-        "ms2": "2.35",
+        "ms2": "2.22",
         "alt25": "1.69",
         "ust25": "1.58",
         "kgVar": "1.76",
@@ -2031,6 +2109,32 @@
       }
     },
     {
+      "id": "4565343",
+      "matchId": "4565343",
+      "eventId": "3241194",
+      "code": "72128",
+      "date": "24.09.2026",
+      "time": "13:05",
+      "league": "HAZ",
+      "homeTeam": "Japonya",
+      "awayTeam": "Uruguay",
+      "odd45Ust": 5.49,
+      "odd45Alt": null,
+      "oddHerIkiYari15Ust": 5.03,
+      "oddHerIkiYari15Alt": 2.02,
+      "diff": 0.46,
+      "isCloseDiff": false,
+      "odds": {
+        "ms1": "1.56",
+        "ms0": "3.13",
+        "ms2": "3.84",
+        "alt25": "1.56",
+        "ust25": "1.72",
+        "kgVar": "1.73",
+        "kgYok": "3.67"
+      }
+    },
+    {
       "id": "4516047",
       "matchId": "4516047",
       "eventId": "3158505",
@@ -2158,32 +2262,6 @@
         "ust25": "1.74",
         "kgVar": "1.73",
         "kgYok": "3.72"
-      }
-    },
-    {
-      "id": "4565343",
-      "matchId": "4565343",
-      "eventId": "3241194",
-      "code": "72128",
-      "date": "24.09.2026",
-      "time": "13:05",
-      "league": "HAZ",
-      "homeTeam": "Japonya",
-      "awayTeam": "Uruguay",
-      "odd45Ust": 5.69,
-      "odd45Alt": null,
-      "oddHerIkiYari15Ust": 5.19,
-      "oddHerIkiYari15Alt": 1.99,
-      "diff": 0.5,
-      "isCloseDiff": false,
-      "odds": {
-        "ms1": "1.56",
-        "ms0": "3.13",
-        "ms2": "3.84",
-        "alt25": "1.53",
-        "ust25": "1.75",
-        "kgVar": "1.73",
-        "kgYok": "3.77"
       }
     },
     {
@@ -2468,6 +2546,32 @@
         "ms2": "2.85",
         "alt25": "1.45",
         "ust25": "1.87",
+        "kgVar": "1.72",
+        "kgYok": "4.10"
+      }
+    },
+    {
+      "id": "4565344",
+      "matchId": "4565344",
+      "eventId": "3215624",
+      "code": "72128",
+      "date": "24.09.2026",
+      "time": "14:00",
+      "league": "HAZ",
+      "homeTeam": "Güney Kore",
+      "awayTeam": "Ekvador",
+      "odd45Ust": 6.32,
+      "odd45Alt": null,
+      "oddHerIkiYari15Ust": 5.69,
+      "oddHerIkiYari15Alt": 1.87,
+      "diff": 0.63,
+      "isCloseDiff": false,
+      "odds": {
+        "ms1": "1.96",
+        "ms0": "2.86",
+        "ms2": "2.75",
+        "alt25": "1.45",
+        "ust25": "1.86",
         "kgVar": "1.72",
         "kgYok": "4.10"
       }
@@ -3409,6 +3513,32 @@
       }
     },
     {
+      "id": "4457620",
+      "matchId": "4457620",
+      "eventId": "3153495",
+      "code": "72313",
+      "date": "24.09.2026",
+      "time": "19:00",
+      "league": "AVUL",
+      "homeTeam": "Andorra",
+      "awayTeam": "Malta",
+      "odd45Ust": 14.8,
+      "odd45Alt": null,
+      "oddHerIkiYari15Ust": 12.05,
+      "oddHerIkiYari15Alt": 1.48,
+      "diff": 2.75,
+      "isCloseDiff": false,
+      "odds": {
+        "ms1": "3.08",
+        "ms0": "2.50",
+        "ms2": "2.21",
+        "alt25": "1.20",
+        "ust25": "2.92",
+        "kgVar": "1.88",
+        "kgYok": "7.27"
+      }
+    },
+    {
       "id": "4449928",
       "matchId": "4449928",
       "eventId": "3154972",
@@ -3432,32 +3562,6 @@
         "ust25": "1.47",
         "kgVar": "1.80",
         "kgYok": "3.01"
-      }
-    },
-    {
-      "id": "4457620",
-      "matchId": "4457620",
-      "eventId": "3153495",
-      "code": "72313",
-      "date": "24.09.2026",
-      "time": "19:00",
-      "league": "AVUL",
-      "homeTeam": "Andorra",
-      "awayTeam": "Malta",
-      "odd45Ust": 14.8,
-      "odd45Alt": null,
-      "oddHerIkiYari15Ust": 11.9,
-      "oddHerIkiYari15Alt": 1.48,
-      "diff": 2.9,
-      "isCloseDiff": false,
-      "odds": {
-        "ms1": "3.16",
-        "ms0": "2.52",
-        "ms2": "2.16",
-        "alt25": "1.20",
-        "ust25": "2.91",
-        "kgVar": "1.88",
-        "kgYok": "7.27"
       }
     },
     {
@@ -3659,9 +3763,9 @@
       "diff": 3.74,
       "isCloseDiff": false,
       "odds": {
-        "ms1": "2.13",
-        "ms0": "2.58",
-        "ms2": "2.75",
+        "ms1": "2.07",
+        "ms0": "2.57",
+        "ms2": "2.84",
         "alt25": "1.34",
         "ust25": "2.11",
         "kgVar": "-",
@@ -3844,8 +3948,8 @@
   ],
   "stats": {
     "totalUnplayed": 402,
-    "totalWithBothOdds": 146,
-    "diff020Count": 51,
+    "totalWithBothOdds": 150,
+    "diff020Count": 54,
     "diff010Count": 31,
     "exactMatchCount": 0
   }
