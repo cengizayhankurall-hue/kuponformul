@@ -618,7 +618,7 @@ export default function GolAnaliziPage() {
             <Search className={`absolute left-4 top-3.5 h-4 w-4 ${isDark ? 'text-slate-500' : 'text-slate-500'}`} />
             <input
               type="text"
-              placeholder="Takım, lig veya maç kodu ara (Örn: Real Madrid, Premier League, 34762)..."
+              placeholder="Takım veya lig ara (Örn: Real Madrid, Premier League)..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className={`w-full border rounded-2xl py-3 pl-11 pr-10 text-sm transition shadow-sm ${
@@ -827,14 +827,6 @@ export default function GolAnaliziPage() {
                                 <Target className="w-3 h-3" />
                                 <span>FARK: {m.diff.toFixed(2)}</span>
                               </span>
-
-                              {m.code && (
-                                <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black ${
-                                  isDark ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-slate-100 text-slate-700 border border-slate-300'
-                                }`}>
-                                  Kod: {m.code}
-                                </span>
-                              )}
 
                               <span className={`text-xs font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                                 {m.date} • {m.time}
@@ -1067,14 +1059,6 @@ export default function GolAnaliziPage() {
                                 <Target className="w-3 h-3" />
                                 <span>FARK: {m.diff.toFixed(2)}</span>
                               </span>
-
-                              {m.code && (
-                                <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black ${
-                                  isDark ? 'bg-slate-800 text-slate-300 border border-slate-700' : 'bg-slate-100 text-slate-700 border border-slate-300'
-                                }`}>
-                                  Kod: {m.code}
-                                </span>
-                              )}
 
                               <span className={`text-xs font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                                 {m.date} {m.time ? `• ${m.time}` : ''}
