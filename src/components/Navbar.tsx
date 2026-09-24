@@ -80,6 +80,7 @@ export default function Navbar() {
     { name: 'Nasıl Kullanılır?', href: '/nasil-kullanilir' },
     { name: 'Spor Toto Formül', href: '/spor-toto' },
     { name: 'İddaa & Yapay Zeka', href: '/iddaa' },
+    { name: '⚡ İY / MS Analizi', href: '/iy-ms-analizi' },
     { name: '💥 Patlayan Oranlar', href: '/patlayan-oranlar' },
     { name: '🔥 4.5 & İki Yarı 1.5', href: '/gol-analizi' },
     ...(user ? [
