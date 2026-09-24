@@ -445,7 +445,19 @@ export default function IddaaPage() {
   // PREFETCH: Sayfa yüklendiğinde arkaplanda Günün ve Dünün tahminlerini çek
   useEffect(() => {
     if (matches && matches.length > 0 && dailyPicks === null && !loadingDailyPicks) {
-      const validMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-').slice(0, 80);
+      const trNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
+      const dd = String(trNow.getDate()).padStart(2, '0');
+      const mm = String(trNow.getMonth() + 1).padStart(2, '0');
+      const yyyy = trNow.getFullYear();
+      const todayStr = `${dd}.${mm}.${yyyy}`;
+
+      const targetDate = selectedDate !== 'Tümü' ? selectedDate : todayStr;
+      let dateMatches = matches.filter(m => (m.date === targetDate || String(m.date).replace(/\//g, '.') === targetDate) && !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
+      if (dateMatches.length === 0) {
+        dateMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
+      }
+
+      const validMatches = dateMatches.slice(0, 80);
       if (validMatches.length > 0) {
         setLoadingDailyPicks(true);
         fetch('/api/generate-daily-picks', {
@@ -465,7 +477,7 @@ export default function IddaaPage() {
           .finally(() => setLoadingDailyPicks(false));
       }
     }
-  }, [matches, dailyPicks, loadingDailyPicks]);
+  }, [matches, dailyPicks, loadingDailyPicks, selectedDate]);
 
   useEffect(() => {
     if (matches && matches.length > 0 && yesterdayPicksData === null && !loadingYesterdayPicks) {
@@ -507,7 +519,19 @@ export default function IddaaPage() {
     setDailyPicksError(null);
     
     try {
-      const validMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-').slice(0, 80);
+      const trNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
+      const dd = String(trNow.getDate()).padStart(2, '0');
+      const mm = String(trNow.getMonth() + 1).padStart(2, '0');
+      const yyyy = trNow.getFullYear();
+      const todayStr = `${dd}.${mm}.${yyyy}`;
+
+      const targetDate = selectedDate !== 'Tümü' ? selectedDate : todayStr;
+      let dateMatches = matches.filter(m => (m.date === targetDate || String(m.date).replace(/\//g, '.') === targetDate) && !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
+      if (dateMatches.length === 0) {
+        dateMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
+      }
+
+      const validMatches = dateMatches.slice(0, 80);
       const res = await fetch('/api/generate-daily-picks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
