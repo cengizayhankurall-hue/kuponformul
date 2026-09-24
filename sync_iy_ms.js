@@ -47,7 +47,7 @@ function httpsGet(urlStr, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Prog
 }
 
 function cleanNum(val) {
-  if (val === undefined || val === null || val === '' || val === '-' || val === '0,00' || val === '0.00') return 0;
+  if (val === undefined || val === null || val === '' || val === '-' || val === '0,00' || val === '0.00' || val === '0') return 0;
   const cleaned = String(val).replace(',', '.');
   const num = Number(cleaned);
   return isNaN(num) ? 0 : num;
@@ -244,14 +244,15 @@ async function syncIyMs() {
               const id = String(m[0] || `${m[1]}-${m[3]}`);
               if (!seenIds.has(id)) {
                 seenIds.add(id);
-                const ms1 = cleanNum(m[16] || m[8]);
-                const ms0 = cleanNum(m[17] || m[9]);
-                const ms2 = cleanNum(m[18] || m[10]);
-                const iy1 = cleanNum(m[28]);
-                const iy0 = cleanNum(m[29]);
-                const iy2 = cleanNum(m[30]);
+                const ms1 = cleanNum(m[16]);
+                const ms0 = cleanNum(m[17]);
+                const ms2 = cleanNum(m[18]);
+                const iy1 = cleanNum(m[33]);
+                const iy0 = cleanNum(m[34]);
+                const iy2 = cleanNum(m[35]);
 
-                if (ms1 > 0 && ms0 > 0 && ms2 > 0) {
+                // SADECE HEM MS (1-0-2) HEM DE İY (1-0-2) ORANLARI AÇILMIŞ MAÇLAR
+                if (ms1 > 0 && ms0 > 0 && ms2 > 0 && iy1 > 0 && iy0 > 0 && iy2 > 0) {
                   rawMatches.push({
                     id,
                     code: String(m[49] || m[4] || id.slice(0, 5)),
@@ -273,7 +274,7 @@ async function syncIyMs() {
     }
   }));
 
-  console.log(`Bültende ${rawMatches.length} maç bulundu. 388k maçlık arşivde oran analizi yapılıyor...`);
+  console.log(`Bültende HEM MS HEM İY ORANI AÇIK ${rawMatches.length} maç bulundu. 388k maçlık arşivde oran analizi yapılıyor...`);
 
   const analyzedMatches = [];
   const concurrency = 30;
