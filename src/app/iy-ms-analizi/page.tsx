@@ -187,6 +187,27 @@ export default function IyMsAnaliziPage() {
     '2/2': 'İY 2 / MS 2'
   };
 
+  const getIyMsEstimatedOdds = (ms1: number, ms0: number, ms2: number, iy1: number, iy0: number, iy2: number): Record<string, number> => {
+    const m1 = ms1 || 2.0;
+    const m0 = ms0 || 3.0;
+    const m2 = ms2 || 3.0;
+    const i1 = iy1 || (m1 < 2 ? m1 * 1.25 : 2.6);
+    const i0 = iy0 || (m0 < 3 ? 1.9 : 2.1);
+    const i2 = iy2 || (m2 < 2 ? m2 * 1.25 : 3.4);
+
+    return {
+      '1/1': Number(Math.max(1.15, (i1 * 0.78) + (m1 * 0.38)).toFixed(2)),
+      'X/1': Number(Math.max(3.20, (i0 * 0.92) + (m1 * 1.75)).toFixed(2)),
+      '2/1': Number(Math.max(18.0, (i2 * 3.0) + (m1 * 3.5)).toFixed(2)),
+      '1/X': Number(Math.max(11.0, (i1 * 3.0) + (m0 * 2.0)).toFixed(2)),
+      'X/X': Number(Math.max(3.30, (i0 * 1.10) + (m0 * 0.60)).toFixed(2)),
+      '2/X': Number(Math.max(11.0, (i2 * 3.0) + (m0 * 2.0)).toFixed(2)),
+      '1/2': Number(Math.max(18.0, (i1 * 3.0) + (m2 * 3.5)).toFixed(2)),
+      'X/2': Number(Math.max(3.20, (i0 * 0.92) + (m2 * 1.75)).toFixed(2)),
+      '2/2': Number(Math.max(1.15, (i2 * 0.78) + (m2 * 0.38)).toFixed(2))
+    };
+  };
+
   return (
     <div className={`min-h-screen transition-colors duration-200 ${isDark ? 'bg-[#0B0F17] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
       <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8">
@@ -402,6 +423,14 @@ export default function IyMsAnaliziPage() {
                         const stat = simResult.stats?.[key] || { rate: 0, count: 0 };
                         const isTop = simResult.topOutcome?.key === key;
                         const isSurprise = ['1/X', '2/X', '1/2', '2/1'].includes(key) && stat.rate >= 12;
+                        const estOdds = getIyMsEstimatedOdds(
+                          parseFloat(simOdds.ms1) || 0,
+                          parseFloat(simOdds.ms0) || 0,
+                          parseFloat(simOdds.ms2) || 0,
+                          parseFloat(simOdds.iy1) || 0,
+                          parseFloat(simOdds.iy0) || 0,
+                          parseFloat(simOdds.iy2) || 0
+                        );
 
                         return (
                           <div
@@ -417,7 +446,10 @@ export default function IyMsAnaliziPage() {
                             }`}
                           >
                             <div className="text-[11px] font-black">{key}</div>
-                            <div className="text-lg font-black mt-0.5">%{stat.rate}</div>
+                            <div className="text-base font-black mt-0.5">%{stat.rate}</div>
+                            <div className="text-[11px] font-black text-emerald-400 my-0.5">
+                              {estOdds[key] ? estOdds[key].toFixed(2) : '-'}
+                            </div>
                             <div className="text-[9px] opacity-70 font-semibold">{stat.count} Maç</div>
                           </div>
                         );
@@ -725,11 +757,19 @@ export default function IyMsAnaliziPage() {
                             const stat = m.stats?.[key] || { rate: 0, count: 0 };
                             const isTop = top?.key === key && stat.rate > 0;
                             const isSurprise = surprise?.key === key;
+                            const estOdds = getIyMsEstimatedOdds(
+                              m.odds.ms1,
+                              m.odds.ms0,
+                              m.odds.ms2,
+                              m.odds.iy1,
+                              m.odds.iy0,
+                              m.odds.iy2
+                            );
 
                             return (
                               <div
                                 key={key}
-                                className={`p-2 rounded-xl border transition ${
+                                className={`p-1.5 sm:p-2 rounded-xl border transition ${
                                   isTop
                                     ? 'bg-amber-500/20 border-amber-500/60 text-amber-400 ring-1 ring-amber-500/30 font-black'
                                     : isSurprise
@@ -739,9 +779,12 @@ export default function IyMsAnaliziPage() {
                                         : 'bg-white border-slate-200 text-slate-700'
                                 }`}
                               >
-                                <div className="text-[10px] opacity-80">{key}</div>
+                                <div className="text-[10px] font-bold opacity-80">{key}</div>
                                 <div className={`text-sm font-black mt-0.5 ${isTop ? 'text-amber-400' : isSurprise ? 'text-purple-300' : ''}`}>
                                   %{stat.rate}
+                                </div>
+                                <div className="text-[10px] font-black text-emerald-400 my-0.5">
+                                  {estOdds[key] ? estOdds[key].toFixed(2) : '-'}
                                 </div>
                                 <div className="text-[9px] opacity-50">{stat.count} Maç</div>
                               </div>
