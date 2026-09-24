@@ -294,11 +294,12 @@ async function syncUpcoming() {
   return data;
 }
 
-// 2. SCAN PAST 3-4 DAYS FINISHED MATCHES
+// 2. SCAN ONLY YESTERDAY'S FINISHED MATCHES (1 GÜN ÖNCESİ)
 async function syncPast() {
-  console.log('\n--- 2. GEÇMİŞ BİTEN MAÇLAR VE DOĞRULAMA TARANIYOR ---');
+  console.log('\n--- 2. DÜNÜN (1 GÜN ÖNCESİNİN) BİTEN MAÇLARI TARANIYOR ---');
   const pastDates = [];
-  for (let i = 1; i <= 3; i++) {
+  // Sadece 1 gün öncesi (Dün)
+  for (let i = 1; i <= 1; i++) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const dd = String(d.getDate()).padStart(2, '0');
@@ -331,7 +332,7 @@ async function syncPast() {
     }
   }));
 
-  console.log(`Son 3 günde toplam ${allFinished.length} bitmiş maç bulundu. Oranları taranıyor...`);
+  console.log(`Dün toplam ${allFinished.length} bitmiş maç bulundu. Oranları taranıyor...`);
 
   const queue = [...allFinished];
   const results = [];
@@ -460,6 +461,7 @@ async function syncPast() {
             halfTimeScore: `${iyHome} - ${iyAway}`,
             status: 'MS',
             totalGoals,
+            isHtOver15,
             isUst25Won: isOver25,
             isUst35Won: isOver35,
             isUst45Won: isOver45,
@@ -490,7 +492,8 @@ async function syncPast() {
 
   const calculateRates = (list) => {
     const total = list.length;
-    if (total === 0) return { total: 0, ust25Rate: 0, ust35Rate: 0, ust45Rate: 0, ust55Rate: 0, ust65Rate: 0, herIkiYari15Rate: 0, kgVarRate: 0, avgGoals: 0 };
+    if (total === 0) return { total: 0, ht15Won: 0, ht15Rate: 0, ust25Won: 0, ust25Rate: 0, ust35Won: 0, ust35Rate: 0, ust45Won: 0, ust45Rate: 0, ust55Won: 0, ust55Rate: 0, ust65Won: 0, ust65Rate: 0, herIkiYari15Won: 0, herIkiYari15Rate: 0, kgVarWon: 0, kgVarRate: 0, avgGoals: 0 };
+    const ht15 = list.filter(m => m.isHtOver15).length;
     const u25 = list.filter(m => m.isUst25Won).length;
     const u35 = list.filter(m => m.isUst35Won).length;
     const u45 = list.filter(m => m.isUst45Won).length;
@@ -501,6 +504,8 @@ async function syncPast() {
     const totalG = list.reduce((acc, m) => acc + (m.totalGoals || 0), 0);
     return {
       totalPlayed: total,
+      ht15Won: ht15,
+      ht15Rate: Math.round((ht15 / total) * 100),
       ust25Won: u25,
       ust25Rate: Math.round((u25 / total) * 100),
       ust35Won: u35,
@@ -543,7 +548,7 @@ async function syncPast() {
   if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
   fs.writeFileSync(path.join(publicDir, 'gol_analizi_past_cache.json'), JSON.stringify(pastData, null, 2), 'utf-8');
 
-  console.log(`Geçmiş Biten Maçlar Kaydedildi: ${results.length} maç (Fark <= 0.20: ${diff020.length} maç)`);
+  console.log(`Dünün Biten Maçları Kaydedildi: ${results.length} maç (Fark <= 0.20: ${diff020.length} maç)`);
   return pastData;
 }
 
