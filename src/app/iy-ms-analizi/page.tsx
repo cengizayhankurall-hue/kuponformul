@@ -22,25 +22,44 @@ import {
   HelpCircle,
   BarChart3,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Clock,
+  Layers,
+  CheckCircle2,
+  XCircle
 } from 'lucide-react';
-import { MatchIyMsAnalysis, IyMsOutcomeStats, PastSimilarMatch } from '../api/iy-ms-analizi/route';
+import { MatchIyMsAnalysis, IyMsOutcomeStats, PastSimilarMatch, IyMsPastMatch } from '../api/iy-ms-analizi/route';
+
+interface IyMsApiResponse {
+  success: boolean;
+  timestamp: number;
+  availableDates: string[];
+  availableLeagues: string[];
+  stats: { totalAnalyzed: number; highConfidenceCount: number; surpriseCount: number };
+  matches: MatchIyMsAnalysis[];
+  pastStats?: {
+    date: string;
+    totalFinished: number;
+    topHitCount: number;
+    topHitRate: number;
+    surpriseHitCount: number;
+    outcomeCounts: Record<string, number>;
+  };
+  pastMatches?: IyMsPastMatch[];
+}
 
 export default function IyMsAnaliziPage() {
-  const [data, setData] = useState<{
-    matches: MatchIyMsAnalysis[];
-    availableDates: string[];
-    availableLeagues: string[];
-    stats: { totalAnalyzed: number; highConfidenceCount: number; surpriseCount: number };
-  } | null>(null);
-
+  const [data, setData] = useState<IyMsApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [isDark, setIsDark] = useState(true);
 
+  // View Mode: 'all' (Bülten + Dünün Sonuçları), 'upcoming' (Sadece Gelecek), 'past' (Dünün Sonuçları)
+  const [viewMode, setViewMode] = useState<'all' | 'upcoming' | 'past'>('all');
+
   // Filters
   const [categoryFilter, setCategoryFilter] = useState<'all' | 'high_confidence' | 'surprise' | 'x_fav' | 'fav_direct'>('all');
-  const [selectedDate, setSelectedDate] = useState<string>('all');
+  const [selectedUpcomingDate, setSelectedUpcomingDate] = useState<string>('all');
   const [selectedLeague, setSelectedLeague] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -71,7 +90,7 @@ export default function IyMsAnaliziPage() {
     try {
       const url = forceRefresh ? '/api/iy-ms-analizi?refresh=true' : '/api/iy-ms-analizi';
       const res = await fetch(url);
-      const json = await res.json();
+      const json: IyMsApiResponse = await res.json();
       if (json.success) {
         setData(json);
       }
@@ -126,11 +145,14 @@ export default function IyMsAnaliziPage() {
     }
   };
 
-  // Filtered Matches
-  const filteredMatches = useMemo(() => {
+  // Filtered Upcoming Matches (Sadece sampleSize > 0 olanlar)
+  const filteredUpcomingMatches = useMemo(() => {
     if (!data?.matches) return [];
 
     return data.matches.filter(m => {
+      // 0 Benzer Maç Olanları Kesinlikle Gösterme
+      if ((m.sampleSize || 0) < 1) return false;
+
       // 1. Category Filter
       if (categoryFilter === 'high_confidence') {
         if ((m.topOutcome?.rate || 0) < 45) return false;
@@ -145,7 +167,7 @@ export default function IyMsAnaliziPage() {
       }
 
       // 2. Date Filter
-      if (selectedDate !== 'all' && m.date !== selectedDate) return false;
+      if (selectedUpcomingDate !== 'all' && m.date !== selectedUpcomingDate) return false;
 
       // 3. League Filter
       if (selectedLeague !== 'all' && m.league !== selectedLeague) return false;
@@ -161,13 +183,65 @@ export default function IyMsAnaliziPage() {
 
       return true;
     });
-  }, [data, categoryFilter, selectedDate, selectedLeague, searchTerm]);
+  }, [data, categoryFilter, selectedUpcomingDate, selectedLeague, searchTerm]);
 
-  // Date Counts
+  // Filtered Past Matches (Dünün Sonuçları)
+  const filteredPastMatches = useMemo(() => {
+    if (!data?.pastMatches) return [];
+
+    return data.pastMatches.filter(m => {
+      // 0 Benzer Maç Olanları Kesinlikle Gösterme
+      if ((m.sampleSize || 0) < 1) return false;
+
+      // 1. Category Filter
+      if (categoryFilter === 'high_confidence') {
+        if ((m.topOutcome?.rate || 0) < 45) return false;
+      } else if (categoryFilter === 'surprise') {
+        if (!m.surpriseOutcome) return false;
+      } else if (categoryFilter === 'x_fav') {
+        const topKey = m.topOutcome?.key;
+        if (topKey !== 'X/1' && topKey !== 'X/2') return false;
+      } else if (categoryFilter === 'fav_direct') {
+        const topKey = m.topOutcome?.key;
+        if (topKey !== '1/1' && topKey !== '2/2') return false;
+      }
+
+      // 2. League Filter
+      if (selectedLeague !== 'all' && m.league !== selectedLeague) return false;
+
+      // 3. Search Filter
+      if (searchTerm.trim()) {
+        const q = searchTerm.toLowerCase();
+        const inHome = m.homeTeam.toLowerCase().includes(q);
+        const inAway = m.awayTeam.toLowerCase().includes(q);
+        const inLeague = m.league.toLowerCase().includes(q);
+        if (!inHome && !inAway && !inLeague) return false;
+      }
+
+      return true;
+    });
+  }, [data, categoryFilter, selectedLeague, searchTerm]);
+
+  // Combined Matches depending on viewMode
+  const displayedMatches = useMemo(() => {
+    if (viewMode === 'upcoming') {
+      return filteredUpcomingMatches.map(m => ({ ...m, isPastMatch: false }));
+    }
+    if (viewMode === 'past') {
+      return filteredPastMatches.map(m => ({ ...m, isPastMatch: true }));
+    }
+    // 'all' -> Past matches first or mixed
+    const past = filteredPastMatches.map(m => ({ ...m, isPastMatch: true }));
+    const upcoming = filteredUpcomingMatches.map(m => ({ ...m, isPastMatch: false }));
+    return [...past, ...upcoming];
+  }, [viewMode, filteredUpcomingMatches, filteredPastMatches]);
+
+  // Date Counts for Upcoming Matches
   const dateCounts = useMemo(() => {
     if (!data?.matches) return {};
-    const counts: Record<string, number> = { all: data.matches.length };
-    data.matches.forEach(m => {
+    const validMatches = data.matches.filter(m => (m.sampleSize || 0) > 0);
+    const counts: Record<string, number> = { all: validMatches.length };
+    validMatches.forEach(m => {
       if (m.date) {
         counts[m.date] = (counts[m.date] || 0) + 1;
       }
@@ -207,6 +281,8 @@ export default function IyMsAnaliziPage() {
       '2/2': Number(Math.max(1.15, (i2 * 0.78) + (m2 * 0.38)).toFixed(2))
     };
   };
+
+  const pastStats = data?.pastStats;
 
   return (
     <div className={`min-h-screen transition-colors duration-200 ${isDark ? 'bg-[#0B0F17] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
@@ -461,12 +537,101 @@ export default function IyMsAnaliziPage() {
             </div>
           )}
 
+          {/* VIEW MODE TABS (Tümünü Göster / Gelecek Bülten / Dünün Sonuçları) */}
+          <div className="flex items-center gap-2.5 mt-6 pt-5 border-t border-slate-800/40 flex-wrap">
+            <button
+              onClick={() => setViewMode('all')}
+              className={`px-4 py-2.5 rounded-2xl font-black text-xs md:text-sm flex items-center gap-2 transition cursor-pointer shadow-sm ${
+                viewMode === 'all'
+                  ? isDark
+                    ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-indigo-500/20 shadow-lg'
+                    : 'bg-slate-900 text-white shadow-md'
+                  : isDark
+                    ? 'bg-slate-900/60 text-slate-400 border border-slate-800 hover:text-slate-200 hover:bg-slate-800/60'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+              }`}
+            >
+              <Layers className="w-4 h-4" />
+              <span>Tümünü Göster (Bülten + Dünün Sonuçları)</span>
+            </button>
+
+            <button
+              onClick={() => setViewMode('upcoming')}
+              className={`px-4 py-2.5 rounded-2xl font-black text-xs md:text-sm flex items-center gap-2 transition cursor-pointer shadow-sm ${
+                viewMode === 'upcoming'
+                  ? isDark
+                    ? 'bg-indigo-600 text-white shadow-indigo-500/20 shadow-lg'
+                    : 'bg-indigo-600 text-white shadow-md'
+                  : isDark
+                    ? 'bg-slate-900/60 text-slate-400 border border-slate-800 hover:text-slate-200 hover:bg-slate-800/60'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+              }`}
+            >
+              <Clock className="w-4 h-4" />
+              <span>Gelecek Bülten ({filteredUpcomingMatches.length})</span>
+            </button>
+
+            <button
+              onClick={() => setViewMode('past')}
+              className={`px-4 py-2.5 rounded-2xl font-black text-xs md:text-sm flex items-center gap-2 transition cursor-pointer shadow-sm ${
+                viewMode === 'past'
+                  ? isDark
+                    ? 'bg-amber-500 text-slate-950 shadow-amber-500/20 shadow-lg font-black'
+                    : 'bg-amber-500 text-slate-950 shadow-md font-black'
+                  : isDark
+                    ? 'bg-slate-900/60 text-slate-400 border border-slate-800 hover:text-slate-200 hover:bg-slate-800/60'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+              }`}
+            >
+              <History className="w-4 h-4" />
+              <span>Dünün Sonuçları ({data?.pastMatches?.length || 0})</span>
+            </button>
+          </div>
+
+          {/* DÜNÜN İY/MS BAŞARI KARNESİ */}
+          {(viewMode === 'all' || viewMode === 'past') && pastStats && (
+            <div className={`mt-6 pt-5 border-t border-slate-800/40`}>
+              <div className="flex items-center justify-between mb-3 px-1 flex-wrap gap-2">
+                <span className={`text-xs font-black uppercase tracking-wider flex items-center gap-1.5 ${isDark ? 'text-amber-400' : 'text-amber-700'}`}>
+                  <Award className="w-4 h-4 text-amber-500" />
+                  Dünün ({pastStats.date}) İY/MS Sonuç Karnesi ({pastStats.totalFinished} Biten Maç)
+                </span>
+                <span className={`text-xs font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  Top Tahmin İsabeti: <strong className="text-emerald-400 text-sm">%{pastStats.topHitRate}</strong> ({pastStats.topHitCount}/{pastStats.totalFinished})
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2.5">
+                <div className={`p-3.5 rounded-2xl border text-center transition ${isDark ? 'bg-emerald-950/30 border-emerald-900/40' : 'bg-emerald-50 border-emerald-200 shadow-sm'}`}>
+                  <div className="text-[11px] font-bold text-emerald-400 mb-0.5">Top Tahmin İsabeti</div>
+                  <div className="text-2xl font-black text-emerald-400">%{pastStats.topHitRate}</div>
+                  <div className="text-[10px] opacity-70 font-semibold">{pastStats.topHitCount} / {pastStats.totalFinished} Maç</div>
+                </div>
+
+                <div className={`p-3.5 rounded-2xl border text-center transition ${isDark ? 'bg-purple-950/30 border-purple-900/40' : 'bg-purple-50 border-purple-200 shadow-sm'}`}>
+                  <div className="text-[11px] font-bold text-purple-400 mb-0.5">Sürpriz İsabeti</div>
+                  <div className="text-2xl font-black text-purple-400">{pastStats.surpriseHitCount}</div>
+                  <div className="text-[10px] opacity-70 font-semibold">1/X, 2/X, 1/2, 2/1</div>
+                </div>
+
+                {/* Outcome counts breakdown */}
+                {['1/1', 'X/1', '2/1', '1/2'].map((oc) => (
+                  <div key={oc} className={`p-3.5 rounded-2xl border text-center transition ${isDark ? 'bg-slate-900/70 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+                    <div className="text-[11px] font-bold text-slate-400 mb-0.5">{oc} Gelen</div>
+                    <div className="text-2xl font-black text-amber-400">{pastStats.outcomeCounts?.[oc] || 0}</div>
+                    <div className="text-[10px] opacity-70 font-semibold">Maç</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* İSTATİSTİK ÖZET ROZETLERİ */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-slate-800/40">
             <div className={`p-3.5 rounded-2xl border ${isDark ? 'bg-indigo-950/20 border-indigo-900/40' : 'bg-indigo-50 border-indigo-200 shadow-sm'}`}>
-              <div className="text-xs font-bold text-indigo-400">Analiz Edilen Maç</div>
-              <div className="text-2xl font-black text-indigo-400 mt-1">{data?.stats?.totalAnalyzed || 0}</div>
-              <div className="text-[10px] opacity-70 font-semibold">Canlı Bültenden</div>
+              <div className="text-xs font-bold text-indigo-400">Gelecek Bülten Maçı</div>
+              <div className="text-2xl font-black text-indigo-400 mt-1">{filteredUpcomingMatches.length}</div>
+              <div className="text-[10px] opacity-70 font-semibold">MS + İY Oranları Açık</div>
             </div>
 
             <div className={`p-3.5 rounded-2xl border ${isDark ? 'bg-amber-950/20 border-amber-900/40' : 'bg-amber-50 border-amber-200 shadow-sm'}`}>
@@ -503,7 +668,7 @@ export default function IyMsAnaliziPage() {
             <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
               categoryFilter === 'all' ? 'bg-white/20 text-white' : isDark ? 'bg-slate-800 text-slate-400' : 'bg-slate-100 text-slate-700'
             }`}>
-              {data?.matches?.length || 0}
+              {displayedMatches.length}
             </span>
           </button>
 
@@ -576,44 +741,60 @@ export default function IyMsAnaliziPage() {
 
           {/* Date & League Pills Row */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 flex-wrap">
-            {/* Date Pills */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <button
-                onClick={() => setSelectedDate('all')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
-                  selectedDate === 'all'
-                    ? isDark ? 'bg-indigo-600 text-white border-indigo-600 shadow-md' : 'bg-slate-900 text-white border-slate-900'
-                    : isDark ? 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800/60' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
-                }`}
-              >
-                <span>Tüm Günler</span>
-                <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
-                  selectedDate === 'all' ? 'bg-white/20 text-white' : isDark ? 'bg-slate-800 text-slate-400' : 'bg-slate-100 text-slate-700'
-                }`}>
-                  {dateCounts.all || 0}
-                </span>
-              </button>
-
-              {(data?.availableDates || []).map(d => (
+            {/* Date Pills (Gelecek Bülten Tarihleri) */}
+            {viewMode !== 'past' && (
+              <div className="flex items-center gap-2 flex-wrap">
                 <button
-                  key={d}
-                  onClick={() => setSelectedDate(d)}
+                  onClick={() => setSelectedUpcomingDate('all')}
                   className={`px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
-                    selectedDate === d
-                      ? isDark ? 'bg-indigo-600 text-white border-indigo-600 shadow-md' : 'bg-indigo-600 text-white border-indigo-600 shadow-md'
+                    selectedUpcomingDate === 'all'
+                      ? isDark ? 'bg-indigo-600 text-white border-indigo-600 shadow-md' : 'bg-slate-900 text-white border-slate-900'
                       : isDark ? 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800/60' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
                   }`}
                 >
-                  <Calendar className="w-3.5 h-3.5 opacity-70" />
-                  <span>{formatTurkishDate(d)}</span>
+                  <span>Tüm Günler</span>
                   <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
-                    selectedDate === d ? 'bg-white/20 text-white font-black' : isDark ? 'bg-slate-800 text-slate-400' : 'bg-slate-100 text-slate-700'
+                    selectedUpcomingDate === 'all' ? 'bg-white/20 text-white' : isDark ? 'bg-slate-800 text-slate-400' : 'bg-slate-100 text-slate-700'
                   }`}>
-                    {dateCounts[d] || 0}
+                    {dateCounts.all || 0}
                   </span>
                 </button>
-              ))}
-            </div>
+
+                {(data?.availableDates || []).map(d => (
+                  <button
+                    key={d}
+                    onClick={() => setSelectedUpcomingDate(d)}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap border transition cursor-pointer flex items-center gap-1.5 ${
+                      selectedUpcomingDate === d
+                        ? isDark ? 'bg-indigo-600 text-white border-indigo-600 shadow-md' : 'bg-indigo-600 text-white border-indigo-600 shadow-md'
+                        : isDark ? 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800/60' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Calendar className="w-3.5 h-3.5 opacity-70" />
+                    <span>{formatTurkishDate(d)}</span>
+                    <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
+                      selectedUpcomingDate === d ? 'bg-white/20 text-white font-black' : isDark ? 'bg-slate-800 text-slate-400' : 'bg-slate-100 text-slate-700'
+                    }`}>
+                      {dateCounts[d] || 0}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {viewMode === 'past' && pastStats && (
+              <div className="flex items-center gap-2">
+                <span className={`px-3.5 py-2 rounded-xl text-xs font-black border flex items-center gap-1.5 ${
+                  isDark ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-amber-100 text-amber-800 border-amber-200'
+                }`}>
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Dünün Sonuçları ({formatTurkishDate(pastStats.date)})</span>
+                  <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-amber-500/20 font-black">
+                    {filteredPastMatches.length} Maç
+                  </span>
+                </span>
+              </div>
+            )}
 
             {/* League Dropdown */}
             <div className="flex items-center gap-2">
@@ -645,20 +826,29 @@ export default function IyMsAnaliziPage() {
           </div>
         ) : (
           <div>
-            {filteredMatches.length > 0 ? (
+            {displayedMatches.length > 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {filteredMatches.map((m) => {
+                {displayedMatches.map((m: any) => {
                   const isExpanded = !!expandedMatches[m.id];
                   const top = m.topOutcome;
                   const surprise = m.surpriseOutcome;
+                  const isPast = !!m.isPastMatch || m.status === 'MS';
 
                   return (
                     <div
                       key={m.id}
                       className={`p-5 rounded-3xl border transition-all hover:shadow-xl relative overflow-hidden ${
-                        isDark
-                          ? 'bg-gradient-to-br from-slate-900/95 via-[#111625]/90 to-slate-900/95 border-slate-800 hover:border-indigo-500/40'
-                          : 'bg-white border-slate-200 hover:border-indigo-400 shadow-md'
+                        isPast
+                          ? m.isTopHit
+                            ? isDark
+                              ? 'bg-gradient-to-br from-emerald-950/40 via-slate-900/95 to-slate-900/95 border-emerald-500/40 shadow-emerald-500/5'
+                              : 'bg-emerald-50/30 border-emerald-300 shadow-md'
+                            : isDark
+                              ? 'bg-gradient-to-br from-slate-900/95 via-[#111625]/90 to-slate-900/95 border-slate-800'
+                              : 'bg-white border-slate-200 shadow-md'
+                          : isDark
+                            ? 'bg-gradient-to-br from-slate-900/95 via-[#111625]/90 to-slate-900/95 border-slate-800 hover:border-indigo-500/40'
+                            : 'bg-white border-slate-200 hover:border-indigo-400 shadow-md'
                       }`}
                     >
                       {/* TOP INFO BAR */}
@@ -678,6 +868,12 @@ export default function IyMsAnaliziPage() {
                           <span className={`text-xs font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                             {m.date} {m.time ? `• ${m.time}` : ''}
                           </span>
+
+                          {isPast && (
+                            <span className="px-2 py-0.5 rounded-lg text-[10px] font-black uppercase bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                              Dünün Maçı
+                            </span>
+                          )}
                         </div>
 
                         <div className="text-right">
@@ -688,6 +884,52 @@ export default function IyMsAnaliziPage() {
                           </span>
                         </div>
                       </div>
+
+                      {/* DÜNÜN BİTEN MAÇ SKOR & SONUÇ BANNERI */}
+                      {isPast && (
+                        <div className={`p-3 rounded-2xl border mb-3 flex items-center justify-between gap-2 ${
+                          m.isTopHit
+                            ? isDark ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300' : 'bg-emerald-100/70 border-emerald-300 text-emerald-900'
+                            : isDark ? 'bg-slate-900/90 border-slate-800 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-800'
+                        }`}>
+                          <div className="flex items-center gap-2">
+                            <span className="font-black text-sm md:text-base">
+                              MS: <strong className="text-amber-400">{m.score}</strong>
+                            </span>
+                            <span className="text-xs opacity-75 font-semibold">
+                              (İY: {m.iyScore})
+                            </span>
+                            <span className={`px-2 py-0.5 rounded-lg text-xs font-black uppercase ${
+                              m.actualOutcome === '1/1' || m.actualOutcome === '2/2'
+                                ? 'bg-emerald-500/20 text-emerald-400'
+                                : m.actualOutcome === 'X/1' || m.actualOutcome === 'X/2'
+                                  ? 'bg-amber-500/20 text-amber-400'
+                                  : 'bg-purple-500/20 text-purple-300'
+                            }`}>
+                              Sonuç: {m.actualOutcome}
+                            </span>
+                          </div>
+
+                          <div>
+                            {m.isTopHit ? (
+                              <span className="px-2.5 py-1 rounded-xl text-xs font-black bg-emerald-500 text-slate-950 flex items-center gap-1 shadow-sm">
+                                <CheckCircle2 className="w-3.5 h-3.5" />
+                                <span>Tahmin Kazandı (%{top?.rate})</span>
+                              </span>
+                            ) : m.isSurpriseHit ? (
+                              <span className="px-2.5 py-1 rounded-xl text-xs font-black bg-purple-500 text-white flex items-center gap-1 shadow-sm">
+                                <Flame className="w-3.5 h-3.5" />
+                                <span>Sürpriz Kazandı!</span>
+                              </span>
+                            ) : (
+                              <span className="px-2.5 py-1 rounded-xl text-xs font-bold opacity-70 flex items-center gap-1">
+                                <XCircle className="w-3.5 h-3.5" />
+                                <span>{m.actualOutcome} Geldi</span>
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      )}
 
                       {/* TEAMS BOX */}
                       <div className={`p-4 rounded-2xl border my-3 ${
@@ -757,6 +999,7 @@ export default function IyMsAnaliziPage() {
                             const stat = m.stats?.[key] || { rate: 0, count: 0 };
                             const isTop = top?.key === key && stat.rate > 0;
                             const isSurprise = surprise?.key === key;
+                            const isWinningOutcome = isPast && m.actualOutcome === key;
                             const estOdds = getIyMsEstimatedOdds(
                               m.odds.ms1,
                               m.odds.ms0,
@@ -770,17 +1013,26 @@ export default function IyMsAnaliziPage() {
                               <div
                                 key={key}
                                 className={`p-1.5 sm:p-2 rounded-xl border transition ${
-                                  isTop
-                                    ? 'bg-amber-500/20 border-amber-500/60 text-amber-400 ring-1 ring-amber-500/30 font-black'
-                                    : isSurprise
-                                      ? 'bg-purple-500/20 border-purple-500/60 text-purple-300 ring-1 ring-purple-500/30 font-black'
-                                      : isDark
-                                        ? 'bg-slate-900/60 border-slate-800 text-slate-300'
-                                        : 'bg-white border-slate-200 text-slate-700'
+                                  isWinningOutcome
+                                    ? 'bg-emerald-500/30 border-emerald-400 text-emerald-300 ring-2 ring-emerald-500/60 font-black shadow-emerald-500/20 shadow-md'
+                                    : isTop
+                                      ? 'bg-amber-500/20 border-amber-500/60 text-amber-400 ring-1 ring-amber-500/30 font-black'
+                                      : isSurprise
+                                        ? 'bg-purple-500/20 border-purple-500/60 text-purple-300 ring-1 ring-purple-500/30 font-black'
+                                        : isDark
+                                          ? 'bg-slate-900/60 border-slate-800 text-slate-300'
+                                          : 'bg-white border-slate-200 text-slate-700'
                                 }`}
                               >
-                                <div className="text-[10px] font-bold opacity-80">{key}</div>
-                                <div className={`text-sm font-black mt-0.5 ${isTop ? 'text-amber-400' : isSurprise ? 'text-purple-300' : ''}`}>
+                                <div className="flex items-center justify-center gap-0.5">
+                                  <span className="text-[10px] font-bold opacity-80">{key}</span>
+                                  {isWinningOutcome && (
+                                    <span className="text-[8px] font-black text-emerald-400">✓</span>
+                                  )}
+                                </div>
+                                <div className={`text-sm font-black mt-0.5 ${
+                                  isWinningOutcome ? 'text-emerald-300 font-black text-base' : isTop ? 'text-amber-400' : isSurprise ? 'text-purple-300' : ''
+                                }`}>
                                   %{stat.rate}
                                 </div>
                                 <div className="text-[10px] font-black text-emerald-400 my-0.5">
@@ -835,7 +1087,7 @@ export default function IyMsAnaliziPage() {
                           </div>
 
                           {m.recentMatches && m.recentMatches.length > 0 ? (
-                            m.recentMatches.map((pm, idx) => (
+                            m.recentMatches.map((pm: any, idx: number) => (
                               <div
                                 key={idx}
                                 className={`p-2.5 rounded-xl border flex items-center justify-between gap-2 ${

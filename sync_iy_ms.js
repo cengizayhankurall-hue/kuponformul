@@ -14,7 +14,7 @@ const agent = new https.Agent({
   maxSockets: 40
 });
 
-function httpsGet(urlStr, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Programi') {
+function httpsGet(urlStr, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Programi', timeoutMs = 7000) {
   return new Promise((resolve) => {
     try {
       const u = new URL(urlStr);
@@ -28,7 +28,7 @@ function httpsGet(urlStr, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Prog
           'Accept': '*/*',
           'Referer': referer
         },
-        timeout: 10000
+        timeout: timeoutMs
       };
 
       const req = https.request(options, (res) => {
@@ -216,8 +216,9 @@ async function analyzeOdds(odds) {
   }
 }
 
-async function syncIyMs() {
-  console.log('--- 1. GELECEK BÜLTEN MAÇLARI ÇEKİLİYOR ---');
+// 1. SCAN UPCOMING (TODAY + 5 DAYS)
+async function syncUpcoming() {
+  console.log('--- 1. GELECEK BÜLTEN MAÇLARI ÇEKİLİYOR (BUGÜNDEN İTİBAREN) ---');
   const dates = [];
   for (let i = 0; i <= 5; i++) {
     const d = new Date();
@@ -240,7 +241,7 @@ async function syncIyMs() {
         (obj.m || []).forEach((g) => {
           (g.m || []).forEach((m) => {
             const state = typeof m[5] === 'number' ? m[5] : parseInt(m[5]) || 0;
-            if (m[1] && m[3]) {
+            if (state === 0 && m[1] && m[3]) {
               const id = String(m[0] || `${m[1]}-${m[3]}`);
               if (!seenIds.has(id)) {
                 seenIds.add(id);
@@ -274,7 +275,7 @@ async function syncIyMs() {
     }
   }));
 
-  console.log(`Bültende HEM MS HEM İY ORANI AÇIK ${rawMatches.length} maç bulundu. 388k maçlık arşivde oran analizi yapılıyor...`);
+  console.log(`Bültende HEM MS HEM İY ORANI AÇIK ${rawMatches.length} maç bulundu. 388k arşivde analiz ediliyor...`);
 
   const analyzedMatches = [];
   const concurrency = 30;
@@ -286,22 +287,25 @@ async function syncIyMs() {
       if (!match) break;
 
       const analysis = await analyzeOdds(match.odds);
-      analyzedMatches.push({
-        id: match.id,
-        code: match.code,
-        homeTeam: match.homeTeam,
-        awayTeam: match.awayTeam,
-        league: match.league,
-        date: match.date,
-        time: match.time,
-        odds: match.odds,
-        sampleSize: analysis.sampleSize,
-        matchTier: analysis.matchTier,
-        stats: analysis.stats,
-        topOutcome: analysis.topOutcome,
-        surpriseOutcome: analysis.surpriseOutcome,
-        recentMatches: analysis.recentMatches
-      });
+      // SADECE EN AZ 1 BENZER MAÇ BULUNANLARI EKLE (0 BENZER MAÇLILARI GÖSTERME)
+      if (analysis.sampleSize > 0) {
+        analyzedMatches.push({
+          id: match.id,
+          code: match.code,
+          homeTeam: match.homeTeam,
+          awayTeam: match.awayTeam,
+          league: match.league,
+          date: match.date,
+          time: match.time,
+          odds: match.odds,
+          sampleSize: analysis.sampleSize,
+          matchTier: analysis.matchTier,
+          stats: analysis.stats,
+          topOutcome: analysis.topOutcome,
+          surpriseOutcome: analysis.surpriseOutcome,
+          recentMatches: analysis.recentMatches
+        });
+      }
     }
   }
 
@@ -322,13 +326,17 @@ async function syncIyMs() {
     if (m.league) leagueSet.add(m.league);
   });
 
+  const sortedDates = Array.from(dateSet).sort((a, b) => {
+    const [d1, m1, y1] = a.split('.').map(Number);
+    const [d2, m2, y2] = b.split('.').map(Number);
+    return new Date(y1, m1 - 1, d1).getTime() - new Date(y2, m2 - 1, d2).getTime();
+  });
+
   const highConfidenceCount = analyzedMatches.filter(m => (m.topOutcome?.rate || 0) >= 45).length;
   const surpriseCount = analyzedMatches.filter(m => !!m.surpriseOutcome).length;
 
-  const payload = {
-    success: true,
-    timestamp: Date.now(),
-    availableDates: Array.from(dateSet),
+  return {
+    availableDates: sortedDates,
     availableLeagues: Array.from(leagueSet).sort(),
     stats: {
       totalAnalyzed: analyzedMatches.length,
@@ -336,6 +344,197 @@ async function syncIyMs() {
       surpriseCount
     },
     matches: analyzedMatches
+  };
+}
+
+// 2. SCAN YESTERDAY'S FINISHED MATCHES (DÜNÜN SONUÇLARI)
+async function syncPast() {
+  console.log('\n--- 2. DÜNÜN (1 GÜN ÖNCESİ) BİTEN İY/MS MAÇLARI ÇEKİLİYOR ---');
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const yyyy = d.getFullYear();
+  const dayStr = `${dd}/${mm}/${yyyy}`;
+  const formattedDate = `${dd}.${mm}.${yyyy}`;
+
+  let programRaw = '';
+  let liveRaw = '';
+
+  try {
+    const [pRes, lRes] = await Promise.all([
+      httpsGet(`https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dayStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`),
+      httpsGet(`https://vd.mackolik.com/livedata?date=${dayStr}`)
+    ]);
+    programRaw = pRes.text;
+    liveRaw = lRes.text;
+  } catch (e) {
+    console.error('Dünün verileri çekilemedi:', e.message);
+    return { pastMatches: [], pastStats: null, date: formattedDate };
+  }
+
+  const liveMap = new Map();
+  if (liveRaw && liveRaw.length > 50) {
+    try {
+      const lObj = JSON.parse(liveRaw);
+      (lObj.m || []).forEach(m => {
+        liveMap.set(String(m[0]), m);
+        if (m[14]) liveMap.set(String(m[14]), m);
+      });
+    } catch (e) {}
+  }
+
+  const finishedMatchesToAnalyze = [];
+  const seenIds = new Set();
+
+  if (programRaw && programRaw.length > 50) {
+    try {
+      const pObj = new Function(`return ${programRaw}`)();
+      (pObj.m || []).forEach(g => {
+        (g.m || []).forEach(m => {
+          const ms1 = cleanNum(m[16]);
+          const ms0 = cleanNum(m[17]);
+          const ms2 = cleanNum(m[18]);
+          const iy1 = cleanNum(m[33]);
+          const iy0 = cleanNum(m[34]);
+          const iy2 = cleanNum(m[35]);
+
+          if (ms1 > 0 && ms0 > 0 && ms2 > 0 && iy1 > 0 && iy0 > 0 && iy2 > 0) {
+            const id = String(m[0]);
+            if (!seenIds.has(id)) {
+              seenIds.add(id);
+              const live = liveMap.get(id);
+              if (live && live[5] === 4) {
+                const msHome = typeof live[12] === 'number' ? live[12] : parseInt(live[12]) || 0;
+                const msAway = typeof live[13] === 'number' ? live[13] : parseInt(live[13]) || 0;
+                const msScore = `${msHome} - ${msAway}`;
+
+                let iyScore = '0 - 0';
+                if (live[7] && String(live[7]).includes('-')) {
+                  iyScore = String(live[7]).trim();
+                } else if (live[31] !== undefined && live[32] !== undefined) {
+                  iyScore = `${live[31]} - ${live[32]}`;
+                }
+
+                const actualOutcome = calculateOutcomeFromScores(iyScore, msScore);
+                if (actualOutcome) {
+                  finishedMatchesToAnalyze.push({
+                    id,
+                    code: String(m[49] || m[4] || id.slice(0, 5)),
+                    homeTeam: String(m[1]).trim(),
+                    awayTeam: String(m[3]).trim(),
+                    league: String(m[26] || 'Diğer').trim(),
+                    date: formattedDate,
+                    time: String(m[6] || live[16] || '').trim(),
+                    odds: { ms1, ms0, ms2, iy1, iy0, iy2 },
+                    msScore,
+                    iyScore,
+                    actualOutcome
+                  });
+                }
+              }
+            }
+          }
+        });
+      });
+    } catch (e) {}
+  }
+
+  console.log(`Dün (${formattedDate}) İY/MS oranlı ${finishedMatchesToAnalyze.length} bitmiş maç bulundu. Analiz ediliyor...`);
+
+  const pastResults = [];
+  const concurrency = 30;
+  let cursor = 0;
+
+  async function pastWorker() {
+    while (cursor < finishedMatchesToAnalyze.length) {
+      const match = finishedMatchesToAnalyze[cursor++];
+      if (!match) break;
+
+      const analysis = await analyzeOdds(match.odds);
+      // SADECE EN AZ 1 BENZER MAÇ BULUNANLARI AL (0 benzer maçlıları gösterme)
+      if (analysis.sampleSize > 0) {
+        const isTopHit = analysis.topOutcome ? (analysis.topOutcome.key === match.actualOutcome) : false;
+        const isSurpriseHit = analysis.surpriseOutcome ? (analysis.surpriseOutcome.key === match.actualOutcome) : false;
+
+        pastResults.push({
+          id: match.id,
+          code: match.code,
+          homeTeam: match.homeTeam,
+          awayTeam: match.awayTeam,
+          league: match.league,
+          date: match.date,
+          time: match.time,
+          status: 'MS',
+          score: match.msScore,
+          iyScore: match.iyScore,
+          actualOutcome: match.actualOutcome,
+          isTopHit,
+          isSurpriseHit,
+          odds: match.odds,
+          sampleSize: analysis.sampleSize,
+          matchTier: analysis.matchTier,
+          stats: analysis.stats,
+          topOutcome: analysis.topOutcome,
+          surpriseOutcome: analysis.surpriseOutcome,
+          recentMatches: analysis.recentMatches
+        });
+      }
+    }
+  }
+
+  const workers = Array(concurrency).fill(null).map(() => pastWorker());
+  await Promise.all(workers);
+
+  // Sort by top hit first, then sampleSize
+  pastResults.sort((a, b) => {
+    if (a.isTopHit !== b.isTopHit) return a.isTopHit ? -1 : 1;
+    return (b.sampleSize || 0) - (a.sampleSize || 0);
+  });
+
+  const topHitCount = pastResults.filter(m => m.isTopHit).length;
+  const surpriseHitCount = pastResults.filter(m => m.isSurpriseHit).length;
+  const topHitRate = pastResults.length > 0 ? Math.round((topHitCount / pastResults.length) * 100) : 0;
+
+  const outcomeCounts = {};
+  OUTCOME_KEYS.forEach(k => { outcomeCounts[k] = 0; });
+  pastResults.forEach(m => {
+    if (m.actualOutcome && outcomeCounts[m.actualOutcome] !== undefined) {
+      outcomeCounts[m.actualOutcome]++;
+    }
+  });
+
+  const pastStats = {
+    date: formattedDate,
+    totalFinished: pastResults.length,
+    topHitCount,
+    topHitRate,
+    surpriseHitCount,
+    outcomeCounts
+  };
+
+  console.log(`Dünün Biten Maçları Kaydedildi: ${pastResults.length} maç (Top Tahmin İsabeti: ${topHitCount}/${pastResults.length} - %${topHitRate})`);
+
+  return {
+    pastMatches: pastResults,
+    pastStats,
+    date: formattedDate
+  };
+}
+
+async function main() {
+  const upcomingData = await syncUpcoming();
+  const pastData = await syncPast();
+
+  const payload = {
+    success: true,
+    timestamp: Date.now(),
+    availableDates: upcomingData.availableDates,
+    availableLeagues: upcomingData.availableLeagues,
+    stats: upcomingData.stats,
+    matches: upcomingData.matches,
+    pastStats: pastData.pastStats,
+    pastMatches: pastData.pastMatches
   };
 
   const cachePath1 = path.join(__dirname, 'data', 'iy_ms_cache.json');
@@ -347,7 +546,7 @@ async function syncIyMs() {
   fs.writeFileSync(cachePath1, JSON.stringify(payload, null, 2), 'utf-8');
   fs.writeFileSync(cachePath2, JSON.stringify(payload, null, 2), 'utf-8');
 
-  console.log(`✅ İY/MS Analizi Tamamlandı: ${analyzedMatches.length} maç analiz edilip önbelleğe kaydedildi!`);
+  console.log(`\n🎉 İY/MS ANALİZİ TAMAMLANDI! (Gelecek Bülten: ${upcomingData.matches.length} maç, Dünün Sonuçları: ${pastData.pastMatches.length} maç)`);
 }
 
-syncIyMs();
+main();

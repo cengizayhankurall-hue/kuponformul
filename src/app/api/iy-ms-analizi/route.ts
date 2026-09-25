@@ -41,6 +41,10 @@ export interface MatchIyMsAnalysis {
   time: string;
   status?: string;
   score?: string;
+  iyScore?: string;
+  actualOutcome?: string;
+  isTopHit?: boolean;
+  isSurpriseHit?: boolean;
   odds: {
     ms1: number;
     ms0: number;
@@ -59,6 +63,15 @@ export interface MatchIyMsAnalysis {
   topOutcome: IyMsOutcomeStats | null;
   surpriseOutcome: IyMsOutcomeStats | null;
   recentMatches: PastSimilarMatch[];
+}
+
+export interface IyMsPastMatch extends MatchIyMsAnalysis {
+  status: string;
+  score: string;
+  iyScore: string;
+  actualOutcome: string;
+  isTopHit: boolean;
+  isSurpriseHit: boolean;
 }
 
 const CACHE_FILE = path.join(process.cwd(), 'data', 'iy_ms_cache.json');
