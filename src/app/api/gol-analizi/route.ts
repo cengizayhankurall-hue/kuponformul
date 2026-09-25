@@ -68,7 +68,8 @@ const PUBLIC_PAST_CACHE_FILE = path.join(process.cwd(), 'public', 'data', 'gol_a
 const CACHE_TTL_MS = 3 * 60 * 1000; // 3 dakika
 
 let memoryCache: CachedData | null = null;
-let inProgressPromise: Promise<CachedData> | null = null;
+let memoryPastCache: any = null;
+let inProgressPromise: Promise<{ upcoming: CachedData; past: any }> | null = null;
 
 function loadCacheFromDisk(): CachedData | null {
   try {
@@ -177,6 +178,269 @@ const cleanOdds = (val: any) => {
 function formatDateStr(dStr: string): string {
   if (!dStr) return '';
   return dStr.replace(/\//g, '.').trim();
+}
+
+async function scanPastMatches(): Promise<any> {
+  const pastDates: { dayStr: string; formattedDate: string }[] = [];
+  // Sadece 1 gün öncesi (Dün)
+  for (let i = 1; i <= 1; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const yyyy = d.getFullYear();
+    pastDates.push({ dayStr: `${dd}/${mm}/${yyyy}`, formattedDate: `${dd}.${mm}.${yyyy}` });
+  }
+
+  const allFinished: any[] = [];
+  const seenEventIds = new Set<string>();
+
+  await Promise.all(pastDates.map(async ({ dayStr, formattedDate }) => {
+    try {
+      const liveRes = await httpsGet(`https://vd.mackolik.com/livedata?date=${dayStr}`);
+      if (liveRes.status === 200 && liveRes.text && liveRes.text.length > 50) {
+        const liveJson = JSON.parse(liveRes.text);
+        (liveJson.m || []).forEach((m: any) => {
+          // state 4 = MS (Bitmiş Maç)
+          if (m[5] === 4 && m[14] && String(m[14]).length > 3) {
+            const eventId = String(m[14]);
+            if (!seenEventIds.has(eventId)) {
+              seenEventIds.add(eventId);
+              allFinished.push({ m, dayStr, formattedDate, eventId });
+            }
+          }
+        });
+      }
+    } catch (e) {
+      console.error('Past livedata hatası:', dayStr, e);
+    }
+  }));
+
+  const queue = [...allFinished];
+  const results: any[] = [];
+  const concurrency = 35;
+
+  async function worker() {
+    while (queue.length > 0) {
+      const item = queue.pop();
+      if (!item) break;
+      const { m, dayStr, formattedDate, eventId } = item;
+
+      try {
+        const popupUrl = `https://arsiv.mackolik.com/AjaxHandlers/IddaaHandler.aspx?command=oddspopup&e=${eventId}&s=futbol`;
+        const popupRes = await httpsGet(popupUrl);
+        if (popupRes.status !== 200 || !popupRes.text || !popupRes.text.trim().startsWith('{')) continue;
+
+        const pJson = JSON.parse(popupRes.text);
+        const bookie = pJson.data?.matches?.[0]?.bookies?.[0];
+        if (!bookie || !Array.isArray(bookie.markets)) continue;
+
+        let odd45Ust: number | null = null;
+        let odd45Alt: number | null = null;
+        let oddHerIkiYari15Ust: number | null = null;
+        let oddHerIkiYari15Alt: number | null = null;
+
+        const odds = {
+          ms1: cleanOdds(m[18] || '-'),
+          ms0: cleanOdds(m[19] || '-'),
+          ms2: cleanOdds(m[20] || '-'),
+          alt25: cleanOdds(m[21] || '-'),
+          ust25: cleanOdds(m[22] || '-'),
+          kgVar: cleanOdds(m[24] || '-'),
+          kgYok: cleanOdds(m[25] || '-')
+        };
+
+        bookie.markets.forEach((mkt: any) => {
+          const normName = normalizeText(mkt.name);
+
+          // 1. Toplam 4.5 Alt / Üst
+          if ((normName.includes('4,5') || normName.includes('4.5')) && normName.includes('alt/ust') && !normName.includes('korner') && !normName.includes('kart') && !normName.includes('1. yari') && !normName.includes('2. yari')) {
+            const ustOutcome = (mkt.outcomes || []).find((o: any) => normalizeText(o.name) === 'ust' || o.key === '+4.5');
+            if (ustOutcome?.value && ustOutcome.value !== '-') {
+              const val = parseFloat(String(ustOutcome.value).replace(',', '.'));
+              if (!isNaN(val) && val > 1) odd45Ust = val;
+            }
+            const altOutcome = (mkt.outcomes || []).find((o: any) => normalizeText(o.name) === 'alt' || o.key === '-4.5');
+            if (altOutcome?.value && altOutcome.value !== '-') {
+              const val = parseFloat(String(altOutcome.value).replace(',', '.'));
+              if (!isNaN(val) && val > 1) odd45Alt = val;
+            }
+          }
+
+          // 2. Her İki Yarı da 1.5 Üst
+          if (normName.includes('iki yari') && (normName.includes('1,5') || normName.includes('1.5')) && normName.includes('ust')) {
+            const evetOutcome = (mkt.outcomes || []).find((o: any) => normalizeText(o.name) === 'evet' || o.key === '+1.5' || normalizeText(o.name) === 'ust');
+            if (evetOutcome?.value && evetOutcome.value !== '-') {
+              const val = parseFloat(String(evetOutcome.value).replace(',', '.'));
+              if (!isNaN(val) && val > 1) oddHerIkiYari15Ust = val;
+            }
+          }
+
+          // 2.5 Alt / Üst
+          if ((normName.includes('2,5') || normName.includes('2.5')) && normName.includes('alt/ust') && !normName.includes('korner') && !normName.includes('kart') && !normName.includes('1. yari')) {
+            (mkt.outcomes || []).forEach((o: any) => {
+              const oName = normalizeText(o.name);
+              if (oName === 'alt' || o.key === '-2.5') odds.alt25 = cleanOdds(o.value);
+              if (oName === 'ust' || o.key === '+2.5') odds.ust25 = cleanOdds(o.value);
+            });
+          }
+
+          // KG Var / Yok
+          if (normName.includes('karsilikli gol') || normName.includes('kg')) {
+            (mkt.outcomes || []).forEach((o: any) => {
+              const oName = normalizeText(o.name);
+              if (oName === 'var') odds.kgVar = cleanOdds(o.value);
+              if (oName === 'yok') odds.kgYok = cleanOdds(o.value);
+            });
+          }
+        });
+
+        if (odd45Ust !== null && oddHerIkiYari15Ust !== null) {
+          const diff = parseFloat(Math.abs(odd45Ust - oddHerIkiYari15Ust).toFixed(2));
+
+          const msHome = typeof m[12] === 'number' ? m[12] : parseInt(m[12]) || 0;
+          const msAway = typeof m[13] === 'number' ? m[13] : parseInt(m[13]) || 0;
+
+          // Parse First Half (İY) Score from m[7] ("4-1") or m[31]/m[32]
+          let iyHome = 0;
+          let iyAway = 0;
+          if (m[7] && String(m[7]).includes('-')) {
+            const parts = String(m[7]).split('-').map((p: string) => parseInt(p.trim()) || 0);
+            iyHome = parts[0] || 0;
+            iyAway = parts[1] || 0;
+          } else if (m[31] !== undefined || m[32] !== undefined) {
+            iyHome = parseInt(String(m[31])) || 0;
+            iyAway = parseInt(String(m[32])) || 0;
+          }
+
+          const htGoals = iyHome + iyAway;
+          const shGoals = Math.max(0, msHome - iyHome) + Math.max(0, msAway - iyAway);
+          const totalGoals = msHome + msAway;
+
+          const isHtOver15 = htGoals >= 2;
+          const isShOver15 = shGoals >= 2;
+          const isBothHalves15Ust = isHtOver15 && isShOver15;
+          const isOver25 = totalGoals >= 3;
+          const isOver35 = totalGoals >= 4;
+          const isOver45 = totalGoals >= 5;
+          const isOver55 = totalGoals >= 6;
+          const isOver65 = totalGoals >= 7;
+          const isKgVar = msHome > 0 && msAway > 0;
+
+          const homeTeam = String(m[2] || '').trim();
+          const awayTeam = String(m[4] || '').trim();
+          const league = Array.isArray(m[36]) ? String(m[36][1] || 'Diğer').trim() : 'Diğer';
+          const matchTime = String(m[16] || '').trim();
+
+          results.push({
+            id: String(m[0]),
+            matchId: String(m[0]),
+            eventId,
+            code: String(m[0]).slice(0, 5),
+            date: formattedDate,
+            time: matchTime,
+            league,
+            homeTeam,
+            awayTeam,
+            odd45Ust,
+            odd45Alt,
+            oddHerIkiYari15Ust,
+            oddHerIkiYari15Alt,
+            diff,
+            isCloseDiff: diff <= 0.20,
+            odds,
+            score: `${msHome} - ${msAway}`,
+            halfTimeScore: `${iyHome} - ${iyAway}`,
+            status: 'MS',
+            totalGoals,
+            isHtOver15,
+            isUst25Won: isOver25,
+            isUst35Won: isOver35,
+            isUst45Won: isOver45,
+            isUst55Won: isOver55,
+            isUst65Won: isOver65,
+            isKgVarWon: isKgVar,
+            isHerIkiYari15UstWon: isBothHalves15Ust
+          });
+        }
+      } catch (e) {}
+    }
+  }
+
+  await Promise.all(Array(concurrency).fill(null).map(() => worker()));
+
+  results.sort((a, b) => {
+    if (a.diff !== b.diff) return a.diff - b.diff;
+    return b.date.localeCompare(a.date);
+  });
+
+  const diff020 = results.filter(r => r.diff <= 0.20);
+  const diff010 = results.filter(r => r.diff <= 0.10);
+  const exact = results.filter(r => r.diff === 0);
+
+  const calculateRates = (list: any[]) => {
+    const total = list.length;
+    if (total === 0) return { total: 0, ht15Won: 0, ht15Rate: 0, ust25Won: 0, ust25Rate: 0, ust35Won: 0, ust35Rate: 0, ust45Won: 0, ust45Rate: 0, ust55Won: 0, ust55Rate: 0, ust65Won: 0, ust65Rate: 0, herIkiYari15Won: 0, herIkiYari15Rate: 0, kgVarWon: 0, kgVarRate: 0, avgGoals: 0 };
+    const ht15 = list.filter(m => m.isHtOver15).length;
+    const u25 = list.filter(m => m.isUst25Won).length;
+    const u35 = list.filter(m => m.isUst35Won).length;
+    const u45 = list.filter(m => m.isUst45Won).length;
+    const u55 = list.filter(m => m.isUst55Won).length;
+    const u65 = list.filter(m => m.isUst65Won).length;
+    const hy15 = list.filter(m => m.isHerIkiYari15UstWon).length;
+    const kg = list.filter(m => m.isKgVarWon).length;
+    const totalG = list.reduce((acc, m) => acc + (m.totalGoals || 0), 0);
+    return {
+      totalPlayed: total,
+      ht15Won: ht15,
+      ht15Rate: Math.round((ht15 / total) * 100),
+      ust25Won: u25,
+      ust25Rate: Math.round((u25 / total) * 100),
+      ust35Won: u35,
+      ust35Rate: Math.round((u35 / total) * 100),
+      ust45Won: u45,
+      ust45Rate: Math.round((u45 / total) * 100),
+      ust55Won: u55,
+      ust55Rate: Math.round((u55 / total) * 100),
+      ust65Won: u65,
+      ust65Rate: Math.round((u65 / total) * 100),
+      herIkiYari15Won: hy15,
+      herIkiYari15Rate: Math.round((hy15 / total) * 100),
+      kgVarWon: kg,
+      kgVarRate: Math.round((kg / total) * 100),
+      avgGoals: Number((totalG / total).toFixed(2))
+    };
+  };
+
+  const pastData = {
+    timestamp: Date.now(),
+    dateRange: pastDates.map(d => d.formattedDate),
+    stats: {
+      totalFinished: allFinished.length,
+      totalWithBothOdds: results.length,
+      diff020Count: diff020.length,
+      diff010Count: diff010.length,
+      exactMatchCount: exact.length,
+      overallRates: calculateRates(results),
+      diff020Rates: calculateRates(diff020),
+      exactRates: calculateRates(exact)
+    },
+    matches: results
+  };
+
+  memoryPastCache = pastData;
+
+  try {
+    const dir = path.dirname(PAST_CACHE_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(PAST_CACHE_FILE, JSON.stringify(pastData, null, 2), 'utf-8');
+
+    const pubDir = path.dirname(PUBLIC_PAST_CACHE_FILE);
+    if (!fs.existsSync(pubDir)) fs.mkdirSync(pubDir, { recursive: true });
+    fs.writeFileSync(PUBLIC_PAST_CACHE_FILE, JSON.stringify(pastData, null, 2), 'utf-8');
+  } catch (e) {}
+
+  return pastData;
 }
 
 async function scanUpcomingMatches(): Promise<CachedData> {
@@ -420,7 +684,13 @@ async function scanUpcomingMatches(): Promise<CachedData> {
 // Background refresher helper
 function triggerBackgroundRefresh() {
   if (!inProgressPromise) {
-    inProgressPromise = scanUpcomingMatches().finally(() => {
+    inProgressPromise = (async () => {
+      const [upcoming, past] = await Promise.all([
+        scanUpcomingMatches(),
+        scanPastMatches()
+      ]);
+      return { upcoming, past };
+    })().finally(() => {
       inProgressPromise = null;
     });
   }
@@ -437,7 +707,17 @@ export async function GET(request: Request) {
       memoryCache = loadCacheFromDisk();
     }
 
-    const pastData = loadPastCacheFromDisk();
+    if (!memoryPastCache) {
+      memoryPastCache = loadPastCacheFromDisk();
+    }
+
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = `${String(yesterday.getDate()).padStart(2, '0')}.${String(yesterday.getMonth() + 1).padStart(2, '0')}.${yesterday.getFullYear()}`;
+
+    // Past data check
+    const isPastOutdated = !memoryPastCache || !memoryPastCache.dateRange || !memoryPastCache.dateRange.includes(yesterdayStr);
 
     // If forceRefresh requested, await fresh scan
     if (forceRefresh) {
@@ -445,14 +725,14 @@ export async function GET(request: Request) {
       const freshData = await inProgressPromise!;
       return NextResponse.json({
         success: true,
-        cachedAt: new Date(freshData.timestamp).toISOString(),
+        cachedAt: new Date(freshData.upcoming.timestamp).toISOString(),
         isRefreshing: false,
-        stats: freshData.stats,
-        availableDates: freshData.dates,
-        availableLeagues: freshData.leagues,
-        matches: freshData.matches,
-        pastStats: pastData?.stats?.overallRates,
-        pastMatches: pastData?.matches || []
+        stats: freshData.upcoming.stats,
+        availableDates: freshData.upcoming.dates,
+        availableLeagues: freshData.upcoming.leagues,
+        matches: freshData.upcoming.matches,
+        pastStats: freshData.past?.stats?.overallRates,
+        pastMatches: freshData.past?.matches || []
       });
     }
 
@@ -461,20 +741,18 @@ export async function GET(request: Request) {
       const isStale = now - memoryCache.timestamp > CACHE_TTL_MS;
 
       // Check if cache contains current or upcoming dates
-      const today = new Date();
-      const todayStr = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`;
       const hasCurrentOrFuture = (memoryCache.dates || []).some(d => {
         const [day, month, year] = d.split('.').map(Number);
         const matchTime = new Date(year, month - 1, day, 23, 59, 59).getTime();
         return matchTime >= today.setHours(0, 0, 0, 0);
       });
 
-      if (isStale || !hasCurrentOrFuture) {
+      if (isStale || !hasCurrentOrFuture || isPastOutdated) {
         triggerBackgroundRefresh();
       }
 
-      // If cache has upcoming dates, return immediately
-      if (hasCurrentOrFuture) {
+      // If cache has upcoming dates and past matches, return immediately
+      if (hasCurrentOrFuture && !isPastOutdated) {
         return NextResponse.json({
           success: true,
           cachedAt: new Date(memoryCache.timestamp).toISOString(),
@@ -483,26 +761,26 @@ export async function GET(request: Request) {
           availableDates: memoryCache.dates,
           availableLeagues: memoryCache.leagues,
           matches: memoryCache.matches,
-          pastStats: pastData?.stats?.overallRates,
-          pastMatches: pastData?.matches || []
+          pastStats: memoryPastCache?.stats?.overallRates,
+          pastMatches: memoryPastCache?.matches || []
         });
       }
     }
 
-    // 2. If no valid cache or cache only had old past dates, perform scan and await
+    // 2. If no valid cache or outdated past date, perform scan and await
     triggerBackgroundRefresh();
     const freshData = await inProgressPromise!;
 
     return NextResponse.json({
       success: true,
-      cachedAt: new Date(freshData.timestamp).toISOString(),
+      cachedAt: new Date(freshData.upcoming.timestamp).toISOString(),
       isRefreshing: false,
-      stats: freshData.stats,
-      availableDates: freshData.dates,
-      availableLeagues: freshData.leagues,
-      matches: freshData.matches,
-      pastStats: pastData?.stats?.overallRates,
-      pastMatches: pastData?.matches || []
+      stats: freshData.upcoming.stats,
+      availableDates: freshData.upcoming.dates,
+      availableLeagues: freshData.upcoming.leagues,
+      matches: freshData.upcoming.matches,
+      pastStats: freshData.past?.stats?.overallRates,
+      pastMatches: freshData.past?.matches || []
     });
   } catch (error: any) {
     console.error('Gol Analizi API Hatası:', error);
