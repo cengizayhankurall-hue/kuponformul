@@ -57,6 +57,7 @@ export interface MatchIyMsAnalysis {
     kgVar?: string;
     kgYok?: string;
   };
+  openedOdds?: Record<string, string>;
   sampleSize: number;
   matchTier: 'exact_ms_iy' | 'close_ms_iy' | 'ms_only' | 'no_history';
   stats: Record<string, IyMsOutcomeStats>;

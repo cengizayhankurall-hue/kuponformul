@@ -1036,7 +1036,7 @@ export default function IyMsAnaliziPage() {
                                   %{stat.rate}
                                 </div>
                                 <div className="text-[10px] font-black text-emerald-400 my-0.5">
-                                  {estOdds[key] ? estOdds[key].toFixed(2) : '-'}
+                                  {m.openedOdds?.[key] && m.openedOdds[key] !== '-' ? m.openedOdds[key] : (estOdds[key] ? estOdds[key].toFixed(2) : '-')}
                                 </div>
                                 <div className="text-[9px] opacity-50">{stat.count} Maç</div>
                               </div>

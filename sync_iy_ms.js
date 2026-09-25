@@ -14,7 +14,14 @@ const agent = new https.Agent({
   maxSockets: 40
 });
 
-function httpsGet(urlStr, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Programi', timeoutMs = 7000) {
+function normalizeText(str) {
+  return (str || '')
+    .replace(/İ/g, 'i').replace(/I/g, 'i').replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/Ğ/g, 'g')
+    .replace(/ü/g, 'u').replace(/Ü/g, 'u').replace(/ş/g, 's').replace(/Ş/g, 's').replace(/ö/g, 'o')
+    .replace(/Ö/g, 'o').replace(/ç/g, 'c').replace(/Ç/g, 'c').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function httpsGet(urlStr, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Programi', timeoutMs = 6000) {
   return new Promise((resolve) => {
     try {
       const u = new URL(urlStr);
@@ -76,6 +83,55 @@ function calculateOutcomeFromScores(iyScore, msScore) {
 }
 
 const OUTCOME_KEYS = ['1/1', 'X/1', '2/1', '1/X', 'X/X', '2/X', '1/2', 'X/2', '2/2'];
+
+function extractOpenedIyMsOdds(popupJson) {
+  const markets = popupJson?.data?.matches?.[0]?.bookies?.[0]?.markets || [];
+  const iyMsMarket = markets.find(x => {
+    const n = normalizeText(x.name);
+    return n === 'ilk yari/mac sonucu' || n === 'ilk yari / mac sonucu' || n === 'iy/ms' || n === 'iy / ms' || (n.includes('ilk yari') && n.includes('mac sonucu'));
+  });
+
+  if (!iyMsMarket || !Array.isArray(iyMsMarket.outcomes) || iyMsMarket.outcomes.length < 5) {
+    return null;
+  }
+
+  const openedOdds = {
+    '1/1': '-',
+    'X/1': '-',
+    '2/1': '-',
+    '1/X': '-',
+    'X/X': '-',
+    '2/X': '-',
+    '1/2': '-',
+    'X/2': '-',
+    '2/2': '-'
+  };
+
+  const KEY_MAP = {
+    '11': '1/1', '1/1': '1/1',
+    'x1': 'X/1', 'x/1': 'X/1', '01': 'X/1', '0/1': 'X/1',
+    '21': '2/1', '2/1': '2/1',
+    '1x': '1/X', '1/x': '1/X', '10': '1/X', '1/0': '1/X',
+    'xx': 'X/X', 'x/x': 'X/X', '00': 'X/X', '0/0': 'X/X',
+    '2x': '2/X', '2/x': '2/X', '20': '2/X', '2/0': '2/X',
+    '12': '1/2', '1/2': '1/2',
+    'x2': 'X/2', 'x/2': 'X/2', '02': 'X/2', '0/2': 'X/2',
+    '22': '2/2', '2/2': '2/2'
+  };
+
+  iyMsMarket.outcomes.forEach(o => {
+    const rawKey = String(o.key || o.name || '').toLowerCase().trim();
+    const mappedKey = KEY_MAP[rawKey];
+    if (mappedKey && o.value && o.value !== '-' && o.value !== '0,00' && o.value !== '0.00') {
+      openedOdds[mappedKey] = String(o.value).replace(',', '.');
+    }
+  });
+
+  const validCount = Object.values(openedOdds).filter(v => v !== '-').length;
+  if (validCount < 5) return null;
+
+  return openedOdds;
+}
 
 async function analyzeOdds(odds) {
   const { ms1, ms0, ms2, iy1, iy0, iy2 } = odds;
@@ -216,9 +272,9 @@ async function analyzeOdds(odds) {
   }
 }
 
-// 1. SCAN UPCOMING (TODAY + 5 DAYS)
+// 1. SCAN UPCOMING MATCHES WITH REAL OPENED IY/MS ODDS
 async function syncUpcoming() {
-  console.log('--- 1. GELECEK BÜLTEN MAÇLARI ÇEKİLİYOR (BUGÜNDEN İTİBAREN) ---');
+  console.log('--- 1. GELECEK BÜLTEN: SADECE İDDAA İY/MS ORANLARI AÇILMIŞ MAÇLAR TARANIYOR ---');
   const dates = [];
   for (let i = 0; i <= 5; i++) {
     const d = new Date();
@@ -230,7 +286,7 @@ async function syncUpcoming() {
   }
 
   const rawMatches = [];
-  const seenIds = new Set();
+  const seenEventIds = new Set();
 
   await Promise.all(dates.map(async (dayStr) => {
     try {
@@ -241,10 +297,10 @@ async function syncUpcoming() {
         (obj.m || []).forEach((g) => {
           (g.m || []).forEach((m) => {
             const state = typeof m[5] === 'number' ? m[5] : parseInt(m[5]) || 0;
-            if (state === 0 && m[1] && m[3]) {
-              const id = String(m[0] || `${m[1]}-${m[3]}`);
-              if (!seenIds.has(id)) {
-                seenIds.add(id);
+            if (state === 0 && m[1] && m[3] && m[50] && String(m[50]).length > 4 && String(m[50]) !== '0') {
+              const eventId = String(m[50]);
+              if (!seenEventIds.has(eventId)) {
+                seenEventIds.add(eventId);
                 const ms1 = cleanNum(m[16]);
                 const ms0 = cleanNum(m[17]);
                 const ms2 = cleanNum(m[18]);
@@ -252,19 +308,17 @@ async function syncUpcoming() {
                 const iy0 = cleanNum(m[34]);
                 const iy2 = cleanNum(m[35]);
 
-                // SADECE HEM MS (1-0-2) HEM DE İY (1-0-2) ORANLARI AÇILMIŞ MAÇLAR
-                if (ms1 > 0 && ms0 > 0 && ms2 > 0 && iy1 > 0 && iy0 > 0 && iy2 > 0) {
-                  rawMatches.push({
-                    id,
-                    code: String(m[49] || m[4] || id.slice(0, 5)),
-                    homeTeam: String(m[1]).trim(),
-                    awayTeam: String(m[3]).trim(),
-                    league: String(m[26] || 'Diğer').trim(),
-                    date: formatDateStr(String(m[7] || dayStr)),
-                    time: String(m[6] || '').trim(),
-                    odds: { ms1, ms0, ms2, iy1, iy0, iy2 }
-                  });
-                }
+                rawMatches.push({
+                  id: String(m[0]),
+                  eventId,
+                  code: String(m[49] || m[4] || String(m[0]).slice(0, 5)),
+                  homeTeam: String(m[1]).trim(),
+                  awayTeam: String(m[3]).trim(),
+                  league: String(m[26] || 'Diğer').trim(),
+                  date: formatDateStr(String(m[7] || dayStr)),
+                  time: String(m[6] || '').trim(),
+                  odds: { ms1, ms0, ms2, iy1, iy0, iy2 }
+                });
               }
             }
           });
@@ -275,10 +329,10 @@ async function syncUpcoming() {
     }
   }));
 
-  console.log(`Bültende HEM MS HEM İY ORANI AÇIK ${rawMatches.length} maç bulundu. 388k arşivde analiz ediliyor...`);
+  console.log(`Gelecek günlerde toplam ${rawMatches.length} maç bulundu. Gerçek İY/MS açılanlar filtreleniyor...`);
 
   const analyzedMatches = [];
-  const concurrency = 30;
+  const concurrency = 35;
   let cursor = 0;
 
   async function worker() {
@@ -286,26 +340,40 @@ async function syncUpcoming() {
       const match = rawMatches[cursor++];
       if (!match) break;
 
-      const analysis = await analyzeOdds(match.odds);
-      // SADECE EN AZ 1 BENZER MAÇ BULUNANLARI EKLE (0 BENZER MAÇLILARI GÖSTERME)
-      if (analysis.sampleSize > 0) {
-        analyzedMatches.push({
-          id: match.id,
-          code: match.code,
-          homeTeam: match.homeTeam,
-          awayTeam: match.awayTeam,
-          league: match.league,
-          date: match.date,
-          time: match.time,
-          odds: match.odds,
-          sampleSize: analysis.sampleSize,
-          matchTier: analysis.matchTier,
-          stats: analysis.stats,
-          topOutcome: analysis.topOutcome,
-          surpriseOutcome: analysis.surpriseOutcome,
-          recentMatches: analysis.recentMatches
-        });
-      }
+      try {
+        const popupUrl = `https://arsiv.mackolik.com/AjaxHandlers/IddaaHandler.aspx?command=oddspopup&e=${match.eventId}&s=futbol`;
+        const popupRes = await httpsGet(popupUrl);
+        if (popupRes.status !== 200 || !popupRes.text || !popupRes.text.trim().startsWith('{')) continue;
+
+        const pJson = JSON.parse(popupRes.text);
+        const openedOdds = extractOpenedIyMsOdds(pJson);
+
+        // EĞER İDDAA İY/MS BAHİSLERİNİ AÇMADIYSA BU MAÇI KESİNLİKLE LİSTEYE ALMA!
+        if (!openedOdds) continue;
+
+        const analysis = await analyzeOdds(match.odds);
+        // Sadece geçmişte en az 1 benzer maç bulunanları al
+        if (analysis.sampleSize > 0) {
+          analyzedMatches.push({
+            id: match.id,
+            eventId: match.eventId,
+            code: match.code,
+            homeTeam: match.homeTeam,
+            awayTeam: match.awayTeam,
+            league: match.league,
+            date: match.date,
+            time: match.time,
+            odds: match.odds,
+            openedOdds, // İDDAA TARAFINDAN AÇILAN GERÇEK 9 ORAN
+            sampleSize: analysis.sampleSize,
+            matchTier: analysis.matchTier,
+            stats: analysis.stats,
+            topOutcome: analysis.topOutcome,
+            surpriseOutcome: analysis.surpriseOutcome,
+            recentMatches: analysis.recentMatches
+          });
+        }
+      } catch (e) {}
     }
   }
 
@@ -335,6 +403,8 @@ async function syncUpcoming() {
   const highConfidenceCount = analyzedMatches.filter(m => (m.topOutcome?.rate || 0) >= 45).length;
   const surpriseCount = analyzedMatches.filter(m => !!m.surpriseOutcome).length;
 
+  console.log(`Gelecek bültende İY/MS bahsi açılmış ${analyzedMatches.length} maç onaylandı.`);
+
   return {
     availableDates: sortedDates,
     availableLeagues: Array.from(leagueSet).sort(),
@@ -347,9 +417,9 @@ async function syncUpcoming() {
   };
 }
 
-// 2. SCAN YESTERDAY'S FINISHED MATCHES (DÜNÜN SONUÇLARI)
+// 2. SCAN YESTERDAY'S FINISHED MATCHES WITH REAL OPENED IY/MS ODDS
 async function syncPast() {
-  console.log('\n--- 2. DÜNÜN (1 GÜN ÖNCESİ) BİTEN İY/MS MAÇLARI ÇEKİLİYOR ---');
+  console.log('\n--- 2. DÜNÜN SONUÇLARI: SADECE İDDAA İY/MS ORANI AÇILMIŞ BİTEN MAÇLAR TARANIYOR ---');
   const d = new Date();
   d.setDate(d.getDate() - 1);
   const dd = String(d.getDate()).padStart(2, '0');
@@ -384,26 +454,20 @@ async function syncPast() {
     } catch (e) {}
   }
 
-  const finishedMatchesToAnalyze = [];
-  const seenIds = new Set();
+  const finishedCandidateMatches = [];
+  const seenEventIds = new Set();
 
   if (programRaw && programRaw.length > 50) {
     try {
       const pObj = new Function(`return ${programRaw}`)();
       (pObj.m || []).forEach(g => {
         (g.m || []).forEach(m => {
-          const ms1 = cleanNum(m[16]);
-          const ms0 = cleanNum(m[17]);
-          const ms2 = cleanNum(m[18]);
-          const iy1 = cleanNum(m[33]);
-          const iy0 = cleanNum(m[34]);
-          const iy2 = cleanNum(m[35]);
-
-          if (ms1 > 0 && ms0 > 0 && ms2 > 0 && iy1 > 0 && iy0 > 0 && iy2 > 0) {
+          if (m[50] && String(m[50]).length > 4 && String(m[50]) !== '0') {
+            const eventId = String(m[50]);
             const id = String(m[0]);
-            if (!seenIds.has(id)) {
-              seenIds.add(id);
-              const live = liveMap.get(id);
+            if (!seenEventIds.has(eventId)) {
+              seenEventIds.add(eventId);
+              const live = liveMap.get(id) || liveMap.get(eventId);
               if (live && live[5] === 4) {
                 const msHome = typeof live[12] === 'number' ? live[12] : parseInt(live[12]) || 0;
                 const msAway = typeof live[13] === 'number' ? live[13] : parseInt(live[13]) || 0;
@@ -418,8 +482,16 @@ async function syncPast() {
 
                 const actualOutcome = calculateOutcomeFromScores(iyScore, msScore);
                 if (actualOutcome) {
-                  finishedMatchesToAnalyze.push({
+                  const ms1 = cleanNum(m[16]);
+                  const ms0 = cleanNum(m[17]);
+                  const ms2 = cleanNum(m[18]);
+                  const iy1 = cleanNum(m[33]);
+                  const iy0 = cleanNum(m[34]);
+                  const iy2 = cleanNum(m[35]);
+
+                  finishedCandidateMatches.push({
                     id,
+                    eventId,
                     code: String(m[49] || m[4] || id.slice(0, 5)),
                     homeTeam: String(m[1]).trim(),
                     awayTeam: String(m[3]).trim(),
@@ -440,46 +512,59 @@ async function syncPast() {
     } catch (e) {}
   }
 
-  console.log(`Dün (${formattedDate}) İY/MS oranlı ${finishedMatchesToAnalyze.length} bitmiş maç bulundu. Analiz ediliyor...`);
+  console.log(`Dün (${formattedDate}) toplam ${finishedCandidateMatches.length} bitmiş maç adayı bulundu. Gerçek İY/MS oranları taranıyor...`);
 
   const pastResults = [];
-  const concurrency = 30;
+  const concurrency = 35;
   let cursor = 0;
 
   async function pastWorker() {
-    while (cursor < finishedMatchesToAnalyze.length) {
-      const match = finishedMatchesToAnalyze[cursor++];
+    while (cursor < finishedCandidateMatches.length) {
+      const match = finishedCandidateMatches[cursor++];
       if (!match) break;
 
-      const analysis = await analyzeOdds(match.odds);
-      // SADECE EN AZ 1 BENZER MAÇ BULUNANLARI AL (0 benzer maçlıları gösterme)
-      if (analysis.sampleSize > 0) {
-        const isTopHit = analysis.topOutcome ? (analysis.topOutcome.key === match.actualOutcome) : false;
-        const isSurpriseHit = analysis.surpriseOutcome ? (analysis.surpriseOutcome.key === match.actualOutcome) : false;
+      try {
+        const popupUrl = `https://arsiv.mackolik.com/AjaxHandlers/IddaaHandler.aspx?command=oddspopup&e=${match.eventId}&s=futbol`;
+        const popupRes = await httpsGet(popupUrl);
+        if (popupRes.status !== 200 || !popupRes.text || !popupRes.text.trim().startsWith('{')) continue;
 
-        pastResults.push({
-          id: match.id,
-          code: match.code,
-          homeTeam: match.homeTeam,
-          awayTeam: match.awayTeam,
-          league: match.league,
-          date: match.date,
-          time: match.time,
-          status: 'MS',
-          score: match.msScore,
-          iyScore: match.iyScore,
-          actualOutcome: match.actualOutcome,
-          isTopHit,
-          isSurpriseHit,
-          odds: match.odds,
-          sampleSize: analysis.sampleSize,
-          matchTier: analysis.matchTier,
-          stats: analysis.stats,
-          topOutcome: analysis.topOutcome,
-          surpriseOutcome: analysis.surpriseOutcome,
-          recentMatches: analysis.recentMatches
-        });
-      }
+        const pJson = JSON.parse(popupRes.text);
+        const openedOdds = extractOpenedIyMsOdds(pJson);
+
+        // İDDAA İY/MS BAHİSLERİ AÇILMAMIŞSA KESİNLİKLE EKLEME!
+        if (!openedOdds) continue;
+
+        const analysis = await analyzeOdds(match.odds);
+        if (analysis.sampleSize > 0) {
+          const isTopHit = analysis.topOutcome ? (analysis.topOutcome.key === match.actualOutcome) : false;
+          const isSurpriseHit = analysis.surpriseOutcome ? (analysis.surpriseOutcome.key === match.actualOutcome) : false;
+
+          pastResults.push({
+            id: match.id,
+            eventId: match.eventId,
+            code: match.code,
+            homeTeam: match.homeTeam,
+            awayTeam: match.awayTeam,
+            league: match.league,
+            date: match.date,
+            time: match.time,
+            status: 'MS',
+            score: match.msScore,
+            iyScore: match.iyScore,
+            actualOutcome: match.actualOutcome,
+            isTopHit,
+            isSurpriseHit,
+            odds: match.odds,
+            openedOdds, // İDDAA GERÇEK ORANLARI
+            sampleSize: analysis.sampleSize,
+            matchTier: analysis.matchTier,
+            stats: analysis.stats,
+            topOutcome: analysis.topOutcome,
+            surpriseOutcome: analysis.surpriseOutcome,
+            recentMatches: analysis.recentMatches
+          });
+        }
+      } catch (e) {}
     }
   }
 
@@ -513,7 +598,7 @@ async function syncPast() {
     outcomeCounts
   };
 
-  console.log(`Dünün Biten Maçları Kaydedildi: ${pastResults.length} maç (Top Tahmin İsabeti: ${topHitCount}/${pastResults.length} - %${topHitRate})`);
+  console.log(`Dünün İY/MS Bahsi Açılmış Biten Maçları Kaydedildi: ${pastResults.length} maç (Top Tahmin: ${topHitCount}/${pastResults.length} - %${topHitRate})`);
 
   return {
     pastMatches: pastResults,
