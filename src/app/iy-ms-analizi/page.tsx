@@ -88,8 +88,8 @@ export default function IyMsAnaliziPage() {
     else setLoading(true);
 
     try {
-      const url = forceRefresh ? '/api/iy-ms-analizi?refresh=true' : '/api/iy-ms-analizi';
-      const res = await fetch(url);
+      const url = forceRefresh ? `/api/iy-ms-analizi?refresh=true&t=${Date.now()}` : `/api/iy-ms-analizi?t=${Date.now()}`;
+      const res = await fetch(url, { cache: 'no-store' });
       const json: IyMsApiResponse = await res.json();
       if (json.success) {
         setData(json);

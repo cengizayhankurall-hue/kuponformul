@@ -308,11 +308,60 @@ async function analyzeOddsPattern(odds: { ms1: number; ms0: number; ms2: number;
   }
 }
 
+export const revalidate = 0;
+
 export async function GET(request: Request) {
   try {
     const cachedData = loadCacheFromDisk();
     if (cachedData && cachedData.matches && cachedData.matches.length > 0) {
-      return NextResponse.json(cachedData);
+      // STRICT FILTER: Sadece gerçek İddaa İY/MS oranları açılmış ve İY oranları olan maçlar
+      const isStrictValidMatch = (m: any) => {
+        if (!m.odds?.iy1 || !m.odds?.iy0 || !m.odds?.iy2) return false;
+        if (!m.openedOdds) return false;
+        const validCount = Object.values(m.openedOdds).filter((v: any) => v && v !== '-').length;
+        if (validCount < 5) return false;
+        if ((m.sampleSize || 0) < 1) return false;
+        return true;
+      };
+
+      const validUpcoming = (cachedData.matches || []).filter(isStrictValidMatch);
+      const validPast = (cachedData.pastMatches || []).filter(isStrictValidMatch);
+
+      const dateSet = new Set<string>();
+      const leagueSet = new Set<string>();
+      validUpcoming.forEach((m: any) => {
+        if (m.date) dateSet.add(m.date);
+        if (m.league) leagueSet.add(m.league);
+      });
+
+      const sortedDates = Array.from(dateSet).sort((a, b) => {
+        const [d1, m1, y1] = a.split('.').map(Number);
+        const [d2, m2, y2] = b.split('.').map(Number);
+        return new Date(y1, m1 - 1, d1).getTime() - new Date(y2, m2 - 1, d2).getTime();
+      });
+
+      const responsePayload = {
+        success: true,
+        timestamp: cachedData.timestamp || Date.now(),
+        availableDates: sortedDates,
+        availableLeagues: Array.from(leagueSet).sort(),
+        stats: {
+          totalAnalyzed: validUpcoming.length,
+          highConfidenceCount: validUpcoming.filter((m: any) => (m.topOutcome?.rate || 0) >= 45).length,
+          surpriseCount: validUpcoming.filter((m: any) => !!m.surpriseOutcome).length
+        },
+        matches: validUpcoming,
+        pastStats: cachedData.pastStats,
+        pastMatches: validPast
+      };
+
+      return NextResponse.json(responsePayload, {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
     }
 
     return NextResponse.json({
@@ -321,7 +370,12 @@ export async function GET(request: Request) {
       availableDates: [],
       availableLeagues: [],
       stats: { totalAnalyzed: 0, highConfidenceCount: 0, surpriseCount: 0 },
-      matches: []
+      matches: [],
+      pastMatches: []
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'
+      }
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
