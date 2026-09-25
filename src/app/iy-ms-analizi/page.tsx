@@ -153,13 +153,16 @@ export default function IyMsAnaliziPage() {
       // 0 Benzer Maç Olanları Kesinlikle Gösterme
       if ((m.sampleSize || 0) < 1) return false;
 
-      // İLK YARI ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
+      // İLK YARI VE MAÇ SONU ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
+      if (!m.odds?.ms1 || !m.odds?.ms0 || !m.odds?.ms2) return false;
       if (!m.odds?.iy1 || !m.odds?.iy0 || !m.odds?.iy2) return false;
+      if (m.odds.ms1 <= 1.01 || m.odds.ms0 <= 1.01 || m.odds.ms2 <= 1.01) return false;
+      if (m.odds.iy1 <= 1.01 || m.odds.iy0 <= 1.01 || m.odds.iy2 <= 1.01) return false;
 
       // İDDAA İY/MS ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
       if (!m.openedOdds) return false;
-      const validOpenedCount = Object.values(m.openedOdds).filter(v => v && v !== '-').length;
-      if (validOpenedCount < 5) return false;
+      const validOpenedCount = Object.values(m.openedOdds).filter(v => v && v !== '-' && v !== '0,00' && v !== '0.00' && v !== '0').length;
+      if (validOpenedCount < 7) return false;
 
       // 1. Category Filter
       if (categoryFilter === 'high_confidence') {
@@ -201,13 +204,16 @@ export default function IyMsAnaliziPage() {
       // 0 Benzer Maç Olanları Kesinlikle Gösterme
       if ((m.sampleSize || 0) < 1) return false;
 
-      // İLK YARI ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
+      // İLK YARI VE MAÇ SONU ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
+      if (!m.odds?.ms1 || !m.odds?.ms0 || !m.odds?.ms2) return false;
       if (!m.odds?.iy1 || !m.odds?.iy0 || !m.odds?.iy2) return false;
+      if (m.odds.ms1 <= 1.01 || m.odds.ms0 <= 1.01 || m.odds.ms2 <= 1.01) return false;
+      if (m.odds.iy1 <= 1.01 || m.odds.iy0 <= 1.01 || m.odds.iy2 <= 1.01) return false;
 
       // İDDAA İY/MS ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
       if (!m.openedOdds) return false;
-      const validOpenedCount = Object.values(m.openedOdds).filter(v => v && v !== '-').length;
-      if (validOpenedCount < 5) return false;
+      const validOpenedCount = Object.values(m.openedOdds).filter(v => v && v !== '-' && v !== '0,00' && v !== '0.00' && v !== '0').length;
+      if (validOpenedCount < 7) return false;
 
       // 1. Category Filter
       if (categoryFilter === 'high_confidence') {

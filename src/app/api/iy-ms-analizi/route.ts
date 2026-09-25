@@ -314,12 +314,15 @@ export async function GET(request: Request) {
   try {
     const cachedData = loadCacheFromDisk();
     if (cachedData && cachedData.matches && cachedData.matches.length > 0) {
-      // STRICT FILTER: Sadece gerçek İddaa İY/MS oranları açılmış ve İY oranları olan maçlar
+      // STRICT FILTER: Sadece gerçek İddaa İY/MS oranları açılmış ve İY/MS oranları eksiksiz olan maçlar
       const isStrictValidMatch = (m: any) => {
+        if (!m.odds?.ms1 || !m.odds?.ms0 || !m.odds?.ms2) return false;
         if (!m.odds?.iy1 || !m.odds?.iy0 || !m.odds?.iy2) return false;
+        if (m.odds.ms1 <= 1.01 || m.odds.ms0 <= 1.01 || m.odds.ms2 <= 1.01) return false;
+        if (m.odds.iy1 <= 1.01 || m.odds.iy0 <= 1.01 || m.odds.iy2 <= 1.01) return false;
         if (!m.openedOdds) return false;
-        const validCount = Object.values(m.openedOdds).filter((v: any) => v && v !== '-').length;
-        if (validCount < 5) return false;
+        const validCount = Object.values(m.openedOdds).filter((v: any) => v && v !== '-' && v !== '0,00' && v !== '0.00' && v !== '0').length;
+        if (validCount < 7) return false;
         if ((m.sampleSize || 0) < 1) return false;
         return true;
       };

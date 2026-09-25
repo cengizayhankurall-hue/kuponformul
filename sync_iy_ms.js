@@ -88,7 +88,7 @@ function extractOpenedIyMsOdds(popupJson) {
   const markets = popupJson?.data?.matches?.[0]?.bookies?.[0]?.markets || [];
   const iyMsMarket = markets.find(x => {
     const n = normalizeText(x.name);
-    return n === 'ilk yari/mac sonucu' || n === 'ilk yari / mac sonucu' || n === 'iy/ms' || n === 'iy / ms' || (n.includes('ilk yari') && n.includes('mac sonucu'));
+    return n === 'ilk yari/mac sonucu' || n === 'ilk yari / mac sonucu' || n === 'iy/ms' || n === 'iy / ms';
   });
 
   if (!iyMsMarket || !Array.isArray(iyMsMarket.outcomes) || iyMsMarket.outcomes.length < 5) {
@@ -122,13 +122,13 @@ function extractOpenedIyMsOdds(popupJson) {
   iyMsMarket.outcomes.forEach(o => {
     const rawKey = String(o.key || o.name || '').toLowerCase().trim();
     const mappedKey = KEY_MAP[rawKey];
-    if (mappedKey && o.value && o.value !== '-' && o.value !== '0,00' && o.value !== '0.00') {
+    if (mappedKey && o.value && o.value !== '-' && o.value !== '0,00' && o.value !== '0.00' && o.value !== '0') {
       openedOdds[mappedKey] = String(o.value).replace(',', '.');
     }
   });
 
   const validCount = Object.values(openedOdds).filter(v => v !== '-').length;
-  if (validCount < 5) return null;
+  if (validCount < 7) return null;
 
   return openedOdds;
 }
@@ -138,7 +138,7 @@ async function analyzeOdds(odds) {
   const emptyStats = {};
   OUTCOME_KEYS.forEach(k => { emptyStats[k] = { key: k, count: 0, rate: 0 }; });
 
-  if (!ms1 && !ms0 && !ms2) {
+  if (!ms1 || !ms0 || !ms2 || !iy1 || !iy0 || !iy2) {
     return { sampleSize: 0, matchTier: 'no_history', stats: emptyStats, topOutcome: null, surpriseOutcome: null, recentMatches: [] };
   }
 
@@ -298,6 +298,11 @@ async function syncUpcoming() {
           (g.m || []).forEach((m) => {
             const state = typeof m[5] === 'number' ? m[5] : parseInt(m[5]) || 0;
             if (state === 0 && m[1] && m[3] && m[50] && String(m[50]).length > 4 && String(m[50]) !== '0') {
+              // SADECE İDDAA BÜLTENİNDE RESMİ İY/MS MARKETİ (m[57]) AÇILMIŞ OLANLARI AL!
+              if (!m[57] || String(m[57]).trim().length < 2) {
+                return;
+              }
+
               const eventId = String(m[50]);
               if (!seenEventIds.has(eventId)) {
                 seenEventIds.add(eventId);
@@ -308,17 +313,20 @@ async function syncUpcoming() {
                 const iy0 = cleanNum(m[34]);
                 const iy2 = cleanNum(m[35]);
 
-                rawMatches.push({
-                  id: String(m[0]),
-                  eventId,
-                  code: String(m[49] || m[4] || String(m[0]).slice(0, 5)),
-                  homeTeam: String(m[1]).trim(),
-                  awayTeam: String(m[3]).trim(),
-                  league: String(m[26] || 'Diğer').trim(),
-                  date: formatDateStr(String(m[7] || dayStr)),
-                  time: String(m[6] || '').trim(),
-                  odds: { ms1, ms0, ms2, iy1, iy0, iy2 }
-                });
+                // SADECE İLK YARI VE MAÇ SONU ORANLARI TAM VE AÇILMIŞ OLANLARI AL
+                if (ms1 > 1.01 && ms0 > 1.01 && ms2 > 1.01 && iy1 > 1.01 && iy0 > 1.01 && iy2 > 1.01) {
+                  rawMatches.push({
+                    id: String(m[0]),
+                    eventId,
+                    code: String(m[49] || m[4] || String(m[0]).slice(0, 5)),
+                    homeTeam: String(m[1]).trim(),
+                    awayTeam: String(m[3]).trim(),
+                    league: String(m[26] || 'Diğer').trim(),
+                    date: formatDateStr(String(m[7] || dayStr)),
+                    time: String(m[6] || '').trim(),
+                    odds: { ms1, ms0, ms2, iy1, iy0, iy2 }
+                  });
+                }
               }
             }
           });
@@ -463,6 +471,11 @@ async function syncPast() {
       (pObj.m || []).forEach(g => {
         (g.m || []).forEach(m => {
           if (m[50] && String(m[50]).length > 4 && String(m[50]) !== '0') {
+            // SADECE İDDAA BÜLTENİNDE RESMİ İY/MS MARKETİ (m[57]) AÇILMIŞ OLANLARI AL!
+            if (!m[57] || String(m[57]).trim().length < 2) {
+              return;
+            }
+
             const eventId = String(m[50]);
             const id = String(m[0]);
             if (!seenEventIds.has(eventId)) {
@@ -489,20 +502,23 @@ async function syncPast() {
                   const iy0 = cleanNum(m[34]);
                   const iy2 = cleanNum(m[35]);
 
-                  finishedCandidateMatches.push({
-                    id,
-                    eventId,
-                    code: String(m[49] || m[4] || id.slice(0, 5)),
-                    homeTeam: String(m[1]).trim(),
-                    awayTeam: String(m[3]).trim(),
-                    league: String(m[26] || 'Diğer').trim(),
-                    date: formattedDate,
-                    time: String(m[6] || live[16] || '').trim(),
-                    odds: { ms1, ms0, ms2, iy1, iy0, iy2 },
-                    msScore,
-                    iyScore,
-                    actualOutcome
-                  });
+                  // SADECE İLK YARI VE MAÇ SONU ORANLARI TAM VE AÇILMIŞ OLANLARI AL
+                  if (ms1 > 1.01 && ms0 > 1.01 && ms2 > 1.01 && iy1 > 1.01 && iy0 > 1.01 && iy2 > 1.01) {
+                    finishedCandidateMatches.push({
+                      id,
+                      eventId,
+                      code: String(m[49] || m[4] || id.slice(0, 5)),
+                      homeTeam: String(m[1]).trim(),
+                      awayTeam: String(m[3]).trim(),
+                      league: String(m[26] || 'Diğer').trim(),
+                      date: formattedDate,
+                      time: String(m[6] || live[16] || '').trim(),
+                      odds: { ms1, ms0, ms2, iy1, iy0, iy2 },
+                      msScore,
+                      iyScore,
+                      actualOutcome
+                    });
+                  }
                 }
               }
             }
