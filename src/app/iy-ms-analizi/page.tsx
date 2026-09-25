@@ -145,13 +145,21 @@ export default function IyMsAnaliziPage() {
     }
   };
 
-  // Filtered Upcoming Matches (Sadece sampleSize > 0 olanlar)
+  // Filtered Upcoming Matches (Sadece Gerçek İY/MS Oranı Açılmış ve İY Oranları Olan Maçlar)
   const filteredUpcomingMatches = useMemo(() => {
     if (!data?.matches) return [];
 
     return data.matches.filter(m => {
       // 0 Benzer Maç Olanları Kesinlikle Gösterme
       if ((m.sampleSize || 0) < 1) return false;
+
+      // İLK YARI ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
+      if (!m.odds?.iy1 || !m.odds?.iy0 || !m.odds?.iy2) return false;
+
+      // İDDAA İY/MS ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
+      if (!m.openedOdds) return false;
+      const validOpenedCount = Object.values(m.openedOdds).filter(v => v && v !== '-').length;
+      if (validOpenedCount < 5) return false;
 
       // 1. Category Filter
       if (categoryFilter === 'high_confidence') {
@@ -185,13 +193,21 @@ export default function IyMsAnaliziPage() {
     });
   }, [data, categoryFilter, selectedUpcomingDate, selectedLeague, searchTerm]);
 
-  // Filtered Past Matches (Dünün Sonuçları)
+  // Filtered Past Matches (Dünün Sonuçları - Sadece Gerçek İY/MS Oranı Açılmış ve İY Oranları Olan Maçlar)
   const filteredPastMatches = useMemo(() => {
     if (!data?.pastMatches) return [];
 
     return data.pastMatches.filter(m => {
       // 0 Benzer Maç Olanları Kesinlikle Gösterme
       if ((m.sampleSize || 0) < 1) return false;
+
+      // İLK YARI ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
+      if (!m.odds?.iy1 || !m.odds?.iy0 || !m.odds?.iy2) return false;
+
+      // İDDAA İY/MS ORANLARI AÇILMAMIŞ MAÇLARI KESİNLİKLE GÖSTERME
+      if (!m.openedOdds) return false;
+      const validOpenedCount = Object.values(m.openedOdds).filter(v => v && v !== '-').length;
+      if (validOpenedCount < 5) return false;
 
       // 1. Category Filter
       if (categoryFilter === 'high_confidence') {
@@ -230,7 +246,6 @@ export default function IyMsAnaliziPage() {
     if (viewMode === 'past') {
       return filteredPastMatches.map(m => ({ ...m, isPastMatch: true }));
     }
-    // 'all' -> Past matches first or mixed
     const past = filteredPastMatches.map(m => ({ ...m, isPastMatch: true }));
     const upcoming = filteredUpcomingMatches.map(m => ({ ...m, isPastMatch: false }));
     return [...past, ...upcoming];
@@ -239,7 +254,7 @@ export default function IyMsAnaliziPage() {
   // Date Counts for Upcoming Matches
   const dateCounts = useMemo(() => {
     if (!data?.matches) return {};
-    const validMatches = data.matches.filter(m => (m.sampleSize || 0) > 0);
+    const validMatches = filteredUpcomingMatches;
     const counts: Record<string, number> = { all: validMatches.length };
     validMatches.forEach(m => {
       if (m.date) {
@@ -247,7 +262,7 @@ export default function IyMsAnaliziPage() {
       }
     });
     return counts;
-  }, [data]);
+  }, [data, filteredUpcomingMatches]);
 
   const OUTCOME_LABELS: Record<string, string> = {
     '1/1': 'İY 1 / MS 1',
@@ -259,27 +274,6 @@ export default function IyMsAnaliziPage() {
     '1/2': 'İY 1 / MS 2',
     'X/2': 'İY X / MS 2',
     '2/2': 'İY 2 / MS 2'
-  };
-
-  const getIyMsEstimatedOdds = (ms1: number, ms0: number, ms2: number, iy1: number, iy0: number, iy2: number): Record<string, number> => {
-    const m1 = ms1 || 2.0;
-    const m0 = ms0 || 3.0;
-    const m2 = ms2 || 3.0;
-    const i1 = iy1 || (m1 < 2 ? m1 * 1.25 : 2.6);
-    const i0 = iy0 || (m0 < 3 ? 1.9 : 2.1);
-    const i2 = iy2 || (m2 < 2 ? m2 * 1.25 : 3.4);
-
-    return {
-      '1/1': Number(Math.max(1.15, (i1 * 0.78) + (m1 * 0.38)).toFixed(2)),
-      'X/1': Number(Math.max(3.20, (i0 * 0.92) + (m1 * 1.75)).toFixed(2)),
-      '2/1': Number(Math.max(18.0, (i2 * 3.0) + (m1 * 3.5)).toFixed(2)),
-      '1/X': Number(Math.max(11.0, (i1 * 3.0) + (m0 * 2.0)).toFixed(2)),
-      'X/X': Number(Math.max(3.30, (i0 * 1.10) + (m0 * 0.60)).toFixed(2)),
-      '2/X': Number(Math.max(11.0, (i2 * 3.0) + (m0 * 2.0)).toFixed(2)),
-      '1/2': Number(Math.max(18.0, (i1 * 3.0) + (m2 * 3.5)).toFixed(2)),
-      'X/2': Number(Math.max(3.20, (i0 * 0.92) + (m2 * 1.75)).toFixed(2)),
-      '2/2': Number(Math.max(1.15, (i2 * 0.78) + (m2 * 0.38)).toFixed(2))
-    };
   };
 
   const pastStats = data?.pastStats;
@@ -499,14 +493,6 @@ export default function IyMsAnaliziPage() {
                         const stat = simResult.stats?.[key] || { rate: 0, count: 0 };
                         const isTop = simResult.topOutcome?.key === key;
                         const isSurprise = ['1/X', '2/X', '1/2', '2/1'].includes(key) && stat.rate >= 12;
-                        const estOdds = getIyMsEstimatedOdds(
-                          parseFloat(simOdds.ms1) || 0,
-                          parseFloat(simOdds.ms0) || 0,
-                          parseFloat(simOdds.ms2) || 0,
-                          parseFloat(simOdds.iy1) || 0,
-                          parseFloat(simOdds.iy0) || 0,
-                          parseFloat(simOdds.iy2) || 0
-                        );
 
                         return (
                           <div
@@ -522,11 +508,8 @@ export default function IyMsAnaliziPage() {
                             }`}
                           >
                             <div className="text-[11px] font-black">{key}</div>
-                            <div className="text-base font-black mt-0.5">%{stat.rate}</div>
-                            <div className="text-[11px] font-black text-emerald-400 my-0.5">
-                              {estOdds[key] ? estOdds[key].toFixed(2) : '-'}
-                            </div>
-                            <div className="text-[9px] opacity-70 font-semibold">{stat.count} Maç</div>
+                            <div className="text-base font-black mt-1">%{stat.rate}</div>
+                            <div className="text-[10px] opacity-70 font-semibold mt-0.5">{stat.count} Maç</div>
                           </div>
                         );
                       })}
@@ -1000,14 +983,7 @@ export default function IyMsAnaliziPage() {
                             const isTop = top?.key === key && stat.rate > 0;
                             const isSurprise = surprise?.key === key;
                             const isWinningOutcome = isPast && m.actualOutcome === key;
-                            const estOdds = getIyMsEstimatedOdds(
-                              m.odds.ms1,
-                              m.odds.ms0,
-                              m.odds.ms2,
-                              m.odds.iy1,
-                              m.odds.iy0,
-                              m.odds.iy2
-                            );
+                            const realOdd = m.openedOdds?.[key] && m.openedOdds[key] !== '-' ? m.openedOdds[key] : '-';
 
                             return (
                               <div
@@ -1036,7 +1012,7 @@ export default function IyMsAnaliziPage() {
                                   %{stat.rate}
                                 </div>
                                 <div className="text-[10px] font-black text-emerald-400 my-0.5">
-                                  {m.openedOdds?.[key] && m.openedOdds[key] !== '-' ? m.openedOdds[key] : (estOdds[key] ? estOdds[key].toFixed(2) : '-')}
+                                  {realOdd}
                                 </div>
                                 <div className="text-[9px] opacity-50">{stat.count} Maç</div>
                               </div>
