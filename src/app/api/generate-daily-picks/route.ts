@@ -256,6 +256,13 @@ export async function POST(request: Request) {
 
     const sortPicks = (picksArray: any[]) => {
       picksArray.sort((a, b) => {
+        // 1. Maç Başlama Saatine göre sırala (Örn: 12:00, 13:25, 19:00, 19:30, 21:45)
+        const timeA = (a.match.time || '99:99').trim();
+        const timeB = (b.match.time || '99:99').trim();
+        if (timeA !== timeB) {
+          return timeA.localeCompare(timeB);
+        }
+        // Aynı saatte ise yüksek yüzdeye göre sırala
         if (b.prediction.percent !== a.prediction.percent) {
           return b.prediction.percent - a.prediction.percent;
         }

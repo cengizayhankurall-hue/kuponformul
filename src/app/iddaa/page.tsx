@@ -525,11 +525,14 @@ export default function IddaaPage() {
       const yyyy = trNow.getFullYear();
       const todayStr = `${dd}.${mm}.${yyyy}`;
 
-      const targetDate = selectedDate !== 'Tümü' ? selectedDate : todayStr;
-      let dateMatches = matches.filter(m => (m.date === targetDate || String(m.date).replace(/\//g, '.') === targetDate) && !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
+      // SADECE OLDUĞUMUZ GÜNÜN (BUGÜNÜN) MAÇLARI
+      let dateMatches = matches.filter(m => (m.date === todayStr || String(m.date).replace(/\//g, '.') === todayStr) && !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
       if (dateMatches.length === 0) {
         dateMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
       }
+
+      // Başlama saatine göre sırala
+      dateMatches.sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'));
 
       const validMatches = dateMatches.slice(0, 80);
       const res = await fetch('/api/generate-daily-picks', {
@@ -2083,27 +2086,44 @@ export default function IddaaPage() {
                     </div>
 
                     {(() => {
-                      const filteredModalPicks = (dailyPicks[activeDailyPicksTab] || []).filter((item: any) => {
-                        if (picksModalLeague) {
-                          const l1 = (item.match.league || '').toLowerCase();
-                          const l2 = picksModalLeague.toLowerCase();
-                          const isMatch = l1 === l2 || 
-                                          l1.includes(l2) || 
-                                          l2.includes(l1) ||
-                                          (l2.includes('şmp') && (l1.includes('şampiyon') || l1.includes('smp') || l1.includes('champions'))) ||
-                                          (l1.includes('şmp') && (l2.includes('şampiyon') || l2.includes('smp') || l2.includes('champions')));
-                          if (!isMatch) return false;
-                        }
-                        if (!picksModalLeague && modalSearch) {
-                          const q = modalSearch.toLowerCase();
-                          if (!item.match.homeTeam.toLowerCase().includes(q) && 
-                              !item.match.awayTeam.toLowerCase().includes(q) && 
-                              !item.match.league.toLowerCase().includes(q)) {
-                            return false;
+                      const trNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
+                      const dd = String(trNow.getDate()).padStart(2, '0');
+                      const mm = String(trNow.getMonth() + 1).padStart(2, '0');
+                      const yyyy = trNow.getFullYear();
+                      const todayStr = `${dd}.${mm}.${yyyy}`;
+
+                      const filteredModalPicks = (dailyPicks[activeDailyPicksTab] || [])
+                        .filter((item: any) => {
+                          // Sadece olduğumuz günün maçları
+                          const itemDate = String(item.match?.date || '').replace(/\//g, '.').trim();
+                          if (itemDate && itemDate !== todayStr) return false;
+
+                          if (picksModalLeague) {
+                            const l1 = (item.match.league || '').toLowerCase();
+                            const l2 = picksModalLeague.toLowerCase();
+                            const isMatch = l1 === l2 || 
+                                            l1.includes(l2) || 
+                                            l2.includes(l1) ||
+                                            (l2.includes('şmp') && (l1.includes('şampiyon') || l1.includes('smp') || l1.includes('champions'))) ||
+                                            (l1.includes('şmp') && (l2.includes('şampiyon') || l2.includes('smp') || l2.includes('champions')));
+                            if (!isMatch) return false;
                           }
-                        }
-                        return true;
-                      });
+                          if (!picksModalLeague && modalSearch) {
+                            const q = modalSearch.toLowerCase();
+                            if (!item.match.homeTeam.toLowerCase().includes(q) && 
+                                !item.match.awayTeam.toLowerCase().includes(q) && 
+                                !item.match.league.toLowerCase().includes(q)) {
+                              return false;
+                            }
+                          }
+                          return true;
+                        })
+                        .sort((a: any, b: any) => {
+                          const timeA = (a.match?.time || '99:99').trim();
+                          const timeB = (b.match?.time || '99:99').trim();
+                          if (timeA !== timeB) return timeA.localeCompare(timeB);
+                          return (b.prediction?.percent || 0) - (a.prediction?.percent || 0);
+                        });
                       
                       return filteredModalPicks.length > 0 ? (
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
