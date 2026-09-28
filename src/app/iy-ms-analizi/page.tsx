@@ -164,6 +164,17 @@ export default function IyMsAnaliziPage() {
       const validOpenedCount = Object.values(m.openedOdds).filter(v => v && v !== '-' && v !== '0,00' && v !== '0.00' && v !== '0').length;
       if (validOpenedCount < 7) return false;
 
+      // Geçmiş günlerin maçlarını gelecek bültende gösterme (Sadece bugünden itibaren)
+      if (m.date) {
+        const [d, mo, y] = m.date.split('.').map(Number);
+        if (d && mo && y) {
+          const mDate = new Date(y, mo - 1, d).getTime();
+          const today = new Date();
+          const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+          if (mDate < todayStart) return false;
+        }
+      }
+
       // 1. Category Filter
       if (categoryFilter === 'high_confidence') {
         if ((m.topOutcome?.rate || 0) < 45) return false;

@@ -327,7 +327,17 @@ export async function GET(request: Request) {
         return true;
       };
 
-      const validUpcoming = (cachedData.matches || []).filter(isStrictValidMatch);
+      const now = new Date();
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+      const isUpcomingDate = (dateStr: string) => {
+        if (!dateStr) return false;
+        const [d, m, y] = dateStr.split('.').map(Number);
+        if (!d || !m || !y) return false;
+        return new Date(y, m - 1, d).getTime() >= todayStart;
+      };
+
+      const validUpcoming = (cachedData.matches || []).filter((m: any) => isStrictValidMatch(m) && isUpcomingDate(m.date));
       const validPast = (cachedData.pastMatches || []).filter(isStrictValidMatch);
 
       const dateSet = new Set<string>();
