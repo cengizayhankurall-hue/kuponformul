@@ -79,7 +79,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Nasıl Kullanılır?', href: '/nasil-kullanilir' },
     { name: 'Spor Toto Formül', href: '/spor-toto' },
-    { name: 'İddaa & Yapay Zeka', href: '/iddaa' },
+    { name: 'İddaa & AI', href: '/iddaa' },
     { name: '⚡ İY / MS Analizi', href: '/iy-ms-analizi' },
     { name: '🎯 Kombine & Skor', href: '/yuksek-oran-analizi' },
     { name: '💥 Patlayan Oranlar', href: '/patlayan-oranlar' },
@@ -92,56 +92,81 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-md sticky top-0 z-40">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+    <nav className="border-b border-neutral-800 bg-neutral-950/90 backdrop-blur-md sticky top-0 z-40">
+      <div className="mx-auto max-w-[1540px] px-3 sm:px-5 lg:px-6">
+        <div className="flex h-16 items-center justify-between gap-2">
           
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center shrink-0">
             <Link href="/" className="flex items-center group">
-              <div className="relative flex items-center justify-center h-10 w-10 bg-gradient-to-tr from-sky-400 via-blue-500 to-indigo-600 rounded-xl shadow-lg shadow-sky-500/30 mr-3 transition-transform group-hover:scale-105">
+              <div className="relative flex items-center justify-center h-9 w-9 bg-gradient-to-tr from-sky-400 via-blue-500 to-indigo-600 rounded-xl shadow-lg shadow-sky-500/30 mr-2.5 transition-transform group-hover:scale-105">
                 <div className="absolute inset-0 bg-white/20 rounded-xl blur-[1px]"></div>
-                <Sigma className="h-6 w-6 text-white relative z-10" strokeWidth={2.5} />
-                <Sparkles className="h-3.5 w-3.5 text-yellow-300 absolute -top-1 -right-1 z-10 animate-pulse" />
+                <Sigma className="h-5 w-5 text-white relative z-10" strokeWidth={2.5} />
+                <Sparkles className="h-3 w-3 text-yellow-300 absolute -top-1 -right-1 z-10 animate-pulse" />
               </div>
-              <span className="text-2xl font-black tracking-tight text-white drop-shadow-md hidden sm:block">
+              <span className="text-xl font-black tracking-tight text-white drop-shadow-md hidden sm:block whitespace-nowrap">
                 Kupon <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-500">Formülü</span>
               </span>
             </Link>
           </div>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex space-x-6 items-center">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-white ${
-                  pathname === link.href ? 'text-white font-semibold' : 'text-neutral-400'
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+          <div className="hidden xl:flex items-center gap-1 overflow-x-auto no-scrollbar py-1">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-xs font-bold px-2.5 py-1.5 rounded-xl transition-all whitespace-nowrap ${
+                    isActive 
+                      ? 'bg-neutral-800 text-white shadow-sm border border-neutral-700/60' 
+                      : 'text-neutral-400 hover:text-neutral-100 hover:bg-neutral-900/80'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Desktop Nav Links (For medium/large screens with slightly compact padding) */}
+          <div className="hidden md:flex xl:hidden items-center gap-0.5 overflow-x-auto no-scrollbar py-1">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-[11px] font-bold px-2 py-1 rounded-lg transition-all whitespace-nowrap ${
+                    isActive 
+                      ? 'bg-neutral-800 text-white shadow-sm border border-neutral-700/60' 
+                      : 'text-neutral-400 hover:text-neutral-100 hover:bg-neutral-900/80'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Desktop User Info & Auth */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2 shrink-0">
             {user ? (
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2">
                 {sub ? (
-                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                  <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20 whitespace-nowrap">
                     <Award className="h-3 w-3 text-sky-400" />
                     <span>{sub.package_name}</span>
                   </span>
                 ) : (
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-neutral-800 text-neutral-400">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-neutral-800 text-neutral-400 whitespace-nowrap">
                     Ücretsiz Üye
                   </span>
                 )}
-                <div className="flex items-center space-x-1 text-sm text-neutral-200">
-                  <User className="h-4 w-4 text-neutral-400" />
-                  <span>{user.full_name}</span>
+                <div className="flex items-center space-x-1 text-xs text-neutral-200 font-semibold max-w-[120px] truncate">
+                  <User className="h-3.5 w-3.5 text-neutral-400 shrink-0" />
+                  <span className="truncate">{user.full_name}</span>
                 </div>
                 <Link
                   href="/auth/complete-profile"

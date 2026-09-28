@@ -276,13 +276,14 @@ export default function YuksekOranAnaliziPage() {
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-3">
-              <span className="p-3 bg-gradient-to-tr from-amber-500 to-orange-500 text-slate-950 rounded-2xl shadow-lg shadow-orange-500/20">
+            <div className="flex items-center gap-3.5">
+              <span className="p-3 bg-gradient-to-tr from-amber-500 to-orange-500 text-slate-950 rounded-2xl shadow-lg shadow-orange-500/20 shrink-0">
                 <Target className="w-6 h-6 stroke-[2.5]" />
               </span>
               <div>
-                <h1 className="text-2xl md:text-3xl font-black tracking-tight">
-                  🎯 Yüksek Oran & Skor Kümeleme Analizi
+                <h1 className="text-xl md:text-2xl font-black tracking-tight flex items-center gap-2">
+                  Yüksek Oran & Skor Kümeleme Analizi
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-500/20 text-amber-400 border border-amber-500/30">YENİ</span>
                 </h1>
                 <p className={`text-xs md:text-sm mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                   388.000+ geçmiş maç veritabanından <strong>MS + 2.5/KG Kombinasyonları</strong> ve <strong>En Olası 2 Skor</strong> tahmini
