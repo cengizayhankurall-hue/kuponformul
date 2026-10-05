@@ -436,107 +436,93 @@ async function syncPast() {
   const dayStr = `${dd}/${mm}/${yyyy}`;
   const formattedDate = `${dd}.${mm}.${yyyy}`;
 
-  let programRaw = '';
   let liveRaw = '';
-
   try {
-    const [pRes, lRes] = await Promise.all([
-      httpsGet(`https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dayStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`),
-      httpsGet(`https://vd.mackolik.com/livedata?date=${dayStr}`)
-    ]);
-    programRaw = pRes.text;
+    const lRes = await httpsGet(`https://vd.mackolik.com/livedata?date=${dayStr}`);
     liveRaw = lRes.text;
   } catch (e) {
     console.error('Dünün verileri çekilemedi:', e.message);
     return { pastMatches: [], pastStats: null, date: formattedDate };
   }
 
-  const liveMap = new Map();
+  const finishedCandidates = [];
+  const seenEventIds = new Set();
+
   if (liveRaw && liveRaw.length > 50) {
     try {
       const lObj = JSON.parse(liveRaw);
       (lObj.m || []).forEach(m => {
-        liveMap.set(String(m[0]), m);
-        if (m[14]) liveMap.set(String(m[14]), m);
-      });
-    } catch (e) {}
-  }
+        if (m[5] === 4 && m[14]) {
+          const eventId = String(m[14]);
+          const id = String(m[0]);
+          if (!seenEventIds.has(eventId)) {
+            seenEventIds.add(eventId);
 
-  const finishedCandidateMatches = [];
-  const seenEventIds = new Set();
+            const msHome = typeof m[12] === 'number' ? m[12] : parseInt(m[12]) || 0;
+            const msAway = typeof m[13] === 'number' ? m[13] : parseInt(m[13]) || 0;
+            const msScore = `${msHome} - ${msAway}`;
 
-  if (programRaw && programRaw.length > 50) {
-    try {
-      const pObj = new Function(`return ${programRaw}`)();
-      (pObj.m || []).forEach(g => {
-        (g.m || []).forEach(m => {
-          if (m[50] && String(m[50]).length > 4 && String(m[50]) !== '0') {
-            // SADECE İDDAA BÜLTENİNDE RESMİ İY/MS MARKETİ (m[57]) AÇILMIŞ OLANLARI AL!
-            if (!m[57] || String(m[57]).trim().length < 2) {
-              return;
+            let iyScore = '0 - 0';
+            if (m[7] && String(m[7]).includes('-')) {
+              iyScore = String(m[7]).trim();
+            } else if (m[31] !== undefined && m[32] !== undefined) {
+              iyScore = `${m[31]} - ${m[32]}`;
             }
 
-            const eventId = String(m[50]);
-            const id = String(m[0]);
-            if (!seenEventIds.has(eventId)) {
-              seenEventIds.add(eventId);
-              const live = liveMap.get(id) || liveMap.get(eventId);
-              if (live && live[5] === 4) {
-                const msHome = typeof live[12] === 'number' ? live[12] : parseInt(live[12]) || 0;
-                const msAway = typeof live[13] === 'number' ? live[13] : parseInt(live[13]) || 0;
-                const msScore = `${msHome} - ${msAway}`;
+            const league = (m[36] && m[36][3]) ? `${m[36][1]} - ${m[36][3]}` : (m[36] && m[36][1]) ? m[36][1] : 'Futbol';
 
-                let iyScore = '0 - 0';
-                if (live[7] && String(live[7]).includes('-')) {
-                  iyScore = String(live[7]).trim();
-                } else if (live[31] !== undefined && live[32] !== undefined) {
-                  iyScore = `${live[31]} - ${live[32]}`;
-                }
-
-                const actualOutcome = calculateOutcomeFromScores(iyScore, msScore);
-                if (actualOutcome) {
-                  const ms1 = cleanNum(m[16]);
-                  const ms0 = cleanNum(m[17]);
-                  const ms2 = cleanNum(m[18]);
-                  const iy1 = cleanNum(m[33]);
-                  const iy0 = cleanNum(m[34]);
-                  const iy2 = cleanNum(m[35]);
-
-                  // SADECE İLK YARI VE MAÇ SONU ORANLARI TAM VE AÇILMIŞ OLANLARI AL
-                  if (ms1 > 1.01 && ms0 > 1.01 && ms2 > 1.01 && iy1 > 1.01 && iy0 > 1.01 && iy2 > 1.01) {
-                    finishedCandidateMatches.push({
-                      id,
-                      eventId,
-                      code: String(m[49] || m[4] || id.slice(0, 5)),
-                      homeTeam: String(m[1]).trim(),
-                      awayTeam: String(m[3]).trim(),
-                      league: String(m[26] || 'Diğer').trim(),
-                      date: formattedDate,
-                      time: String(m[6] || live[16] || '').trim(),
-                      odds: { ms1, ms0, ms2, iy1, iy0, iy2 },
-                      msScore,
-                      iyScore,
-                      actualOutcome
-                    });
-                  }
-                }
-              }
-            }
+            finishedCandidates.push({
+              id,
+              eventId,
+              code: String(m[0]).slice(-4),
+              homeTeam: String(m[2] || '').trim(),
+              awayTeam: String(m[4] || '').trim(),
+              league,
+              date: formattedDate,
+              time: String(m[16] || '').trim(),
+              msScore,
+              iyScore
+            });
           }
-        });
+        }
       });
     } catch (e) {}
   }
 
-  console.log(`Dün (${formattedDate}) toplam ${finishedCandidateMatches.length} bitmiş maç adayı bulundu. Gerçek İY/MS oranları taranıyor...`);
+  console.log(`Dün (${formattedDate}) toplam ${finishedCandidates.length} bitmiş maç adayı bulundu. Gerçek İY/MS oranları taranıyor...`);
+
+  function extractOddsFromPopup(popupJson) {
+    const markets = popupJson?.data?.matches?.[0]?.bookies?.[0]?.markets || [];
+    let ms1 = 0, ms0 = 0, ms2 = 0, iy1 = 0, iy0 = 0, iy2 = 0;
+    markets.forEach(mkt => {
+      const n = normalizeText(mkt.name);
+      if (n === 'mac sonucu' || n === 'ms') {
+        (mkt.outcomes || []).forEach(o => {
+          const on = normalizeText(o.name);
+          if (on === '1') ms1 = cleanNum(o.value);
+          if (on === '0' || on === 'x') ms0 = cleanNum(o.value);
+          if (on === '2') ms2 = cleanNum(o.value);
+        });
+      }
+      if (n === '1. yari sonucu' || n === '1. yari' || n === 'ilk yari sonucu') {
+        (mkt.outcomes || []).forEach(o => {
+          const on = normalizeText(o.name);
+          if (on === '1') iy1 = cleanNum(o.value);
+          if (on === '0' || on === 'x') iy0 = cleanNum(o.value);
+          if (on === '2') iy2 = cleanNum(o.value);
+        });
+      }
+    });
+    return { ms1, ms0, ms2, iy1, iy0, iy2 };
+  }
 
   const pastResults = [];
   const concurrency = 35;
   let cursor = 0;
 
   async function pastWorker() {
-    while (cursor < finishedCandidateMatches.length) {
-      const match = finishedCandidateMatches[cursor++];
+    while (cursor < finishedCandidates.length) {
+      const match = finishedCandidates[cursor++];
       if (!match) break;
 
       try {
@@ -546,14 +532,19 @@ async function syncPast() {
 
         const pJson = JSON.parse(popupRes.text);
         const openedOdds = extractOpenedIyMsOdds(pJson);
-
-        // İDDAA İY/MS BAHİSLERİ AÇILMAMIŞSA KESİNLİKLE EKLEME!
         if (!openedOdds) continue;
 
-        const analysis = await analyzeOdds(match.odds);
-        if (analysis.sampleSize > 0) {
-          const isTopHit = analysis.topOutcome ? (analysis.topOutcome.key === match.actualOutcome) : false;
-          const isSurpriseHit = analysis.surpriseOutcome ? (analysis.surpriseOutcome.key === match.actualOutcome) : false;
+        const odds = extractOddsFromPopup(pJson);
+        if (!odds.ms1 || !odds.ms0 || !odds.ms2 || !odds.iy1 || !odds.iy0 || !odds.iy2) continue;
+        if (odds.ms1 <= 1.01 || odds.ms0 <= 1.01 || odds.ms2 <= 1.01 || odds.iy1 <= 1.01 || odds.iy0 <= 1.01 || odds.iy2 <= 1.01) continue;
+
+        const actualOutcome = calculateOutcomeFromScores(match.iyScore, match.msScore);
+        if (!actualOutcome) continue;
+
+        const analysis = await analyzeOdds(odds);
+        if (analysis.sampleSize > 0 && analysis.topOutcome) {
+          const isTopHit = analysis.topOutcome ? (analysis.topOutcome.key === actualOutcome) : false;
+          const isSurpriseHit = analysis.surpriseOutcome ? (analysis.surpriseOutcome.key === actualOutcome) : false;
 
           pastResults.push({
             id: match.id,
@@ -567,11 +558,11 @@ async function syncPast() {
             status: 'MS',
             score: match.msScore,
             iyScore: match.iyScore,
-            actualOutcome: match.actualOutcome,
+            actualOutcome,
             isTopHit,
             isSurpriseHit,
-            odds: match.odds,
-            openedOdds, // İDDAA GERÇEK ORANLARI
+            odds,
+            openedOdds,
             sampleSize: analysis.sampleSize,
             matchTier: analysis.matchTier,
             stats: analysis.stats,

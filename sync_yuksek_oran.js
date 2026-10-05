@@ -14,6 +14,13 @@ const agent = new https.Agent({
   maxSockets: 40
 });
 
+function normalizeText(str) {
+  return (str || '')
+    .replace(/İ/g, 'i').replace(/I/g, 'i').replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/Ğ/g, 'g')
+    .replace(/ü/g, 'u').replace(/Ü/g, 'u').replace(/ş/g, 's').replace(/Ş/g, 's').replace(/ö/g, 'o')
+    .replace(/Ö/g, 'o').replace(/ç/g, 'c').replace(/Ç/g, 'c').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 function httpsGet(urlStr, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Programi', timeoutMs = 6000) {
   return new Promise((resolve) => {
     try {
@@ -154,7 +161,8 @@ async function analyzeComboAndScore(odds) {
     // Kombinasyonları sırala
     const combos = Object.entries(comboCounts).map(([name, data]) => {
       const rate = Math.round((data.count / validCount) * 100);
-      const estOdd = Math.max(2.20, parseFloat(data.sampleOdds.toFixed(2)));
+      const safeOdds = typeof data.sampleOdds === 'number' && !isNaN(data.sampleOdds) && data.sampleOdds > 1 ? data.sampleOdds : 2.80;
+      const estOdd = Math.max(2.20, parseFloat(safeOdds.toFixed(2)));
       return {
         name,
         count: data.count,
@@ -309,145 +317,176 @@ async function syncPast() {
   const dayStr = `${dd}/${mm}/${yyyy}`;
   const formattedDate = `${dd}.${mm}.${yyyy}`;
 
-  let programRaw = '';
   let liveRaw = '';
-
   try {
-    const [pRes, lRes] = await Promise.all([
-      httpsGet(`https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dayStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`),
-      httpsGet(`https://vd.mackolik.com/livedata?date=${dayStr}`)
-    ]);
-    programRaw = pRes.text;
+    const lRes = await httpsGet(`https://vd.mackolik.com/livedata?date=${dayStr}`);
     liveRaw = lRes.text;
   } catch (e) {
+    console.error('Dünün verileri çekilemedi:', e.message);
     return { pastMatches: [], pastStats: null, date: formattedDate };
   }
 
-  const liveMap = new Map();
+  const finishedMatches = [];
+  const seenEventIds = new Set();
+
   if (liveRaw && liveRaw.length > 50) {
     try {
       const lObj = JSON.parse(liveRaw);
       (lObj.m || []).forEach(m => {
-        liveMap.set(String(m[0]), m);
-        if (m[14]) liveMap.set(String(m[14]), m);
+        if (m[5] === 4 && m[14]) {
+          const eventId = String(m[14]);
+          if (!seenEventIds.has(eventId)) {
+            seenEventIds.add(eventId);
+            finishedMatches.push(m);
+          }
+        }
       });
     } catch (e) {}
   }
 
-  const finishedCandidates = [];
-  const seenEventIds = new Set();
+  console.log(`Dün (${formattedDate}) toplam ${finishedMatches.length} bitmiş maç adayı bulundu. Oranları taranıyor...`);
 
-  if (programRaw && programRaw.length > 50) {
-    try {
-      const pObj = new Function(`return ${programRaw}`)();
-      (pObj.m || []).forEach(g => {
-        (g.m || []).forEach(m => {
-          if (m[50] && String(m[50]).length > 4 && String(m[50]) !== '0') {
-            const eventId = String(m[50]);
-            const id = String(m[0]);
-            if (!seenEventIds.has(eventId)) {
-              seenEventIds.add(eventId);
-              const live = liveMap.get(id) || liveMap.get(eventId);
-              if (live && live[5] === 4) {
-                const msHome = typeof live[12] === 'number' ? live[12] : parseInt(live[12]) || 0;
-                const msAway = typeof live[13] === 'number' ? live[13] : parseInt(live[13]) || 0;
-                const actualScore = `${msHome} - ${msAway}`;
-
-                let iyScore = '0 - 0';
-                if (live[7] && String(live[7]).includes('-')) {
-                  iyScore = String(live[7]).trim();
-                } else if (live[31] !== undefined && live[32] !== undefined) {
-                  iyScore = `${live[31]} - ${live[32]}`;
-                }
-
-                const ms1 = cleanNum(m[16]);
-                const ms0 = cleanNum(m[17]);
-                const ms2 = cleanNum(m[18]);
-                const alt25 = cleanNum(m[22]);
-                const ust25 = cleanNum(m[23]);
-                const kgVar = cleanNum(m[39]);
-                const kgYok = cleanNum(m[40]);
-
-                if (ms1 > 1.05 && ms0 > 1.05 && ms2 > 1.05) {
-                  finishedCandidates.push({
-                    id,
-                    eventId,
-                    code: String(m[49] || m[4] || id.slice(0, 5)),
-                    homeTeam: String(m[1]).trim(),
-                    awayTeam: String(m[3]).trim(),
-                    league: String(m[26] || 'Diğer').trim(),
-                    date: formattedDate,
-                    time: String(m[6] || live[16] || '').trim(),
-                    odds: { ms1, ms0, ms2, alt25, ust25, kgVar, kgYok },
-                    actualScore,
-                    iyScore,
-                    msHome,
-                    msAway
-                  });
-                }
-              }
-            }
-          }
+  function extractOddsFromPopup(popupJson) {
+    const markets = popupJson?.data?.matches?.[0]?.bookies?.[0]?.markets || [];
+    let ms1 = 0, ms0 = 0, ms2 = 0, alt25 = 0, ust25 = 0, kgVar = 0, kgYok = 0;
+    markets.forEach(mkt => {
+      const n = normalizeText(mkt.name);
+      if (n === 'mac sonucu' || n === 'ms') {
+        (mkt.outcomes || []).forEach(o => {
+          const on = normalizeText(o.name);
+          if (on === '1') ms1 = cleanNum(o.value);
+          if (on === '0' || on === 'x') ms0 = cleanNum(o.value);
+          if (on === '2') ms2 = cleanNum(o.value);
         });
-      });
-    } catch (e) {}
+      }
+      if ((n.includes('2,5') || n.includes('2.5')) && n.includes('alt/ust') && !n.includes('korner') && !n.includes('kart') && !n.includes('1. yari')) {
+        (mkt.outcomes || []).forEach(o => {
+          const on = normalizeText(o.name);
+          if (on === 'alt' || o.key === '-2.5') alt25 = cleanNum(o.value);
+          if (on === 'ust' || o.key === '+2.5') ust25 = cleanNum(o.value);
+        });
+      }
+      if (n.includes('karsilikli gol') || n === 'kg') {
+        (mkt.outcomes || []).forEach(o => {
+          const on = normalizeText(o.name);
+          if (on === 'var') kgVar = cleanNum(o.value);
+          if (on === 'yok') kgYok = cleanNum(o.value);
+        });
+      }
+    });
+    return { ms1, ms0, ms2, alt25, ust25, kgVar, kgYok };
   }
 
   const pastResults = [];
-  const concurrency = 25;
+  const concurrency = 20;
   let cursor = 0;
 
   async function pastWorker() {
-    while (cursor < finishedCandidates.length) {
-      const match = finishedCandidates[cursor++];
-      if (!match) break;
+    while (cursor < finishedMatches.length) {
+      const m = finishedMatches[cursor++];
+      if (!m) break;
+
+      const eventId = String(m[14]);
+      const id = String(m[0]);
 
       try {
-        const analysis = await analyzeComboAndScore(match.odds);
-        if (analysis.sampleSize >= 10 && analysis.topCombo && analysis.primaryScore) {
-          const h = match.msHome;
-          const a = match.msAway;
-          const totalGoals = h + a;
-          const isOver25 = totalGoals >= 3;
-          const isKgVar = h > 0 && a > 0;
+        const popupUrl = `https://arsiv.mackolik.com/AjaxHandlers/IddaaHandler.aspx?command=oddspopup&e=${eventId}&s=futbol`;
+        const popupRes = await httpsGet(popupUrl);
+        let odds = {
+          ms1: cleanNum(m[18]),
+          ms0: cleanNum(m[19]),
+          ms2: cleanNum(m[20]),
+          alt25: cleanNum(m[21]),
+          ust25: cleanNum(m[22]),
+          kgVar: cleanNum(m[39]),
+          kgYok: cleanNum(m[40])
+        };
 
-          // Top Combo Hit Kontrolü
-          let isComboHit = false;
-          if (analysis.topCombo.name === 'MS 1 & 2.5 ÜST' && h > a && isOver25) isComboHit = true;
-          else if (analysis.topCombo.name === 'MS 1 & 2.5 ALT' && h > a && !isOver25) isComboHit = true;
-          else if (analysis.topCombo.name === 'MS 1 & KG VAR' && h > a && isKgVar) isComboHit = true;
-          else if (analysis.topCombo.name === 'MS 1 & KG YOK' && h > a && !isKgVar) isComboHit = true;
-          else if (analysis.topCombo.name === 'MS X & 2.5 ALT' && h === a && !isOver25) isComboHit = true;
-          else if (analysis.topCombo.name === 'MS X & KG VAR' && h === a && isKgVar) isComboHit = true;
-          else if (analysis.topCombo.name === 'MS 2 & 2.5 ÜST' && h < a && isOver25) isComboHit = true;
-          else if (analysis.topCombo.name === 'MS 2 & 2.5 ALT' && h < a && !isOver25) isComboHit = true;
-          else if (analysis.topCombo.name === 'MS 2 & KG VAR' && h < a && isKgVar) isComboHit = true;
-          else if (analysis.topCombo.name === 'MS 2 & KG YOK' && h < a && !isKgVar) isComboHit = true;
-
-          const isPrimaryScoreHit = analysis.primaryScore?.score === match.actualScore;
-          const isSecondaryScoreHit = analysis.secondaryScore?.score === match.actualScore;
-          const isExactScoreHit = isPrimaryScoreHit || isSecondaryScoreHit;
-
-          pastResults.push({
-            ...match,
-            status: 'MS',
-            sampleSize: analysis.sampleSize,
-            combos: analysis.combos,
-            topCombo: analysis.topCombo,
-            topScores: analysis.topScores,
-            primaryScore: analysis.primaryScore,
-            secondaryScore: analysis.secondaryScore,
-            isComboHit,
-            isPrimaryScoreHit,
-            isSecondaryScoreHit,
-            isExactScoreHit
-          });
+        if (popupRes.status === 200 && popupRes.text && popupRes.text.trim().startsWith('{')) {
+          const pJson = JSON.parse(popupRes.text);
+          const pOdds = extractOddsFromPopup(pJson);
+          if (pOdds.ms1 > 0) odds.ms1 = pOdds.ms1;
+          if (pOdds.ms0 > 0) odds.ms0 = pOdds.ms0;
+          if (pOdds.ms2 > 0) odds.ms2 = pOdds.ms2;
+          if (pOdds.alt25 > 0) odds.alt25 = pOdds.alt25;
+          if (pOdds.ust25 > 0) odds.ust25 = pOdds.ust25;
+          if (pOdds.kgVar > 0) odds.kgVar = pOdds.kgVar;
+          if (pOdds.kgYok > 0) odds.kgYok = pOdds.kgYok;
         }
-      } catch (e) {}
+
+        if (odds.ms1 > 1.01 && odds.ms0 > 1.01 && odds.ms2 > 1.01) {
+          const analysis = await analyzeComboAndScore(odds);
+          if (analysis && analysis.sampleSize >= 5 && analysis.topCombo && analysis.primaryScore) {
+            const msHome = typeof m[12] === 'number' ? m[12] : parseInt(m[12]) || 0;
+            const msAway = typeof m[13] === 'number' ? m[13] : parseInt(m[13]) || 0;
+            const actualScore = `${msHome} - ${msAway}`;
+
+            let iyScore = '0 - 0';
+            if (m[7] && String(m[7]).includes('-')) {
+              iyScore = String(m[7]).trim();
+            } else if (m[31] !== undefined && m[32] !== undefined) {
+              iyScore = `${m[31]} - ${m[32]}`;
+            }
+
+            const league = (m[36] && m[36][3]) ? `${m[36][1]} - ${m[36][3]}` : (m[36] && m[36][1]) ? m[36][1] : 'Futbol';
+
+            const h = msHome;
+            const a = msAway;
+            const totalGoals = h + a;
+            const isOver25 = totalGoals >= 3;
+            const isKgVar = h > 0 && a > 0;
+
+            // Top Combo Hit Kontrolü
+            let isComboHit = false;
+            if (analysis.topCombo.name === 'MS 1 & 2.5 ÜST' && h > a && isOver25) isComboHit = true;
+            else if (analysis.topCombo.name === 'MS 1 & 2.5 ALT' && h > a && !isOver25) isComboHit = true;
+            else if (analysis.topCombo.name === 'MS 1 & KG VAR' && h > a && isKgVar) isComboHit = true;
+            else if (analysis.topCombo.name === 'MS 1 & KG YOK' && h > a && !isKgVar) isComboHit = true;
+            else if (analysis.topCombo.name === 'MS X & 2.5 ALT' && h === a && !isOver25) isComboHit = true;
+            else if (analysis.topCombo.name === 'MS X & KG VAR' && h === a && isKgVar) isComboHit = true;
+            else if (analysis.topCombo.name === 'MS 2 & 2.5 ÜST' && h < a && isOver25) isComboHit = true;
+            else if (analysis.topCombo.name === 'MS 2 & 2.5 ALT' && h < a && !isOver25) isComboHit = true;
+            else if (analysis.topCombo.name === 'MS 2 & KG VAR' && h < a && isKgVar) isComboHit = true;
+            else if (analysis.topCombo.name === 'MS 2 & KG YOK' && h < a && !isKgVar) isComboHit = true;
+
+            const isPrimaryScoreHit = analysis.primaryScore?.score === actualScore;
+            const isSecondaryScoreHit = analysis.secondaryScore?.score === actualScore;
+            const isExactScoreHit = isPrimaryScoreHit || isSecondaryScoreHit;
+
+            pastResults.push({
+              id,
+              eventId,
+              code: String(m[0]).slice(-4),
+              homeTeam: String(m[2] || '').trim(),
+              awayTeam: String(m[4] || '').trim(),
+              league,
+              date: formattedDate,
+              time: String(m[16] || '').trim(),
+              odds,
+              actualScore,
+              iyScore,
+              status: 'MS',
+              sampleSize: analysis.sampleSize,
+              combos: analysis.combos,
+              topCombo: analysis.topCombo,
+              topScores: analysis.topScores,
+              primaryScore: analysis.primaryScore,
+              secondaryScore: analysis.secondaryScore,
+              isComboHit,
+              isPrimaryScoreHit,
+              isSecondaryScoreHit,
+              isExactScoreHit
+            });
+          }
+        }
+      } catch (e) {
+        console.error('pastWorker error:', e);
+      }
     }
   }
 
-  await Promise.all(Array(concurrency).fill(null).map(() => pastWorker()));
+  const workers = Array(concurrency).fill(null).map(() => pastWorker());
+  await Promise.all(workers);
 
   // Başlama saatine göre sırala
   pastResults.sort((a, b) => {
