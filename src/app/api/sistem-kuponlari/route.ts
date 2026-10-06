@@ -18,6 +18,9 @@ export interface SystemMatch {
   choice: string;
   odd: number;
   reason?: string;
+  score?: string;
+  iyScore?: string;
+  won?: boolean;
 }
 
 export interface PayoutTier {
@@ -46,6 +49,21 @@ export interface SystemCoupon {
   matches: SystemMatch[];
   payoutTable: PayoutTier[];
   targetProfitBadge: string;
+  hitCount?: number;
+  isWinner?: boolean;
+  wonAmount?: number;
+  profit?: number;
+}
+
+export interface YesterdaySummary {
+  date: string;
+  formattedDate: string;
+  totalCoupons: number;
+  wonCoupons: number;
+  totalCost: number;
+  totalWonAmount: number;
+  netProfit: number;
+  coupons: SystemCoupon[];
 }
 
 function getSubsets<T>(arr: T[], k: number): T[][] {
@@ -144,6 +162,7 @@ export async function GET() {
     const iymsCache = loadJsonCache('iy_ms_cache.json');
     const yuksekCache = loadJsonCache('yuksek_oran_cache.json');
 
+    // 1. TODAY'S ACTIVE MATCHES
     const rawIyms = (iymsCache?.matches || []).filter((m: any) => isUpcomingDate(m.date));
     const rawYuksek = (yuksekCache?.matches || []).filter((m: any) => isUpcomingDate(m.date));
 
@@ -154,7 +173,6 @@ export async function GET() {
       let chosenKey = top?.key || 'X/1';
       let oddVal = op[chosenKey] ? parseFloat(String(op[chosenKey]).replace(',', '.')) : 0;
 
-      // Prefer high-value outcome if available
       if (oddVal < 2.00) {
         if (op['X/1'] && parseFloat(op['X/1']) >= 3.00) {
           chosenKey = 'X/1';
@@ -237,7 +255,6 @@ export async function GET() {
     const allMatchesPool = [...iymsPool, ...comboPool];
 
     // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
-    // Bugün (06.10) ve yakın maçlardan karma
     const c1Candidates = [
       comboPool.find(m => m.homeTeam.includes('Estonya')),
       comboPool.find(m => m.homeTeam.includes('Belarus')),
@@ -384,11 +401,226 @@ export async function GET() {
       targetProfitBadge: '75.000 TL - 280.000 TL Hedef'
     };
 
+    // 2. YESTERDAY'S EVALUATED COUPONS (05.10.2026)
+    const pastIyms = iymsCache?.pastMatches || [];
+    const pastYuksek = yuksekCache?.pastMatches || [];
+
+    const pastPool: SystemMatch[] = [];
+
+    pastIyms.forEach((m: any, idx: number) => {
+      const topKey = m.topOutcome?.key || '1/1';
+      const oddVal = m.openedOdds?.[topKey] ? parseFloat(m.openedOdds[topKey]) : 2.10;
+      pastPool.push({
+        id: `past_iyms_${m.id || idx}`,
+        code: m.code || String(300 + idx),
+        homeTeam: m.homeTeam,
+        awayTeam: m.awayTeam,
+        league: m.league || 'BÜLTEN',
+        date: m.date || '05.10.2026',
+        time: m.time || '20:00',
+        marketType: 'iy_ms',
+        marketName: 'İY / MS',
+        choice: `${topKey} (İY/MS)`,
+        odd: oddVal,
+        score: m.score || 'MS',
+        iyScore: m.iyScore || 'İY',
+        won: m.isTopHit === true,
+        reason: `Gerçek Sonuç: İY ${m.iyScore || '-'} / MS ${m.score || '-'} (${m.actualOutcome || ''})`
+      });
+    });
+
+    pastYuksek.forEach((m: any, idx: number) => {
+      const tc = m.topCombo;
+      const oddVal = tc?.estOdd ? parseFloat(tc.estOdd) : 2.50;
+      pastPool.push({
+        id: `past_yuksek_${m.id || idx}`,
+        code: m.code || String(400 + idx),
+        homeTeam: m.homeTeam,
+        awayTeam: m.awayTeam,
+        league: m.league || 'BÜLTEN',
+        date: m.date || '05.10.2026',
+        time: m.time || '21:00',
+        marketType: 'combo',
+        marketName: 'Kombine & Skor',
+        choice: tc?.name || 'MS 1 & 2.5 ÜST',
+        odd: oddVal,
+        score: m.actualScore || 'MS',
+        iyScore: m.iyScore || 'İY',
+        won: m.isComboHit === true,
+        reason: `Gerçek Sonuç: İY ${m.iyScore || '-'} / MS ${m.actualScore || '-'}`
+      });
+    });
+
+    function evaluatePastCoupon(
+      id: string,
+      title: string,
+      badge: string,
+      description: string,
+      theme: 'amber' | 'emerald' | 'purple' | 'cyan',
+      systemSizes: number[],
+      systemLabel: string,
+      neededCount: number,
+      selectedCandidates: (SystemMatch | undefined)[]
+    ): SystemCoupon {
+      const matches = getUniqueMatches(selectedCandidates, pastPool, neededCount);
+      const odds = matches.map(m => m.odd);
+      const hitIndices = matches.map((m, i) => m.won ? i : -1).filter(i => i !== -1);
+      const hitCount = hitIndices.length;
+      const minK = Math.min(...systemSizes);
+      const isWinner = hitCount >= minK;
+
+      let totalColumns = 0;
+      for (const k of systemSizes) {
+        totalColumns += getSubsets(matches, k).length;
+      }
+
+      const cost = totalColumns * 1;
+      const wonAmount = isWinner ? Number(calcSystemPayout(odds, hitIndices, systemSizes, 1).toFixed(2)) : 0;
+      const profit = Number((wonAmount - cost).toFixed(2));
+      const payoutTable = generatePayoutTable(odds, systemSizes, 1);
+
+      return {
+        id,
+        title,
+        badge,
+        description,
+        theme,
+        systemSizes,
+        systemLabel,
+        totalMatches: matches.length,
+        totalColumns,
+        misli: 1,
+        cost,
+        minOdds: Math.min(...odds),
+        maxOdds: Math.max(...odds),
+        avgOdds: Number((odds.reduce((a, b) => a + b, 0) / odds.length).toFixed(2)),
+        matches,
+        payoutTable,
+        targetProfitBadge: isWinner ? `${wonAmount.toLocaleString('tr-TR')} TL KAZANDI` : 'İADE ALINAMADI',
+        hitCount,
+        isWinner,
+        wonAmount,
+        profit
+      };
+    }
+
+    // Past Coupon 1 (Hibrit)
+    const pastC1 = evaluatePastCoupon(
+      'past-kupon-1',
+      'Hibrit / Karma Vurgun Kuponu (Dün)',
+      '05.10.2026 SONUÇLARI',
+      'Dün oynanan İY/MS, Kombine ve Beraberlik maçlarından oluşan karma sistem kuponu sonuçları.',
+      'amber',
+      [3, 4, 5],
+      'Sistem 3, 4, 5',
+      10,
+      [
+        pastPool.find(m => m.homeTeam.includes('Cordoba')),
+        pastPool.find(m => m.homeTeam.includes('Romanya')),
+        pastPool.find(m => m.homeTeam.includes('İtalya')),
+        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
+        pastPool.find(m => m.homeTeam.includes('Argentinos')),
+        pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
+        pastPool.find(m => m.homeTeam.includes('Nikaragua')),
+        pastPool.find(m => m.homeTeam.includes('Lujan')),
+        pastPool.find(m => m.homeTeam.includes('Bosna')),
+        pastPool.find(m => m.homeTeam.includes('Fransa'))
+      ]
+    );
+
+    // Past Coupon 2 (İY/MS)
+    const pastC2 = evaluatePastCoupon(
+      'past-kupon-2',
+      'İY/MS & Sürpriz Değer Kuponu (Dün)',
+      '05.10.2026 SONUÇLARI',
+      'Dün oynanan yüksek oranlı İY/MS maçlarının gerçekleşen sonuçları ve kazanç tablosu.',
+      'purple',
+      [3, 4, 5],
+      'Sistem 3, 4, 5',
+      10,
+      [
+        pastPool.find(m => m.homeTeam.includes('Cordoba')),
+        pastPool.find(m => m.homeTeam.includes('Romanya')),
+        pastPool.find(m => m.homeTeam.includes('İtalya')),
+        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
+        pastPool.find(m => m.homeTeam.includes('Argentinos')),
+        pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
+        pastPool.find(m => m.homeTeam.includes('Guastatoya')),
+        pastPool.find(m => m.homeTeam.includes('Racing Club')),
+        pastPool.find(m => m.homeTeam.includes('Kıbrıs')),
+        pastPool.find(m => m.homeTeam.includes('Karadağ'))
+      ]
+    );
+
+    // Past Coupon 3 (Kombine)
+    const pastC3 = evaluatePastCoupon(
+      'past-kupon-3',
+      'Kombine & Gol Kilidi (Dün)',
+      '05.10.2026 SONUÇLARI',
+      'Dün oynanan MS & 2.5 Üst kombine maçlarının sonuçları.',
+      'cyan',
+      [3, 4, 5],
+      'Sistem 3, 4, 5',
+      10,
+      [
+        pastPool.find(m => m.homeTeam.includes('Nikaragua')),
+        pastPool.find(m => m.homeTeam.includes('Karadağ U21')),
+        pastPool.find(m => m.homeTeam.includes('İsveç U21')),
+        pastPool.find(m => m.homeTeam.includes('Moss')),
+        pastPool.find(m => m.homeTeam.includes('Romanya')),
+        pastPool.find(m => m.homeTeam.includes('Bosna')),
+        pastPool.find(m => m.homeTeam.includes('Guadeloupe')),
+        pastPool.find(m => m.homeTeam.includes('Cordoba')),
+        pastPool.find(m => m.homeTeam.includes('Argentinos')),
+        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio'))
+      ]
+    );
+
+    // Past Coupon 4 (Büyük Vurgun)
+    const pastC4 = evaluatePastCoupon(
+      'past-kupon-4',
+      'Büyük Vurgun / Çılgın Sistem (Dün)',
+      '05.10.2026 SONUÇLARI',
+      '420 TL maliyetli 9 maçlık Sistem 3,4,5,6 modelinin dünkü performans ve kazanç dökümü.',
+      'emerald',
+      [3, 4, 5, 6],
+      'Sistem 3, 4, 5, 6',
+      9,
+      [
+        pastPool.find(m => m.homeTeam.includes('Cordoba')),
+        pastPool.find(m => m.homeTeam.includes('Romanya')),
+        pastPool.find(m => m.homeTeam.includes('İtalya')),
+        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
+        pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
+        pastPool.find(m => m.homeTeam.includes('Nikaragua')),
+        pastPool.find(m => m.homeTeam.includes('Argentinos')),
+        pastPool.find(m => m.homeTeam.includes('Guastatoya')),
+        pastPool.find(m => m.homeTeam.includes('Bosna'))
+      ]
+    );
+
+    const pastCoupons = [pastC1, pastC2, pastC3, pastC4];
+    const totalPastCost = pastCoupons.reduce((a, b) => a + b.cost, 0);
+    const totalPastWon = pastCoupons.reduce((a, b) => a + (b.wonAmount || 0), 0);
+    const wonPastCount = pastCoupons.filter(c => c.isWinner).length;
+
+    const yesterdaySummary: YesterdaySummary = {
+      date: '05.10.2026',
+      formattedDate: '5 Ekim 2026 Dün',
+      totalCoupons: pastCoupons.length,
+      wonCoupons: wonPastCount,
+      totalCost: totalPastCost,
+      totalWonAmount: Number(totalPastWon.toFixed(2)),
+      netProfit: Number((totalPastWon - totalPastCost).toFixed(2)),
+      coupons: pastCoupons
+    };
+
     return NextResponse.json({
       success: true,
       timestamp: Date.now(),
       date: new Date().toLocaleDateString('tr-TR'),
-      coupons: [coupon1, coupon2, coupon3, coupon4]
+      coupons: [coupon1, coupon2, coupon3, coupon4],
+      yesterday: yesterdaySummary
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
