@@ -197,21 +197,45 @@ export async function GET() {
       { id: 'm18', code: '118', homeTeam: 'Depor Santani', awayTeam: 'Guairena', league: 'PAR2', date: 'Yarın', time: '01:30', marketType: 'draw', marketName: 'Beraberlik', choice: 'MS X (Beraberlik)', odd: 3.25, reason: 'Paraguay ligi kısır beraberlik trendi' }
     ];
 
-    const sourcePool = poolOfMatches.length >= 10 ? poolOfMatches : fallbackSeeds;
+    const sourcePool = [...poolOfMatches, ...fallbackSeeds];
+
+    function getValidMatches(candidates: (SystemMatch | undefined)[], neededCount: number): SystemMatch[] {
+      const result: SystemMatch[] = [];
+      const seen = new Set<string>();
+
+      candidates.forEach(c => {
+        if (c && c.id && !seen.has(c.id) && typeof c.odd === 'number' && c.odd > 0) {
+          seen.add(c.id);
+          result.push(c);
+        }
+      });
+
+      if (result.length < neededCount) {
+        sourcePool.forEach(c => {
+          if (c && c.id && !seen.has(c.id) && typeof c.odd === 'number' && c.odd > 0 && result.length < neededCount) {
+            seen.add(c.id);
+            result.push(c);
+          }
+        });
+      }
+
+      return result.slice(0, neededCount);
+    }
 
     // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
-    const coupon1Matches = [
-      sourcePool.find(m => m.homeTeam.includes('İtalya')) || sourcePool[0],
-      sourcePool.find(m => m.homeTeam.includes('Fransa')) || sourcePool[1],
-      sourcePool.find(m => m.homeTeam.includes('Karadağ')) || sourcePool[2],
-      sourcePool.find(m => m.homeTeam.includes('Lüksemburg')) || sourcePool[3],
-      sourcePool.find(m => m.homeTeam.includes('Estonya')) || sourcePool[4],
-      sourcePool.find(m => m.homeTeam.includes('Bogota')) || sourcePool[5],
-      sourcePool.find(m => m.homeTeam.includes('Merlo')) || sourcePool[6],
-      sourcePool.find(m => m.homeTeam.includes('Martinik')) || sourcePool[7],
-      sourcePool.find(m => m.homeTeam.includes('Chapelton')) || sourcePool[8],
-      sourcePool.find(m => m.homeTeam.includes('Küba')) || sourcePool[9],
-    ];
+    const coupon1Matches = getValidMatches([
+      sourcePool.find(m => m.homeTeam.includes('İtalya')),
+      sourcePool.find(m => m.homeTeam.includes('Fransa')),
+      sourcePool.find(m => m.homeTeam.includes('Karadağ')),
+      sourcePool.find(m => m.homeTeam.includes('Lüksemburg')),
+      sourcePool.find(m => m.homeTeam.includes('Estonya')),
+      sourcePool.find(m => m.homeTeam.includes('Bogota')),
+      sourcePool.find(m => m.homeTeam.includes('Merlo')),
+      sourcePool.find(m => m.homeTeam.includes('Martinik')),
+      sourcePool.find(m => m.homeTeam.includes('Chapelton')),
+      sourcePool.find(m => m.homeTeam.includes('Küba')),
+    ], 10);
+
     const c1Odds = coupon1Matches.map(m => m.odd);
     const c1Payouts = generatePayoutTable(c1Odds, [3, 4, 5], 1);
 
@@ -236,18 +260,19 @@ export async function GET() {
     };
 
     // --- KUPON 2: İY/MS & SÜRPRİZ DEĞER (10 Maç - Sistem 3, 4, 5) ---
-    const coupon2Matches = [
-      sourcePool.find(m => m.homeTeam.includes('Kıbrıs')) || sourcePool[10],
-      sourcePool.find(m => m.homeTeam.includes('Estonya')) || sourcePool[4],
-      sourcePool.find(m => m.homeTeam.includes('Hırvatistan')) || sourcePool[11],
-      sourcePool.find(m => m.homeTeam.includes('Lüksemburg')) || sourcePool[3],
-      sourcePool.find(m => m.homeTeam.includes('İtalya')) || sourcePool[0],
-      sourcePool.find(m => m.homeTeam.includes('Karadağ')) || sourcePool[2],
-      sourcePool.find(m => m.homeTeam.includes('Fransa')) || sourcePool[1],
-      sourcePool.find(m => m.homeTeam.includes('Kolombiya')) || sourcePool[12],
-      sourcePool.find(m => m.homeTeam.includes('Palmeiras')) || sourcePool[13],
-      sourcePool.find(m => m.homeTeam.includes('Helsinki')) || sourcePool[14],
-    ];
+    const coupon2Matches = getValidMatches([
+      sourcePool.find(m => m.homeTeam.includes('Kıbrıs')),
+      sourcePool.find(m => m.homeTeam.includes('Estonya')),
+      sourcePool.find(m => m.homeTeam.includes('Hırvatistan')),
+      sourcePool.find(m => m.homeTeam.includes('Lüksemburg')),
+      sourcePool.find(m => m.homeTeam.includes('İtalya')),
+      sourcePool.find(m => m.homeTeam.includes('Karadağ')),
+      sourcePool.find(m => m.homeTeam.includes('Fransa')),
+      sourcePool.find(m => m.homeTeam.includes('Kolombiya')),
+      sourcePool.find(m => m.homeTeam.includes('Palmeiras')),
+      sourcePool.find(m => m.homeTeam.includes('Helsinki')),
+    ], 10);
+
     const c2Odds = coupon2Matches.map(m => m.odd);
     const c2Payouts = generatePayoutTable(c2Odds, [3, 4, 5], 1);
 
@@ -272,18 +297,19 @@ export async function GET() {
     };
 
     // --- KUPON 3: KOMBİNE & BERABERLİK KİLİDİ (10 Maç - Sistem 3, 4, 5) ---
-    const coupon3Matches = [
-      sourcePool.find(m => m.homeTeam.includes('Bogota')) || sourcePool[5],
-      sourcePool.find(m => m.homeTeam.includes('Merlo')) || sourcePool[6],
-      sourcePool.find(m => m.homeTeam.includes('Martinik')) || sourcePool[7],
-      sourcePool.find(m => m.homeTeam.includes('Chapelton')) || sourcePool[8],
-      sourcePool.find(m => m.homeTeam.includes('Küba')) || sourcePool[9],
-      sourcePool.find(m => m.homeTeam.includes('Santani')) || sourcePool[17],
-      sourcePool.find(m => m.homeTeam.includes('Velez')) || sourcePool[15],
-      sourcePool.find(m => m.homeTeam.includes('Estudiantes')) || sourcePool[16],
-      { id: 'm19', code: '119', homeTeam: 'Fransa', awayTeam: 'Belçika', league: 'AVUL', date: 'Bugün', time: '21:45', marketType: 'combo', marketName: 'Kombine', choice: 'MS 1 & KG VAR', odd: 3.60, reason: 'İki taraf da gol atar ama Fransa kazanır' },
-      { id: 'm20', code: '120', homeTeam: 'İtalya', awayTeam: 'Türkiye', league: 'AVUL', date: 'Bugün', time: '21:45', marketType: 'combo', marketName: 'Kombine', choice: 'MS 1 & 2.5 ÜST', odd: 3.10, reason: 'Tempolu ev sahibi galibiyeti' }
-    ];
+    const coupon3Matches = getValidMatches([
+      sourcePool.find(m => m.homeTeam.includes('Bogota')),
+      sourcePool.find(m => m.homeTeam.includes('Merlo')),
+      sourcePool.find(m => m.homeTeam.includes('Martinik')),
+      sourcePool.find(m => m.homeTeam.includes('Chapelton')),
+      sourcePool.find(m => m.homeTeam.includes('Küba')),
+      sourcePool.find(m => m.homeTeam.includes('Santani')),
+      sourcePool.find(m => m.homeTeam.includes('Velez')),
+      sourcePool.find(m => m.homeTeam.includes('Estudiantes')),
+      sourcePool.find(m => m.homeTeam.includes('Fransa')),
+      sourcePool.find(m => m.homeTeam.includes('İtalya'))
+    ], 10);
+
     const c3Odds = coupon3Matches.map(m => m.odd);
     const c3Payouts = generatePayoutTable(c3Odds, [3, 4, 5], 1);
 
@@ -308,17 +334,18 @@ export async function GET() {
     };
 
     // --- KUPON 4: 9 MAÇ ÇILGIN VURGUN (9 Maç - Sistem 3, 4, 5, 6) ---
-    const coupon4Matches = [
-      sourcePool.find(m => m.homeTeam.includes('Karadağ')) || sourcePool[2],
-      sourcePool.find(m => m.homeTeam.includes('İtalya')) || sourcePool[0],
-      sourcePool.find(m => m.homeTeam.includes('Fransa')) || sourcePool[1],
-      sourcePool.find(m => m.homeTeam.includes('Lüksemburg')) || sourcePool[3],
-      sourcePool.find(m => m.homeTeam.includes('Estonya')) || sourcePool[4],
-      sourcePool.find(m => m.homeTeam.includes('Palmeiras')) || sourcePool[13],
-      sourcePool.find(m => m.homeTeam.includes('Helsinki')) || sourcePool[14],
-      sourcePool.find(m => m.homeTeam.includes('Bogota')) || sourcePool[5],
-      sourcePool.find(m => m.homeTeam.includes('Merlo')) || sourcePool[6]
-    ];
+    const coupon4Matches = getValidMatches([
+      sourcePool.find(m => m.homeTeam.includes('Karadağ')),
+      sourcePool.find(m => m.homeTeam.includes('İtalya')),
+      sourcePool.find(m => m.homeTeam.includes('Fransa')),
+      sourcePool.find(m => m.homeTeam.includes('Lüksemburg')),
+      sourcePool.find(m => m.homeTeam.includes('Estonya')),
+      sourcePool.find(m => m.homeTeam.includes('Palmeiras')),
+      sourcePool.find(m => m.homeTeam.includes('Helsinki')),
+      sourcePool.find(m => m.homeTeam.includes('Bogota')),
+      sourcePool.find(m => m.homeTeam.includes('Merlo'))
+    ], 9);
+
     const c4Odds = coupon4Matches.map(m => m.odd);
     const c4Payouts = generatePayoutTable(c4Odds, [3, 4, 5, 6], 1);
 

@@ -115,11 +115,9 @@ export default function SistemKuponlariPage() {
     try {
       const res = await fetch(`/api/sistem-kuponlari?t=${Date.now()}`, { cache: 'no-store' });
       const json: ApiResponse = await res.json();
-      if (json.success) {
+      if (json && json.success && Array.isArray(json.coupons) && json.coupons.length > 0) {
         setData(json);
-        if (json.coupons?.length > 0 && !activeCouponId) {
-          setActiveCouponId(json.coupons[0].id);
-        }
+        setActiveCouponId(prev => prev && json.coupons.some(c => c.id === prev) ? prev : json.coupons[0].id);
       }
     } catch (err) {
       console.error('Sistem kuponları veri çekme hatası:', err);
@@ -130,7 +128,7 @@ export default function SistemKuponlariPage() {
   };
 
   const activeCoupon = useMemo(() => {
-    if (!data?.coupons) return null;
+    if (!data?.coupons || data.coupons.length === 0) return null;
     return data.coupons.find(c => c.id === activeCouponId) || data.coupons[0];
   }, [data, activeCouponId]);
 
