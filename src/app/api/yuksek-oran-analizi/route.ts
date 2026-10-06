@@ -37,8 +37,18 @@ export async function GET(request: Request) {
         return new Date(y, m - 1, d).getTime() >= todayStart;
       };
 
-      const validUpcoming = (cachedData.matches || []).filter((m: any) => isUpcomingDate(m.date));
-      const validPast = cachedData.pastMatches || [];
+      const isValidComboMatch = (m: any) => {
+        if (!m.odds?.ms1 || !m.odds?.ms0 || !m.odds?.ms2) return false;
+        if (!m.odds?.alt25 || !m.odds?.ust25 || !m.odds?.kgVar || !m.odds?.kgYok) return false;
+        if (m.odds.ms1 <= 1.05 || m.odds.ms0 <= 1.05 || m.odds.ms2 <= 1.05) return false;
+        if (m.odds.alt25 <= 1.05 || m.odds.ust25 <= 1.05) return false;
+        if (m.odds.kgVar <= 1.05 || m.odds.kgYok <= 1.05) return false;
+        if (!m.topCombo || !m.primaryScore) return false;
+        return true;
+      };
+
+      const validUpcoming = (cachedData.matches || []).filter((m: any) => isValidComboMatch(m) && isUpcomingDate(m.date));
+      const validPast = (cachedData.pastMatches || []).filter(isValidComboMatch);
 
       const dateSet = new Set<string>();
       const leagueSet = new Set<string>();
