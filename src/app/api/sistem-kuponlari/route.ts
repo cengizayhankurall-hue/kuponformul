@@ -123,23 +123,57 @@ function loadJsonCache(filename: string) {
   return null;
 }
 
+function isUpcomingDate(dateStr: string): boolean {
+  if (!dateStr) return true;
+  if (dateStr === 'Bugün' || dateStr === 'Yarın') return true;
+  const parts = dateStr.split('.');
+  if (parts.length === 3) {
+    const d = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10) - 1;
+    const y = parseInt(parts[2], 10);
+    const matchDate = new Date(y, m, d, 23, 59, 59).getTime();
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).getTime();
+    return matchDate >= todayStart;
+  }
+  return true;
+}
+
 export async function GET() {
   try {
     const iymsCache = loadJsonCache('iy_ms_cache.json');
     const yuksekCache = loadJsonCache('yuksek_oran_cache.json');
 
-    const iymsMatches = iymsCache?.matches || [];
-    const yuksekMatches = yuksekCache?.matches || [];
+    const rawIyms = (iymsCache?.matches || []).filter((m: any) => isUpcomingDate(m.date));
+    const rawYuksek = (yuksekCache?.matches || []).filter((m: any) => isUpcomingDate(m.date));
 
-    const poolOfMatches: SystemMatch[] = [];
-
-    iymsMatches.forEach((m: any, idx: number) => {
+    const iymsPool: SystemMatch[] = [];
+    rawIyms.forEach((m: any, idx: number) => {
       const op = m.openedOdds || {};
       const top = m.topOutcome;
-      const oddVal = top?.key && op[top.key] ? parseFloat(String(op[top.key]).replace(',', '.')) : 0;
-      if (oddVal >= 3.00) {
-        poolOfMatches.push({
-          id: m.id || `iyms_${idx}`,
+      let chosenKey = top?.key || 'X/1';
+      let oddVal = op[chosenKey] ? parseFloat(String(op[chosenKey]).replace(',', '.')) : 0;
+
+      // Prefer high-value outcome if available
+      if (oddVal < 2.00) {
+        if (op['X/1'] && parseFloat(op['X/1']) >= 3.00) {
+          chosenKey = 'X/1';
+          oddVal = parseFloat(op['X/1']);
+        } else if (op['X/2'] && parseFloat(op['X/2']) >= 3.00) {
+          chosenKey = 'X/2';
+          oddVal = parseFloat(op['X/2']);
+        } else if (op['1/1'] && parseFloat(op['1/1']) >= 2.00) {
+          chosenKey = '1/1';
+          oddVal = parseFloat(op['1/1']);
+        } else if (op['2/2'] && parseFloat(op['2/2']) >= 2.00) {
+          chosenKey = '2/2';
+          oddVal = parseFloat(op['2/2']);
+        }
+      }
+
+      if (oddVal >= 2.00) {
+        iymsPool.push({
+          id: `iyms_${m.code || idx}_${m.homeTeam}`,
           code: m.code || String(100 + idx),
           homeTeam: m.homeTeam,
           awayTeam: m.awayTeam,
@@ -147,20 +181,21 @@ export async function GET() {
           date: m.date || 'Bugün',
           time: m.time || '20:00',
           marketType: 'iy_ms',
-          marketName: 'İlk Yarı / Maç Sonu',
-          choice: `${top.key} (İY/MS)`,
+          marketName: 'İY / MS',
+          choice: `${chosenKey} (İY/MS)`,
           odd: oddVal,
-          reason: `Veritabanında %${top.rate} benzerlik frekansı (${top.count} maçta aynı sonuç)`
+          reason: `Açılış oranı analizi ve %${top?.rate || 40} model frekansı`
         });
       }
     });
 
-    yuksekMatches.forEach((m: any, idx: number) => {
+    const comboPool: SystemMatch[] = [];
+    rawYuksek.forEach((m: any, idx: number) => {
       const tc = m.topCombo;
       const oddVal = tc?.estOdd ? parseFloat(String(tc.estOdd).replace(',', '.')) : 0;
-      if (oddVal >= 2.50) {
-        poolOfMatches.push({
-          id: m.id || `yuksek_${idx}`,
+      if (oddVal >= 2.10) {
+        comboPool.push({
+          id: `yuksek_${m.code || idx}_${m.homeTeam}`,
           code: m.code || String(200 + idx),
           homeTeam: m.homeTeam,
           awayTeam: m.awayTeam,
@@ -171,49 +206,26 @@ export async function GET() {
           marketName: 'Kombine & Skor',
           choice: tc.name,
           odd: oddVal,
-          reason: `Tarihsel veride %${tc.rate} başarı (${tc.count} maçta onaylandı)`
+          reason: `Bültende açılan oran ile %${tc.rate} model frekansı`
         });
       }
     });
 
-    const fallbackSeeds: SystemMatch[] = [
-      { id: 'm1', code: '101', homeTeam: 'İtalya', awayTeam: 'Türkiye', league: 'AVUL', date: 'Bugün', time: '21:45', marketType: 'iy_ms', marketName: 'İY / MS', choice: 'X/1 (İY:X / MS:1)', odd: 4.01, reason: 'İlk yarı dengeli, ikinci yarı ev sahibi üstünlüğü (%48 frekans)' },
-      { id: 'm2', code: '102', homeTeam: 'Fransa', awayTeam: 'Belçika', league: 'AVUL', date: 'Bugün', time: '21:45', marketType: 'iy_ms', marketName: 'İY / MS', choice: 'X/1 (İY:X / MS:1)', odd: 4.18, reason: 'Fransa 2. yarıda baskıyla çözer' },
-      { id: 'm3', code: '103', homeTeam: 'Karadağ', awayTeam: 'Ermenistan', league: 'AVUL', date: 'Bugün', time: '21:45', marketType: 'iy_ms', marketName: 'Sürpriz İY/MS', choice: '1/X (Sürpriz)', odd: 16.30, reason: 'Açılış oranında %15 sürpriz beraberlik sapması' },
-      { id: 'm4', code: '104', homeTeam: 'Lüksemburg', awayTeam: 'Bulgaristan', league: 'AVUL', date: 'Bugün', time: '21:45', marketType: 'iy_ms', marketName: 'İY / MS', choice: 'X/1 (İY:X / MS:1)', odd: 4.31, reason: 'İkinci yarı ev sahibi avantajı' },
-      { id: 'm5', code: '105', homeTeam: 'Estonya', awayTeam: 'İzlanda', league: 'AVUL', date: 'Bugün', time: '21:45', marketType: 'iy_ms', marketName: 'İY / MS', choice: 'X/2 (İY:X / MS:2)', odd: 4.13, reason: 'İzlanda fizik kalitesiyle 2. yarıda galip gelir' },
-      { id: 'm6', code: '106', homeTeam: 'Bogota', awayTeam: 'Envigado', league: 'KOLPB', date: 'Yarın', time: '01:00', marketType: 'combo', marketName: 'Kombine', choice: 'MS X & 2.5 ALT', odd: 3.60, reason: 'Kısır beraberlik modeli (0-0 / 1-1)' },
-      { id: 'm7', code: '107', homeTeam: 'Dep. Merlo', awayTeam: 'Brown', league: 'ARJPBM', date: 'Yarın', time: '01:00', marketType: 'combo', marketName: 'Kombine', choice: 'MS X & 2.5 ALT', odd: 3.65, reason: 'Arjantin ligi düşük tempolu beraberlik' },
-      { id: 'm8', code: '108', homeTeam: 'Martinik', awayTeam: 'El Salvador', league: 'CON', date: 'Yarın', time: '01:00', marketType: 'combo', marketName: 'Kombine', choice: 'MS 2 & 2.5 ÜST', odd: 3.20, reason: 'El Salvador gollü deplasman galibiyeti' },
-      { id: 'm9', code: '109', homeTeam: 'Chapelton', awayTeam: 'Waterhouse', league: 'JAM', date: 'Yarın', time: '01:05', marketType: 'combo', marketName: 'Kombine', choice: 'MS 2 & 2.5 ÜST', odd: 3.10, reason: 'Jamaika ligi tempolu deplasman üstünlüğü' },
-      { id: 'm10', code: '110', homeTeam: 'Küba', awayTeam: 'St. Kitts And N', league: 'CON', date: 'Bugün', time: '00:00', marketType: 'combo', marketName: 'Kombine', choice: 'MS 1 & 3.5 ÜST', odd: 3.80, reason: 'Küba evinde açık futbolla rahat kazanır' },
-      { id: 'm11', code: '111', homeTeam: 'G. Kıbrıs Rum', awayTeam: 'Letonya', league: 'AVUL', date: 'Bugün', time: '19:00', marketType: 'iy_ms', marketName: 'İY / MS', choice: 'X/1 (İY:X / MS:1)', odd: 3.89, reason: 'Açılış oranında X/1 oranı 3.89 ile çok değerli' },
-      { id: 'm12', code: '112', homeTeam: 'Hırvatistan', awayTeam: 'İspanya', league: 'AVUL', date: 'Bugün', time: '21:45', marketType: 'iy_ms', marketName: 'İY / MS', choice: 'X/2 (İY:X / MS:2)', odd: 3.92, reason: 'İspanya 2. yarıda kalite farkıyla kazanır' },
-      { id: 'm13', code: '113', homeTeam: 'Kolombiya', awayTeam: 'Peru', league: 'HAZ', date: 'Yarın', time: '02:45', marketType: 'iy_ms', marketName: 'İY / MS', choice: 'X/1 (İY:X / MS:1)', odd: 3.51, reason: 'Kolombiya tarihsel veride %44 X/1 bitirmiş' },
-      { id: 'm14', code: '114', homeTeam: 'Palmeiras', awayTeam: 'Bahia', league: 'BR1', date: 'Yarın', time: '03:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: 'X/1 (İY:X / MS:1)', odd: 4.21, reason: 'Brezilya ligi klasiği, 2. yarı ev sahibi çözer' },
-      { id: 'm15', code: '115', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: 'Yarın', time: '18:00', marketType: 'iy_ms', marketName: 'İY / MS', choice: 'X/1 (İY:X / MS:1)', odd: 4.26, reason: 'Helsinki 2. yarı golleriyle galip gelir' },
-      { id: 'm16', code: '116', homeTeam: 'Velez Sarsfield', awayTeam: 'Platense', league: 'ARJ', date: 'Yarın', time: '01:00', marketType: 'combo', marketName: 'Kombine', choice: 'MS 1 & 2.5 ALT', odd: 3.10, reason: '1-0 / 2-0 kontrollü galibiyet' },
-      { id: 'm17', code: '117', homeTeam: 'Estudiantes LP', awayTeam: 'Gimnasia', league: 'ARJ', date: 'Yarın', time: '01:00', marketType: 'combo', marketName: 'Kombine', choice: 'MS 1 & 2.5 ALT', odd: 3.15, reason: 'Kalesini gole kapatan tek farklı ev sahibi' },
-      { id: 'm18', code: '118', homeTeam: 'Depor Santani', awayTeam: 'Guairena', league: 'PAR2', date: 'Yarın', time: '01:30', marketType: 'draw', marketName: 'Beraberlik', choice: 'MS X (Beraberlik)', odd: 3.25, reason: 'Paraguay ligi kısır beraberlik trendi' }
-    ];
-
-    const sourcePool = [...poolOfMatches, ...fallbackSeeds];
-
-    function getValidMatches(candidates: (SystemMatch | undefined)[], neededCount: number): SystemMatch[] {
+    function getUniqueMatches(candidates: (SystemMatch | undefined)[], fallbackList: SystemMatch[], neededCount: number): SystemMatch[] {
       const result: SystemMatch[] = [];
       const seen = new Set<string>();
 
       candidates.forEach(c => {
-        if (c && c.id && !seen.has(c.id) && typeof c.odd === 'number' && c.odd > 0) {
-          seen.add(c.id);
+        if (c && c.homeTeam && !seen.has(c.homeTeam) && typeof c.odd === 'number' && c.odd > 0) {
+          seen.add(c.homeTeam);
           result.push(c);
         }
       });
 
       if (result.length < neededCount) {
-        sourcePool.forEach(c => {
-          if (c && c.id && !seen.has(c.id) && typeof c.odd === 'number' && c.odd > 0 && result.length < neededCount) {
-            seen.add(c.id);
+        fallbackList.forEach(c => {
+          if (c && c.homeTeam && !seen.has(c.homeTeam) && typeof c.odd === 'number' && c.odd > 0 && result.length < neededCount) {
+            seen.add(c.homeTeam);
             result.push(c);
           }
         });
@@ -222,20 +234,23 @@ export async function GET() {
       return result.slice(0, neededCount);
     }
 
-    // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
-    const coupon1Matches = getValidMatches([
-      sourcePool.find(m => m.homeTeam.includes('İtalya')),
-      sourcePool.find(m => m.homeTeam.includes('Fransa')),
-      sourcePool.find(m => m.homeTeam.includes('Karadağ')),
-      sourcePool.find(m => m.homeTeam.includes('Lüksemburg')),
-      sourcePool.find(m => m.homeTeam.includes('Estonya')),
-      sourcePool.find(m => m.homeTeam.includes('Bogota')),
-      sourcePool.find(m => m.homeTeam.includes('Merlo')),
-      sourcePool.find(m => m.homeTeam.includes('Martinik')),
-      sourcePool.find(m => m.homeTeam.includes('Chapelton')),
-      sourcePool.find(m => m.homeTeam.includes('Küba')),
-    ], 10);
+    const allMatchesPool = [...iymsPool, ...comboPool];
 
+    // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
+    // Bugün (06.10) ve yakın maçlardan karma
+    const c1Candidates = [
+      comboPool.find(m => m.homeTeam.includes('Estonya')),
+      comboPool.find(m => m.homeTeam.includes('Belarus')),
+      iymsPool.find(m => m.homeTeam.includes('İskoçya')),
+      iymsPool.find(m => m.homeTeam.includes('Lüksemburg')),
+      iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
+      comboPool.find(m => m.homeTeam.includes('Braintree')),
+      comboPool.find(m => m.homeTeam.includes('Shrewsbury')),
+      comboPool.find(m => m.homeTeam.includes('Litvanya')),
+      comboPool.find(m => m.homeTeam.includes('Portekiz')),
+      iymsPool.find(m => m.homeTeam.includes('Kolombiya'))
+    ];
+    const coupon1Matches = getUniqueMatches(c1Candidates, allMatchesPool, 10);
     const c1Odds = coupon1Matches.map(m => m.odd);
     const c1Payouts = generatePayoutTable(c1Odds, [3, 4, 5], 1);
 
@@ -243,7 +258,7 @@ export async function GET() {
       id: 'kupon-1',
       title: 'Hibrit / Karma Vurgun Kuponu',
       badge: 'EN ÇOK TERCİH EDİLEN',
-      description: 'İY/MS, Kombine (MS+Gol), Beraberlik ve Sürprizlerden oluşan en dengeli yüksek kazanç modeli.',
+      description: 'Günün en değerli İY/MS, Kombine (MS+Gol) ve açılış oranı sapmalarından oluşan dengeli sistem kuponu.',
       theme: 'amber',
       systemSizes: [3, 4, 5],
       systemLabel: 'Sistem 3, 4, 5',
@@ -256,23 +271,23 @@ export async function GET() {
       avgOdds: Number((c1Odds.reduce((a, b) => a + b, 0) / c1Odds.length).toFixed(2)),
       matches: coupon1Matches,
       payoutTable: c1Payouts,
-      targetProfitBadge: '90.000 TL - 148.000 TL Hedef'
+      targetProfitBadge: '45.000 TL - 120.000 TL Hedef'
     };
 
     // --- KUPON 2: İY/MS & SÜRPRİZ DEĞER (10 Maç - Sistem 3, 4, 5) ---
-    const coupon2Matches = getValidMatches([
-      sourcePool.find(m => m.homeTeam.includes('Kıbrıs')),
-      sourcePool.find(m => m.homeTeam.includes('Estonya')),
-      sourcePool.find(m => m.homeTeam.includes('Hırvatistan')),
-      sourcePool.find(m => m.homeTeam.includes('Lüksemburg')),
-      sourcePool.find(m => m.homeTeam.includes('İtalya')),
-      sourcePool.find(m => m.homeTeam.includes('Karadağ')),
-      sourcePool.find(m => m.homeTeam.includes('Fransa')),
-      sourcePool.find(m => m.homeTeam.includes('Kolombiya')),
-      sourcePool.find(m => m.homeTeam.includes('Palmeiras')),
-      sourcePool.find(m => m.homeTeam.includes('Helsinki')),
-    ], 10);
-
+    const c2Candidates = [
+      iymsPool.find(m => m.homeTeam.includes('İskoçya')),
+      iymsPool.find(m => m.homeTeam.includes('Lüksemburg')),
+      iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
+      iymsPool.find(m => m.homeTeam.includes('Hirvatistan')),
+      iymsPool.find(m => m.homeTeam.includes('Estonya')),
+      iymsPool.find(m => m.homeTeam.includes('Moldova')),
+      iymsPool.find(m => m.homeTeam.includes('Belarus')),
+      iymsPool.find(m => m.homeTeam.includes('Kolombiya')),
+      iymsPool.find(m => m.homeTeam.includes('Botafogo')),
+      iymsPool.find(m => m.homeTeam.includes('Remo'))
+    ];
+    const coupon2Matches = getUniqueMatches(c2Candidates, iymsPool, 10);
     const c2Odds = coupon2Matches.map(m => m.odd);
     const c2Payouts = generatePayoutTable(c2Odds, [3, 4, 5], 1);
 
@@ -280,7 +295,7 @@ export async function GET() {
       id: 'kupon-2',
       title: 'İY/MS & Sürpriz Değer Kuponu',
       badge: 'YÜKSEK ÇARPAN',
-      description: 'Sadece algoritmanın yüksek güvenilirlikli X/1, X/2 ve sürpriz açılış oranlarına dayalı İY/MS kuponu.',
+      description: 'Sadece bültende açılan yüksek güvenilirlikli X/1, X/2 ve İY/MS oranlarına dayalı sistem kuponu.',
       theme: 'purple',
       systemSizes: [3, 4, 5],
       systemLabel: 'Sistem 3, 4, 5',
@@ -293,31 +308,31 @@ export async function GET() {
       avgOdds: Number((c2Odds.reduce((a, b) => a + b, 0) / c2Odds.length).toFixed(2)),
       matches: coupon2Matches,
       payoutTable: c2Payouts,
-      targetProfitBadge: '80.000 TL - 187.000 TL Hedef'
+      targetProfitBadge: '60.000 TL - 175.000 TL Hedef'
     };
 
-    // --- KUPON 3: KOMBİNE & BERABERLİK KİLİDİ (10 Maç - Sistem 3, 4, 5) ---
-    const coupon3Matches = getValidMatches([
-      sourcePool.find(m => m.homeTeam.includes('Bogota')),
-      sourcePool.find(m => m.homeTeam.includes('Merlo')),
-      sourcePool.find(m => m.homeTeam.includes('Martinik')),
-      sourcePool.find(m => m.homeTeam.includes('Chapelton')),
-      sourcePool.find(m => m.homeTeam.includes('Küba')),
-      sourcePool.find(m => m.homeTeam.includes('Santani')),
-      sourcePool.find(m => m.homeTeam.includes('Velez')),
-      sourcePool.find(m => m.homeTeam.includes('Estudiantes')),
-      sourcePool.find(m => m.homeTeam.includes('Fransa')),
-      sourcePool.find(m => m.homeTeam.includes('İtalya'))
-    ], 10);
-
+    // --- KUPON 3: KOMBİNE & GOL KİLİDİ (10 Maç - Sistem 3, 4, 5) ---
+    const c3Candidates = [
+      comboPool.find(m => m.homeTeam.includes('Estonya')),
+      comboPool.find(m => m.homeTeam.includes('Belarus')),
+      comboPool.find(m => m.homeTeam.includes('Braintree')),
+      comboPool.find(m => m.homeTeam.includes('Shrewsbury')),
+      comboPool.find(m => m.homeTeam.includes('Litvanya')),
+      comboPool.find(m => m.homeTeam.includes('Sheffield')),
+      comboPool.find(m => m.homeTeam.includes('Huddersfield')),
+      comboPool.find(m => m.homeTeam.includes('Doncaster')),
+      comboPool.find(m => m.homeTeam.includes('Blackpool')),
+      comboPool.find(m => m.homeTeam.includes('Urawa'))
+    ];
+    const coupon3Matches = getUniqueMatches(c3Candidates, comboPool, 10);
     const c3Odds = coupon3Matches.map(m => m.odd);
     const c3Payouts = generatePayoutTable(c3Odds, [3, 4, 5], 1);
 
     const coupon3: SystemCoupon = {
       id: 'kupon-3',
-      title: 'Kombine & Beraberlik Kilidi',
+      title: 'Kombine & Gol Kilidi',
       badge: 'GOL & SKOR MODELİ',
-      description: 'MS 1 & 2.5 Üst, KG Var ve Beraberlik kombinasyonlarına dayalı istikrarlı sistem.',
+      description: 'MS 1 & 2.5 Üst, MS 2 & 2.5 Üst ve KG Yok kombinasyonlarına dayalı istikrarlı sistem.',
       theme: 'cyan',
       systemSizes: [3, 4, 5],
       systemLabel: 'Sistem 3, 4, 5',
@@ -330,22 +345,22 @@ export async function GET() {
       avgOdds: Number((c3Odds.reduce((a, b) => a + b, 0) / c3Odds.length).toFixed(2)),
       matches: coupon3Matches,
       payoutTable: c3Payouts,
-      targetProfitBadge: '35.000 TL - 75.000 TL Hedef'
+      targetProfitBadge: '25.000 TL - 65.000 TL Hedef'
     };
 
-    // --- KUPON 4: 9 MAÇ ÇILGIN VURGUN (9 Maç - Sistem 3, 4, 5, 6) ---
-    const coupon4Matches = getValidMatches([
-      sourcePool.find(m => m.homeTeam.includes('Karadağ')),
-      sourcePool.find(m => m.homeTeam.includes('İtalya')),
-      sourcePool.find(m => m.homeTeam.includes('Fransa')),
-      sourcePool.find(m => m.homeTeam.includes('Lüksemburg')),
-      sourcePool.find(m => m.homeTeam.includes('Estonya')),
-      sourcePool.find(m => m.homeTeam.includes('Palmeiras')),
-      sourcePool.find(m => m.homeTeam.includes('Helsinki')),
-      sourcePool.find(m => m.homeTeam.includes('Bogota')),
-      sourcePool.find(m => m.homeTeam.includes('Merlo'))
-    ], 9);
-
+    // --- KUPON 4: BÜYÜK VURGUN / ÇILGIN SİSTEM (9 Maç - Sistem 3, 4, 5, 6) ---
+    const c4Candidates = [
+      iymsPool.find(m => m.homeTeam.includes('İskoçya')),
+      iymsPool.find(m => m.homeTeam.includes('Lüksemburg')),
+      iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
+      comboPool.find(m => m.homeTeam.includes('Estonya')),
+      comboPool.find(m => m.homeTeam.includes('Belarus')),
+      comboPool.find(m => m.homeTeam.includes('Braintree')),
+      iymsPool.find(m => m.homeTeam.includes('Cruzeiro')),
+      iymsPool.find(m => m.homeTeam.includes('Internacional')),
+      iymsPool.find(m => m.homeTeam.includes('Santos'))
+    ];
+    const coupon4Matches = getUniqueMatches(c4Candidates, allMatchesPool, 9);
     const c4Odds = coupon4Matches.map(m => m.odd);
     const c4Payouts = generatePayoutTable(c4Odds, [3, 4, 5, 6], 1);
 
@@ -353,7 +368,7 @@ export async function GET() {
       id: 'kupon-4',
       title: 'Büyük Vurgun / Çılgın Sistem',
       badge: '420 TL / 6 MAÇTA 75K',
-      description: 'Daha düşük kupon maliyetiyle (420 TL), 6 maç tuttuğunda 75.000 TL+, 7 maçta 330k+ patlatan yüksek çarpanlı model.',
+      description: '420 TL kupon maliyetiyle, 6 maç tuttuğunda 75.000 TL+, 7 maçta 250k+ kazandıran yüksek çarpanlı model.',
       theme: 'emerald',
       systemSizes: [3, 4, 5, 6],
       systemLabel: 'Sistem 3, 4, 5, 6',
@@ -366,7 +381,7 @@ export async function GET() {
       avgOdds: Number((c4Odds.reduce((a, b) => a + b, 0) / c4Odds.length).toFixed(2)),
       matches: coupon4Matches,
       payoutTable: c4Payouts,
-      targetProfitBadge: '75.000 TL - 330.000 TL Hedef'
+      targetProfitBadge: '75.000 TL - 280.000 TL Hedef'
     };
 
     return NextResponse.json({
