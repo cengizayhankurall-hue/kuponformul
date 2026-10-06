@@ -160,11 +160,26 @@ function isUpcomingDate(dateStr: string): boolean {
 export async function GET() {
   try {
     const iymsCache = loadJsonCache('iy_ms_cache.json');
-    const yuksekCache = loadJsonCache('yuksek_oran_cache.json');
+    const yuksekCache = loadJsonCache('yuksek_oran_cache.json');    // Sadece resmi İddaa bülteninde İY/MS ve Kombine açılan popüler/ana ligler
+    const allowedLeagues = [
+      'UEFA', 'AVUL', 'U21', 'U19', 'HAZ', 'DÜNYA',
+      'İspanya', 'İngiltere', 'İtalya', 'Almanya', 'Fransa', 'Türkiye',
+      'Hollanda', 'Belçika', 'Portekiz', 'Brezilya', 'BR1', 'BR2',
+      'Arjantin - Premier', 'ARJ', 'Finlandiya', 'FİN', 'İsveç', 'Norveç', 'Japonya', 'JPK', 'MLS'
+    ];
 
-    // 1. TODAY'S ACTIVE MATCHES
-    const rawIyms = (iymsCache?.matches || []).filter((m: any) => isUpcomingDate(m.date));
-    const rawYuksek = (yuksekCache?.matches || []).filter((m: any) => isUpcomingDate(m.date));
+    function isMajorLeague(leagueName: string): boolean {
+      if (!leagueName) return false;
+      const ln = leagueName.toUpperCase();
+      if (ln.includes('PRIMERA C') || ln.includes('PRIMERA D') || ln.includes('GUATEMALA') || ln.includes('PARAGUAY') || ln.includes('JAMAIKA') || ln.includes('KOLPB') || ln.includes('CONCACAF')) {
+        return false;
+      }
+      return allowedLeagues.some(al => ln.includes(al.toUpperCase()));
+    }
+
+    // 1. TODAY'S ACTIVE MATCHES (06.10.2026+)
+    const rawIyms = (iymsCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
+    const rawYuksek = (yuksekCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
 
     const iymsPool: SystemMatch[] = [];
     rawIyms.forEach((m: any, idx: number) => {
@@ -202,7 +217,7 @@ export async function GET() {
           marketName: 'İY / MS',
           choice: `${chosenKey} (İY/MS)`,
           odd: oddVal,
-          reason: `Açılış oranı analizi ve %${top?.rate || 40} model frekansı`
+          reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Model Benzerliği: %${top?.rate || 40}`
         });
       }
     });
@@ -211,7 +226,7 @@ export async function GET() {
     rawYuksek.forEach((m: any, idx: number) => {
       const tc = m.topCombo;
       const oddVal = tc?.estOdd ? parseFloat(String(tc.estOdd).replace(',', '.')) : 0;
-      if (oddVal >= 2.10) {
+      if (oddVal >= 2.00) {
         comboPool.push({
           id: `yuksek_${m.code || idx}_${m.homeTeam}`,
           code: m.code || String(200 + idx),
@@ -224,7 +239,7 @@ export async function GET() {
           marketName: 'Kombine & Skor',
           choice: tc.name,
           odd: oddVal,
-          reason: `Bültende açılan oran ile %${tc.rate} model frekansı`
+          reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Başarı Frekansı: %${tc.rate}`
         });
       }
     });
@@ -261,8 +276,8 @@ export async function GET() {
       iymsPool.find(m => m.homeTeam.includes('İskoçya')),
       iymsPool.find(m => m.homeTeam.includes('Lüksemburg')),
       iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
-      comboPool.find(m => m.homeTeam.includes('Braintree')),
-      comboPool.find(m => m.homeTeam.includes('Shrewsbury')),
+      iymsPool.find(m => m.homeTeam.includes('Hirvatistan')),
+      iymsPool.find(m => m.homeTeam.includes('Moldova')),
       comboPool.find(m => m.homeTeam.includes('Litvanya')),
       comboPool.find(m => m.homeTeam.includes('Portekiz')),
       iymsPool.find(m => m.homeTeam.includes('Kolombiya'))
@@ -275,7 +290,7 @@ export async function GET() {
       id: 'kupon-1',
       title: 'Hibrit / Karma Vurgun Kuponu',
       badge: 'EN ÇOK TERCİH EDİLEN',
-      description: 'Günün en değerli İY/MS, Kombine (MS+Gol) ve açılış oranı sapmalarından oluşan dengeli sistem kuponu.',
+      description: 'Günün resmi bültendeki İY/MS, Kombine (MS+Gol) açılış oranlarından oluşan dengeli sistem kuponu.',
       theme: 'amber',
       systemSizes: [3, 4, 5],
       systemLabel: 'Sistem 3, 4, 5',
@@ -312,7 +327,7 @@ export async function GET() {
       id: 'kupon-2',
       title: 'İY/MS & Sürpriz Değer Kuponu',
       badge: 'YÜKSEK ÇARPAN',
-      description: 'Sadece bültende açılan yüksek güvenilirlikli X/1, X/2 ve İY/MS oranlarına dayalı sistem kuponu.',
+      description: 'Sadece bültende resmi açılış oranları bulunan X/1, X/2 ve İY/MS oranlarına dayalı sistem kuponu.',
       theme: 'purple',
       systemSizes: [3, 4, 5],
       systemLabel: 'Sistem 3, 4, 5',
@@ -332,16 +347,16 @@ export async function GET() {
     const c3Candidates = [
       comboPool.find(m => m.homeTeam.includes('Estonya')),
       comboPool.find(m => m.homeTeam.includes('Belarus')),
-      comboPool.find(m => m.homeTeam.includes('Braintree')),
-      comboPool.find(m => m.homeTeam.includes('Shrewsbury')),
       comboPool.find(m => m.homeTeam.includes('Litvanya')),
-      comboPool.find(m => m.homeTeam.includes('Sheffield')),
-      comboPool.find(m => m.homeTeam.includes('Huddersfield')),
-      comboPool.find(m => m.homeTeam.includes('Doncaster')),
-      comboPool.find(m => m.homeTeam.includes('Blackpool')),
-      comboPool.find(m => m.homeTeam.includes('Urawa'))
+      comboPool.find(m => m.homeTeam.includes('Portekiz')),
+      comboPool.find(m => m.homeTeam.includes('Urawa')),
+      iymsPool.find(m => m.homeTeam.includes('İskoçya')),
+      iymsPool.find(m => m.homeTeam.includes('Lüksemburg')),
+      iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
+      iymsPool.find(m => m.homeTeam.includes('Kolombiya')),
+      iymsPool.find(m => m.homeTeam.includes('Helsinki'))
     ];
-    const coupon3Matches = getUniqueMatches(c3Candidates, comboPool, 10);
+    const coupon3Matches = getUniqueMatches(c3Candidates, allMatchesPool, 10);
     const c3Odds = coupon3Matches.map(m => m.odd);
     const c3Payouts = generatePayoutTable(c3Odds, [3, 4, 5], 1);
 
@@ -349,7 +364,7 @@ export async function GET() {
       id: 'kupon-3',
       title: 'Kombine & Gol Kilidi',
       badge: 'GOL & SKOR MODELİ',
-      description: 'MS 1 & 2.5 Üst, MS 2 & 2.5 Üst ve KG Yok kombinasyonlarına dayalı istikrarlı sistem.',
+      description: 'Resmi bülten MS 1 & 2.5 Üst, MS 2 & 2.5 Üst ve İY/MS kombinasyonlarına dayalı sistem.',
       theme: 'cyan',
       systemSizes: [3, 4, 5],
       systemLabel: 'Sistem 3, 4, 5',
@@ -372,10 +387,10 @@ export async function GET() {
       iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
       comboPool.find(m => m.homeTeam.includes('Estonya')),
       comboPool.find(m => m.homeTeam.includes('Belarus')),
-      comboPool.find(m => m.homeTeam.includes('Braintree')),
       iymsPool.find(m => m.homeTeam.includes('Cruzeiro')),
       iymsPool.find(m => m.homeTeam.includes('Internacional')),
-      iymsPool.find(m => m.homeTeam.includes('Santos'))
+      iymsPool.find(m => m.homeTeam.includes('Santos')),
+      iymsPool.find(m => m.homeTeam.includes('Palmeiras'))
     ];
     const coupon4Matches = getUniqueMatches(c4Candidates, allMatchesPool, 9);
     const c4Odds = coupon4Matches.map(m => m.odd);
@@ -402,13 +417,13 @@ export async function GET() {
     };
 
     // 2. YESTERDAY'S EVALUATED COUPONS (05.10.2026)
-    const pastIyms = iymsCache?.pastMatches || [];
+    // SADECE RESMİ İDDAA BÜLTENİNDE İY/MS AÇILAN POPÜLER LİGLER (Lujan, Nikaragua vb. elendi)
+    const pastIyms = (iymsCache?.pastMatches || []).filter((m: any) => isMajorLeague(m.league));
 
     const pastPool: SystemMatch[] = [];
 
     pastIyms.forEach((m: any, idx: number) => {
       const topKey = m.topOutcome?.key || '1/1';
-      // SADECE VE SADECE İddaa bülteninde resmi açılış oranı (openedOdds) olan maçlar
       if (!m.openedOdds || !m.openedOdds[topKey]) return;
       const oddVal = parseFloat(String(m.openedOdds[topKey]).replace(',', '.'));
       if (oddVal < 1.50) return;
@@ -428,7 +443,7 @@ export async function GET() {
         score: m.score || 'MS',
         iyScore: m.iyScore || 'İY',
         won: m.isTopHit === true,
-        reason: `İddaa Açılış Oranı: ${oddVal} | Sonuç: İY ${m.iyScore || '-'} / MS ${m.score || '-'} (${m.actualOutcome || ''})`
+        reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Sonuç: İY ${m.iyScore || '-'} / MS ${m.score || '-'} (${m.actualOutcome || ''})`
       });
     });
 
@@ -490,7 +505,7 @@ export async function GET() {
       'past-kupon-1',
       'Hibrit / Karma Vurgun Kuponu (Dün)',
       '05.10.2026 SONUÇLARI',
-      'Dün bültende resmi açılış oranları bulunan maçlardan derlenen sistem kuponu sonuçları.',
+      'Dün resmi bültende İY/MS açılış oranları bulunan ana lig maçlarından derlenen sistem kuponu sonuçları.',
       'amber',
       [3, 4, 5],
       'Sistem 3, 4, 5',
@@ -502,9 +517,9 @@ export async function GET() {
         pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
         pastPool.find(m => m.homeTeam.includes('Argentinos')),
         pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
-        pastPool.find(m => m.homeTeam.includes('Racing Club')),
-        pastPool.find(m => m.homeTeam.includes('Lujan')),
+        pastPool.find(m => m.homeTeam.includes('Ukrayna')),
         pastPool.find(m => m.homeTeam.includes('Bosna')),
+        pastPool.find(m => m.homeTeam.includes('Karadağ')),
         pastPool.find(m => m.homeTeam.includes('Fransa'))
       ]
     );
@@ -526,9 +541,9 @@ export async function GET() {
         pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
         pastPool.find(m => m.homeTeam.includes('Argentinos')),
         pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
-        pastPool.find(m => m.homeTeam.includes('Guastatoya')),
-        pastPool.find(m => m.homeTeam.includes('Porto Riko')),
-        pastPool.find(m => m.homeTeam.includes('Kıbrıs')),
+        pastPool.find(m => m.homeTeam.includes('Ukrayna')),
+        pastPool.find(m => m.homeTeam.includes('Kuzey İrlanda')),
+        pastPool.find(m => m.homeTeam.includes('Bosna')),
         pastPool.find(m => m.homeTeam.includes('Karadağ'))
       ]
     );
@@ -552,7 +567,7 @@ export async function GET() {
         pastPool.find(m => m.homeTeam.includes('Ukrayna')),
         pastPool.find(m => m.homeTeam.includes('Bosna')),
         pastPool.find(m => m.homeTeam.includes('Kuzey İrlanda')),
-        pastPool.find(m => m.homeTeam.includes('Trinidad')),
+        pastPool.find(m => m.homeTeam.includes('İtalya')),
         pastPool.find(m => m.homeTeam.includes('Fransa'))
       ]
     );
@@ -574,12 +589,11 @@ export async function GET() {
         pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
         pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
         pastPool.find(m => m.homeTeam.includes('Argentinos')),
-        pastPool.find(m => m.homeTeam.includes('Guastatoya')),
-        pastPool.find(m => m.homeTeam.includes('Racing Club')),
+        pastPool.find(m => m.homeTeam.includes('Ukrayna')),
+        pastPool.find(m => m.homeTeam.includes('Karadağ')),
         pastPool.find(m => m.homeTeam.includes('Bosna'))
       ]
     );
-
 
     const pastCoupons = [pastC1, pastC2, pastC3, pastC4];
     const totalPastCost = pastCoupons.reduce((a, b) => a + b.cost, 0);
@@ -608,3 +622,4 @@ export async function GET() {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
+
