@@ -185,26 +185,21 @@ export async function GET() {
     rawIyms.forEach((m: any, idx: number) => {
       const op = m.openedOdds || {};
       const top = m.topOutcome;
-      let chosenKey = top?.key || 'X/1';
+      let chosenKey = top?.key || '1/1';
       let oddVal = op[chosenKey] ? parseFloat(String(op[chosenKey]).replace(',', '.')) : 0;
 
-      if (oddVal < 2.00) {
-        if (op['X/1'] && parseFloat(op['X/1']) >= 3.00) {
-          chosenKey = 'X/1';
-          oddVal = parseFloat(op['X/1']);
-        } else if (op['X/2'] && parseFloat(op['X/2']) >= 3.00) {
-          chosenKey = 'X/2';
-          oddVal = parseFloat(op['X/2']);
-        } else if (op['1/1'] && parseFloat(op['1/1']) >= 2.00) {
-          chosenKey = '1/1';
-          oddVal = parseFloat(op['1/1']);
-        } else if (op['2/2'] && parseFloat(op['2/2']) >= 2.00) {
-          chosenKey = '2/2';
-          oddVal = parseFloat(op['2/2']);
+      if (!oddVal || oddVal < 1.30) {
+        const altKeys = ['1/1', '2/2', 'X/1', 'X/2'];
+        for (const k of altKeys) {
+          if (op[k] && parseFloat(op[k]) >= 1.30) {
+            chosenKey = k;
+            oddVal = parseFloat(op[k]);
+            break;
+          }
         }
       }
 
-      if (oddVal >= 2.00) {
+      if (oddVal >= 1.30) {
         iymsPool.push({
           id: `iyms_${m.code || idx}_${m.homeTeam}`,
           code: m.code || String(100 + idx),
@@ -217,7 +212,7 @@ export async function GET() {
           marketName: 'İY / MS',
           choice: `${chosenKey} (İY/MS)`,
           odd: oddVal,
-          reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Model Benzerliği: %${top?.rate || 40}`
+          reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Model Benzerliği: %${top?.rate || 50}`
         });
       }
     });
@@ -226,7 +221,7 @@ export async function GET() {
     rawYuksek.forEach((m: any, idx: number) => {
       const tc = m.topCombo;
       const oddVal = tc?.estOdd ? parseFloat(String(tc.estOdd).replace(',', '.')) : 0;
-      if (oddVal >= 2.00) {
+      if (oddVal >= 1.30) {
         comboPool.push({
           id: `yuksek_${m.code || idx}_${m.homeTeam}`,
           code: m.code || String(200 + idx),
@@ -239,7 +234,7 @@ export async function GET() {
           marketName: 'Kombine & Skor',
           choice: tc.name,
           odd: oddVal,
-          reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Başarı Frekansı: %${tc.rate}`
+          reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Başarı Frekansı: %${tc.rate || 50}`
         });
       }
     });

@@ -1,6 +1,5 @@
 {
-  "success": true,
-  "timestamp": 1791285016227,
+  "date": "06.10.2026",
   "availableDates": [
     "06.10.2026",
     "07.10.2026",
@@ -8,1014 +7,15 @@
     "09.10.2026"
   ],
   "availableLeagues": [
-    "AFCAKŞ",
-    "AVUL",
-    "BR1",
-    "FİN",
-    "HAZ",
-    "JPK",
-    "KAPL",
     "U21",
-    "ÇİN2",
-    "İCON",
-    "İNTK",
-    "İRL"
+    "HAZ",
+    "AVUL",
+    "BR2",
+    "JPK",
+    "FİN",
+    "BR1"
   ],
-  "stats": {
-    "totalAnalyzed": 36,
-    "highConfidenceCount": 17
-  },
   "matches": [
-    {
-      "id": "4423311",
-      "eventId": "3189138",
-      "code": "71950",
-      "homeTeam": "Santos",
-      "awayTeam": "Flamengo",
-      "league": "BR1",
-      "date": "09.10.2026",
-      "time": "01:30",
-      "odds": {
-        "ms1": 3.78,
-        "ms0": 3.28,
-        "ms2": 1.65,
-        "alt25": 1.84,
-        "ust25": 1.58,
-        "kgVar": 2.98,
-        "kgYok": 1.19
-      },
-      "sampleSize": 164,
-      "combos": [
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 58,
-          "rate": 35,
-          "estOdd": "2.22"
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 57,
-          "rate": 35,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "count": 36,
-          "rate": 22,
-          "estOdd": "4.18"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 35,
-          "rate": 21,
-          "estOdd": "2.58"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 58,
-        "rate": 35,
-        "estOdd": "2.22"
-      },
-      "topScores": [
-        {
-          "score": "1 - 1",
-          "count": 25,
-          "rate": 15,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "0 - 1",
-          "count": 18,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "0 - 2",
-          "count": 17,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 2",
-          "count": 15,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 1",
-        "count": 25,
-        "rate": 15,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "0 - 1",
-        "count": 18,
-        "rate": 11,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4460143",
-      "eventId": "3291698",
-      "code": "72629",
-      "homeTeam": "Forge",
-      "awayTeam": "Pacific Fc",
-      "league": "KAPL",
-      "date": "08.10.2026",
-      "time": "02:00",
-      "odds": {
-        "ms1": 1.08,
-        "ms0": 5.48,
-        "ms2": 8.73,
-        "alt25": 2.51,
-        "ust25": 1.22,
-        "kgVar": 2.81,
-        "kgYok": 1.16
-      },
-      "sampleSize": 59,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 42,
-          "rate": 71,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 34,
-          "rate": 58,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 20,
-          "rate": 34,
-          "estOdd": "2.58"
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "2.30"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 42,
-        "rate": 71,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 9,
-          "rate": 15,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "3 - 0",
-          "count": 8,
-          "rate": 14,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 0",
-          "count": 7,
-          "rate": 12,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "4 - 0",
-          "count": 6,
-          "rate": 10,
-          "estOdd": "9.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 9,
-        "rate": 15,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "3 - 0",
-        "count": 8,
-        "rate": 14,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4423317",
-      "eventId": "3189092",
-      "code": "71950",
-      "homeTeam": "Vitoria Bahia",
-      "awayTeam": "Chapecoense",
-      "league": "BR1",
-      "date": "08.10.2026",
-      "time": "02:00",
-      "odds": {
-        "ms1": 1.49,
-        "ms0": 3.49,
-        "ms2": 4.57,
-        "alt25": 1.73,
-        "ust25": 1.66,
-        "kgVar": 3.37,
-        "kgYok": 1.14
-      },
-      "sampleSize": 232,
-      "combos": [
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 90,
-          "rate": 39,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 77,
-          "rate": 33,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 64,
-          "rate": 28,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 51,
-          "rate": 22,
-          "estOdd": "4.27"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & KG YOK",
-        "count": 90,
-        "rate": 39,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 0",
-          "count": 34,
-          "rate": 15,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "2 - 0",
-          "count": 30,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 23,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 1",
-          "count": 19,
-          "rate": 8,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 0",
-        "count": 34,
-        "rate": 15,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "2 - 0",
-        "count": 30,
-        "rate": 13,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4565342",
-      "eventId": "3189283",
-      "code": "72128",
-      "homeTeam": "Abd",
-      "awayTeam": "Kanada",
-      "league": "HAZ",
-      "date": "07.10.2026",
-      "time": "03:00",
-      "odds": {
-        "ms1": 1.52,
-        "ms0": 3.35,
-        "ms2": 3.75,
-        "alt25": 1.89,
-        "ust25": 1.44,
-        "kgVar": 2.66,
-        "kgYok": 1.18
-      },
-      "sampleSize": 350,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 127,
-          "rate": 36,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 99,
-          "rate": 28,
-          "estOdd": "3.44"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 84,
-          "rate": 24,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "count": 71,
-          "rate": 20,
-          "estOdd": "5.38"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 127,
-        "rate": 36,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 1",
-          "count": 49,
-          "rate": 14,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 1",
-          "count": 41,
-          "rate": 12,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 0",
-          "count": 36,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "3 - 1",
-          "count": 24,
-          "rate": 7,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 1",
-        "count": 49,
-        "rate": 14,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "2 - 1",
-        "count": 41,
-        "rate": 12,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4423309",
-      "eventId": "3189213",
-      "code": "71950",
-      "homeTeam": "Fluminense",
-      "awayTeam": "Coritiba",
-      "league": "BR1",
-      "date": "09.10.2026",
-      "time": "03:30",
-      "odds": {
-        "ms1": 1.33,
-        "ms0": 3.94,
-        "ms2": 5.83,
-        "alt25": 1.72,
-        "ust25": 1.67,
-        "kgVar": 3.73,
-        "kgYok": 1.1
-      },
-      "sampleSize": 267,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 126,
-          "rate": 47,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 112,
-          "rate": 42,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 76,
-          "rate": 28,
-          "estOdd": "4.22"
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 62,
-          "rate": 23,
-          "estOdd": "2.20"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 126,
-        "rate": 47,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 0",
-          "count": 34,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 1",
-          "count": 31,
-          "rate": 12,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 0",
-          "count": 28,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "3 - 0",
-          "count": 25,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 0",
-        "count": 34,
-        "rate": 13,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "2 - 1",
-        "count": 31,
-        "rate": 12,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4423312",
-      "eventId": "3189471",
-      "code": "71950",
-      "homeTeam": "Palmeiras",
-      "awayTeam": "Bahia",
-      "league": "BR1",
-      "date": "09.10.2026",
-      "time": "03:30",
-      "odds": {
-        "ms1": 1.38,
-        "ms0": 3.89,
-        "ms2": 5.04,
-        "alt25": 1.99,
-        "ust25": 1.49,
-        "kgVar": 3.05,
-        "kgYok": 1.18
-      },
-      "sampleSize": 340,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 150,
-          "rate": 44,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 115,
-          "rate": 34,
-          "estOdd": "3.58"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 110,
-          "rate": 32,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 75,
-          "rate": 22,
-          "estOdd": "2.33"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 150,
-        "rate": 44,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 44,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 0",
-          "count": 38,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 0",
-          "count": 37,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 25,
-          "rate": 7,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 44,
-        "rate": 13,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "2 - 0",
-        "count": 38,
-        "rate": 11,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4566184",
-      "eventId": "3204115",
-      "code": "74271",
-      "homeTeam": "Urawa",
-      "awayTeam": "Omiya",
-      "league": "JPK",
-      "date": "07.10.2026",
-      "time": "12:00",
-      "odds": {
-        "ms1": 1.36,
-        "ms0": 3.88,
-        "ms2": 5.2,
-        "alt25": 1.24,
-        "ust25": 2.68,
-        "kgVar": 4.26,
-        "kgYok": 1.06
-      },
-      "sampleSize": 350,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 157,
-          "rate": 45,
-          "estOdd": "3.10"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 115,
-          "rate": 33,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 111,
-          "rate": 32,
-          "estOdd": "4.92"
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 69,
-          "rate": 20,
-          "estOdd": "2.20"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 157,
-        "rate": 45,
-        "estOdd": "3.10"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 41,
-          "rate": 12,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 0",
-          "count": 38,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 35,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 0",
-          "count": 31,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 41,
-        "rate": 12,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "2 - 0",
-        "count": 38,
-        "rate": 11,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4452093",
-      "eventId": "3189421",
-      "code": "72453",
-      "homeTeam": "Foshan Nanshi",
-      "awayTeam": "Guangxi Hengche",
-      "league": "ÇİN2",
-      "date": "07.10.2026",
-      "time": "14:30",
-      "odds": {
-        "ms1": 4.95,
-        "ms0": 3.81,
-        "ms2": 1.32,
-        "alt25": 1.91,
-        "ust25": 1.44,
-        "kgVar": 2.88,
-        "kgYok": 1.14
-      },
-      "sampleSize": 266,
-      "combos": [
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 120,
-          "rate": 45,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "count": 85,
-          "rate": 32,
-          "estOdd": "3.23"
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 84,
-          "rate": 32,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "count": 47,
-          "rate": 18,
-          "estOdd": "6.19"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 120,
-        "rate": 45,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 2",
-          "count": 32,
-          "rate": 12,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "0 - 1",
-          "count": 32,
-          "rate": 12,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "0 - 0",
-          "count": 24,
-          "rate": 9,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 23,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 2",
-        "count": 32,
-        "rate": 12,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "0 - 1",
-        "count": 32,
-        "rate": 12,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4478193",
-      "eventId": "3189611",
-      "code": "73304",
-      "homeTeam": "Buriram Utd",
-      "awayTeam": "Borneo Fc",
-      "league": "AFCAKŞ",
-      "date": "07.10.2026",
-      "time": "15:00",
-      "odds": {
-        "ms1": 1.14,
-        "ms0": 4.73,
-        "ms2": 7.6,
-        "alt25": 2.29,
-        "ust25": 1.27,
-        "kgVar": 2.82,
-        "kgYok": 1.16
-      },
-      "sampleSize": 110,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 63,
-          "rate": 57,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 50,
-          "rate": 45,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 42,
-          "rate": 38,
-          "estOdd": "2.73"
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 29,
-          "rate": 26,
-          "estOdd": "2.22"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 63,
-        "rate": 57,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "2 - 0",
-          "count": 19,
-          "rate": 17,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "2 - 1",
-          "count": 14,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "3 - 1",
-          "count": 12,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 0",
-          "count": 10,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 0",
-        "count": 19,
-        "rate": 17,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "2 - 1",
-        "count": 14,
-        "rate": 13,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4560142",
-      "eventId": "3201917",
-      "code": "74131",
-      "homeTeam": "Helsinki",
-      "awayTeam": "Vaasa",
-      "league": "FİN",
-      "date": "08.10.2026",
-      "time": "18:00",
-      "odds": {
-        "ms1": 1.44,
-        "ms0": 3.77,
-        "ms2": 4.67,
-        "alt25": 1.92,
-        "ust25": 1.53,
-        "kgVar": 3.1,
-        "kgYok": 1.17
-      },
-      "sampleSize": 214,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 91,
-          "rate": 43,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 72,
-          "rate": 34,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 67,
-          "rate": 31,
-          "estOdd": "3.79"
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 48,
-          "rate": 22,
-          "estOdd": "2.35"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 91,
-        "rate": 43,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 29,
-          "rate": 14,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 26,
-          "rate": 12,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 0",
-          "count": 25,
-          "rate": 12,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 0",
-          "count": 23,
-          "rate": 11,
-          "estOdd": "9.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 29,
-        "rate": 14,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 1",
-        "count": 26,
-        "rate": 12,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4289941",
-      "eventId": "3185271",
-      "code": "70131",
-      "homeTeam": "Kuzey İrlanda",
-      "awayTeam": "Yunanistan (U21",
-      "league": "U21",
-      "date": "06.10.2026",
-      "time": "19:00",
-      "odds": {
-        "ms1": 9.32,
-        "ms0": 5.24,
-        "ms2": 1.09,
-        "alt25": 1.52,
-        "ust25": 1.77,
-        "kgVar": 3.34,
-        "kgYok": 1.09
-      },
-      "sampleSize": 13,
-      "combos": [
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 9,
-          "rate": 69,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 9,
-          "rate": 69,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 3,
-          "rate": 23,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "count": 3,
-          "rate": 23,
-          "estOdd": "3.09"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 9,
-        "rate": 69,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "0 - 3",
-          "count": 5,
-          "rate": 38,
-          "estOdd": "5.25"
-        },
-        {
-          "score": "1 - 2",
-          "count": 2,
-          "rate": 15,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "0 - 2",
-          "count": 2,
-          "rate": 15,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "0 - 1",
-          "count": 1,
-          "rate": 8,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "0 - 3",
-        "count": 5,
-        "rate": 38,
-        "estOdd": "5.25"
-      },
-      "secondaryScore": {
-        "score": "1 - 2",
-        "count": 2,
-        "rate": 15,
-        "estOdd": "7.50"
-      }
-    },
     {
       "id": "4289942",
       "eventId": "3185208",
@@ -1029,261 +29,464 @@
         "ms1": 1.16,
         "ms0": 4.58,
         "ms2": 6.94,
+        "iy1": 1.56,
+        "iy0": 2.32,
+        "iy2": 6.68,
         "alt25": 1.91,
         "ust25": 12.95,
-        "kgVar": 3.27,
-        "kgYok": 1.09
+        "kgVar": 1.74,
+        "kgYok": 1.54
       },
-      "sampleSize": 197,
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "count": 110,
-          "rate": 56,
-          "estOdd": "12.77"
+          "estOdd": "1.68",
+          "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "count": 77,
-          "rate": 39,
-          "estOdd": "2.20"
+          "estOdd": "1.87",
+          "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "count": 70,
-          "rate": 36,
-          "estOdd": "3.22"
+          "estOdd": "2.67",
+          "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "count": 37,
-          "rate": 19,
-          "estOdd": "2.20"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 110,
-        "rate": 56,
-        "estOdd": "12.77"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 20,
-          "rate": 10,
-          "estOdd": "9.00"
+          "estOdd": "3.20",
+          "rate": 52
         },
         {
-          "score": "2 - 0",
-          "count": 20,
-          "rate": 10,
-          "estOdd": "9.00"
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.83",
+          "rate": 48
         },
         {
-          "score": "3 - 0",
-          "count": 18,
-          "rate": 9,
-          "estOdd": "12.00"
+          "name": "MS X & KG VAR",
+          "estOdd": "6.33",
+          "rate": 35
         },
-        {
-          "score": "3 - 1",
-          "count": 18,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 20,
-        "rate": 10,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "2 - 0",
-        "count": 20,
-        "rate": 10,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4560143",
-      "eventId": "3201922",
-      "code": "74131",
-      "homeTeam": "Kuopion",
-      "awayTeam": "Oulu",
-      "league": "FİN",
-      "date": "08.10.2026",
-      "time": "19:00",
-      "odds": {
-        "ms1": 1.42,
-        "ms0": 3.67,
-        "ms2": 5.01,
-        "alt25": 1.69,
-        "ust25": 1.71,
-        "kgVar": 3.6,
-        "kgYok": 1.11
-      },
-      "sampleSize": 258,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 105,
-          "rate": 41,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 82,
-          "rate": 32,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 78,
-          "rate": 30,
-          "estOdd": "4.35"
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 55,
-          "rate": 21,
-          "estOdd": "2.20"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 105,
-        "rate": 41,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 34,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 0",
-          "count": 33,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 26,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 0",
-          "count": 22,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 34,
-        "rate": 13,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 33,
-        "rate": 13,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4560141",
-      "eventId": "3201913",
-      "code": "74131",
-      "homeTeam": "Gnistan",
-      "awayTeam": "Inter Turku",
-      "league": "FİN",
-      "date": "07.10.2026",
-      "time": "19:00",
-      "odds": {
-        "ms1": 3.66,
-        "ms0": 3.35,
-        "ms2": 1.65,
-        "alt25": 1.86,
-        "ust25": 1.57,
-        "kgVar": 2.97,
-        "kgYok": 1.19
-      },
-      "sampleSize": 143,
-      "combos": [
         {
           "name": "MS 2 & 2.5 ÜST",
-          "count": 46,
-          "rate": 32,
-          "estOdd": "2.20"
+          "estOdd": "12.95",
+          "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "count": 46,
-          "rate": 32,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 37,
-          "rate": 26,
-          "estOdd": "2.61"
+          "estOdd": "13.45",
+          "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "count": 37,
-          "rate": 26,
-          "estOdd": "4.17"
+          "estOdd": "14.05",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "14.45",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "14.90",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "18.45",
+          "rate": 48
         }
       ],
       "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 46,
-        "rate": 32,
-        "estOdd": "2.20"
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "1.68",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4289943",
+      "eventId": "3185338",
+      "code": "70131",
+      "homeTeam": "Almanya (U21)",
+      "awayTeam": "Gürcistan (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:00",
+      "odds": {
+        "ms1": 0,
+        "ms0": 9.8,
+        "ms2": 17.5,
+        "iy1": 1.14,
+        "iy0": 3.61,
+        "iy2": 15,
+        "alt25": 3.44,
+        "ust25": 1.08,
+        "kgVar": 1.98,
+        "kgYok": 1.39
       },
-      "topScores": [
+      "combos": [
         {
-          "score": "0 - 1",
-          "count": 20,
-          "rate": 14,
-          "estOdd": "9.00"
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.43",
+          "rate": 52
         },
         {
-          "score": "0 - 2",
-          "count": 17,
-          "rate": 12,
-          "estOdd": "9.00"
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.21",
+          "rate": 52
         },
         {
-          "score": "1 - 1",
-          "count": 15,
-          "rate": 10,
-          "estOdd": "9.00"
+          "name": "MS X & KG VAR",
+          "estOdd": "15.60",
+          "rate": 35
         },
         {
-          "score": "1 - 2",
-          "count": 14,
-          "rate": 10,
-          "estOdd": "9.00"
+          "name": "MS X & KG YOK",
+          "estOdd": "35.00",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "35.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "35.00",
+          "rate": 48
         }
       ],
-      "primaryScore": {
-        "score": "0 - 1",
-        "count": 20,
-        "rate": 14,
-        "estOdd": "9.00"
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "1.43",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4565366",
+      "eventId": "3261738",
+      "code": "72128",
+      "homeTeam": "Rusya",
+      "awayTeam": "Nijerya",
+      "league": "HAZ",
+      "date": "06.10.2026",
+      "time": "19:00",
+      "odds": {
+        "ms1": 1.36,
+        "ms0": 3.51,
+        "ms2": 4.94,
+        "iy1": 1.85,
+        "iy0": 2.03,
+        "iy2": 5.34,
+        "alt25": 1.6,
+        "ust25": 1.67,
+        "kgVar": 1.75,
+        "kgYok": 1.53
       },
-      "secondaryScore": {
-        "score": "0 - 2",
-        "count": 17,
-        "rate": 12,
-        "estOdd": "9.00"
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.14",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.19",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.14",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.26",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.25",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.03",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.67",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "9.49",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "9.71",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "10.15",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "10.75",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "16.30",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.19",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4289941",
+      "eventId": "3185271",
+      "code": "70131",
+      "homeTeam": "Kuzey İrlanda",
+      "awayTeam": "Yunanistan (U21",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:00",
+      "odds": {
+        "ms1": 9.76,
+        "ms0": 5.33,
+        "ms2": 1.08,
+        "iy1": 8.5,
+        "iy0": 2.52,
+        "iy2": 1.41,
+        "alt25": 2.06,
+        "ust25": 3.24,
+        "kgVar": 1.87,
+        "kgYok": 1.45
+      },
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "1.65",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.61",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "7.65",
+          "rate": 35
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "16.85",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "19.00",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "20.50",
+          "rate": 52
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "1.65",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4290003",
+      "eventId": "3185352",
+      "code": "70133",
+      "homeTeam": "Galler (U21)",
+      "awayTeam": "Avusturya (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:30",
+      "odds": {
+        "ms1": 3.53,
+        "ms0": 3.16,
+        "ms2": 1.61,
+        "iy1": 3.96,
+        "iy0": 2.03,
+        "iy2": 2.09,
+        "alt25": 1.74,
+        "ust25": 1.55,
+        "kgVar": 1.5,
+        "kgYok": 1.81
+      },
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.91",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.23",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.08",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "6.64",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "6.93",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "11.60",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "2.91",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4289823",
+      "eventId": "3185455",
+      "code": "70127",
+      "homeTeam": "Bulgaristan U2",
+      "awayTeam": "İskoçya (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:30",
+      "odds": {
+        "ms1": 2.28,
+        "ms0": 2.81,
+        "ms2": 2.35,
+        "iy1": 2.93,
+        "iy0": 1.82,
+        "iy2": 3.01,
+        "alt25": 1.47,
+        "ust25": 1.85,
+        "kgVar": 1.63,
+        "kgYok": 1.65
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.82",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.95",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "3.96",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "5.04",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.18",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "8.25",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "3.82",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4290002",
+      "eventId": "3185371",
+      "code": "70133",
+      "homeTeam": "Danimarka (U21",
+      "awayTeam": "Belçika (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:30",
+      "odds": {
+        "ms1": 2.35,
+        "ms0": 2.83,
+        "ms2": 2.25,
+        "iy1": 2.96,
+        "iy0": 1.87,
+        "iy2": 2.85,
+        "alt25": 1.55,
+        "ust25": 1.73,
+        "kgVar": 1.55,
+        "kgYok": 1.73
+      },
+      "combos": [
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.82",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "3.97",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "4.17",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.69",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.88",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.14",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "3.97",
+        "rate": 48
       }
     },
     {
@@ -1296,84 +499,201 @@
       "date": "06.10.2026",
       "time": "19:30",
       "odds": {
-        "ms1": 1.22,
-        "ms0": 4.17,
-        "ms2": 6.22,
+        "ms1": 1.21,
+        "ms0": 4.21,
+        "ms2": 6.43,
+        "iy1": 1.61,
+        "iy0": 2.26,
+        "iy2": 6.3,
         "alt25": 1.84,
         "ust25": 1.47,
-        "kgVar": 3.23,
-        "kgYok": 1.09
+        "kgVar": 1.72,
+        "kgYok": 1.56
       },
-      "sampleSize": 266,
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "count": 141,
-          "rate": 53,
-          "estOdd": "2.20"
+          "estOdd": "1.78",
+          "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "count": 114,
-          "rate": 43,
-          "estOdd": "2.20"
+          "estOdd": "1.94",
+          "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "count": 88,
-          "rate": 33,
-          "estOdd": "3.35"
+          "estOdd": "2.77",
+          "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "count": 61,
-          "rate": 23,
-          "estOdd": "2.20"
+          "estOdd": "3.22",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.31",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.81",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "12.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "12.25",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "13.10",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "13.25",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "13.50",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "17.15",
+          "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "count": 141,
-        "rate": 53,
-        "estOdd": "2.20"
+        "estOdd": "1.78",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4289962",
+      "eventId": "3185436",
+      "code": "70132",
+      "homeTeam": "Hollanda (U21)",
+      "awayTeam": "Bosna Hersek (U",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:45",
+      "odds": {
+        "ms1": 0,
+        "ms0": 7.47,
+        "ms2": 15.65,
+        "iy1": 1.24,
+        "iy0": 2.99,
+        "iy2": 11.85,
+        "alt25": 2.56,
+        "ust25": 2.38,
+        "kgVar": 2,
+        "kgYok": 1.38
       },
-      "topScores": [
+      "combos": [
         {
-          "score": "1 - 0",
-          "count": 36,
-          "rate": 14,
-          "estOdd": "9.00"
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.47",
+          "rate": 52
         },
         {
-          "score": "2 - 1",
-          "count": 32,
-          "rate": 12,
-          "estOdd": "9.00"
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.43",
+          "rate": 52
         },
         {
-          "score": "3 - 0",
-          "count": 27,
-          "rate": 10,
-          "estOdd": "9.00"
+          "name": "MS X & KG VAR",
+          "estOdd": "11.30",
+          "rate": 35
         },
         {
-          "score": "2 - 0",
-          "count": 25,
-          "rate": 9,
-          "estOdd": "12.00"
+          "name": "MS X & KG YOK",
+          "estOdd": "25.50",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "34.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "34.00",
+          "rate": 48
         }
       ],
-      "primaryScore": {
-        "score": "1 - 0",
-        "count": 36,
-        "rate": 14,
-        "estOdd": "9.00"
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "1.47",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4289791",
+      "eventId": "3185230",
+      "code": "70126",
+      "homeTeam": "İspanya (U21)",
+      "awayTeam": "Romanya (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "odds": {
+        "ms1": 0,
+        "ms0": 9.54,
+        "ms2": 17.5,
+        "iy1": 1.16,
+        "iy0": 3.36,
+        "iy2": 15.7,
+        "alt25": 2.93,
+        "ust25": 1.14,
+        "kgVar": 2.21,
+        "kgYok": 1.3
       },
-      "secondaryScore": {
-        "score": "2 - 1",
-        "count": 32,
-        "rate": 12,
-        "estOdd": "9.00"
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.34",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.49",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "16.20",
+          "rate": 35
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "33.00",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "35.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "35.00",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "1.34",
+        "rate": 52
       }
     },
     {
@@ -1386,174 +706,53 @@
       "date": "06.10.2026",
       "time": "20:00",
       "odds": {
-        "ms1": 7.65,
-        "ms0": 4.87,
-        "ms2": 1.13,
-        "alt25": 1.44,
-        "ust25": 1.88,
-        "kgVar": 3.19,
-        "kgYok": 1.1
+        "ms1": 7.39,
+        "ms0": 4.74,
+        "ms2": 1.14,
+        "iy1": 6.85,
+        "iy0": 2.42,
+        "iy2": 1.51,
+        "alt25": 2.04,
+        "ust25": 1.37,
+        "kgVar": 1.7,
+        "kgYok": 1.58
       },
-      "sampleSize": 34,
       "combos": [
         {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 20,
-          "rate": 59,
-          "estOdd": "2.20"
+          "name": "MS 2 & KG YOK",
+          "estOdd": "1.88",
+          "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "count": 15,
-          "rate": 44,
-          "estOdd": "3.06"
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 10,
-          "rate": 29,
-          "estOdd": "2.20"
+          "estOdd": "2.53",
+          "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "count": 6,
-          "rate": 18,
-          "estOdd": "13.21"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 20,
-        "rate": 59,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 3",
-          "count": 5,
-          "rate": 15,
-          "estOdd": "7.50"
+          "estOdd": "6.40",
+          "rate": 35
         },
         {
-          "score": "0 - 1",
-          "count": 4,
-          "rate": 12,
-          "estOdd": "9.00"
+          "name": "MS 1 & KG VAR",
+          "estOdd": "14.35",
+          "rate": 52
         },
         {
-          "score": "1 - 2",
-          "count": 4,
-          "rate": 12,
-          "estOdd": "9.00"
+          "name": "MS 1 & KG YOK",
+          "estOdd": "15.05",
+          "rate": 52
         },
         {
-          "score": "1 - 4",
-          "count": 4,
-          "rate": 12,
-          "estOdd": "9.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 3",
-        "count": 5,
-        "rate": 15,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "0 - 1",
-        "count": 4,
-        "rate": 12,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4289853",
-      "eventId": "3185463",
-      "code": "70128",
-      "homeTeam": "Faroe Adalari",
-      "awayTeam": "İzlanda (U21)",
-      "league": "U21",
-      "date": "06.10.2026",
-      "time": "20:00",
-      "odds": {
-        "ms1": 6.86,
-        "ms0": 4.21,
-        "ms2": 1.19,
-        "alt25": 1.72,
-        "ust25": 1.56,
-        "kgVar": 3.57,
-        "kgYok": 1.06
-      },
-      "sampleSize": 37,
-      "combos": [
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 21,
-          "rate": 57,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 15,
-          "rate": 41,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 14,
-          "rate": 38,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "count": 8,
-          "rate": 22,
-          "estOdd": "3.61"
+          "name": "MS X & KG YOK",
+          "estOdd": "16.60",
+          "rate": 35
         }
       ],
       "topCombo": {
         "name": "MS 2 & KG YOK",
-        "count": 21,
-        "rate": 57,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "0 - 2",
-          "count": 8,
-          "rate": 22,
-          "estOdd": "6.50"
-        },
-        {
-          "score": "0 - 1",
-          "count": 7,
-          "rate": 19,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 2",
-          "count": 6,
-          "rate": 16,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "0 - 3",
-          "count": 3,
-          "rate": 8,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "0 - 2",
-        "count": 8,
-        "rate": 22,
-        "estOdd": "6.50"
-      },
-      "secondaryScore": {
-        "score": "0 - 1",
-        "count": 7,
-        "rate": 19,
-        "estOdd": "7.50"
+        "estOdd": "1.88",
+        "rate": 48
       }
     },
     {
@@ -1569,81 +768,139 @@
         "ms1": 9.45,
         "ms0": 5.29,
         "ms2": 1.08,
-        "alt25": 1.51,
-        "ust25": 1.79,
-        "kgVar": 3.45,
-        "kgYok": 1.08
+        "iy1": 8.31,
+        "iy0": 2.5,
+        "iy2": 1.42,
+        "alt25": 2.04,
+        "ust25": 1.37,
+        "kgVar": 1.86,
+        "kgYok": 1.46
       },
-      "sampleSize": 19,
       "combos": [
         {
           "name": "MS 2 & KG YOK",
-          "count": 10,
-          "rate": 53,
-          "estOdd": "2.80"
+          "estOdd": "1.67",
+          "rate": 48
         },
         {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 8,
-          "rate": 42,
-          "estOdd": "2.20"
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.61",
+          "rate": 48
         },
         {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 5,
-          "rate": 26,
-          "estOdd": "2.20"
+          "name": "MS X & KG VAR",
+          "estOdd": "7.56",
+          "rate": 35
         },
         {
-          "name": "MS X & 2.5 ALT",
-          "count": 3,
-          "rate": 16,
-          "estOdd": "6.79"
+          "name": "MS X & KG YOK",
+          "estOdd": "16.75",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "18.40",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "19.80",
+          "rate": 52
         }
       ],
       "topCombo": {
         "name": "MS 2 & KG YOK",
-        "count": 10,
-        "rate": 53,
-        "estOdd": "2.80"
+        "estOdd": "1.67",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4289851",
+      "eventId": "3185428",
+      "code": "70128",
+      "homeTeam": "Lüksemburg (U2",
+      "awayTeam": "Estonya (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "odds": {
+        "ms1": 1.54,
+        "ms0": 3.33,
+        "ms2": 3.65,
+        "iy1": 2.02,
+        "iy0": 2.08,
+        "iy2": 4.05,
+        "alt25": 1.83,
+        "ust25": 1.48,
+        "kgVar": 1.47,
+        "kgYok": 1.85
       },
-      "topScores": [
+      "combos": [
         {
-          "score": "0 - 2",
-          "count": 3,
-          "rate": 16,
-          "estOdd": "7.50"
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.26",
+          "rate": 52
         },
         {
-          "score": "1 - 1",
-          "count": 3,
-          "rate": 16,
-          "estOdd": "7.50"
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.86",
+          "rate": 52
         },
         {
-          "score": "0 - 4",
-          "count": 3,
-          "rate": 16,
-          "estOdd": "7.50"
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.01",
+          "rate": 52
         },
         {
-          "score": "0 - 1",
-          "count": 2,
-          "rate": 11,
-          "estOdd": "9.00"
+          "name": "MS X & KG VAR",
+          "estOdd": "4.22",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.23",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.52",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "5.88",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.65",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "7.46",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "8.72",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "10.65",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "13.00",
+          "rate": 35
         }
       ],
-      "primaryScore": {
-        "score": "0 - 2",
-        "count": 3,
-        "rate": 16,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 1",
-        "count": 3,
-        "rate": 16,
-        "estOdd": "7.50"
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.26",
+        "rate": 52
       }
     },
     {
@@ -1656,84 +913,142 @@
       "date": "06.10.2026",
       "time": "20:00",
       "odds": {
-        "ms1": 4.48,
-        "ms0": 3.68,
-        "ms2": 1.37,
-        "alt25": 1.93,
-        "ust25": 1.42,
-        "kgVar": 2.77,
-        "kgYok": 1.16
+        "ms1": 4.81,
+        "ms0": 3.83,
+        "ms2": 1.32,
+        "iy1": 4.94,
+        "iy0": 2.23,
+        "iy2": 1.75,
+        "alt25": 1.96,
+        "ust25": 1.4,
+        "kgVar": 1.51,
+        "kgYok": 1.79
       },
-      "sampleSize": 350,
       "combos": [
         {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 166,
-          "rate": 47,
-          "estOdd": "2.20"
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.41",
+          "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "count": 115,
-          "rate": 33,
-          "estOdd": "3.23"
+          "estOdd": "2.64",
+          "rate": 48
         },
         {
-          "name": "MS 2 & KG YOK",
-          "count": 111,
-          "rate": 32,
-          "estOdd": "2.20"
+          "name": "MS X & KG VAR",
+          "estOdd": "4.87",
+          "rate": 35
         },
         {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 60,
-          "rate": 17,
-          "estOdd": "2.25"
+          "name": "MS 1 & KG VAR",
+          "estOdd": "8.67",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "10.15",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "15.15",
+          "rate": 35
         }
       ],
       "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 166,
-        "rate": 47,
-        "estOdd": "2.20"
+        "name": "MS 2 & KG YOK",
+        "estOdd": "2.41",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4565367",
+      "eventId": "3286358",
+      "code": "72128",
+      "homeTeam": "Ürdün",
+      "awayTeam": "Venezuela",
+      "league": "HAZ",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "odds": {
+        "ms1": 1.83,
+        "ms0": 2.85,
+        "ms2": 3.07,
+        "iy1": 2.47,
+        "iy0": 1.8,
+        "iy2": 3.79,
+        "alt25": 1.43,
+        "ust25": 1.93,
+        "kgVar": 1.72,
+        "kgYok": 1.57
       },
-      "topScores": [
+      "combos": [
         {
-          "score": "1 - 2",
-          "count": 41,
-          "rate": 12,
-          "estOdd": "9.00"
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.91",
+          "rate": 52
         },
         {
-          "score": "1 - 1",
-          "count": 34,
-          "rate": 10,
-          "estOdd": "9.00"
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.31",
+          "rate": 52
         },
         {
-          "score": "0 - 1",
-          "count": 33,
-          "rate": 9,
-          "estOdd": "12.00"
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.38",
+          "rate": 48
         },
         {
-          "score": "1 - 3",
-          "count": 28,
-          "rate": 8,
-          "estOdd": "12.00"
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.68",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.17",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.38",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.07",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "5.77",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.01",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.05",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "7.76",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "14.20",
+          "rate": 48
         }
       ],
-      "primaryScore": {
-        "score": "1 - 2",
-        "count": 41,
-        "rate": 12,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 1",
-        "count": 34,
-        "rate": 10,
-        "estOdd": "9.00"
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.31",
+        "rate": 52
       }
     },
     {
@@ -1746,84 +1061,112 @@
       "date": "06.10.2026",
       "time": "20:00",
       "odds": {
-        "ms1": 1.38,
-        "ms0": 3.75,
-        "ms2": 4.27,
+        "ms1": 1.43,
+        "ms0": 3.65,
+        "ms2": 4.01,
+        "iy1": 1.86,
+        "iy0": 2.24,
+        "iy2": 4.24,
         "alt25": 2.1,
         "ust25": 1.34,
-        "kgVar": 2.56,
-        "kgYok": 1.21
+        "kgVar": 1.38,
+        "kgYok": 2
       },
-      "sampleSize": 350,
       "combos": [
         {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 153,
-          "rate": 44,
-          "estOdd": "2.20"
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.59",
+          "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "count": 110,
-          "rate": 31,
-          "estOdd": "2.20"
+          "estOdd": "2.85",
+          "rate": 52
         },
         {
-          "name": "MS 1 & KG VAR",
-          "count": 106,
-          "rate": 30,
-          "estOdd": "3.00"
+          "name": "MS X & KG VAR",
+          "estOdd": "4.40",
+          "rate": 35
         },
         {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 63,
-          "rate": 18,
-          "estOdd": "2.46"
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.70",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "9.23",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "17.00",
+          "rate": 35
         }
       ],
       "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 153,
-        "rate": 44,
-        "estOdd": "2.20"
+        "name": "MS 1 & KG VAR",
+        "estOdd": "2.59",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4289853",
+      "eventId": "3185463",
+      "code": "70128",
+      "homeTeam": "Faroe Adalari",
+      "awayTeam": "İzlanda (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "odds": {
+        "ms1": 6.86,
+        "ms0": 4.21,
+        "ms2": 1.19,
+        "iy1": 6.77,
+        "iy0": 2.21,
+        "iy2": 1.61,
+        "alt25": 1.72,
+        "ust25": 1.56,
+        "kgVar": 1.86,
+        "kgYok": 1.46
       },
-      "topScores": [
+      "combos": [
         {
-          "score": "1 - 0",
-          "count": 40,
-          "rate": 11,
-          "estOdd": "9.00"
+          "name": "MS 2 & KG YOK",
+          "estOdd": "1.82",
+          "rate": 48
         },
         {
-          "score": "2 - 1",
-          "count": 39,
-          "rate": 11,
-          "estOdd": "9.00"
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.97",
+          "rate": 48
         },
         {
-          "score": "1 - 1",
-          "count": 34,
-          "rate": 10,
-          "estOdd": "9.00"
+          "name": "MS X & KG VAR",
+          "estOdd": "6.13",
+          "rate": 35
         },
         {
-          "score": "2 - 0",
-          "count": 23,
-          "rate": 7,
-          "estOdd": "12.00"
+          "name": "MS X & KG YOK",
+          "estOdd": "12.05",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "12.20",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "15.10",
+          "rate": 52
         }
       ],
-      "primaryScore": {
-        "score": "1 - 0",
-        "count": 40,
-        "rate": 11,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "2 - 1",
-        "count": 39,
-        "rate": 11,
-        "estOdd": "9.00"
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "1.82",
+        "rate": 48
       }
     },
     {
@@ -1836,894 +1179,53 @@
       "date": "06.10.2026",
       "time": "20:00",
       "odds": {
-        "ms1": 3.72,
-        "ms0": 3.06,
-        "ms2": 1.59,
+        "ms1": 3.84,
+        "ms0": 3.09,
+        "ms2": 1.57,
+        "iy1": 4.41,
+        "iy0": 1.93,
+        "iy2": 2.1,
         "alt25": 1.53,
-        "ust25": 7.86,
-        "kgVar": 3.26,
-        "kgYok": 1.09
+        "ust25": 7.66,
+        "kgVar": 1.67,
+        "kgYok": 1.6
       },
-      "sampleSize": 350,
       "combos": [
         {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 114,
-          "rate": 33,
-          "estOdd": "10.62"
-        },
-        {
           "name": "MS 2 & KG YOK",
-          "count": 112,
-          "rate": 32,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 80,
-          "rate": 23,
-          "estOdd": "2.20"
+          "estOdd": "2.54",
+          "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "count": 82,
-          "rate": 23,
-          "estOdd": "4.41"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 114,
-        "rate": 33,
-        "estOdd": "10.62"
-      },
-      "topScores": [
-        {
-          "score": "0 - 1",
-          "count": 46,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 2",
-          "count": 35,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "0 - 2",
-          "count": 34,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 28,
-          "rate": 8,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "0 - 1",
-        "count": 46,
-        "rate": 13,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 2",
-        "count": 35,
-        "rate": 10,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4527807",
-      "eventId": "3185233",
-      "code": "73747",
-      "homeTeam": "Sheffield Wed",
-      "awayTeam": "Sunderland (B)",
-      "league": "İNTK",
-      "date": "06.10.2026",
-      "time": "21:00",
-      "odds": {
-        "ms1": 1.2,
-        "ms0": 4.92,
-        "ms2": 5.37,
-        "alt25": 3.3,
-        "ust25": 1.09,
-        "kgVar": 2.06,
-        "kgYok": 1.36
-      },
-      "sampleSize": 28,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 20,
-          "rate": 71,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 12,
-          "rate": 43,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 10,
-          "rate": 36,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 3,
-          "rate": 11,
-          "estOdd": "6.21"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 20,
-        "rate": 71,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "4 - 1",
-          "count": 5,
-          "rate": 18,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "4 - 0",
-          "count": 5,
-          "rate": 18,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "3 - 1",
-          "count": 2,
-          "rate": 7,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "6 - 1",
-          "count": 2,
-          "rate": 7,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "4 - 1",
-        "count": 5,
-        "rate": 18,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "4 - 0",
-        "count": 5,
-        "rate": 18,
-        "estOdd": "7.50"
-      }
-    },
-    {
-      "id": "4527841",
-      "eventId": "3185238",
-      "code": "73754",
-      "homeTeam": "Huddersfield",
-      "awayTeam": "Rochdale",
-      "league": "İNTK",
-      "date": "06.10.2026",
-      "time": "21:00",
-      "odds": {
-        "ms1": 1.14,
-        "ms0": 4.95,
-        "ms2": 7.11,
-        "alt25": 1.56,
-        "ust25": 1.72,
-        "kgVar": 2.72,
-        "kgYok": 1.17
-      },
-      "sampleSize": 70,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 43,
-          "rate": 61,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 28,
-          "rate": 40,
-          "estOdd": "2.64"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 27,
-          "rate": 39,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 12,
-          "rate": 17,
-          "estOdd": "2.20"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 43,
-        "rate": 61,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "3 - 0",
-          "count": 10,
-          "rate": 14,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 1",
-          "count": 10,
-          "rate": 14,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "3 - 1",
-          "count": 8,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 0",
-          "count": 7,
-          "rate": 10,
-          "estOdd": "9.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "3 - 0",
-        "count": 10,
-        "rate": 14,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "2 - 1",
-        "count": 10,
-        "rate": 14,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4570813",
-      "eventId": "3185409",
-      "code": "73754",
-      "homeTeam": "Doncaster",
-      "awayTeam": "Liverpool U21",
-      "league": "İNTK",
-      "date": "06.10.2026",
-      "time": "21:00",
-      "odds": {
-        "ms1": 1.29,
-        "ms0": 4.31,
-        "ms2": 4.71,
-        "alt25": 2.91,
-        "ust25": 1.14,
-        "kgVar": 2.11,
-        "kgYok": 1.34
-      },
-      "sampleSize": 139,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 71,
-          "rate": 51,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 55,
-          "rate": 40,
-          "estOdd": "2.31"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 32,
-          "rate": 23,
-          "estOdd": "2.20"
+          "estOdd": "3.62",
+          "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "count": 22,
-          "rate": 16,
-          "estOdd": "7.73"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 71,
-        "rate": 51,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 16,
-          "rate": 12,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 15,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "3 - 1",
-          "count": 12,
-          "rate": 9,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "1 - 0",
-          "count": 9,
-          "rate": 6,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 16,
-        "rate": 12,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 1",
-        "count": 15,
-        "rate": 11,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4527888",
-      "eventId": "3185231",
-      "code": "73762",
-      "homeTeam": "Mk Dons",
-      "awayTeam": "Brentford U21",
-      "league": "İNTK",
-      "date": "06.10.2026",
-      "time": "21:00",
-      "odds": {
-        "ms1": 1.52,
-        "ms0": 3.63,
-        "ms2": 3.43,
-        "alt25": 2.29,
-        "ust25": 1.27,
-        "kgVar": 2.28,
-        "kgYok": 1.28
-      },
-      "sampleSize": 350,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 158,
-          "rate": 45,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 119,
-          "rate": 34,
-          "estOdd": "2.95"
+          "estOdd": "4.36",
+          "rate": 35
         },
         {
           "name": "MS 1 & KG YOK",
-          "count": 83,
-          "rate": 24,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 62,
-          "rate": 18,
-          "estOdd": "3.70"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 158,
-        "rate": 45,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 47,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 24,
-          "rate": 7,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "3 - 1",
-          "count": 24,
-          "rate": 7,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "3 - 0",
-          "count": 23,
-          "rate": 7,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 47,
-        "rate": 13,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 1",
-        "count": 24,
-        "rate": 7,
-        "estOdd": "12.00"
-      }
-    },
-    {
-      "id": "4527827",
-      "eventId": "3185398",
-      "code": "73751",
-      "homeTeam": "Shrewsbury",
-      "awayTeam": "Stockport",
-      "league": "İNTK",
-      "date": "06.10.2026",
-      "time": "21:00",
-      "odds": {
-        "ms1": 4.19,
-        "ms0": 3.75,
-        "ms2": 1.39,
-        "alt25": 1.31,
-        "ust25": 2.18,
-        "kgVar": 2.43,
-        "kgYok": 1.23
-      },
-      "sampleSize": 299,
-      "combos": [
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 127,
-          "rate": 42,
-          "estOdd": "2.58"
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 91,
-          "rate": 30,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "count": 87,
-          "rate": 29,
-          "estOdd": "2.87"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 51,
-          "rate": 17,
-          "estOdd": "2.20"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 127,
-        "rate": 42,
-        "estOdd": "2.58"
-      },
-      "topScores": [
-        {
-          "score": "0 - 1",
-          "count": 30,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 2",
-          "count": 29,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 25,
-          "rate": 8,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "2 - 3",
-          "count": 21,
-          "rate": 7,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "0 - 1",
-        "count": 30,
-        "rate": 10,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 2",
-        "count": 29,
-        "rate": 10,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4547586",
-      "eventId": "3185302",
-      "code": "73748",
-      "homeTeam": "Blackpool",
-      "awayTeam": "Crewe",
-      "league": "İNTK",
-      "date": "06.10.2026",
-      "time": "21:00",
-      "odds": {
-        "ms1": 1.45,
-        "ms0": 3.65,
-        "ms2": 3.85,
-        "alt25": 2.1,
-        "ust25": 1.34,
-        "kgVar": 2.49,
-        "kgYok": 1.22
-      },
-      "sampleSize": 350,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 146,
-          "rate": 42,
-          "estOdd": "2.20"
+          "estOdd": "6.70",
+          "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "count": 117,
-          "rate": 33,
-          "estOdd": "3.07"
+          "estOdd": "8.29",
+          "rate": 52
         },
         {
-          "name": "MS 1 & KG YOK",
-          "count": 85,
-          "rate": 24,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS X & KG VAR",
-          "count": 62,
-          "rate": 18,
-          "estOdd": "7.73"
+          "name": "MS X & KG YOK",
+          "estOdd": "9.06",
+          "rate": 35
         }
       ],
       "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "count": 146,
-        "rate": 42,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 1",
-          "count": 39,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 1",
-          "count": 37,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 0",
-          "count": 33,
-          "rate": 9,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "3 - 1",
-          "count": 27,
-          "rate": 8,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 1",
-        "count": 39,
-        "rate": 11,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "2 - 1",
-        "count": 37,
-        "rate": 11,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4527871",
-      "eventId": "3185453",
-      "code": "73759",
-      "homeTeam": "Newport County",
-      "awayTeam": "Plymouth",
-      "league": "İNTK",
-      "date": "06.10.2026",
-      "time": "21:00",
-      "odds": {
-        "ms1": 3.98,
-        "ms0": 3.52,
-        "ms2": 1.45,
-        "alt25": 2.12,
-        "ust25": 1.33,
-        "kgVar": 2.46,
-        "kgYok": 1.23
-      },
-      "sampleSize": 350,
-      "combos": [
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 134,
-          "rate": 38,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 106,
-          "rate": 30,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "count": 94,
-          "rate": 27,
-          "estOdd": "3.03"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 66,
-          "rate": 19,
-          "estOdd": "2.61"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 134,
-        "rate": 38,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 1",
-          "count": 35,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 2",
-          "count": 34,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "0 - 2",
-          "count": 33,
-          "rate": 9,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "0 - 1",
-          "count": 33,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 1",
-        "count": 35,
-        "rate": 10,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 2",
-        "count": 34,
-        "rate": 10,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4527838",
-      "eventId": "3185224",
-      "code": "73753",
-      "homeTeam": "Fleetwood Town",
-      "awayTeam": "Barnsley",
-      "league": "İNTK",
-      "date": "06.10.2026",
-      "time": "21:00",
-      "odds": {
-        "ms1": 2.89,
-        "ms0": 3.58,
-        "ms2": 1.67,
-        "alt25": 2.54,
-        "ust25": 1.21,
-        "kgVar": 2.07,
-        "kgYok": 1.35
-      },
-      "sampleSize": 281,
-      "combos": [
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 101,
-          "rate": 36,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "count": 82,
-          "rate": 29,
-          "estOdd": "2.94"
-        },
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 65,
-          "rate": 23,
-          "estOdd": "2.97"
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "count": 53,
-          "rate": 19,
-          "estOdd": "5.08"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 101,
-        "rate": 36,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 2",
-          "count": 31,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 28,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "0 - 2",
-          "count": 19,
-          "rate": 7,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "2 - 1",
-          "count": 19,
-          "rate": 7,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 2",
-        "count": 31,
-        "rate": 11,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 1",
-        "count": 28,
-        "rate": 10,
-        "estOdd": "9.00"
-      }
-    },
-    {
-      "id": "4445138",
-      "eventId": "3185400",
-      "code": "72303",
-      "homeTeam": "Hirvatistan",
-      "awayTeam": "İspanya",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 7.95,
-        "ms0": 5.43,
-        "ms2": 1.16,
-        "alt25": 2.43,
-        "ust25": 1.3,
-        "kgVar": 3.05,
-        "kgYok": 1.18
-      },
-      "sampleSize": 22,
-      "combos": [
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 14,
-          "rate": 64,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 14,
-          "rate": 64,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 4,
-          "rate": 18,
-          "estOdd": "2.40"
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "count": 4,
-          "rate": 18,
-          "estOdd": "3.01"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 14,
-        "rate": 64,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "0 - 4",
-          "count": 3,
-          "rate": 14,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "0 - 3",
-          "count": 3,
-          "rate": 14,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 3",
-          "count": 2,
-          "rate": 9,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "0 - 1",
-          "count": 2,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "0 - 4",
-        "count": 3,
-        "rate": 14,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "0 - 3",
-        "count": 3,
-        "rate": 14,
-        "estOdd": "9.00"
+        "name": "MS 2 & KG YOK",
+        "estOdd": "2.54",
+        "rate": 48
       }
     },
     {
@@ -2736,174 +1238,261 @@
       "date": "06.10.2026",
       "time": "21:45",
       "odds": {
-        "ms1": 5.03,
-        "ms0": 3.67,
-        "ms2": 1.42,
-        "alt25": 1.19,
-        "ust25": 2.98,
-        "kgVar": 3.58,
-        "kgYok": 1.11
+        "ms1": 4.88,
+        "ms0": 3.61,
+        "ms2": 1.44,
+        "iy1": 5.3,
+        "iy0": 2.09,
+        "iy2": 1.96,
+        "alt25": 1.67,
+        "ust25": 1.72,
+        "kgVar": 1.77,
+        "kgYok": 1.64
       },
-      "sampleSize": 88,
       "combos": [
         {
           "name": "MS 2 & 2.5 ÜST",
-          "count": 36,
-          "rate": 41,
-          "estOdd": "3.60"
+          "estOdd": "2.33",
+          "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "count": 33,
-          "rate": 38,
-          "estOdd": "2.20"
+          "estOdd": "2.34",
+          "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "count": 26,
-          "rate": 30,
-          "estOdd": "4.32"
+          "estOdd": "3.40",
+          "rate": 48
         },
         {
           "name": "MS 2 & 2.5 ALT",
-          "count": 23,
-          "rate": 26,
-          "estOdd": "2.20"
+          "estOdd": "3.43",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.41",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.07",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "8.67",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "9.28",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "9.58",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "10.30",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "10.85",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "16.00",
+          "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 2 & 2.5 ÜST",
-        "count": 36,
-        "rate": 41,
-        "estOdd": "3.60"
-      },
-      "topScores": [
-        {
-          "score": "0 - 2",
-          "count": 13,
-          "rate": 15,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "0 - 1",
-          "count": 10,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 9,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 2",
-          "count": 7,
-          "rate": 8,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "0 - 2",
-        "count": 13,
-        "rate": 15,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "0 - 1",
-        "count": 10,
-        "rate": 11,
-        "estOdd": "9.00"
+        "estOdd": "2.33",
+        "rate": 48
       }
     },
     {
-      "id": "4516055",
-      "eventId": "3185402",
-      "code": "73631",
-      "homeTeam": "Braintree",
-      "awayTeam": "Walton And Hers",
-      "league": "İCON",
+      "id": "4445138",
+      "eventId": "3185400",
+      "code": "72303",
+      "homeTeam": "Hirvatistan",
+      "awayTeam": "İspanya",
+      "league": "AVUL",
       "date": "06.10.2026",
       "time": "21:45",
       "odds": {
-        "ms1": 1.51,
-        "ms0": 3.68,
-        "ms2": 3.47,
-        "alt25": 1.35,
-        "ust25": 2.09,
-        "kgVar": 2.09,
-        "kgYok": 1.34
+        "ms1": 8.64,
+        "ms0": 5.61,
+        "ms2": 1.13,
+        "iy1": 7.45,
+        "iy0": 2.7,
+        "iy2": 1.49,
+        "alt25": 2.43,
+        "ust25": 1.3,
+        "kgVar": 1.68,
+        "kgYok": 1.72
       },
-      "sampleSize": 350,
       "combos": [
         {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "1.51",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.40",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "3.99",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "7.11",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "7.62",
+          "rate": 48
+        },
+        {
           "name": "MS 1 & 2.5 ÜST",
-          "count": 139,
-          "rate": 40,
-          "estOdd": "2.68"
+          "estOdd": "14.20",
+          "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "count": 100,
-          "rate": 29,
-          "estOdd": "2.68"
+          "estOdd": "15.25",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "17.70",
+          "rate": 48
         },
         {
           "name": "MS 1 & KG YOK",
-          "count": 90,
-          "rate": 26,
-          "estOdd": "2.20"
+          "estOdd": "18.85",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "20.50",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "22.30",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "1.51",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4445139",
+      "eventId": "3185350",
+      "code": "72303",
+      "homeTeam": "İngiltere",
+      "awayTeam": "Çekya",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "odds": {
+        "ms1": 0,
+        "ms0": 9.32,
+        "ms2": 17.5,
+        "iy1": 1.23,
+        "iy0": 3.42,
+        "iy2": 13.35,
+        "alt25": 3.12,
+        "ust25": 1.16,
+        "kgVar": 2,
+        "kgYok": 1.48
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "1.22",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.55",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.38",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.20",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "12.25",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "12.65",
+          "rate": 35
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "33.00",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "33.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "35.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "35.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "35.00",
+          "rate": 48
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "count": 64,
-          "rate": 18,
-          "estOdd": "6.16"
+          "estOdd": "35.00",
+          "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "count": 139,
-        "rate": 40,
-        "estOdd": "2.68"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 36,
-          "rate": 10,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 31,
-          "rate": 9,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "1 - 0",
-          "count": 28,
-          "rate": 8,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "3 - 1",
-          "count": 24,
-          "rate": 7,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 36,
-        "rate": 10,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 1",
-        "count": 31,
-        "rate": 9,
-        "estOdd": "12.00"
+        "estOdd": "1.22",
+        "rate": 52
       }
     },
     {
@@ -2916,174 +1505,83 @@
       "date": "06.10.2026",
       "time": "21:45",
       "odds": {
-        "ms1": 7.39,
-        "ms0": 4.42,
-        "ms2": 1.23,
-        "alt25": 1.31,
-        "ust25": 2.41,
-        "kgVar": 3.89,
-        "kgYok": 1.09
+        "ms1": 7.99,
+        "ms0": 4.52,
+        "ms2": 1.21,
+        "iy1": 7.51,
+        "iy0": 2.35,
+        "iy2": 1.62,
+        "alt25": 1.83,
+        "ust25": 1.58,
+        "kgVar": 1.94,
+        "kgYok": 1.51
       },
-      "sampleSize": 24,
       "combos": [
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "1.85",
+          "rate": 48
+        },
         {
           "name": "MS 2 & KG YOK",
-          "count": 9,
-          "rate": 38,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 8,
-          "rate": 33,
-          "estOdd": "2.52"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 7,
-          "rate": 29,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS X & KG VAR",
-          "count": 6,
-          "rate": 25,
-          "estOdd": "14.61"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & KG YOK",
-        "count": 9,
-        "rate": 38,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 1",
-          "count": 5,
-          "rate": 21,
-          "estOdd": "6.50"
-        },
-        {
-          "score": "0 - 2",
-          "count": 4,
-          "rate": 17,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "0 - 1",
-          "count": 3,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 3",
-          "count": 3,
-          "rate": 13,
-          "estOdd": "9.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 1",
-        "count": 5,
-        "rate": 21,
-        "estOdd": "6.50"
-      },
-      "secondaryScore": {
-        "score": "0 - 2",
-        "count": 4,
-        "rate": 17,
-        "estOdd": "7.50"
-      }
-    },
-    {
-      "id": "4445211",
-      "eventId": "3185439",
-      "code": "72309",
-      "homeTeam": "Belarus",
-      "awayTeam": "Finlandiya",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 3.68,
-        "ms0": 2.84,
-        "ms2": 1.81,
-        "alt25": 1.35,
-        "ust25": 2.3,
-        "kgVar": 4.35,
-        "kgYok": 1.06
-      },
-      "sampleSize": 47,
-      "combos": [
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 17,
-          "rate": 36,
-          "estOdd": "3.54"
+          "estOdd": "1.86",
+          "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "count": 15,
-          "rate": 32,
-          "estOdd": "6.69"
+          "estOdd": "3.08",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "3.11",
+          "rate": 48
         },
         {
           "name": "MS X & 2.5 ALT",
-          "count": 11,
-          "rate": 23,
-          "estOdd": "3.26"
+          "estOdd": "5.43",
+          "rate": 48
         },
         {
-          "name": "MS 2 & KG YOK",
-          "count": 11,
-          "rate": 23,
-          "estOdd": "2.20"
+          "name": "MS X & KG VAR",
+          "estOdd": "6.51",
+          "rate": 35
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "12.90",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "14.10",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "15.05",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "16.00",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "17.25",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "21.45",
+          "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 2 & 2.5 ÜST",
-        "count": 17,
-        "rate": 36,
-        "estOdd": "3.54"
-      },
-      "topScores": [
-        {
-          "score": "1 - 2",
-          "count": 12,
-          "rate": 26,
-          "estOdd": "6.50"
-        },
-        {
-          "score": "1 - 1",
-          "count": 7,
-          "rate": 15,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "0 - 2",
-          "count": 5,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "0 - 1",
-          "count": 4,
-          "rate": 9,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 2",
-        "count": 12,
-        "rate": 26,
-        "estOdd": "6.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 1",
-        "count": 7,
-        "rate": 15,
-        "estOdd": "7.50"
+        "estOdd": "1.85",
+        "rate": 48
       }
     },
     {
@@ -3096,283 +1594,2961 @@
       "date": "06.10.2026",
       "time": "21:45",
       "odds": {
-        "ms1": 1.64,
-        "ms0": 3.02,
-        "ms2": 4.25,
-        "alt25": 1.38,
-        "ust25": 2.2,
-        "kgVar": 4.37,
-        "kgYok": 1.06
+        "ms1": 1.65,
+        "ms0": 2.92,
+        "ms2": 4.36,
+        "iy1": 2.33,
+        "iy0": 1.79,
+        "iy2": 5.26,
+        "alt25": 1.32,
+        "ust25": 2.39,
+        "kgVar": 2.14,
+        "kgYok": 1.41
       },
-      "sampleSize": 149,
       "combos": [
         {
           "name": "MS 1 & KG YOK",
-          "count": 48,
-          "rate": 32,
-          "estOdd": "2.20"
+          "estOdd": "2.34",
+          "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "count": 41,
-          "rate": 28,
-          "estOdd": "2.20"
+          "estOdd": "2.98",
+          "rate": 52
         },
         {
           "name": "MS X & 2.5 ALT",
-          "count": 41,
-          "rate": 28,
-          "estOdd": "3.54"
+          "estOdd": "3.22",
+          "rate": 48
         },
         {
           "name": "MS 1 & 2.5 ÜST",
-          "count": 40,
-          "rate": 27,
-          "estOdd": "3.07"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & KG YOK",
-        "count": 48,
-        "rate": 32,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 0",
-          "count": 29,
-          "rate": 19,
-          "estOdd": "7.50"
+          "estOdd": "3.42",
+          "rate": 52
         },
         {
-          "score": "0 - 0",
-          "count": 22,
-          "rate": 15,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 1",
-          "count": 19,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 1",
-          "count": 17,
-          "rate": 11,
-          "estOdd": "9.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 0",
-        "count": 29,
-        "rate": 19,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "0 - 0",
-        "count": 22,
-        "rate": 15,
-        "estOdd": "7.50"
-      }
-    },
-    {
-      "id": "4426371",
-      "eventId": "3194419",
-      "code": "72037",
-      "homeTeam": "Shamrock Rover",
-      "awayTeam": "Drogheda",
-      "league": "İRL",
-      "date": "08.10.2026",
-      "time": "22:00",
-      "odds": {
-        "ms1": 1.23,
-        "ms0": 4.03,
-        "ms2": 6.24,
-        "alt25": 1.8,
-        "ust25": 1.5,
-        "kgVar": 3.28,
-        "kgYok": 1.09
-      },
-      "sampleSize": 342,
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "count": 148,
-          "rate": 43,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "count": 140,
-          "rate": 41,
-          "estOdd": "2.20"
+          "name": "MS X & KG VAR",
+          "estOdd": "4.97",
+          "rate": 35
         },
         {
           "name": "MS 1 & KG VAR",
-          "count": 98,
-          "rate": 29,
-          "estOdd": "3.43"
+          "estOdd": "5.02",
+          "rate": 52
         },
         {
-          "name": "MS 1 & 2.5 ALT",
-          "count": 90,
-          "rate": 26,
-          "estOdd": "2.20"
+          "name": "MS X & KG YOK",
+          "estOdd": "6.36",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "6.42",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "6.92",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "10.65",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "12.15",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "22.30",
+          "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "count": 148,
-        "rate": 43,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "1 - 0",
-          "count": 46,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 0",
-          "count": 44,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "2 - 1",
-          "count": 39,
-          "rate": 11,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "1 - 1",
-          "count": 38,
-          "rate": 11,
-          "estOdd": "9.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "1 - 0",
-        "count": 46,
-        "rate": 13,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "2 - 0",
-        "count": 44,
-        "rate": 13,
-        "estOdd": "9.00"
+        "estOdd": "3.42",
+        "rate": 52
       }
-    }
-  ],
-  "pastStats": {
-    "date": "05.10.2026",
-    "totalFinished": 7,
-    "comboHitCount": 1,
-    "comboHitRate": 14,
-    "scoreHitCount": 2,
-    "scoreHitRate": 29
-  },
-  "pastMatches": [
+    },
     {
-      "id": "4537151",
-      "eventId": "3180441",
-      "code": "7151",
-      "homeTeam": "Nikaragua",
-      "awayTeam": "Dominik Cumhuriyeti",
-      "league": "CONCACAF Uluslar Ligi - Lig A Grup A",
-      "date": "05.10.2026",
-      "time": "05:00",
+      "id": "4445211",
+      "eventId": "3185439",
+      "code": "72309",
+      "homeTeam": "Belarus",
+      "awayTeam": "Finlandiya",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
       "odds": {
-        "ms1": 3.84,
-        "ms0": 3.56,
-        "ms2": 1.47,
-        "alt25": 2.02,
-        "ust25": 6.56,
-        "kgVar": 2.56,
-        "kgYok": 1.2
+        "ms1": 3.97,
+        "ms0": 2.77,
+        "ms2": 1.77,
+        "iy1": 4.93,
+        "iy0": 1.74,
+        "iy2": 2.49,
+        "alt25": 1.29,
+        "ust25": 2.49,
+        "kgVar": 2.14,
+        "kgYok": 1.41
       },
-      "actualScore": "1 - 2",
-      "iyScore": "0-0",
-      "status": "MS",
-      "sampleSize": 350,
       "combos": [
         {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 135,
-          "rate": 39,
-          "estOdd": "8.20"
-        },
-        {
           "name": "MS 2 & KG YOK",
-          "count": 103,
-          "rate": 29,
-          "estOdd": "2.20"
+          "estOdd": "2.50",
+          "rate": 48
         },
         {
-          "name": "MS 2 & KG VAR",
-          "count": 99,
-          "rate": 28,
-          "estOdd": "3.20"
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.05",
+          "rate": 48
         },
         {
           "name": "MS 2 & 2.5 ALT",
-          "count": 67,
-          "rate": 19,
-          "estOdd": "2.52"
+          "estOdd": "3.10",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "3.78",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.78",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.40",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "5.80",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "5.98",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "6.29",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "9.80",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "11.35",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "21.60",
+          "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 2 & 2.5 ÜST",
-        "count": 135,
-        "rate": 39,
-        "estOdd": "8.20"
+        "estOdd": "3.78",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4445163",
+      "eventId": "3185229",
+      "code": "72305",
+      "homeTeam": "İsviçre",
+      "awayTeam": "K. Makedonya",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "odds": {
+        "ms1": 0,
+        "ms0": 10.65,
+        "ms2": 17.5,
+        "iy1": 1.22,
+        "iy0": 3.26,
+        "iy2": 20.5,
+        "alt25": 2.47,
+        "ust25": 1.3,
+        "kgVar": 3.49,
+        "kgYok": 1.12
       },
-      "topScores": [
+      "combos": [
         {
-          "score": "0 - 1",
-          "count": 42,
-          "rate": 12,
-          "estOdd": "9.00"
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.24",
+          "rate": 52
         },
         {
-          "score": "1 - 1",
-          "count": 38,
-          "rate": 11,
-          "estOdd": "9.00"
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "1.30",
+          "rate": 52
         },
         {
-          "score": "1 - 2",
-          "count": 29,
-          "rate": 8,
-          "estOdd": "12.00"
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.04",
+          "rate": 52
         },
         {
-          "score": "0 - 2",
-          "count": 25,
-          "rate": 7,
-          "estOdd": "12.00"
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.42",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "12.20",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "18.80",
+          "rate": 35
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "23.65",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "35.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "35.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "35.00",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "35.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "35.00",
+          "rate": 48
         }
       ],
-      "primaryScore": {
-        "score": "0 - 1",
-        "count": 42,
-        "rate": 12,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "1 - 1",
-        "count": 38,
-        "rate": 11,
-        "estOdd": "9.00"
-      },
-      "isComboHit": true,
-      "isPrimaryScoreHit": false,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": false
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "1.30",
+        "rate": 52
+      }
     },
+    {
+      "id": "4453998",
+      "eventId": "3185465",
+      "code": "72525",
+      "homeTeam": "Sport Recife",
+      "awayTeam": "Sao Bernardo",
+      "league": "BR2",
+      "date": "07.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 1.56,
+        "ms0": 3.11,
+        "ms2": 3.88,
+        "iy1": 2.06,
+        "iy0": 1.98,
+        "iy2": 4.34,
+        "alt25": 1.61,
+        "ust25": 6.99,
+        "kgVar": 1.6,
+        "kgYok": 1.66
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.49",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.62",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.42",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.68",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.89",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.24",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.99",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "7.06",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.93",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "8.00",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.89",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "12.55",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.49",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4454002",
+      "eventId": "3185464",
+      "code": "72525",
+      "homeTeam": "Goias",
+      "awayTeam": "Athletic Club",
+      "league": "BR2",
+      "date": "07.10.2026",
+      "time": "02:30",
+      "odds": {
+        "ms1": 1.65,
+        "ms0": 2.9,
+        "ms2": 3.73,
+        "iy1": 2.28,
+        "iy0": 1.78,
+        "iy2": 4.52,
+        "alt25": 1.36,
+        "ust25": 2.07,
+        "kgVar": 1.88,
+        "kgYok": 1.44
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.43",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.40",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.55",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.81",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "6.97",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "9.41",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "2.43",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4565346",
+      "eventId": "3257987",
+      "code": "72128",
+      "homeTeam": "Kolombiya",
+      "awayTeam": "Peru",
+      "league": "HAZ",
+      "date": "07.10.2026",
+      "time": "02:45",
+      "odds": {
+        "ms1": 1.21,
+        "ms0": 3.92,
+        "ms2": 7.05,
+        "iy1": 1.67,
+        "iy0": 2.05,
+        "iy2": 7.28,
+        "alt25": 1.51,
+        "ust25": 1.79,
+        "kgVar": 2.13,
+        "kgYok": 1.33
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.70",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.09",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "2.54",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.55",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.45",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.43",
+          "rate": 35
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.10",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "11.05",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "11.70",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "17.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "18.35",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "26.00",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.09",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4565342",
+      "eventId": "3189283",
+      "code": "72128",
+      "homeTeam": "Abd",
+      "awayTeam": "Kanada",
+      "league": "HAZ",
+      "date": "07.10.2026",
+      "time": "03:00",
+      "odds": {
+        "ms1": 1.47,
+        "ms0": 3.45,
+        "ms2": 3.94,
+        "iy1": 1.9,
+        "iy0": 2.19,
+        "iy2": 4.18,
+        "alt25": 2,
+        "ust25": 1.39,
+        "kgVar": 1.41,
+        "kgYok": 1.95
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.05",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.74",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.86",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.23",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.50",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.91",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.04",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.77",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.67",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "9.89",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "10.20",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "15.10",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.05",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4453997",
+      "eventId": "3185211",
+      "code": "72525",
+      "homeTeam": "Ponte Preta",
+      "awayTeam": "Juventude",
+      "league": "BR2",
+      "date": "07.10.2026",
+      "time": "03:35",
+      "odds": {
+        "ms1": 7.71,
+        "ms0": 4.36,
+        "ms2": 1.16,
+        "iy1": 7.46,
+        "iy0": 2.22,
+        "iy2": 1.57,
+        "alt25": 1.7,
+        "ust25": 1.58,
+        "kgVar": 1.97,
+        "kgYok": 1.4
+      },
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "1.72",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.06",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.60",
+          "rate": 35
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "11.65",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "13.25",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "17.85",
+          "rate": 52
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "1.72",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4565336",
+      "eventId": "3273818",
+      "code": "72128",
+      "homeTeam": "Meksika",
+      "awayTeam": "Şili",
+      "league": "HAZ",
+      "date": "07.10.2026",
+      "time": "05:30",
+      "odds": {
+        "ms1": 1.37,
+        "ms0": 3.53,
+        "ms2": 4.74,
+        "iy1": 1.83,
+        "iy0": 2.09,
+        "iy2": 5.03,
+        "alt25": 1.72,
+        "ust25": 1.57,
+        "kgVar": 1.63,
+        "kgYok": 1.64
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.10",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.29",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.03",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.47",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.46",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.78",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "8.55",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.93",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "9.49",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "9.89",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "11.50",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "13.85",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.10",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4566184",
+      "eventId": "3204115",
+      "code": "74271",
+      "homeTeam": "Urawa",
+      "awayTeam": "Omiya",
+      "league": "JPK",
+      "date": "07.10.2026",
+      "time": "12:00",
+      "odds": {
+        "ms1": 1.36,
+        "ms0": 3.88,
+        "ms2": 5.2,
+        "iy1": 1.85,
+        "iy0": 2.19,
+        "iy2": 5.46,
+        "alt25": 1.8,
+        "ust25": 8.7,
+        "kgVar": 1.71,
+        "kgYok": 1.68
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "1.99",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.18",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.90",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.33",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.58",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.90",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "8.70",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "9.06",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "9.64",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "10.05",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "11.75",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "14.15",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "1.99",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4566185",
+      "eventId": "3204106",
+      "code": "74271",
+      "homeTeam": "Cerezo Osaka",
+      "awayTeam": "Kagoshima Unite",
+      "league": "JPK",
+      "date": "07.10.2026",
+      "time": "12:30",
+      "odds": {
+        "ms1": 1.38,
+        "ms0": 3.6,
+        "ms2": 4.53,
+        "iy1": 1.86,
+        "iy0": 2.09,
+        "iy2": 4.87,
+        "alt25": 1.74,
+        "ust25": 1.54,
+        "kgVar": 1.61,
+        "kgYok": 1.66
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.09",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.35",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.98",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.54",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.60",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.81",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "8.02",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.65",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.93",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "9.67",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "12.10",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "13.65",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.09",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4566186",
+      "eventId": "3204122",
+      "code": "74271",
+      "homeTeam": "Hiroshima",
+      "awayTeam": "Iwaki",
+      "league": "JPK",
+      "date": "07.10.2026",
+      "time": "12:30",
+      "odds": {
+        "ms1": 1.15,
+        "ms0": 4.87,
+        "ms2": 7.04,
+        "iy1": 1.51,
+        "iy0": 2.45,
+        "iy2": 6.55,
+        "alt25": 2.14,
+        "ust25": 1.32,
+        "kgVar": 1.63,
+        "kgYok": 1.64
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.95",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.42",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.40",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "13.10",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "15.00",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "18.45",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "1.95",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4566187",
+      "eventId": "3204087",
+      "code": "74271",
+      "homeTeam": "Avispa Fukuoka",
+      "awayTeam": "Yokohama Fc",
+      "league": "JPK",
+      "date": "07.10.2026",
+      "time": "12:30",
+      "odds": {
+        "ms1": 1.97,
+        "ms0": 2.74,
+        "ms2": 2.85,
+        "iy1": 2.72,
+        "iy0": 1.71,
+        "iy2": 3.72,
+        "alt25": 1.31,
+        "ust25": 11.1,
+        "kgVar": 1.87,
+        "kgYok": 1.45
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.94",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.35",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.35",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "5.25",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "6.48",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.39",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "2.94",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4566190",
+      "eventId": "3204078",
+      "code": "74271",
+      "homeTeam": "Gainare Tottor",
+      "awayTeam": "Tokyo Verdy",
+      "league": "JPK",
+      "date": "07.10.2026",
+      "time": "13:00",
+      "odds": {
+        "ms1": 1.58,
+        "ms0": 3.04,
+        "ms2": 3.92,
+        "iy1": 2.16,
+        "iy0": 1.87,
+        "iy2": 4.58,
+        "alt25": 1.46,
+        "ust25": 7.69,
+        "kgVar": 1.78,
+        "kgYok": 1.53
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.40",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.73",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.19",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.48",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.82",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.37",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "6.28",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "6.95",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "7.72",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "7.85",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.77",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "15.15",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.73",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4566189",
+      "eventId": "3204096",
+      "code": "74271",
+      "homeTeam": "Fc Tokyo",
+      "awayTeam": "Shonan",
+      "league": "JPK",
+      "date": "07.10.2026",
+      "time": "13:00",
+      "odds": {
+        "ms1": 1.38,
+        "ms0": 3.52,
+        "ms2": 4.64,
+        "iy1": 1.86,
+        "iy0": 2.05,
+        "iy2": 5.03,
+        "alt25": 1.65,
+        "ust25": 1.62,
+        "kgVar": 1.68,
+        "kgYok": 1.59
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.18",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.26",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.15",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.33",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.37",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.88",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.42",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "8.65",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "9.32",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "9.63",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "10.85",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "14.85",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.18",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4566193",
+      "eventId": "3204121",
+      "code": "74271",
+      "homeTeam": "Shimizu",
+      "awayTeam": "V-Varen Nagasak",
+      "league": "JPK",
+      "date": "07.10.2026",
+      "time": "13:00",
+      "odds": {
+        "ms1": 1.92,
+        "ms0": 2.94,
+        "ms2": 2.77,
+        "iy1": 2.56,
+        "iy0": 1.84,
+        "iy2": 3.47,
+        "alt25": 1.49,
+        "ust25": 1.81,
+        "kgVar": 1.64,
+        "kgYok": 1.64
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.19",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.13",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.29",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.76",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.04",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "8.68",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "3.19",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4566192",
+      "eventId": "3204082",
+      "code": "74271",
+      "homeTeam": "Fagiano Okayam",
+      "awayTeam": "Jef Utd Chiba",
+      "league": "JPK",
+      "date": "07.10.2026",
+      "time": "13:00",
+      "odds": {
+        "ms1": 1.51,
+        "ms0": 3.23,
+        "ms2": 3.95,
+        "iy1": 2.04,
+        "iy0": 1.97,
+        "iy2": 4.47,
+        "alt25": 1.59,
+        "ust25": 7.3,
+        "kgVar": 1.65,
+        "kgYok": 1.63
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.45",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.50",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.41",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.51",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.99",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.47",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "7.08",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "7.30",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "7.95",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.24",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.93",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "13.65",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.45",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4560141",
+      "eventId": "3201913",
+      "code": "74131",
+      "homeTeam": "Gnistan",
+      "awayTeam": "Inter Turku",
+      "league": "FİN",
+      "date": "07.10.2026",
+      "time": "19:00",
+      "odds": {
+        "ms1": 3.51,
+        "ms0": 3.32,
+        "ms2": 1.69,
+        "iy1": 3.98,
+        "iy0": 2.11,
+        "iy2": 2.21,
+        "alt25": 1.86,
+        "ust25": 1.57,
+        "kgVar": 1.51,
+        "kgYok": 1.94
+      },
+      "combos": [
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "2.54",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "3.18",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.35",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.23",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.47",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "4.57",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "5.69",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "6.50",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "7.08",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "8.38",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "10.90",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "12.80",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "2.54",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4423318",
+      "eventId": "3189196",
+      "code": "71950",
+      "homeTeam": "Remo",
+      "awayTeam": "Gremio",
+      "league": "BR1",
+      "date": "08.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 2.11,
+        "ms0": 3.04,
+        "ms2": 2.68,
+        "iy1": 2.7,
+        "iy0": 2,
+        "iy2": 3.26,
+        "alt25": 1.71,
+        "ust25": 1.69,
+        "kgVar": 1.53,
+        "kgYok": 1.91
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.39",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.92",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.96",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.97",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.24",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.40",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.08",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "5.11",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.25",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "6.23",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "10.80",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "10.95",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.39",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4454000",
+      "eventId": "3185228",
+      "code": "72525",
+      "homeTeam": "Operario",
+      "awayTeam": "Botafogo Ribeir",
+      "league": "BR2",
+      "date": "08.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 1.79,
+        "ms0": 2.89,
+        "ms2": 3.12,
+        "iy1": 2.42,
+        "iy0": 1.83,
+        "iy2": 3.82,
+        "alt25": 1.45,
+        "ust25": 1.87,
+        "kgVar": 1.69,
+        "kgYok": 1.58
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.90",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.17",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.21",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.24",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.00",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "8.11",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "2.90",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4423313",
+      "eventId": "3189217",
+      "code": "71950",
+      "homeTeam": "Bragantino",
+      "awayTeam": "Mirassol",
+      "league": "BR1",
+      "date": "08.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 1.63,
+        "ms0": 3.33,
+        "ms2": 3.79,
+        "iy1": 2.14,
+        "iy0": 2.13,
+        "iy2": 4.21,
+        "alt25": 1.85,
+        "ust25": 1.58,
+        "kgVar": 1.53,
+        "kgYok": 1.91
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.45",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.02",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.28",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.27",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.40",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.45",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.22",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.06",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "7.60",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "8.88",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "11.20",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "12.65",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.45",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4423315",
+      "eventId": "3189608",
+      "code": "71950",
+      "homeTeam": "Internacional",
+      "awayTeam": "Corinthians",
+      "league": "BR1",
+      "date": "08.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 2,
+        "ms0": 2.93,
+        "ms2": 2.99,
+        "iy1": 2.64,
+        "iy0": 1.9,
+        "iy2": 3.68,
+        "alt25": 1.52,
+        "ust25": 1.92,
+        "kgVar": 1.7,
+        "kgYok": 1.7
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.33",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.52",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.56",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.14",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.24",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.56",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.14",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "5.56",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "5.99",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.58",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "8.67",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "13.25",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.52",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4454003",
+      "eventId": "3185432",
+      "code": "72525",
+      "homeTeam": "Avai",
+      "awayTeam": "Londrina",
+      "league": "BR2",
+      "date": "08.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 1.86,
+        "ms0": 2.82,
+        "ms2": 3.03,
+        "iy1": 2.49,
+        "iy0": 1.8,
+        "iy2": 3.74,
+        "alt25": 1.43,
+        "ust25": 1.92,
+        "kgVar": 1.71,
+        "kgYok": 1.58
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.97",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.11",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.43",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.93",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "7.72",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "2.97",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4423317",
+      "eventId": "3189092",
+      "code": "71950",
+      "homeTeam": "Vitoria Bahia",
+      "awayTeam": "Chapecoense",
+      "league": "BR1",
+      "date": "08.10.2026",
+      "time": "02:00",
+      "odds": {
+        "ms1": 1.49,
+        "ms0": 3.49,
+        "ms2": 4.57,
+        "iy1": 2,
+        "iy0": 2.12,
+        "iy2": 4.95,
+        "alt25": 1.73,
+        "ust25": 1.66,
+        "kgVar": 1.68,
+        "kgYok": 1.72
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.34",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.53",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.33",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.72",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.39",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.73",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "8.22",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.48",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "9.19",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "9.49",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "11.40",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "13.90",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.34",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4423310",
+      "eventId": "3189130",
+      "code": "71950",
+      "homeTeam": "Botafogo",
+      "awayTeam": "Vasco Da Gama",
+      "league": "BR1",
+      "date": "08.10.2026",
+      "time": "02:30",
+      "odds": {
+        "ms1": 2.49,
+        "ms0": 3.11,
+        "ms2": 2.21,
+        "iy1": 3.04,
+        "iy0": 2.06,
+        "iy2": 2.77,
+        "alt25": 1.83,
+        "ust25": 1.58,
+        "kgVar": 1.46,
+        "kgYok": 2.03
+      },
+      "combos": [
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "3.39",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.86",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.90",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.16",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.25",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.38",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.62",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "4.98",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "5.75",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "6.34",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "9.80",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "12.50",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "3.39",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4453999",
+      "eventId": "3185276",
+      "code": "72525",
+      "homeTeam": "America Mineir",
+      "awayTeam": "Fortaleza Ce",
+      "league": "BR2",
+      "date": "08.10.2026",
+      "time": "02:30",
+      "odds": {
+        "ms1": 2.4,
+        "ms0": 2.77,
+        "ms2": 2.43,
+        "iy1": 3.03,
+        "iy0": 1.88,
+        "iy2": 3.06,
+        "alt25": 1.52,
+        "ust25": 10.15,
+        "kgVar": 1.64,
+        "kgYok": 1.73
+      },
+      "combos": [
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.20",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.61",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.86",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "3.91",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.96",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.03",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.70",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "4.75",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.88",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.94",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "7.87",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "11.05",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.96",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4454005",
+      "eventId": "3185342",
+      "code": "72525",
+      "homeTeam": "Regatas",
+      "awayTeam": "Atletico Goiani",
+      "league": "BR2",
+      "date": "08.10.2026",
+      "time": "02:30",
+      "odds": {
+        "ms1": 1.78,
+        "ms0": 2.96,
+        "ms2": 3.12,
+        "iy1": 2.34,
+        "iy0": 1.91,
+        "iy2": 3.71,
+        "alt25": 1.57,
+        "ust25": 1.72,
+        "kgVar": 1.58,
+        "kgYok": 1.7
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.04",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.82",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.03",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.60",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.41",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.45",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "3.04",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4454006",
+      "eventId": "3185345",
+      "code": "72525",
+      "homeTeam": "Vila Nova",
+      "awayTeam": "Cuiaba",
+      "league": "BR2",
+      "date": "08.10.2026",
+      "time": "02:30",
+      "odds": {
+        "ms1": 1.89,
+        "ms0": 2.63,
+        "ms2": 3.19,
+        "iy1": 2.56,
+        "iy0": 1.72,
+        "iy2": 3.96,
+        "alt25": 1.31,
+        "ust25": 2.16,
+        "kgVar": 1.85,
+        "kgYok": 1.47
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.83",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.15",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.91",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "5.01",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "6.30",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.13",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "2.83",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4423314",
+      "eventId": "3189237",
+      "code": "71950",
+      "homeTeam": "Cruzeiro",
+      "awayTeam": "Sao Paulo",
+      "league": "BR1",
+      "date": "08.10.2026",
+      "time": "03:30",
+      "odds": {
+        "ms1": 1.72,
+        "ms0": 3.15,
+        "ms2": 3.61,
+        "iy1": 2.28,
+        "iy0": 2,
+        "iy2": 4.2,
+        "alt25": 1.63,
+        "ust25": 1.78,
+        "kgVar": 1.66,
+        "kgYok": 1.74
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.83",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.92",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.81",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.94",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.99",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.32",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "6.52",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.53",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "7.48",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.50",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "10.00",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "13.05",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.83",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4560142",
+      "eventId": "3201917",
+      "code": "74131",
+      "homeTeam": "Helsinki",
+      "awayTeam": "Vaasa",
+      "league": "FİN",
+      "date": "08.10.2026",
+      "time": "18:00",
+      "odds": {
+        "ms1": 1.44,
+        "ms0": 3.77,
+        "ms2": 4.67,
+        "iy1": 1.91,
+        "iy0": 2.22,
+        "iy2": 4.94,
+        "alt25": 1.92,
+        "ust25": 1.53,
+        "kgVar": 1.59,
+        "kgYok": 1.83
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.11",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.57",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.98",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.00",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.87",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.99",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "7.84",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.72",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "9.36",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "10.65",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "12.95",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "13.95",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.11",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4560143",
+      "eventId": "3201922",
+      "code": "74131",
+      "homeTeam": "Kuopion",
+      "awayTeam": "Oulu",
+      "league": "FİN",
+      "date": "08.10.2026",
+      "time": "19:00",
+      "odds": {
+        "ms1": 1.42,
+        "ms0": 3.67,
+        "ms2": 5.01,
+        "iy1": 1.93,
+        "iy0": 2.11,
+        "iy2": 5.39,
+        "alt25": 1.69,
+        "ust25": 1.71,
+        "kgVar": 1.77,
+        "kgYok": 1.64
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.28",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.31",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.35",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.42",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.49",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.13",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.93",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "9.49",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "9.89",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "10.55",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "11.05",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "16.10",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.28",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4423311",
+      "eventId": "3189138",
+      "code": "71950",
+      "homeTeam": "Santos",
+      "awayTeam": "Flamengo",
+      "league": "BR1",
+      "date": "09.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 3.78,
+        "ms0": 3.28,
+        "ms2": 1.65,
+        "iy1": 4.18,
+        "iy0": 2.13,
+        "iy2": 2.14,
+        "alt25": 1.84,
+        "ust25": 1.58,
+        "kgVar": 1.52,
+        "kgYok": 1.92
+      },
+      "combos": [
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "2.47",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "3.05",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.31",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.20",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.39",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "4.45",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "6.19",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "7.04",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "7.59",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "8.88",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "11.00",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "12.45",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "2.47",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4454001",
+      "eventId": "3185444",
+      "code": "72525",
+      "homeTeam": "Ceara",
+      "awayTeam": "Criciuma",
+      "league": "BR2",
+      "date": "09.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 2.05,
+        "ms0": 2.77,
+        "ms2": 2.68,
+        "iy1": 2.77,
+        "iy0": 1.75,
+        "iy2": 3.46,
+        "alt25": 1.37,
+        "ust25": 2.04,
+        "kgVar": 1.77,
+        "kgYok": 1.52
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.20",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.17",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.25",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "5.07",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.48",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "7.11",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "3.20",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4454004",
+      "eventId": "3185394",
+      "code": "72525",
+      "homeTeam": "Nautico",
+      "awayTeam": "Novorizontino",
+      "league": "BR2",
+      "date": "09.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 2.8,
+        "ms0": 2.93,
+        "ms2": 1.91,
+        "iy1": 3.35,
+        "iy0": 1.93,
+        "iy2": 2.45,
+        "alt25": 1.64,
+        "ust25": 1.64,
+        "kgVar": 1.51,
+        "kgYok": 1.79
+      },
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "3.45",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.85",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.86",
+          "rate": 48
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "5.24",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "5.49",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "10.25",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "3.45",
+        "rate": 48
+      }
+    },
+    {
+      "id": "4423316",
+      "eventId": "3189120",
+      "code": "71950",
+      "homeTeam": "Atletico Pr",
+      "awayTeam": "Atletico Mg",
+      "league": "BR1",
+      "date": "09.10.2026",
+      "time": "02:00",
+      "odds": {
+        "ms1": 1.88,
+        "ms0": 2.97,
+        "ms2": 3.23,
+        "iy1": 2.48,
+        "iy0": 1.95,
+        "iy2": 3.85,
+        "alt25": 1.58,
+        "ust25": 1.83,
+        "kgVar": 1.65,
+        "kgYok": 1.75
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.19",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.22",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.68",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.10",
+          "rate": 35
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.18",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.24",
+          "rate": 52
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.74",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "5.84",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "6.68",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.82",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.28",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "12.50",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.19",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4423312",
+      "eventId": "3189471",
+      "code": "71950",
+      "homeTeam": "Palmeiras",
+      "awayTeam": "Bahia",
+      "league": "BR1",
+      "date": "09.10.2026",
+      "time": "03:30",
+      "odds": {
+        "ms1": 1.38,
+        "ms0": 3.89,
+        "ms2": 5.04,
+        "iy1": 1.83,
+        "iy0": 2.28,
+        "iy2": 5.17,
+        "alt25": 1.99,
+        "ust25": 1.49,
+        "kgVar": 1.58,
+        "kgYok": 1.84
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.00",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.51",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.85",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.04",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.98",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.22",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "8.33",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "9.23",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "10.30",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "11.70",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "12.90",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "14.85",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.00",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4423309",
+      "eventId": "3189213",
+      "code": "71950",
+      "homeTeam": "Fluminense",
+      "awayTeam": "Coritiba",
+      "league": "BR1",
+      "date": "09.10.2026",
+      "time": "03:30",
+      "odds": {
+        "ms1": 1.33,
+        "ms0": 3.94,
+        "ms2": 5.83,
+        "iy1": 1.81,
+        "iy0": 2.18,
+        "iy2": 6.04,
+        "alt25": 1.72,
+        "ust25": 1.67,
+        "kgVar": 1.84,
+        "kgYok": 1.58
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.12",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.12",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.25",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.26",
+          "rate": 52
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.78",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.58",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "10.30",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "11.25",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "11.35",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "11.55",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "12.45",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "17.95",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.12",
+        "rate": 52
+      }
+    }
+  ],
+  "pastMatches": [
     {
       "id": "4289911",
       "eventId": "3183029",
@@ -3857,103 +5033,6 @@
       "isPrimaryScoreHit": false,
       "isSecondaryScoreHit": false,
       "isExactScoreHit": false
-    },
-    {
-      "id": "4537178",
-      "eventId": "3215739",
-      "code": "7178",
-      "homeTeam": "Guadeloupe",
-      "awayTeam": "St. Lucia",
-      "league": "CONCACAF Uluslar Ligi - Lig B Grup B",
-      "date": "05.10.2026",
-      "time": "22:00",
-      "odds": {
-        "ms1": 3.96,
-        "ms0": 3.62,
-        "ms2": 1.44,
-        "alt25": 1.94,
-        "ust25": 1.41,
-        "kgVar": 2.68,
-        "kgYok": 1.18
-      },
-      "actualScore": "0 - 1",
-      "iyScore": "0-1",
-      "status": "MS",
-      "sampleSize": 350,
-      "combos": [
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "count": 136,
-          "rate": 39,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "count": 111,
-          "rate": 32,
-          "estOdd": "2.20"
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "count": 100,
-          "rate": 29,
-          "estOdd": "3.28"
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "count": 75,
-          "rate": 21,
-          "estOdd": "2.37"
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "count": 136,
-        "rate": 39,
-        "estOdd": "2.20"
-      },
-      "topScores": [
-        {
-          "score": "0 - 1",
-          "count": 45,
-          "rate": 13,
-          "estOdd": "9.00"
-        },
-        {
-          "score": "0 - 2",
-          "count": 30,
-          "rate": 9,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "1 - 3",
-          "count": 29,
-          "rate": 8,
-          "estOdd": "12.00"
-        },
-        {
-          "score": "1 - 0",
-          "count": 28,
-          "rate": 8,
-          "estOdd": "12.00"
-        }
-      ],
-      "primaryScore": {
-        "score": "0 - 1",
-        "count": 45,
-        "rate": 13,
-        "estOdd": "9.00"
-      },
-      "secondaryScore": {
-        "score": "0 - 2",
-        "count": 30,
-        "rate": 9,
-        "estOdd": "12.00"
-      },
-      "isComboHit": false,
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
     }
   ]
 }
