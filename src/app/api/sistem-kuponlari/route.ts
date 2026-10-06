@@ -403,13 +403,16 @@ export async function GET() {
 
     // 2. YESTERDAY'S EVALUATED COUPONS (05.10.2026)
     const pastIyms = iymsCache?.pastMatches || [];
-    const pastYuksek = yuksekCache?.pastMatches || [];
 
     const pastPool: SystemMatch[] = [];
 
     pastIyms.forEach((m: any, idx: number) => {
       const topKey = m.topOutcome?.key || '1/1';
-      const oddVal = m.openedOdds?.[topKey] ? parseFloat(m.openedOdds[topKey]) : 2.10;
+      // SADECE VE SADECE İddaa bülteninde resmi açılış oranı (openedOdds) olan maçlar
+      if (!m.openedOdds || !m.openedOdds[topKey]) return;
+      const oddVal = parseFloat(String(m.openedOdds[topKey]).replace(',', '.'));
+      if (oddVal < 1.50) return;
+
       pastPool.push({
         id: `past_iyms_${m.id || idx}`,
         code: m.code || String(300 + idx),
@@ -425,29 +428,7 @@ export async function GET() {
         score: m.score || 'MS',
         iyScore: m.iyScore || 'İY',
         won: m.isTopHit === true,
-        reason: `Gerçek Sonuç: İY ${m.iyScore || '-'} / MS ${m.score || '-'} (${m.actualOutcome || ''})`
-      });
-    });
-
-    pastYuksek.forEach((m: any, idx: number) => {
-      const tc = m.topCombo;
-      const oddVal = tc?.estOdd ? parseFloat(tc.estOdd) : 2.50;
-      pastPool.push({
-        id: `past_yuksek_${m.id || idx}`,
-        code: m.code || String(400 + idx),
-        homeTeam: m.homeTeam,
-        awayTeam: m.awayTeam,
-        league: m.league || 'BÜLTEN',
-        date: m.date || '05.10.2026',
-        time: m.time || '21:00',
-        marketType: 'combo',
-        marketName: 'Kombine & Skor',
-        choice: tc?.name || 'MS 1 & 2.5 ÜST',
-        odd: oddVal,
-        score: m.actualScore || 'MS',
-        iyScore: m.iyScore || 'İY',
-        won: m.isComboHit === true,
-        reason: `Gerçek Sonuç: İY ${m.iyScore || '-'} / MS ${m.actualScore || '-'}`
+        reason: `İddaa Açılış Oranı: ${oddVal} | Sonuç: İY ${m.iyScore || '-'} / MS ${m.score || '-'} (${m.actualOutcome || ''})`
       });
     });
 
@@ -504,12 +485,12 @@ export async function GET() {
       };
     }
 
-    // Past Coupon 1 (Hibrit)
+    // Past Coupon 1 (Hibrit / Karma Vurgun) - Tamamı resmi İddaa İY/MS açılış oranlı maçlar
     const pastC1 = evaluatePastCoupon(
       'past-kupon-1',
       'Hibrit / Karma Vurgun Kuponu (Dün)',
       '05.10.2026 SONUÇLARI',
-      'Dün oynanan İY/MS, Kombine ve Beraberlik maçlarından oluşan karma sistem kuponu sonuçları.',
+      'Dün bültende resmi açılış oranları bulunan maçlardan derlenen sistem kuponu sonuçları.',
       'amber',
       [3, 4, 5],
       'Sistem 3, 4, 5',
@@ -521,19 +502,19 @@ export async function GET() {
         pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
         pastPool.find(m => m.homeTeam.includes('Argentinos')),
         pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
-        pastPool.find(m => m.homeTeam.includes('Nikaragua')),
+        pastPool.find(m => m.homeTeam.includes('Racing Club')),
         pastPool.find(m => m.homeTeam.includes('Lujan')),
         pastPool.find(m => m.homeTeam.includes('Bosna')),
         pastPool.find(m => m.homeTeam.includes('Fransa'))
       ]
     );
 
-    // Past Coupon 2 (İY/MS)
+    // Past Coupon 2 (İY/MS Değer)
     const pastC2 = evaluatePastCoupon(
       'past-kupon-2',
       'İY/MS & Sürpriz Değer Kuponu (Dün)',
       '05.10.2026 SONUÇLARI',
-      'Dün oynanan yüksek oranlı İY/MS maçlarının gerçekleşen sonuçları ve kazanç tablosu.',
+      'Dün resmi İY/MS oranları açılmış maçların gerçekleşen sonuçları ve kazanç tablosu.',
       'purple',
       [3, 4, 5],
       'Sistem 3, 4, 5',
@@ -546,42 +527,42 @@ export async function GET() {
         pastPool.find(m => m.homeTeam.includes('Argentinos')),
         pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
         pastPool.find(m => m.homeTeam.includes('Guastatoya')),
-        pastPool.find(m => m.homeTeam.includes('Racing Club')),
+        pastPool.find(m => m.homeTeam.includes('Porto Riko')),
         pastPool.find(m => m.homeTeam.includes('Kıbrıs')),
         pastPool.find(m => m.homeTeam.includes('Karadağ'))
       ]
     );
 
-    // Past Coupon 3 (Kombine)
+    // Past Coupon 3 (Kombine & İY/MS Dengeli)
     const pastC3 = evaluatePastCoupon(
       'past-kupon-3',
-      'Kombine & Gol Kilidi (Dün)',
+      'Kombine & İY/MS Kilidi (Dün)',
       '05.10.2026 SONUÇLARI',
-      'Dün oynanan MS & 2.5 Üst kombine maçlarının sonuçları.',
+      'Dün bültende resmi oranları bulunan maçların sonuçları.',
       'cyan',
       [3, 4, 5],
       'Sistem 3, 4, 5',
       10,
       [
-        pastPool.find(m => m.homeTeam.includes('Nikaragua')),
-        pastPool.find(m => m.homeTeam.includes('Karadağ U21')),
-        pastPool.find(m => m.homeTeam.includes('İsveç U21')),
-        pastPool.find(m => m.homeTeam.includes('Moss')),
-        pastPool.find(m => m.homeTeam.includes('Romanya')),
-        pastPool.find(m => m.homeTeam.includes('Bosna')),
-        pastPool.find(m => m.homeTeam.includes('Guadeloupe')),
         pastPool.find(m => m.homeTeam.includes('Cordoba')),
         pastPool.find(m => m.homeTeam.includes('Argentinos')),
-        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio'))
+        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
+        pastPool.find(m => m.homeTeam.includes('Romanya')),
+        pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
+        pastPool.find(m => m.homeTeam.includes('Ukrayna')),
+        pastPool.find(m => m.homeTeam.includes('Bosna')),
+        pastPool.find(m => m.homeTeam.includes('Kuzey İrlanda')),
+        pastPool.find(m => m.homeTeam.includes('Trinidad')),
+        pastPool.find(m => m.homeTeam.includes('Fransa'))
       ]
     );
 
-    // Past Coupon 4 (Büyük Vurgun)
+    // Past Coupon 4 (Büyük Vurgun 9 Maç)
     const pastC4 = evaluatePastCoupon(
       'past-kupon-4',
       'Büyük Vurgun / Çılgın Sistem (Dün)',
       '05.10.2026 SONUÇLARI',
-      '420 TL maliyetli 9 maçlık Sistem 3,4,5,6 modelinin dünkü performans ve kazanç dökümü.',
+      '420 TL maliyetli 9 maçlık Sistem 3,4,5,6 modelinin dünkü resmi bülten sonuç dökümü.',
       'emerald',
       [3, 4, 5, 6],
       'Sistem 3, 4, 5, 6',
@@ -592,12 +573,13 @@ export async function GET() {
         pastPool.find(m => m.homeTeam.includes('İtalya')),
         pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
         pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
-        pastPool.find(m => m.homeTeam.includes('Nikaragua')),
         pastPool.find(m => m.homeTeam.includes('Argentinos')),
         pastPool.find(m => m.homeTeam.includes('Guastatoya')),
+        pastPool.find(m => m.homeTeam.includes('Racing Club')),
         pastPool.find(m => m.homeTeam.includes('Bosna'))
       ]
     );
+
 
     const pastCoupons = [pastC1, pastC2, pastC3, pastC4];
     const totalPastCost = pastCoupons.reduce((a, b) => a + b.cost, 0);
