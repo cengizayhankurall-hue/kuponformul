@@ -102,6 +102,7 @@ export default function Navbar() {
   };
 
   const analysisTools = [
+    { name: '🎰 Günün Sistem Kuponları', href: '/sistem-kuponlari', desc: 'Sistem 3,4,5 ve 4,5,6 Vurgun Kuponları', isNew: true },
     { name: '⚡ İY / MS Analizi', href: '/iy-ms-analizi', desc: 'İlk Yarı & Maç Sonu 9 Olasılık' },
     { name: '🎯 Kombine & Skor', href: '/yuksek-oran-analizi', desc: 'MS + Gol/KG ve En Olası 2 Skor', isNew: true },
     { name: '💥 Patlayan Oranlar', href: '/patlayan-oranlar', desc: 'Favori Takım Oran Tuzakları' },
