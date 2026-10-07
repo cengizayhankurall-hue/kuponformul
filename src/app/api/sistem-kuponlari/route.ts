@@ -177,12 +177,23 @@ export async function GET() {
       return allowedLeagues.some(al => ln.includes(al.toUpperCase()));
     }
 
-    // 1. TODAY'S ACTIVE MATCHES (06.10.2026+)
-    const rawIyms = (iymsCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
-    const rawYuksek = (yuksekCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
+    // 1. TODAY'S ACTIVE MATCHES (07.10.2026)
+    // Bugünün tarihini bul (veya bültendeki en yakın aktif günü)
+    const allUpcoming = [...(iymsCache?.matches || []), ...(yuksekCache?.matches || [])].filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
+    const uniqueUpcomingDates = [...new Set(allUpcoming.map((m: any) => m.date))];
+    const todayTargetDate = uniqueUpcomingDates[0] || '07.10.2026';
+
+    const rawIyms = (iymsCache?.matches || []).filter((m: any) => m.date === todayTargetDate && isMajorLeague(m.league));
+    const rawYuksek = (yuksekCache?.matches || []).filter((m: any) => m.date === todayTargetDate && isMajorLeague(m.league));
+
+    // Eğer o güne özel maç sayısı 10'dan azsa, genel aktif günlerden tamamla
+    const fallbackIyms = (iymsCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
+    const fallbackYuksek = (yuksekCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
 
     const iymsPool: SystemMatch[] = [];
-    rawIyms.forEach((m: any, idx: number) => {
+    const sourceIyms = rawIyms.length >= 8 ? rawIyms : fallbackIyms;
+
+    sourceIyms.forEach((m: any, idx: number) => {
       const op = m.openedOdds || {};
       const top = m.topOutcome;
       let chosenKey = top?.key || '1/1';
@@ -206,7 +217,7 @@ export async function GET() {
           homeTeam: m.homeTeam,
           awayTeam: m.awayTeam,
           league: m.league || 'BÜLTEN',
-          date: m.date || 'Bugün',
+          date: m.date || todayTargetDate,
           time: m.time || '20:00',
           marketType: 'iy_ms',
           marketName: 'İY / MS',
@@ -218,7 +229,9 @@ export async function GET() {
     });
 
     const comboPool: SystemMatch[] = [];
-    rawYuksek.forEach((m: any, idx: number) => {
+    const sourceYuksek = rawYuksek.length >= 8 ? rawYuksek : fallbackYuksek;
+
+    sourceYuksek.forEach((m: any, idx: number) => {
       const tc = m.topCombo;
       const oddVal = tc?.estOdd ? parseFloat(String(tc.estOdd).replace(',', '.')) : 0;
       if (oddVal >= 1.30) {
@@ -228,7 +241,7 @@ export async function GET() {
           homeTeam: m.homeTeam,
           awayTeam: m.awayTeam,
           league: m.league || 'BÜLTEN',
-          date: m.date || 'Bugün',
+          date: m.date || todayTargetDate,
           time: m.time || '21:00',
           marketType: 'combo',
           marketName: 'Kombine & Skor',
@@ -265,17 +278,10 @@ export async function GET() {
     const allMatchesPool = [...iymsPool, ...comboPool];
 
     // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
+    // En yüksek başarı oranına sahip Kombine ve İY/MS maçlarının dengeli karması
     const c1Candidates = [
-      comboPool.find(m => m.homeTeam.includes('Estonya')),
-      comboPool.find(m => m.homeTeam.includes('Belarus')),
-      iymsPool.find(m => m.homeTeam.includes('İskoçya')),
-      iymsPool.find(m => m.homeTeam.includes('Lüksemburg')),
-      iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
-      iymsPool.find(m => m.homeTeam.includes('Hirvatistan')),
-      iymsPool.find(m => m.homeTeam.includes('Moldova')),
-      comboPool.find(m => m.homeTeam.includes('Litvanya')),
-      comboPool.find(m => m.homeTeam.includes('Portekiz')),
-      iymsPool.find(m => m.homeTeam.includes('Kolombiya'))
+      ...comboPool.slice(0, 5),
+      ...iymsPool.slice(0, 5)
     ];
     const coupon1Matches = getUniqueMatches(c1Candidates, allMatchesPool, 10);
     const c1Odds = coupon1Matches.map(m => m.odd);
@@ -293,27 +299,17 @@ export async function GET() {
       totalColumns: 582,
       misli: 1,
       cost: 582,
-      minOdds: Math.min(...c1Odds),
-      maxOdds: Math.max(...c1Odds),
-      avgOdds: Number((c1Odds.reduce((a, b) => a + b, 0) / c1Odds.length).toFixed(2)),
+      minOdds: c1Odds.length > 0 ? Math.min(...c1Odds) : 0,
+      maxOdds: c1Odds.length > 0 ? Math.max(...c1Odds) : 0,
+      avgOdds: c1Odds.length > 0 ? Number((c1Odds.reduce((a, b) => a + b, 0) / c1Odds.length).toFixed(2)) : 0,
       matches: coupon1Matches,
       payoutTable: c1Payouts,
       targetProfitBadge: '45.000 TL - 120.000 TL Hedef'
     };
 
     // --- KUPON 2: İY/MS & SÜRPRİZ DEĞER (10 Maç - Sistem 3, 4, 5) ---
-    const c2Candidates = [
-      iymsPool.find(m => m.homeTeam.includes('İskoçya')),
-      iymsPool.find(m => m.homeTeam.includes('Lüksemburg')),
-      iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
-      iymsPool.find(m => m.homeTeam.includes('Hirvatistan')),
-      iymsPool.find(m => m.homeTeam.includes('Estonya')),
-      iymsPool.find(m => m.homeTeam.includes('Moldova')),
-      iymsPool.find(m => m.homeTeam.includes('Belarus')),
-      iymsPool.find(m => m.homeTeam.includes('Kolombiya')),
-      iymsPool.find(m => m.homeTeam.includes('Botafogo')),
-      iymsPool.find(m => m.homeTeam.includes('Remo'))
-    ];
+    // Sadece bültende resmi açılışı olan İY/MS maçları
+    const c2Candidates = iymsPool.slice(0, 10);
     const coupon2Matches = getUniqueMatches(c2Candidates, iymsPool, 10);
     const c2Odds = coupon2Matches.map(m => m.odd);
     const c2Payouts = generatePayoutTable(c2Odds, [3, 4, 5], 1);
@@ -330,27 +326,17 @@ export async function GET() {
       totalColumns: 582,
       misli: 1,
       cost: 582,
-      minOdds: Math.min(...c2Odds),
-      maxOdds: Math.max(...c2Odds),
-      avgOdds: Number((c2Odds.reduce((a, b) => a + b, 0) / c2Odds.length).toFixed(2)),
+      minOdds: c2Odds.length > 0 ? Math.min(...c2Odds) : 0,
+      maxOdds: c2Odds.length > 0 ? Math.max(...c2Odds) : 0,
+      avgOdds: c2Odds.length > 0 ? Number((c2Odds.reduce((a, b) => a + b, 0) / c2Odds.length).toFixed(2)) : 0,
       matches: coupon2Matches,
       payoutTable: c2Payouts,
       targetProfitBadge: '60.000 TL - 175.000 TL Hedef'
     };
 
     // --- KUPON 3: KOMBİNE & GOL KİLİDİ (10 Maç - Sistem 3, 4, 5) ---
-    const c3Candidates = [
-      comboPool.find(m => m.homeTeam.includes('Estonya')),
-      comboPool.find(m => m.homeTeam.includes('Belarus')),
-      comboPool.find(m => m.homeTeam.includes('Litvanya')),
-      comboPool.find(m => m.homeTeam.includes('Portekiz')),
-      comboPool.find(m => m.homeTeam.includes('Urawa')),
-      iymsPool.find(m => m.homeTeam.includes('İskoçya')),
-      iymsPool.find(m => m.homeTeam.includes('Lüksemburg')),
-      iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
-      iymsPool.find(m => m.homeTeam.includes('Kolombiya')),
-      iymsPool.find(m => m.homeTeam.includes('Helsinki'))
-    ];
+    // Resmi bülten MS + 2.5 Üst/Alt ve KG kombinasyonları
+    const c3Candidates = comboPool.slice(0, 10);
     const coupon3Matches = getUniqueMatches(c3Candidates, allMatchesPool, 10);
     const c3Odds = coupon3Matches.map(m => m.odd);
     const c3Payouts = generatePayoutTable(c3Odds, [3, 4, 5], 1);
@@ -367,26 +353,17 @@ export async function GET() {
       totalColumns: 582,
       misli: 1,
       cost: 582,
-      minOdds: Math.min(...c3Odds),
-      maxOdds: Math.max(...c3Odds),
-      avgOdds: Number((c3Odds.reduce((a, b) => a + b, 0) / c3Odds.length).toFixed(2)),
+      minOdds: c3Odds.length > 0 ? Math.min(...c3Odds) : 0,
+      maxOdds: c3Odds.length > 0 ? Math.max(...c3Odds) : 0,
+      avgOdds: c3Odds.length > 0 ? Number((c3Odds.reduce((a, b) => a + b, 0) / c3Odds.length).toFixed(2)) : 0,
       matches: coupon3Matches,
       payoutTable: c3Payouts,
       targetProfitBadge: '25.000 TL - 65.000 TL Hedef'
     };
 
     // --- KUPON 4: BÜYÜK VURGUN / ÇILGIN SİSTEM (9 Maç - Sistem 3, 4, 5, 6) ---
-    const c4Candidates = [
-      iymsPool.find(m => m.homeTeam.includes('İskoçya')),
-      iymsPool.find(m => m.homeTeam.includes('Lüksemburg')),
-      iymsPool.find(m => m.homeTeam.includes('Kazakistan')),
-      comboPool.find(m => m.homeTeam.includes('Estonya')),
-      comboPool.find(m => m.homeTeam.includes('Belarus')),
-      iymsPool.find(m => m.homeTeam.includes('Cruzeiro')),
-      iymsPool.find(m => m.homeTeam.includes('Internacional')),
-      iymsPool.find(m => m.homeTeam.includes('Santos')),
-      iymsPool.find(m => m.homeTeam.includes('Palmeiras'))
-    ];
+    // Yüksek çarpanlı 9 maçlık mega sistem
+    const c4Candidates = [...comboPool.slice(0, 5), ...iymsPool.slice(0, 4)];
     const coupon4Matches = getUniqueMatches(c4Candidates, allMatchesPool, 9);
     const c4Odds = coupon4Matches.map(m => m.odd);
     const c4Payouts = generatePayoutTable(c4Odds, [3, 4, 5, 6], 1);
@@ -403,16 +380,16 @@ export async function GET() {
       totalColumns: 420,
       misli: 1,
       cost: 420,
-      minOdds: Math.min(...c4Odds),
-      maxOdds: Math.max(...c4Odds),
-      avgOdds: Number((c4Odds.reduce((a, b) => a + b, 0) / c4Odds.length).toFixed(2)),
+      minOdds: c4Odds.length > 0 ? Math.min(...c4Odds) : 0,
+      maxOdds: c4Odds.length > 0 ? Math.max(...c4Odds) : 0,
+      avgOdds: c4Odds.length > 0 ? Number((c4Odds.reduce((a, b) => a + b, 0) / c4Odds.length).toFixed(2)) : 0,
       matches: coupon4Matches,
       payoutTable: c4Payouts,
       targetProfitBadge: '75.000 TL - 280.000 TL Hedef'
     };
 
-    // 2. YESTERDAY'S EVALUATED COUPONS (05.10.2026)
-    // SADECE RESMİ İDDAA BÜLTENİNDE İY/MS AÇILAN POPÜLER LİGLER (Lujan, Nikaragua vb. elendi)
+    // 2. YESTERDAY'S EVALUATED COUPONS (06.10.2026)
+    // Dünün resmi maç sonuçları ve açılış oranları
     const pastIyms = (iymsCache?.pastMatches || []).filter((m: any) => isMajorLeague(m.league));
 
     const pastPool: SystemMatch[] = [];
@@ -421,7 +398,7 @@ export async function GET() {
       const topKey = m.topOutcome?.key || '1/1';
       if (!m.openedOdds || !m.openedOdds[topKey]) return;
       const oddVal = parseFloat(String(m.openedOdds[topKey]).replace(',', '.'));
-      if (oddVal < 1.50) return;
+      if (oddVal < 1.30) return;
 
       pastPool.push({
         id: `past_iyms_${m.id || idx}`,
@@ -429,7 +406,7 @@ export async function GET() {
         homeTeam: m.homeTeam,
         awayTeam: m.awayTeam,
         league: m.league || 'BÜLTEN',
-        date: m.date || '05.10.2026',
+        date: m.date || '06.10.2026',
         time: m.time || '20:00',
         marketType: 'iy_ms',
         marketName: 'İY / MS',
@@ -499,95 +476,52 @@ export async function GET() {
     const pastC1 = evaluatePastCoupon(
       'past-kupon-1',
       'Hibrit / Karma Vurgun Kuponu (Dün)',
-      '05.10.2026 SONUÇLARI',
+      '06.10.2026 SONUÇLARI',
       'Dün resmi bültende İY/MS açılış oranları bulunan ana lig maçlarından derlenen sistem kuponu sonuçları.',
       'amber',
       [3, 4, 5],
       'Sistem 3, 4, 5',
       10,
-      [
-        pastPool.find(m => m.homeTeam.includes('Cordoba')),
-        pastPool.find(m => m.homeTeam.includes('Romanya')),
-        pastPool.find(m => m.homeTeam.includes('İtalya')),
-        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
-        pastPool.find(m => m.homeTeam.includes('Argentinos')),
-        pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
-        pastPool.find(m => m.homeTeam.includes('Ukrayna')),
-        pastPool.find(m => m.homeTeam.includes('Bosna')),
-        pastPool.find(m => m.homeTeam.includes('Karadağ')),
-        pastPool.find(m => m.homeTeam.includes('Fransa'))
-      ]
+      pastPool.slice(0, 10)
     );
 
     // Past Coupon 2 (İY/MS Değer)
     const pastC2 = evaluatePastCoupon(
       'past-kupon-2',
       'İY/MS & Sürpriz Değer Kuponu (Dün)',
-      '05.10.2026 SONUÇLARI',
+      '06.10.2026 SONUÇLARI',
       'Dün resmi İY/MS oranları açılmış maçların gerçekleşen sonuçları ve kazanç tablosu.',
       'purple',
       [3, 4, 5],
       'Sistem 3, 4, 5',
       10,
-      [
-        pastPool.find(m => m.homeTeam.includes('Cordoba')),
-        pastPool.find(m => m.homeTeam.includes('Romanya')),
-        pastPool.find(m => m.homeTeam.includes('İtalya')),
-        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
-        pastPool.find(m => m.homeTeam.includes('Argentinos')),
-        pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
-        pastPool.find(m => m.homeTeam.includes('Ukrayna')),
-        pastPool.find(m => m.homeTeam.includes('Kuzey İrlanda')),
-        pastPool.find(m => m.homeTeam.includes('Bosna')),
-        pastPool.find(m => m.homeTeam.includes('Karadağ'))
-      ]
+      pastPool.slice(0, 10)
     );
 
     // Past Coupon 3 (Kombine & İY/MS Dengeli)
     const pastC3 = evaluatePastCoupon(
       'past-kupon-3',
       'Kombine & İY/MS Kilidi (Dün)',
-      '05.10.2026 SONUÇLARI',
+      '06.10.2026 SONUÇLARI',
       'Dün bültende resmi oranları bulunan maçların sonuçları.',
       'cyan',
       [3, 4, 5],
       'Sistem 3, 4, 5',
       10,
-      [
-        pastPool.find(m => m.homeTeam.includes('Cordoba')),
-        pastPool.find(m => m.homeTeam.includes('Argentinos')),
-        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
-        pastPool.find(m => m.homeTeam.includes('Romanya')),
-        pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
-        pastPool.find(m => m.homeTeam.includes('Ukrayna')),
-        pastPool.find(m => m.homeTeam.includes('Bosna')),
-        pastPool.find(m => m.homeTeam.includes('Kuzey İrlanda')),
-        pastPool.find(m => m.homeTeam.includes('İtalya')),
-        pastPool.find(m => m.homeTeam.includes('Fransa'))
-      ]
+      pastPool.slice(0, 10)
     );
 
     // Past Coupon 4 (Büyük Vurgun 9 Maç)
     const pastC4 = evaluatePastCoupon(
       'past-kupon-4',
       'Büyük Vurgun / Çılgın Sistem (Dün)',
-      '05.10.2026 SONUÇLARI',
+      '06.10.2026 SONUÇLARI',
       '420 TL maliyetli 9 maçlık Sistem 3,4,5,6 modelinin dünkü resmi bülten sonuç dökümü.',
       'emerald',
       [3, 4, 5, 6],
       'Sistem 3, 4, 5, 6',
       9,
-      [
-        pastPool.find(m => m.homeTeam.includes('Cordoba')),
-        pastPool.find(m => m.homeTeam.includes('Romanya')),
-        pastPool.find(m => m.homeTeam.includes('İtalya')),
-        pastPool.find(m => m.homeTeam.includes('Estudiantes Rio')),
-        pastPool.find(m => m.homeTeam.includes('Deportivo Riestra')),
-        pastPool.find(m => m.homeTeam.includes('Argentinos')),
-        pastPool.find(m => m.homeTeam.includes('Ukrayna')),
-        pastPool.find(m => m.homeTeam.includes('Karadağ')),
-        pastPool.find(m => m.homeTeam.includes('Bosna'))
-      ]
+      pastPool.slice(0, 9)
     );
 
     const pastCoupons = [pastC1, pastC2, pastC3, pastC4];
@@ -596,8 +530,8 @@ export async function GET() {
     const wonPastCount = pastCoupons.filter(c => c.isWinner).length;
 
     const yesterdaySummary: YesterdaySummary = {
-      date: '05.10.2026',
-      formattedDate: '5 Ekim 2026 Dün',
+      date: '06.10.2026',
+      formattedDate: '6 Ekim 2026 Dün',
       totalCoupons: pastCoupons.length,
       wonCoupons: wonPastCount,
       totalCost: totalPastCost,

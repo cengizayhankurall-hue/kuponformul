@@ -1,399 +1,18 @@
 {
-  "date": "06.10.2026",
+  "date": "07.10.2026",
   "availableDates": [
-    "06.10.2026",
     "07.10.2026",
     "08.10.2026",
     "09.10.2026"
   ],
   "availableLeagues": [
-    "AVUL",
-    "HAZ",
     "JPK",
     "FİN",
     "BR1",
-    "BR2"
+    "BR2",
+    "İRL"
   ],
   "matches": [
-    {
-      "id": "4445210",
-      "eventId": "3185214",
-      "code": "72309",
-      "homeTeam": "Arnavutluk",
-      "awayTeam": "San Marino",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 0,
-        "ms0": 17.5,
-        "ms2": 17.5,
-        "iy1": 1.05,
-        "iy0": 4.86,
-        "iy2": 26,
-        "alt25": 3.72,
-        "ust25": 1.1,
-        "kgVar": 0,
-        "kgYok": 0
-      },
-      "openedOdds": {
-        "1/X": "35.00",
-        "1/2": "35.00",
-        "X/1": "4.39",
-        "X/X": "23.20",
-        "X/2": "35.00",
-        "2/1": "35.00",
-        "2/X": "35.00",
-        "2/2": "35.00"
-      },
-      "topOutcome": {
-        "key": "X/1",
-        "count": 12,
-        "rate": 45
-      }
-    },
-    {
-      "id": "4445237",
-      "eventId": "3185332",
-      "code": "72312",
-      "homeTeam": "Estonya",
-      "awayTeam": "İzlanda",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 4.88,
-        "ms0": 3.61,
-        "ms2": 1.44,
-        "iy1": 5.3,
-        "iy0": 2.09,
-        "iy2": 1.96,
-        "alt25": 1.67,
-        "ust25": 1.72,
-        "kgVar": 1.77,
-        "kgYok": 1.64
-      },
-      "openedOdds": {
-        "1/1": "8.75",
-        "1/X": "17.70",
-        "1/2": "24.05",
-        "X/1": "10.35",
-        "X/X": "5.22",
-        "X/2": "4.05",
-        "2/1": "35.00",
-        "2/X": "15.75",
-        "2/2": "2.11"
-      },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 12,
-        "rate": 65
-      }
-    },
-    {
-      "id": "4445138",
-      "eventId": "3185400",
-      "code": "72303",
-      "homeTeam": "Hirvatistan",
-      "awayTeam": "İspanya",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 8.64,
-        "ms0": 5.61,
-        "ms2": 1.13,
-        "iy1": 7.45,
-        "iy0": 2.7,
-        "iy2": 1.49,
-        "alt25": 2.43,
-        "ust25": 1.3,
-        "kgVar": 1.68,
-        "kgYok": 1.72
-      },
-      "openedOdds": {
-        "1/1": "15.35",
-        "1/X": "24.05",
-        "1/2": "20.60",
-        "X/1": "18.75",
-        "X/X": "8.63",
-        "X/2": "3.93",
-        "2/1": "35.00",
-        "2/X": "20.95",
-        "2/2": "1.51"
-      },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 12,
-        "rate": 65
-      }
-    },
-    {
-      "id": "4445139",
-      "eventId": "3185350",
-      "code": "72303",
-      "homeTeam": "İngiltere",
-      "awayTeam": "Çekya",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 0,
-        "ms0": 9.32,
-        "ms2": 17.5,
-        "iy1": 1.23,
-        "iy0": 3.42,
-        "iy2": 13.35,
-        "alt25": 3.12,
-        "ust25": 1.16,
-        "kgVar": 2,
-        "kgYok": 1.48
-      },
-      "openedOdds": {
-        "1/1": "1.20",
-        "1/X": "35.00",
-        "1/2": "35.00",
-        "X/1": "4.01",
-        "X/X": "13.55",
-        "X/2": "35.00",
-        "2/1": "24.50",
-        "2/X": "35.00",
-        "2/2": "35.00"
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 45
-      }
-    },
-    {
-      "id": "4445229",
-      "eventId": "3185448",
-      "code": "72311",
-      "homeTeam": "Moldova",
-      "awayTeam": "Slovakya",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 7.99,
-        "ms0": 4.52,
-        "ms2": 1.21,
-        "iy1": 7.51,
-        "iy0": 2.35,
-        "iy2": 1.62,
-        "alt25": 1.83,
-        "ust25": 1.58,
-        "kgVar": 1.94,
-        "kgYok": 1.51
-      },
-      "openedOdds": {
-        "1/1": "14.70",
-        "1/X": "23.20",
-        "1/2": "24.50",
-        "X/1": "16.30",
-        "X/X": "6.37",
-        "X/2": "3.78",
-        "2/1": "35.00",
-        "2/X": "19.55",
-        "2/2": "1.65"
-      },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 12,
-        "rate": 65
-      }
-    },
-    {
-      "id": "4445162",
-      "eventId": "3185246",
-      "code": "72305",
-      "homeTeam": "İskoçya",
-      "awayTeam": "Slovenya",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 1.65,
-        "ms0": 2.92,
-        "ms2": 4.36,
-        "iy1": 2.33,
-        "iy0": 1.79,
-        "iy2": 5.26,
-        "alt25": 1.32,
-        "ust25": 2.39,
-        "kgVar": 2.14,
-        "kgYok": 1.41
-      },
-      "openedOdds": {
-        "1/1": "2.56",
-        "1/X": "15.90",
-        "1/2": "35.00",
-        "X/1": "4.09",
-        "X/X": "3.82",
-        "X/2": "8.69",
-        "2/1": "32.50",
-        "2/X": "17.60",
-        "2/2": "8.02"
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 45
-      }
-    },
-    {
-      "id": "4445211",
-      "eventId": "3185439",
-      "code": "72309",
-      "homeTeam": "Belarus",
-      "awayTeam": "Finlandiya",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 3.97,
-        "ms0": 2.77,
-        "ms2": 1.77,
-        "iy1": 4.93,
-        "iy0": 1.74,
-        "iy2": 2.49,
-        "alt25": 1.29,
-        "ust25": 2.49,
-        "kgVar": 2.14,
-        "kgYok": 1.41
-      },
-      "openedOdds": {
-        "1/1": "7.28",
-        "1/X": "16.85",
-        "1/2": "34.00",
-        "X/1": "7.97",
-        "X/X": "3.61",
-        "X/2": "4.24",
-        "2/1": "35.00",
-        "2/X": "15.40",
-        "2/2": "2.80"
-      },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 12,
-        "rate": 45
-      }
-    },
-    {
-      "id": "4445163",
-      "eventId": "3185229",
-      "code": "72305",
-      "homeTeam": "İsviçre",
-      "awayTeam": "K. Makedonya",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "odds": {
-        "ms1": 0,
-        "ms0": 10.65,
-        "ms2": 17.5,
-        "iy1": 1.22,
-        "iy0": 3.26,
-        "iy2": 20.5,
-        "alt25": 2.47,
-        "ust25": 1.3,
-        "kgVar": 3.49,
-        "kgYok": 1.12
-      },
-      "openedOdds": {
-        "1/1": "1.17",
-        "1/X": "35.00",
-        "1/2": "35.00",
-        "X/1": "3.63",
-        "X/X": "13.30",
-        "X/2": "35.00",
-        "2/1": "35.00",
-        "2/X": "35.00",
-        "2/2": "35.00"
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 45
-      }
-    },
-    {
-      "id": "4565346",
-      "eventId": "3257987",
-      "code": "72128",
-      "homeTeam": "Kolombiya",
-      "awayTeam": "Peru",
-      "league": "HAZ",
-      "date": "07.10.2026",
-      "time": "02:45",
-      "odds": {
-        "ms1": 1.21,
-        "ms0": 3.92,
-        "ms2": 7.05,
-        "iy1": 1.67,
-        "iy0": 2.05,
-        "iy2": 7.28,
-        "alt25": 1.51,
-        "ust25": 1.79,
-        "kgVar": 2.13,
-        "kgYok": 1.33
-      },
-      "openedOdds": {
-        "1/1": "1.75",
-        "1/X": "20.75",
-        "1/2": "35.00",
-        "X/1": "3.54",
-        "X/X": "5.45",
-        "X/2": "14.60",
-        "2/1": "27.00",
-        "2/X": "24.05",
-        "2/2": "14.10"
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 65
-      }
-    },
-    {
-      "id": "4565342",
-      "eventId": "3189283",
-      "code": "72128",
-      "homeTeam": "Abd",
-      "awayTeam": "Kanada",
-      "league": "HAZ",
-      "date": "07.10.2026",
-      "time": "03:00",
-      "odds": {
-        "ms1": 1.47,
-        "ms0": 3.45,
-        "ms2": 3.94,
-        "iy1": 1.9,
-        "iy0": 2.19,
-        "iy2": 4.18,
-        "alt25": 2,
-        "ust25": 1.39,
-        "kgVar": 1.41,
-        "kgYok": 1.95
-      },
-      "openedOdds": {
-        "1/1": "2.18",
-        "1/X": "13.50",
-        "1/2": "35.00",
-        "X/1": "4.51",
-        "X/X": "5.81",
-        "X/2": "9.67",
-        "2/1": "20.90",
-        "2/X": "14.85",
-        "2/2": "7.03"
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 65
-      }
-    },
     {
       "id": "4566184",
       "eventId": "3204115",
@@ -442,108 +61,32 @@
       "date": "07.10.2026",
       "time": "19:00",
       "odds": {
-        "ms1": 3.51,
-        "ms0": 3.32,
-        "ms2": 1.69,
-        "iy1": 3.98,
-        "iy0": 2.11,
-        "iy2": 2.21,
-        "alt25": 1.86,
-        "ust25": 1.57,
+        "ms1": 3.62,
+        "ms0": 3.37,
+        "ms2": 1.65,
+        "iy1": 4.06,
+        "iy0": 2.14,
+        "iy2": 2.16,
+        "alt25": 1.88,
+        "ust25": 1.55,
         "kgVar": 1.51,
-        "kgYok": 1.94
+        "kgYok": 1.95
       },
       "openedOdds": {
-        "1/1": "6.00",
-        "1/X": "14.30",
-        "1/2": "23.20",
-        "X/1": "8.17",
-        "X/X": "5.19",
-        "X/2": "4.69",
+        "1/1": "6.20",
+        "1/X": "14.45",
+        "1/2": "22.75",
+        "X/1": "8.43",
+        "X/X": "5.29",
+        "X/2": "4.65",
         "2/1": "35.00",
-        "2/X": "13.30",
-        "2/2": "2.55"
+        "2/X": "13.35",
+        "2/2": "2.48"
       },
       "topOutcome": {
         "key": "2/2",
         "count": 12,
-        "rate": 45
-      }
-    },
-    {
-      "id": "4423318",
-      "eventId": "3189196",
-      "code": "71950",
-      "homeTeam": "Remo",
-      "awayTeam": "Gremio",
-      "league": "BR1",
-      "date": "08.10.2026",
-      "time": "01:30",
-      "odds": {
-        "ms1": 2.11,
-        "ms0": 3.04,
-        "ms2": 2.68,
-        "iy1": 2.7,
-        "iy0": 2,
-        "iy2": 3.26,
-        "alt25": 1.71,
-        "ust25": 1.69,
-        "kgVar": 1.53,
-        "kgYok": 1.91
-      },
-      "openedOdds": {
-        "1/1": "3.35",
-        "1/X": "12.85",
-        "1/2": "31.00",
-        "X/1": "5.37",
-        "X/X": "4.66",
-        "X/2": "6.43",
-        "2/1": "26.50",
-        "2/X": "13.15",
-        "2/2": "4.44"
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 45
-      }
-    },
-    {
-      "id": "4423313",
-      "eventId": "3189217",
-      "code": "71950",
-      "homeTeam": "Bragantino",
-      "awayTeam": "Mirassol",
-      "league": "BR1",
-      "date": "08.10.2026",
-      "time": "01:30",
-      "odds": {
-        "ms1": 1.63,
-        "ms0": 3.33,
-        "ms2": 3.79,
-        "iy1": 2.14,
-        "iy0": 2.13,
-        "iy2": 4.21,
-        "alt25": 1.85,
-        "ust25": 1.58,
-        "kgVar": 1.53,
-        "kgYok": 1.91
-      },
-      "openedOdds": {
-        "1/1": "2.42",
-        "1/X": "13.35",
-        "1/2": "35.00",
-        "X/1": "4.59",
-        "X/X": "5.18",
-        "X/2": "8.72",
-        "2/1": "23.20",
-        "2/X": "14.55",
-        "2/2": "6.54"
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 45
+        "rate": 48
       }
     },
     {
@@ -557,31 +100,69 @@
       "time": "01:30",
       "odds": {
         "ms1": 2,
-        "ms0": 2.93,
+        "ms0": 2.92,
         "ms2": 2.99,
-        "iy1": 2.64,
-        "iy0": 1.9,
-        "iy2": 3.68,
-        "alt25": 1.52,
-        "ust25": 1.92,
-        "kgVar": 1.7,
-        "kgYok": 1.7
+        "iy1": 2.68,
+        "iy0": 1.86,
+        "iy2": 3.74,
+        "alt25": 1.48,
+        "ust25": 1.99,
+        "kgVar": 1.75,
+        "kgYok": 1.65
       },
       "openedOdds": {
-        "1/1": "3.18",
-        "1/X": "13.45",
+        "1/1": "3.21",
+        "1/X": "13.85",
         "1/2": "35.00",
-        "X/1": "4.94",
-        "X/X": "4.24",
-        "X/2": "6.74",
-        "2/1": "29.00",
-        "2/X": "14.10",
-        "2/2": "5.13"
+        "X/1": "4.87",
+        "X/X": "4.17",
+        "X/2": "6.63",
+        "2/1": "29.50",
+        "2/X": "14.45",
+        "2/2": "5.16"
       },
       "topOutcome": {
         "key": "1/1",
         "count": 12,
-        "rate": 45
+        "rate": 48
+      }
+    },
+    {
+      "id": "4423313",
+      "eventId": "3189217",
+      "code": "71950",
+      "homeTeam": "Bragantino",
+      "awayTeam": "Mirassol",
+      "league": "BR1",
+      "date": "08.10.2026",
+      "time": "01:30",
+      "odds": {
+        "ms1": 1.6,
+        "ms0": 3.39,
+        "ms2": 3.89,
+        "iy1": 2.1,
+        "iy0": 2.14,
+        "iy2": 4.31,
+        "alt25": 1.85,
+        "ust25": 1.58,
+        "kgVar": 1.54,
+        "kgYok": 1.89
+      },
+      "openedOdds": {
+        "1/1": "2.37",
+        "1/X": "13.55",
+        "1/2": "35.00",
+        "X/1": "4.52",
+        "X/X": "5.25",
+        "X/2": "8.88",
+        "2/1": "22.75",
+        "2/X": "14.85",
+        "2/2": "6.74"
+      },
+      "topOutcome": {
+        "key": "1/1",
+        "count": 12,
+        "rate": 48
       }
     },
     {
@@ -594,27 +175,27 @@
       "date": "08.10.2026",
       "time": "02:00",
       "odds": {
-        "ms1": 1.49,
-        "ms0": 3.49,
-        "ms2": 4.57,
-        "iy1": 2,
+        "ms1": 1.46,
+        "ms0": 3.58,
+        "ms2": 4.66,
+        "iy1": 1.97,
         "iy0": 2.12,
-        "iy2": 4.95,
+        "iy2": 5.05,
         "alt25": 1.73,
         "ust25": 1.66,
-        "kgVar": 1.68,
-        "kgYok": 1.72
+        "kgVar": 1.7,
+        "kgYok": 1.7
       },
       "openedOdds": {
-        "1/1": "2.18",
-        "1/X": "14.65",
+        "1/1": "2.14",
+        "1/X": "15.10",
         "1/2": "35.00",
-        "X/1": "4.24",
-        "X/X": "5.18",
-        "X/2": "9.98",
+        "X/1": "4.17",
+        "X/X": "5.29",
+        "X/2": "10.10",
         "2/1": "23.65",
-        "2/X": "16.35",
-        "2/2": "8.09"
+        "2/X": "16.90",
+        "2/2": "8.27"
       },
       "topOutcome": {
         "key": "1/1",
@@ -632,32 +213,32 @@
       "date": "08.10.2026",
       "time": "02:30",
       "odds": {
-        "ms1": 2.49,
-        "ms0": 3.11,
-        "ms2": 2.21,
-        "iy1": 3.04,
-        "iy0": 2.06,
-        "iy2": 2.77,
-        "alt25": 1.83,
-        "ust25": 1.58,
-        "kgVar": 1.46,
-        "kgYok": 2.03
+        "ms1": 2.62,
+        "ms0": 3.16,
+        "ms2": 2.09,
+        "iy1": 3.16,
+        "iy0": 2.07,
+        "iy2": 2.63,
+        "alt25": 1.86,
+        "ust25": 1.56,
+        "kgVar": 1.45,
+        "kgYok": 2.05
       },
       "openedOdds": {
-        "1/1": "4.03",
-        "1/X": "12.80",
-        "1/2": "26.00",
-        "X/1": "6.21",
-        "X/X": "4.92",
-        "X/2": "5.69",
-        "2/1": "28.50",
-        "2/X": "12.65",
-        "2/2": "3.52"
+        "1/1": "4.29",
+        "1/X": "13.05",
+        "1/2": "25.50",
+        "X/1": "6.48",
+        "X/X": "5.03",
+        "X/2": "5.47",
+        "2/1": "29.50",
+        "2/X": "12.75",
+        "2/2": "3.29"
       },
       "topOutcome": {
         "key": "2/2",
         "count": 12,
-        "rate": 45
+        "rate": 48
       }
     },
     {
@@ -695,7 +276,7 @@
       "topOutcome": {
         "key": "1/1",
         "count": 12,
-        "rate": 45
+        "rate": 48
       }
     },
     {
@@ -709,9 +290,9 @@
       "time": "03:30",
       "odds": {
         "ms1": 1.72,
-        "ms0": 3.15,
+        "ms0": 3.16,
         "ms2": 3.61,
-        "iy1": 2.28,
+        "iy1": 2.29,
         "iy0": 2,
         "iy2": 4.2,
         "alt25": 1.63,
@@ -725,15 +306,15 @@
         "1/2": "35.00",
         "X/1": "4.54",
         "X/X": "4.66",
-        "X/2": "8.02",
+        "X/2": "8.01",
         "2/1": "25.50",
         "2/X": "14.85",
-        "2/2": "6.31"
+        "2/2": "6.29"
       },
       "topOutcome": {
         "key": "1/1",
         "count": 12,
-        "rate": 45
+        "rate": 48
       }
     },
     {
@@ -749,24 +330,24 @@
         "ms1": 1.44,
         "ms0": 3.77,
         "ms2": 4.67,
-        "iy1": 1.91,
-        "iy0": 2.22,
-        "iy2": 4.94,
-        "alt25": 1.92,
-        "ust25": 1.53,
-        "kgVar": 1.59,
-        "kgYok": 1.83
+        "iy1": 1.9,
+        "iy0": 2.24,
+        "iy2": 4.92,
+        "alt25": 1.95,
+        "ust25": 1.51,
+        "kgVar": 1.57,
+        "kgYok": 1.86
       },
       "openedOdds": {
         "1/1": "2.07",
-        "1/X": "14.95",
+        "1/X": "14.80",
         "1/2": "35.00",
-        "X/1": "4.23",
-        "X/X": "5.79",
+        "X/1": "4.27",
+        "X/X": "5.85",
         "X/2": "10.45",
-        "2/1": "21.90",
-        "2/X": "16.65",
-        "2/2": "8.20"
+        "2/1": "21.75",
+        "2/X": "16.50",
+        "2/2": "8.17"
       },
       "topOutcome": {
         "key": "1/1",
@@ -813,6 +394,44 @@
       }
     },
     {
+      "id": "4426371",
+      "eventId": "3194419",
+      "code": "72037",
+      "homeTeam": "Shamrock Rover",
+      "awayTeam": "Drogheda",
+      "league": "İRL",
+      "date": "08.10.2026",
+      "time": "22:00",
+      "odds": {
+        "ms1": 1.24,
+        "ms0": 4.01,
+        "ms2": 6.01,
+        "iy1": 1.65,
+        "iy0": 2.21,
+        "iy2": 6,
+        "alt25": 1.8,
+        "ust25": 1.5,
+        "kgVar": 1.71,
+        "kgYok": 1.57
+      },
+      "openedOdds": {
+        "1/1": "1.77",
+        "1/X": "17.50",
+        "1/2": "35.00",
+        "X/1": "3.87",
+        "X/X": "6.19",
+        "X/2": "13.50",
+        "2/1": "22.30",
+        "2/X": "20.10",
+        "2/2": "11.50"
+      },
+      "topOutcome": {
+        "key": "1/1",
+        "count": 12,
+        "rate": 65
+      }
+    },
+    {
       "id": "4423311",
       "eventId": "3189138",
       "code": "71950",
@@ -847,7 +466,7 @@
       "topOutcome": {
         "key": "2/2",
         "count": 12,
-        "rate": 45
+        "rate": 48
       }
     },
     {
@@ -885,7 +504,7 @@
       "topOutcome": {
         "key": "1/1",
         "count": 12,
-        "rate": 45
+        "rate": 48
       }
     },
     {
@@ -967,2972 +586,423 @@
   ],
   "pastMatches": [
     {
-      "id": "4492760",
-      "eventId": "3179769",
-      "code": "2760",
-      "homeTeam": "Cordoba",
-      "awayTeam": "Tenerife",
-      "league": "İspanya - 2.Lig",
-      "date": "05.10.2026",
-      "time": "21:30",
-      "status": "MS",
-      "score": "3 - 2",
-      "iyScore": "2-1",
-      "actualOutcome": "1/1",
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 1.44,
-        "ms0": 3.68,
-        "ms2": 4.51,
-        "iy1": 1.89,
-        "iy0": 2.23,
-        "iy2": 4.73
-      },
-      "openedOdds": {
-        "1/1": "2.06",
-        "X/1": "4.27",
-        "2/1": "21.15",
-        "1/X": "14.10",
-        "X/X": "5.73",
-        "2/X": "15.70",
-        "1/2": "34.50",
-        "X/2": "10.20",
-        "2/2": "7.80"
-      },
-      "sampleSize": 49,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 15,
-          "rate": 31
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 13,
-          "rate": 27
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 6,
-          "rate": 12
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 2,
-          "rate": 4
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 6,
-          "rate": 12
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 3,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 0,
-          "rate": 0
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 1,
-          "rate": 2
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 3,
-          "rate": 6
-        }
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 15,
-        "rate": 31
-      },
-      "surpriseOutcome": {
-        "key": "2/1",
-        "count": 6,
-        "rate": 12
-      },
-      "recentMatches": [
-        {
-          "id": "a51bb3c5-3728-4aca-8663-ed5ddb1f0b7d",
-          "date": "2026-10-03",
-          "homeTeam": "Valenciennes U",
-          "awayTeam": "Dunkerque U19",
-          "league": "FRU19",
-          "msScore": "4 - 2",
-          "iyScore": "0-2",
-          "outcome": "2/1",
-          "ms1": 1.37,
-          "ms0": 3.75,
-          "ms2": 4.49,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "38494ccd-42b5-4306-af0f-8144a1429b20",
-          "date": "2026-10-03",
-          "homeTeam": "Portekiz (U19)",
-          "awayTeam": "Danimarka  U19",
-          "league": "HU19",
-          "msScore": "3 - 3",
-          "iyScore": "1-2",
-          "outcome": "2/X",
-          "ms1": 1.38,
-          "ms0": 3.62,
-          "ms2": 4.45,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "9b589b28-ca43-4533-a290-15b1b1fc1c0d",
-          "date": "2026-09-26",
-          "homeTeam": "Bury",
-          "awayTeam": "Gainsborough Tr",
-          "league": "İNFAT",
-          "msScore": "3 - 3",
-          "iyScore": "1-0",
-          "outcome": "1/X",
-          "ms1": 1.37,
-          "ms0": 3.75,
-          "ms2": 4.45,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "763111a1-3fbb-4f7f-b273-61141303a0df",
-          "date": "2026-09-19",
-          "homeTeam": "Charleroi",
-          "awayTeam": "Cercle Brugge",
-          "league": "BEL",
-          "msScore": "3 - 2",
-          "iyScore": "2-1",
-          "outcome": "1/1",
-          "ms1": 1.46,
-          "ms0": 3.73,
-          "ms2": 4.43,
-          "iy1": 1.94,
-          "iy0": 2.21,
-          "iy2": 4.74
-        },
-        {
-          "id": "3d2f9bfb-e77e-4c08-b0df-b564624fffdf",
-          "date": "2026-09-19",
-          "homeTeam": "Ehime Fc",
-          "awayTeam": "Kamatamare Sanu",
-          "league": "JAP3",
-          "msScore": "2 - 1",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.4,
-          "ms0": 3.63,
-          "ms2": 4.51,
-          "iy1": 1.85,
-          "iy0": 2.18,
-          "iy2": 4.75
-        },
-        {
-          "id": "b31d1426-7179-4059-a08c-26aa0ab516f4",
-          "date": "2026-09-12",
-          "homeTeam": "Slovan Liberec",
-          "awayTeam": "Mlada Boleslav",
-          "league": "ÇEK",
-          "msScore": "3 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.4,
-          "ms0": 3.68,
-          "ms2": 4.47,
-          "iy1": 1.84,
-          "iy0": 2.21,
-          "iy2": 4.69
-        },
-        {
-          "id": "0a75c5d7-fd74-43ce-a40a-3ef973319b83",
-          "date": "2026-09-05",
-          "homeTeam": "Nice",
-          "awayTeam": "Le Mans",
-          "league": "FR1",
-          "msScore": "1 - 1",
-          "iyScore": "1-1",
-          "outcome": "X/X",
-          "ms1": 1.47,
-          "ms0": 3.64,
-          "ms2": 4.5,
-          "iy1": 1.93,
-          "iy0": 2.23,
-          "iy2": 4.74
-        },
-        {
-          "id": "b1a04e09-afcc-41b2-80d2-be6707bdbfeb",
-          "date": "2026-09-05",
-          "homeTeam": "Southend",
-          "awayTeam": "Yeovil",
-          "league": "İBSL",
-          "msScore": "3 - 2",
-          "iyScore": "0-1",
-          "outcome": "2/1",
-          "ms1": 1.39,
-          "ms0": 3.69,
-          "ms2": 4.53,
-          "iy1": 1.83,
-          "iy0": 2.2,
-          "iy2": 4.76
-        },
-        {
-          "id": "c2d83243-6c97-4d21-a39a-69d44d582405",
-          "date": "2026-09-04",
-          "homeTeam": "Regatas",
-          "awayTeam": "America Mineiro",
-          "league": "BR2",
-          "msScore": "3 - 1",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.4,
-          "ms0": 3.62,
-          "ms2": 4.51,
-          "iy1": 1.84,
-          "iy0": 2.21,
-          "iy2": 4.7
-        },
-        {
-          "id": "64a6b078-692d-4bc1-bbf9-896d56baefd7",
-          "date": "2026-09-04",
-          "homeTeam": "Triglav Kranj",
-          "awayTeam": "Bistrica",
-          "league": "SLVN2",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 1.4,
-          "ms0": 3.65,
-          "ms2": 4.47,
-          "iy1": 1.84,
-          "iy0": 2.21,
-          "iy2": 4.68
-        }
-      ]
-    },
-    {
-      "id": "4445199",
-      "eventId": "3182991",
-      "code": "5199",
-      "homeTeam": "Romanya",
-      "awayTeam": "İsveç",
-      "league": "UEFA Uluslar Ligi - B Ligi Grup 4",
-      "date": "05.10.2026",
-      "time": "21:45",
-      "status": "MS",
-      "score": "0 - 1",
-      "iyScore": "0-1",
-      "actualOutcome": "2/2",
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 3.75,
-        "ms0": 3.44,
-        "ms2": 1.62,
-        "iy1": 4.15,
-        "iy0": 2.17,
-        "iy2": 2.11
-      },
-      "openedOdds": {
-        "1/1": "6.41",
-        "X/1": "8.72",
-        "2/1": "35.00",
-        "1/X": "14.55",
-        "X/X": "5.44",
-        "2/X": "13.45",
-        "1/2": "22.30",
-        "X/2": "4.61",
-        "2/2": "2.40"
-      },
-      "sampleSize": 22,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 2,
-          "rate": 9
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 1,
-          "rate": 5
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 0,
-          "rate": 0
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 0,
-          "rate": 0
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 2,
-          "rate": 9
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 3,
-          "rate": 14
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 1,
-          "rate": 5
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 6,
-          "rate": 27
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 7,
-          "rate": 32
-        }
-      },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 7,
-        "rate": 32
-      },
-      "surpriseOutcome": {
-        "key": "2/X",
-        "count": 3,
-        "rate": 14
-      },
-      "recentMatches": [
-        {
-          "id": "9c4cd030-6093-4c59-a016-1f7498e35530",
-          "date": "2026-09-16",
-          "homeTeam": "Hapoel Beer Sh",
-          "awayTeam": "Dinamo Zagreb",
-          "league": "AVL",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 3.7,
-          "ms0": 3.37,
-          "ms2": 1.64,
-          "iy1": 4.15,
-          "iy0": 2.13,
-          "iy2": 2.15
-        },
-        {
-          "id": "dff1b012-045e-4bb5-a8b8-9e6da9913ef4",
-          "date": "2026-09-11",
-          "homeTeam": "Mechelen",
-          "awayTeam": "Anderlecht",
-          "league": "BEL",
-          "msScore": "0 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/2",
-          "ms1": 3.71,
-          "ms0": 3.41,
-          "ms2": 1.63,
-          "iy1": 4.12,
-          "iy0": 2.15,
-          "iy2": 2.13
-        },
-        {
-          "id": "88ff7620-84a1-46ba-aad6-a8114593216e",
-          "date": "2026-08-31",
-          "homeTeam": "Celta Vigo Ii",
-          "awayTeam": "Castellon",
-          "league": "İS2",
-          "msScore": "1 - 2",
-          "iyScore": "0-1",
-          "outcome": "2/2",
-          "ms1": 3.71,
-          "ms0": 3.47,
-          "ms2": 1.61,
-          "iy1": 4.14,
-          "iy0": 2.15,
-          "iy2": 2.12
-        },
-        {
-          "id": "37f62316-49a7-4762-99dc-8b68493dd59e",
-          "date": "2026-08-30",
-          "homeTeam": "Aberdeen",
-          "awayTeam": "Glasgow Rangers",
-          "league": "İKP",
-          "msScore": "0 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 3.75,
-          "ms0": 3.46,
-          "ms2": 1.61,
-          "iy1": 4.1,
-          "iy0": 2.21,
-          "iy2": 2.08
-        },
-        {
-          "id": "3656e974-80ba-4d8d-abd2-3b85d2531cf4",
-          "date": "2026-08-29",
-          "homeTeam": "L.Moskova",
-          "awayTeam": "Dinamo Moskova",
-          "league": "RUS",
-          "msScore": "0 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 3.75,
-          "ms0": 3.37,
-          "ms2": 1.63,
-          "iy1": 4.17,
-          "iy0": 2.14,
-          "iy2": 2.13
-        },
-        {
-          "id": "f714dd45-35d0-43a1-a86b-16ee9a70ebee",
-          "date": "2026-01-11",
-          "homeTeam": "Aberdeen",
-          "awayTeam": "Rangers",
-          "league": "İskoçya : Premiership",
-          "msScore": "0 - 2",
-          "iyScore": "0-1",
-          "outcome": "2/2",
-          "ms1": 3.73,
-          "ms0": 3.36,
-          "ms2": 1.62,
-          "iy1": 4.16,
-          "iy0": 2.13,
-          "iy2": 2.13
-        },
-        {
-          "id": "9c8a52a2-dafa-4e0c-9e23-5a19c220d309",
-          "date": "2025-12-06",
-          "homeTeam": "Başakşehir",
-          "awayTeam": "Fenerbahçe",
-          "league": "Türkiye : Trendyol Süper Lig",
-          "msScore": "1 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 3.7,
-          "ms0": 3.47,
-          "ms2": 1.61,
-          "iy1": 4.13,
-          "iy0": 2.16,
-          "iy2": 2.11
-        },
-        {
-          "id": "5b1ca32c-4ab7-49b3-89a9-3aa41bff9071",
-          "date": "2025-12-05",
-          "homeTeam": "Preussen M.",
-          "awayTeam": "Hannover 96",
-          "league": "Almanya : 2. Bundesliga",
-          "msScore": "2 - 2",
-          "iyScore": "0-1",
-          "outcome": "2/X",
-          "ms1": 3.78,
-          "ms0": 3.5,
-          "ms2": 1.59,
-          "iy1": 4.15,
-          "iy0": 2.2,
-          "iy2": 2.07
-        },
-        {
-          "id": "838cf042-3cb7-4d7c-a441-798521a9c756",
-          "date": "2025-12-03",
-          "homeTeam": "Muğlaspor",
-          "awayTeam": "Bodrum FK",
-          "league": "Türkiye : Ziraat Türkiye Kupası",
-          "msScore": "1 - 2",
-          "iyScore": "1-0",
-          "outcome": "1/2",
-          "ms1": 3.78,
-          "ms0": 3.37,
-          "ms2": 1.61,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "69ee031c-30b6-4ca7-8bd9-0b5b56f68c4d",
-          "date": "2025-08-10",
-          "homeTeam": "Sochi",
-          "awayTeam": "D. Moskova",
-          "league": "Rusya : Premier Lig",
-          "msScore": "1 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/X",
-          "ms1": 3.7,
-          "ms0": 3.44,
-          "ms2": 1.57,
-          "iy1": 4.12,
-          "iy0": 2.13,
-          "iy2": 2.07
-        }
-      ]
-    },
-    {
-      "id": "4444924",
-      "eventId": "3183073",
-      "code": "4924",
-      "homeTeam": "İtalya",
-      "awayTeam": "Türkiye",
-      "league": "UEFA Uluslar Ligi - A Ligi Grup 1",
-      "date": "05.10.2026",
-      "time": "21:45",
-      "status": "MS",
-      "score": "3 - 1",
-      "iyScore": "1-0",
-      "actualOutcome": "1/1",
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 1.37,
-        "ms0": 3.97,
-        "ms2": 5.12,
-        "iy1": 1.81,
-        "iy0": 2.31,
-        "iy2": 5.21
-      },
-      "openedOdds": {
-        "1/1": "1.94",
-        "X/1": "4.21",
-        "2/1": "21.20",
-        "1/X": "15.25",
-        "X/X": "6.20",
-        "2/X": "17.20",
-        "1/2": "35.00",
-        "X/2": "11.50",
-        "2/2": "8.97"
-      },
-      "sampleSize": 21,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 9,
-          "rate": 43
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 4,
-          "rate": 19
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 1,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 1,
-          "rate": 5
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 0,
-          "rate": 0
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 1,
-          "rate": 5
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 0,
-          "rate": 0
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 3,
-          "rate": 14
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 2,
-          "rate": 10
-        }
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 9,
-        "rate": 43
-      },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "6178cd2a-ceae-422d-a492-4fdb1ac7ef62",
-          "date": "2026-10-04",
-          "homeTeam": "Uj Krakow (K)",
-          "awayTeam": "Sleza Wroclaw (",
-          "league": "POLBE",
-          "msScore": "4 - 1",
-          "iyScore": "2-1",
-          "outcome": "1/1",
-          "ms1": 1.29,
-          "ms0": 4.01,
-          "ms2": 5.04,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "20a666bf-27ee-41b2-b3c0-478fa6973e9c",
-          "date": "2026-10-02",
-          "homeTeam": "Polonya",
-          "awayTeam": "Romanya",
-          "league": "AVUL",
-          "msScore": "6 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.37,
-          "ms0": 3.96,
-          "ms2": 5.1,
-          "iy1": 1.81,
-          "iy0": 2.31,
-          "iy2": 5.19
-        },
-        {
-          "id": "23adac4f-8ad8-43d8-80a7-8539b2418851",
-          "date": "2026-09-29",
-          "homeTeam": "Bath City",
-          "awayTeam": "Malvern Town",
-          "league": "İNGNLP",
-          "msScore": "2 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/1",
-          "ms1": 1.29,
-          "ms0": 3.98,
-          "ms2": 5.15,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "b8710a5b-20fd-4f4f-89c9-cc4c7e17c74a",
-          "date": "2026-09-20",
-          "homeTeam": "Rayo Vallecano",
-          "awayTeam": "Sporting Hortal",
-          "league": "ISPU18",
-          "msScore": "2 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 1.3,
-          "ms0": 4.04,
-          "ms2": 5.16,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "8aa7fc48-4f23-4d02-be9b-83b4b8753334",
-          "date": "2026-09-05",
-          "homeTeam": "Lens",
-          "awayTeam": "Lorient",
-          "league": "FR1",
-          "msScore": "0 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 1.37,
-          "ms0": 4.04,
-          "ms2": 5.08,
-          "iy1": 1.81,
-          "iy0": 2.31,
-          "iy2": 5.21
-        },
-        {
-          "id": "bf8abe27-602d-4472-99dc-3375c1c7e75d",
-          "date": "2026-08-12",
-          "homeTeam": "Arkadag",
-          "awayTeam": "Goa",
-          "league": "Asya : AFC Şampiyonlar Ligi 2",
-          "msScore": "3 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 1.29,
-          "ms0": 3.92,
-          "ms2": 5.09,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "1780ba90-3ba7-4bcb-adc2-8ac24649b502",
-          "date": "2026-01-26",
-          "homeTeam": "Nottingham U21",
-          "awayTeam": "Reading U21",
-          "league": "İngiltere : Premier Lig 2",
-          "msScore": "0 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/2",
-          "ms1": 1.3,
-          "ms0": 4.04,
-          "ms2": 5.11,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "60259a86-4f45-483f-a868-90b161c7d574",
-          "date": "2026-01-25",
-          "homeTeam": "Arsenal",
-          "awayTeam": "Man. United",
-          "league": "İngiltere : Premier Lig",
-          "msScore": "2 - 3",
-          "iyScore": "1-1",
-          "outcome": "X/2",
-          "ms1": 1.37,
-          "ms0": 3.93,
-          "ms2": 5.13,
-          "iy1": 1.81,
-          "iy0": 2.28,
-          "iy2": 5.25
-        },
-        {
-          "id": "3b5a489d-7cd2-4689-8ad2-f8a10c78cc8f",
-          "date": "2025-12-09",
-          "homeTeam": "Watford",
-          "awayTeam": "S. Wednesday",
-          "league": "İngiltere : Championship",
-          "msScore": "1 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/X",
-          "ms1": 1.37,
-          "ms0": 3.96,
-          "ms2": 5.06,
-          "iy1": 1.82,
-          "iy0": 2.26,
-          "iy2": 5.24
-        },
-        {
-          "id": "c4b5b48a-3559-4821-893b-8e814bf8e6e5",
-          "date": "2025-11-30",
-          "homeTeam": "K.Maraş İstiklal",
-          "awayTeam": "G.Gebze Spor",
-          "league": "Türkiye : Nesine 2. Lig",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 1.36,
-          "ms0": 3.97,
-          "ms2": 5.17,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        }
-      ]
-    },
-    {
-      "id": "4475865",
-      "eventId": "3180655",
-      "code": "5865",
-      "homeTeam": "Estudiantes Rio Cuarto",
-      "awayTeam": "Racing Club",
-      "league": "Arjantin - Premier Lig 2. Aşama",
-      "date": "05.10.2026",
-      "time": "03:30",
-      "status": "MS",
-      "score": "1 - 2",
-      "iyScore": "0-2",
-      "actualOutcome": "2/2",
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 3.5,
-        "ms0": 2.77,
-        "ms2": 1.89,
-        "iy1": 4.41,
-        "iy0": 1.76,
-        "iy2": 2.63
-      },
-      "openedOdds": {
-        "1/1": "6.28",
-        "X/1": "7.24",
-        "2/1": "35.00",
-        "1/X": "15.85",
-        "X/X": "3.68",
-        "2/X": "14.80",
-        "1/2": "33.00",
-        "X/2": "4.48",
-        "2/2": "3.03"
-      },
-      "sampleSize": 18,
-      "matchTier": "close_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 2,
-          "rate": 11
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 2,
-          "rate": 11
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 0,
-          "rate": 0
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 0,
-          "rate": 0
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 2,
-          "rate": 11
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 1,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 0,
-          "rate": 0
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 3,
-          "rate": 17
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 8,
-          "rate": 44
-        }
-      },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 8,
-        "rate": 44
-      },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "a8af19a4-a68d-4725-b285-434b64acab57",
-          "date": "2026-10-04",
-          "homeTeam": "Rio Cuarto",
-          "awayTeam": "Racing Club",
-          "league": "ARJ",
-          "msScore": "1 - 2",
-          "iyScore": "0-2",
-          "outcome": "2/2",
-          "ms1": 3.5,
-          "ms0": 2.77,
-          "ms2": 1.89,
-          "iy1": 4.41,
-          "iy0": 1.76,
-          "iy2": 2.63
-        },
-        {
-          "id": "4245b7e2-8f9e-416f-b305-d37f8826c96a",
-          "date": "2026-09-16",
-          "homeTeam": "Niki Volos",
-          "awayTeam": "Asteras Tripoli",
-          "league": "YUK",
-          "msScore": "0 - 3",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 3.45,
-          "ms0": 2.7,
-          "ms2": 1.82,
-          "iy1": 4.31,
-          "iy0": 1.72,
-          "iy2": 2.51
-        },
-        {
-          "id": "9812ef27-d741-41f0-bf2a-64f501135d83",
-          "date": "2026-08-22",
-          "homeTeam": "Genoa",
-          "awayTeam": "Napoli",
-          "league": "İTA",
-          "msScore": "0 - 2",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 3.51,
-          "ms0": 2.74,
-          "ms2": 1.9,
-          "iy1": 4.31,
-          "iy0": 1.79,
-          "iy2": 2.58
-        },
-        {
-          "id": "d268d049-4aff-4013-877d-6b8619bf478f",
-          "date": "2026-08-19",
-          "homeTeam": "Torque",
-          "awayTeam": "Tigre",
-          "league": "CSA",
-          "msScore": "2 - 1",
-          "iyScore": "2-1",
-          "outcome": "1/1",
-          "ms1": 3.53,
-          "ms0": 2.7,
-          "ms2": 1.92,
-          "iy1": 4.48,
-          "iy0": 1.72,
-          "iy2": 2.68
-        },
-        {
-          "id": "0ba1d46b-83fd-486e-98eb-f050fe84f416",
-          "date": "2026-04-26",
-          "homeTeam": "Gwangju",
-          "awayTeam": "Anyang",
-          "league": "Güney Kore : K-Lig",
-          "msScore": "2 - 5",
-          "iyScore": "0-3",
-          "outcome": "2/2",
-          "ms1": 3.46,
-          "ms0": 2.75,
-          "ms2": 1.81,
-          "iy1": 4.33,
-          "iy0": 1.74,
-          "iy2": 2.52
-        },
-        {
-          "id": "a0946716-d0df-4c0d-8f90-0a78251f765c",
-          "date": "2026-03-08",
-          "homeTeam": "Kilis 1984",
-          "awayTeam": "Silifke Bld",
-          "league": "Türkiye : Nesine 3. Lig",
-          "msScore": "0 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 3.51,
-          "ms0": 2.69,
-          "ms2": 1.82,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "3a4b04da-b9e9-4046-847e-aecdb86f2852",
-          "date": "2025-12-13",
-          "homeTeam": "Casa Pia",
-          "awayTeam": "Gil Vicente",
-          "league": "Portekiz : Premier Lig",
-          "msScore": "1 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/X",
-          "ms1": 3.48,
-          "ms0": 2.74,
-          "ms2": 1.89,
-          "iy1": 4.38,
-          "iy0": 1.75,
-          "iy2": 2.63
-        },
-        {
-          "id": "764f3648-b221-4dbf-ae3a-2bd02b152c94",
-          "date": "2025-11-09",
-          "homeTeam": "Malaga II",
-          "awayTeam": "UCAM",
-          "league": "İspanya : Segunda Lig RFEF",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 3.43,
-          "ms0": 2.7,
-          "ms2": 1.81,
-          "iy1": 4.26,
-          "iy0": 1.73,
-          "iy2": 2.49
-        },
-        {
-          "id": "7fcdd39a-3050-47b2-9cab-2941de0b8183",
-          "date": "2025-06-15",
-          "homeTeam": "Tokyo Verdy",
-          "awayTeam": "Kashiwa",
-          "league": "Japonya : J1 Lig",
-          "msScore": "0 - 3",
-          "iyScore": "0-2",
-          "outcome": "2/2",
-          "ms1": 3.42,
-          "ms0": 2.78,
-          "ms2": 1.88,
-          "iy1": 4.26,
-          "iy0": 1.78,
-          "iy2": 2.6
-        },
-        {
-          "id": "84f50a9d-4ec3-4bea-a2d9-d0c120505ef3",
-          "date": "2025-05-01",
-          "homeTeam": "Ceara CE",
-          "awayTeam": "Palmeiras",
-          "league": "Brezilya : Kupa",
-          "msScore": "0 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/2",
-          "ms1": 3.45,
-          "ms0": 2.85,
-          "ms2": 1.85,
-          "iy1": 4.29,
-          "iy0": 1.8,
-          "iy2": 2.54
-        }
-      ]
-    },
-    {
-      "id": "4475871",
-      "eventId": "3180643",
-      "code": "5871",
-      "homeTeam": "Argentinos Juniors",
-      "awayTeam": "Atletico Tigre",
-      "league": "Arjantin - Premier Lig 2. Aşama",
-      "date": "05.10.2026",
-      "time": "01:15",
-      "status": "MS",
-      "score": "2 - 1",
-      "iyScore": "2-0",
-      "actualOutcome": "1/1",
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 1.79,
-        "ms0": 2.74,
-        "ms2": 3.98,
-        "iy1": 2.49,
-        "iy0": 1.74,
-        "iy2": 4.92
-      },
-      "openedOdds": {
-        "1/1": "2.82",
-        "X/1": "4.29",
-        "2/1": "34.00",
-        "1/X": "15.20",
-        "X/X": "3.58",
-        "2/X": "16.60",
-        "1/2": "35.00",
-        "X/2": "8.01",
-        "2/2": "7.28"
-      },
-      "sampleSize": 11,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 3,
-          "rate": 27
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 2,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 1,
-          "rate": 9
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 0,
-          "rate": 0
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 2,
-          "rate": 18
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 1,
-          "rate": 9
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 0,
-          "rate": 0
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 2,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 0,
-          "rate": 0
-        }
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 3,
-        "rate": 27
-      },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "8f12c8c3-4cc3-485e-95e0-073e6d7a38f2",
-          "date": "2026-10-05",
-          "homeTeam": "Velez Sarsfiel",
-          "awayTeam": "Platense",
-          "league": "ARJ",
-          "msScore": "2 - 2",
-          "iyScore": "1-1",
-          "outcome": "X/X",
-          "ms1": 1.74,
-          "ms0": 2.82,
-          "ms2": 4.03,
-          "iy1": 2.44,
-          "iy0": 1.77,
-          "iy2": 4.93
-        },
-        {
-          "id": "4ead9234-aee5-4fd3-82d1-39113a3a08ae",
-          "date": "2026-10-04",
-          "homeTeam": "Argentinos Jr",
-          "awayTeam": "Tigre",
-          "league": "ARJ",
-          "msScore": "2 - 1",
-          "iyScore": "2-0",
-          "outcome": "1/1",
-          "ms1": 1.79,
-          "ms0": 2.74,
-          "ms2": 3.98,
-          "iy1": 2.49,
-          "iy0": 1.74,
-          "iy2": 4.92
-        },
-        {
-          "id": "279427bb-49bd-4ee8-ae34-8e515460fb90",
-          "date": "2026-09-26",
-          "homeTeam": "Kerkennah",
-          "awayTeam": "Cs Msaken",
-          "league": "TUN2",
-          "msScore": "1 - 2",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 1.75,
-          "ms0": 2.82,
-          "ms2": 4,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "717c32d9-1461-47a4-b265-4755c8d614ae",
-          "date": "2026-08-24",
-          "homeTeam": "Baltika Kalini",
-          "awayTeam": "Rubin Kazan",
-          "league": "RUS",
-          "msScore": "1 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/X",
-          "ms1": 1.78,
-          "ms0": 2.79,
-          "ms2": 3.9,
-          "iy1": 2.51,
-          "iy0": 1.74,
-          "iy2": 4.88
-        },
-        {
-          "id": "1172d0a9-d20c-4979-a5aa-a4259fe0c8fc",
-          "date": "2025-12-14",
-          "homeTeam": "Bayelsa Utd",
-          "awayTeam": "Remo Stars",
-          "league": "Nijerya : Premier Lig",
-          "msScore": "2 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/1",
-          "ms1": 1.71,
-          "ms0": 2.66,
-          "ms2": 3.93,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "dbcfbb1d-a31e-4966-9094-aa57ce8f5fde",
-          "date": "2025-11-27",
-          "homeTeam": "Atl Lanus",
-          "awayTeam": "CA Tigre",
-          "league": "Arjantin : Premier Lig",
-          "msScore": "0 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 1.79,
-          "ms0": 2.66,
-          "ms2": 4.05,
-          "iy1": 2.5,
-          "iy0": 1.73,
-          "iy2": 4.96
-        },
-        {
-          "id": "413a0f15-505d-475b-a0f1-f7c5bf48a825",
-          "date": "2025-09-13",
-          "homeTeam": "Atl Lanus",
-          "awayTeam": "Ind. Mendoza",
-          "league": "Arjantin : Premier Lig",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 1.72,
-          "ms0": 2.74,
-          "ms2": 3.98,
-          "iy1": 2.44,
-          "iy0": 1.71,
-          "iy2": 4.94
-        },
-        {
-          "id": "107cd3a7-0366-4de5-bf58-25c7b33b5ba2",
-          "date": "2025-04-05",
-          "homeTeam": "V. Guimaraes",
-          "awayTeam": "Santa Clara",
-          "league": "Portekiz : Premier Lig",
-          "msScore": "2 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.77,
-          "ms0": 2.76,
-          "ms2": 3.93,
-          "iy1": 2.49,
-          "iy0": 1.73,
-          "iy2": 4.89
-        },
-        {
-          "id": "c81014d9-ca2a-490e-810c-4704b69ba895",
-          "date": "2024-12-19",
-          "homeTeam": "Huesca",
-          "awayTeam": "Tenerife",
-          "league": "İspanya : LaLiga 2",
-          "msScore": "1 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.74,
-          "ms0": 2.75,
-          "ms2": 4.03,
-          "iy1": 2.49,
-          "iy0": 1.72,
-          "iy2": 4.93
-        },
-        {
-          "id": "67031b8e-7e10-4720-9b9c-18edf8eecafa",
-          "date": "2024-09-22",
-          "homeTeam": "Elche",
-          "awayTeam": "Mirandes",
-          "league": "İspanya : LaLiga2",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 1.74,
-          "ms0": 2.72,
-          "ms2": 4.05,
-          "iy1": 2.45,
-          "iy0": 1.74,
-          "iy2": 4.88
-        }
-      ]
-    },
-    {
-      "id": "4475861",
-      "eventId": "3180617",
-      "code": "5861",
-      "homeTeam": "Deportivo Riestra",
-      "awayTeam": "Central Cordoba Santiago",
-      "league": "Arjantin - Premier Lig 2. Aşama",
-      "date": "05.10.2026",
-      "time": "22:45",
-      "status": "MS",
-      "score": "1 - 1",
-      "iyScore": "1-1",
-      "actualOutcome": "X/X",
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 1.78,
-        "ms0": 2.76,
-        "ms2": 3.97,
-        "iy1": 2.53,
-        "iy0": 1.72,
-        "iy2": 4.98
-      },
-      "openedOdds": {
-        "1/1": "2.84",
-        "X/1": "4.22",
-        "2/1": "35.00",
-        "1/X": "15.70",
-        "X/X": "3.55",
-        "2/X": "17.10",
-        "1/2": "35.00",
-        "X/2": "7.89",
-        "2/2": "7.30"
-      },
-      "sampleSize": 6,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 2,
-          "rate": 33
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 0,
-          "rate": 0
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 0,
-          "rate": 0
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 0,
-          "rate": 0
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 3,
-          "rate": 50
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 0,
-          "rate": 0
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 0,
-          "rate": 0
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 1,
-          "rate": 17
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 0,
-          "rate": 0
-        }
-      },
-      "topOutcome": {
-        "key": "X/X",
-        "count": 3,
-        "rate": 50
-      },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "e565658a-6f63-4196-85ed-301ca2175a09",
-          "date": "2026-10-05",
-          "homeTeam": "Riestra",
-          "awayTeam": "Corboda Santiag",
-          "league": "ARJ",
-          "msScore": "1 - 1",
-          "iyScore": "1-1",
-          "outcome": "X/X",
-          "ms1": 1.78,
-          "ms0": 2.76,
-          "ms2": 3.97,
-          "iy1": 2.53,
-          "iy0": 1.72,
-          "iy2": 4.98
-        },
-        {
-          "id": "279427bb-49bd-4ee8-ae34-8e515460fb90",
-          "date": "2026-09-26",
-          "homeTeam": "Kerkennah",
-          "awayTeam": "Cs Msaken",
-          "league": "TUN2",
-          "msScore": "1 - 2",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 1.75,
-          "ms0": 2.82,
-          "ms2": 4,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "b53c090a-a1ef-449c-a8d9-0583edc834de",
-          "date": "2025-10-25",
-          "homeTeam": "Independiente",
-          "awayTeam": "Platense",
-          "league": "Arjantin : Premier Lig",
-          "msScore": "3 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.75,
-          "ms0": 2.7,
-          "ms2": 3.98,
-          "iy1": 2.49,
-          "iy0": 1.69,
-          "iy2": 4.98
-        },
-        {
-          "id": "f46b9cf2-29cb-4319-a9c1-b9d94f727930",
-          "date": "2025-07-27",
-          "homeTeam": "V. Sarsfield",
-          "awayTeam": "Instituto",
-          "league": "Arjantin : Premier Lig",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 1.76,
-          "ms0": 2.75,
-          "ms2": 3.99,
-          "iy1": 2.51,
-          "iy0": 1.72,
-          "iy2": 5.01
-        },
-        {
-          "id": "c81014d9-ca2a-490e-810c-4704b69ba895",
-          "date": "2024-12-19",
-          "homeTeam": "Huesca",
-          "awayTeam": "Tenerife",
-          "league": "İspanya : LaLiga 2",
-          "msScore": "1 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.74,
-          "ms0": 2.75,
-          "ms2": 4.03,
-          "iy1": 2.49,
-          "iy0": 1.72,
-          "iy2": 4.93
-        },
-        {
-          "id": "fc7b247c-6150-4ed9-9e02-4560ee5d38bf",
-          "date": "2022-05-01",
-          "homeTeam": "Ebro",
-          "awayTeam": "Brea",
-          "league": "İspanya : Segunda División RFEF",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 1.72,
-          "ms0": 2.75,
-          "ms2": 3.9,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        }
-      ]
-    },
-    {
-      "id": "4445198",
-      "eventId": "3182949",
-      "code": "5198",
-      "homeTeam": "Bosna-Hersek",
-      "awayTeam": "Polonya",
-      "league": "UEFA Uluslar Ligi - B Ligi Grup 4",
-      "date": "05.10.2026",
-      "time": "21:45",
-      "status": "MS",
-      "score": "1 - 0",
-      "iyScore": "0-0",
-      "actualOutcome": "X/1",
-      "isTopHit": false,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 2.9,
-        "ms0": 3.02,
-        "ms2": 2,
-        "iy1": 3.49,
-        "iy0": 1.99,
-        "iy2": 2.58
-      },
-      "openedOdds": {
-        "1/1": "4.87",
-        "X/1": "6.80",
-        "2/1": "33.50",
-        "1/X": "13.45",
-        "X/X": "4.59",
-        "2/X": "12.90",
-        "1/2": "26.50",
-        "X/2": "5.13",
-        "2/2": "3.14"
-      },
-      "sampleSize": 50,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 7,
-          "rate": 14
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 11,
-          "rate": 22
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 1,
-          "rate": 2
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 2,
-          "rate": 4
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 12,
-          "rate": 24
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 0,
-          "rate": 0
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 1,
-          "rate": 2
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 6,
-          "rate": 12
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 10,
-          "rate": 20
-        }
-      },
-      "topOutcome": {
-        "key": "X/X",
-        "count": 12,
-        "rate": 24
-      },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "f5312d4d-c617-45fb-8030-6fb7c7a433f3",
-          "date": "2026-10-05",
-          "homeTeam": "Bosna Hersek",
-          "awayTeam": "Polonya",
-          "league": "AVUL",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 2.9,
-          "ms0": 3.02,
-          "ms2": 2,
-          "iy1": 3.49,
-          "iy0": 1.99,
-          "iy2": 2.58
-        },
-        {
-          "id": "fabc4bfa-3c30-4cea-b8a9-b785b0b3c89c",
-          "date": "2026-09-11",
-          "homeTeam": "Nancy",
-          "awayTeam": "Reims",
-          "league": "FR2",
-          "msScore": "1 - 2",
-          "iyScore": "0-2",
-          "outcome": "2/2",
-          "ms1": 2.97,
-          "ms0": 2.97,
-          "ms2": 1.99,
-          "iy1": 3.55,
-          "iy0": 1.98,
-          "iy2": 2.56
-        },
-        {
-          "id": "eee755c3-8031-46f2-883a-969326d4f9d5",
-          "date": "2026-09-09",
-          "homeTeam": "Charlton",
-          "awayTeam": "Qpr",
-          "league": "İNCL",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 2.94,
-          "ms0": 2.98,
-          "ms2": 2,
-          "iy1": 3.54,
-          "iy0": 1.98,
-          "iy2": 2.58
-        },
-        {
-          "id": "579e32fe-c652-4f08-ba46-1ddb0bcc7223",
-          "date": "2026-09-06",
-          "homeTeam": "St Johnstone",
-          "awayTeam": "Hibernian",
-          "league": "İKP",
-          "msScore": "2 - 1",
-          "iyScore": "2-1",
-          "outcome": "1/1",
-          "ms1": 2.88,
-          "ms0": 3.04,
-          "ms2": 2,
-          "iy1": 3.44,
-          "iy0": 2.02,
-          "iy2": 2.56
-        },
-        {
-          "id": "0b167516-2177-4660-b492-de0aa5ba0d09",
-          "date": "2026-09-06",
-          "homeTeam": "Fortuna Köln",
-          "awayTeam": "Fortuna Düsseld",
-          "league": "AL3",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 2.9,
-          "ms0": 3.03,
-          "ms2": 2,
-          "iy1": 3.47,
-          "iy0": 2,
-          "iy2": 2.57
-        },
-        {
-          "id": "786119ee-6d7a-422a-be7d-907db59bef7b",
-          "date": "2026-08-29",
-          "homeTeam": "Gaziantep Fk",
-          "awayTeam": "Rizespor",
-          "league": "TSL",
-          "msScore": "1 - 2",
-          "iyScore": "0-2",
-          "outcome": "2/2",
-          "ms1": 2.84,
-          "ms0": 3.06,
-          "ms2": 2,
-          "iy1": 3.47,
-          "iy0": 1.98,
-          "iy2": 2.61
-        },
-        {
-          "id": "c5f24784-736f-4688-98fa-9d13f1f7ba6f",
-          "date": "2026-08-27",
-          "homeTeam": "Hradec Kralove",
-          "awayTeam": "Panathinaikos",
-          "league": "AVKL",
-          "msScore": "1 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 2.84,
-          "ms0": 3.08,
-          "ms2": 2,
-          "iy1": 3.5,
-          "iy0": 1.96,
-          "iy2": 2.63
-        },
-        {
-          "id": "39874dac-4301-472f-b12a-a00b3c63e5bb",
-          "date": "2026-08-25",
-          "homeTeam": "Gimcheon Sangm",
-          "awayTeam": "Jeonbuk Hm",
-          "league": "GKOR",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 2.91,
-          "ms0": 3.01,
-          "ms2": 2,
-          "iy1": 3.53,
-          "iy0": 1.97,
-          "iy2": 2.6
-        },
-        {
-          "id": "a6702fc5-e83a-438c-b6be-a1628166c235",
-          "date": "2026-03-25",
-          "homeTeam": "Uşakspor A.Ş.",
-          "awayTeam": "Balıkesirspor",
-          "league": "Türkiye : Nesine 3. Lig",
-          "msScore": "0 - 2",
-          "iyScore": "0-2",
-          "outcome": "2/2",
-          "ms1": 2.86,
-          "ms0": 2.97,
-          "ms2": 1.93,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "f4dabf74-f8a8-4f79-ba4c-e79d67242981",
-          "date": "2026-03-11",
-          "homeTeam": "Elazığspor",
-          "awayTeam": "Muğlaspor",
-          "league": "Türkiye : Nesine 2. Lig",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 2.84,
-          "ms0": 2.98,
-          "ms2": 1.93,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        }
-      ]
-    },
-    {
-      "id": "4457617",
-      "eventId": "3182984",
-      "code": "7617",
-      "homeTeam": "G. Kıbrıs Rum Kesimi",
-      "awayTeam": "Letonya",
-      "league": "UEFA Uluslar Ligi - C Ligi Grup 2",
-      "date": "05.10.2026",
-      "time": "19:00",
-      "status": "MS",
-      "score": "2 - 1",
-      "iyScore": "0-0",
-      "actualOutcome": "X/1",
-      "isTopHit": false,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 1.39,
-        "ms0": 3.49,
-        "ms2": 5.76,
-        "iy1": 1.93,
-        "iy0": 2,
-        "iy2": 6.26
-      },
-      "openedOdds": {
-        "1/1": "2.04",
-        "X/1": "3.84",
-        "2/1": "28.00",
-        "1/X": "17.20",
-        "X/X": "4.69",
-        "2/X": "19.75",
-        "1/2": "35.00",
-        "X/2": "11.55",
-        "2/2": "10.65"
-      },
-      "sampleSize": 23,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 9,
-          "rate": 39
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 5,
-          "rate": 22
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 1,
-          "rate": 4
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 2,
-          "rate": 9
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 5,
-          "rate": 22
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 0,
-          "rate": 0
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 0,
-          "rate": 0
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 0,
-          "rate": 0
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 1,
-          "rate": 4
-        }
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 9,
-        "rate": 39
-      },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "06deae6f-dfa6-4ccc-9557-fb879d3edeea",
-          "date": "2026-09-26",
-          "homeTeam": "Banfield (K)",
-          "awayTeam": "Newells Old Boy",
-          "league": "ARJKŞ",
-          "msScore": "3 - 1",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.31,
-          "ms0": 3.52,
-          "ms2": 5.71,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "35eb45bd-c016-4bb4-a8b2-894d4862a9f3",
-          "date": "2026-09-16",
-          "homeTeam": "Apr Kigali",
-          "awayTeam": "Marines",
-          "league": "RUA",
-          "msScore": "4 - 2",
-          "iyScore": "1-2",
-          "outcome": "2/1",
-          "ms1": 1.34,
-          "ms0": 3.46,
-          "ms2": 5.77,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "cde6b144-13c3-4805-91d9-3d1344742b3a",
-          "date": "2026-09-13",
-          "homeTeam": "Azuaga",
-          "awayTeam": "Montijo",
-          "league": "İSTL",
-          "msScore": "2 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.32,
-          "ms0": 3.53,
-          "ms2": 5.83,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "3d06e763-58aa-495b-bb5a-a6b2a9b2b487",
-          "date": "2025-12-20",
-          "homeTeam": "Yalova FK",
-          "awayTeam": "İnkılapspor",
-          "league": "Türkiye : Nesine 3. Lig",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 1.38,
-          "ms0": 3.55,
-          "ms2": 5.8,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "42412328-97c5-4810-88e5-a6413ef14166",
-          "date": "2025-12-08",
-          "homeTeam": "Las Palmas",
-          "awayTeam": "Mirandes",
-          "league": "İspanya : LaLiga 2",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 1.38,
-          "ms0": 3.51,
-          "ms2": 5.82,
-          "iy1": 1.91,
-          "iy0": 2.02,
-          "iy2": 6.26
-        },
-        {
-          "id": "b95bd04b-094b-4c42-b2a6-62bdc3c472d5",
-          "date": "2025-11-28",
-          "homeTeam": "Fluminense",
-          "awayTeam": "Sao Paulo",
-          "league": "Brezilya : Serie A",
-          "msScore": "6 - 0",
-          "iyScore": "3-0",
-          "outcome": "1/1",
-          "ms1": 1.38,
-          "ms0": 3.53,
-          "ms2": 5.78,
-          "iy1": 1.9,
-          "iy0": 2.02,
-          "iy2": 6.21
-        },
-        {
-          "id": "9f34f8e6-943e-4722-928c-fbef8fb296ec",
-          "date": "2025-08-30",
-          "homeTeam": "Ipswich Town",
-          "awayTeam": "Derby County",
-          "league": "İngiltere : Championship",
-          "msScore": "2 - 2",
-          "iyScore": "1-0",
-          "outcome": "1/X",
-          "ms1": 1.36,
-          "ms0": 3.49,
-          "ms2": 5.8,
-          "iy1": 1.88,
-          "iy0": 1.98,
-          "iy2": 6.27
-        },
-        {
-          "id": "7450f469-14da-4f57-945d-c7e6250f3255",
-          "date": "2025-07-12",
-          "homeTeam": "Internacional",
-          "awayTeam": "Vitoria BA",
-          "league": "Brezilya : Serie A",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 1.39,
-          "ms0": 3.41,
-          "ms2": 5.81,
-          "iy1": 1.93,
-          "iy0": 1.99,
-          "iy2": 6.29
-        },
-        {
-          "id": "f8436d12-3704-4e96-bf3a-b44e4eadf729",
-          "date": "2025-06-30",
-          "homeTeam": "ABD",
-          "awayTeam": "Kosta Rika",
-          "league": "Kuzey / Orta Amerika : CONCACAF Gold Cup",
-          "msScore": "2 - 2",
-          "iyScore": "1-1",
-          "outcome": "X/X",
-          "ms1": 1.38,
-          "ms0": 3.52,
-          "ms2": 5.73,
-          "iy1": 1.92,
-          "iy0": 2,
-          "iy2": 6.24
-        },
-        {
-          "id": "acbcb7da-aa5c-4c46-82b4-689e9b98fc2e",
-          "date": "2025-04-14",
-          "homeTeam": "Atl. Mineiro",
-          "awayTeam": "Vitoria BA",
-          "league": "Brezilya : Serie A",
-          "msScore": "2 - 2",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 1.38,
-          "ms0": 3.51,
-          "ms2": 5.74,
-          "iy1": 1.92,
-          "iy0": 2,
-          "iy2": 6.26
-        }
-      ]
-    },
-    {
-      "id": "4445175",
-      "eventId": "3183038",
-      "code": "5175",
-      "homeTeam": "Ukrayna",
-      "awayTeam": "Macaristan",
-      "league": "UEFA Uluslar Ligi - B Ligi Grup 2",
-      "date": "05.10.2026",
-      "time": "21:45",
-      "status": "MS",
-      "score": "1 - 2",
-      "iyScore": "0-0",
-      "actualOutcome": "X/2",
-      "isTopHit": false,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 2.53,
-        "ms0": 2.75,
-        "ms2": 2.4,
-        "iy1": 3.25,
-        "iy0": 1.83,
-        "iy2": 3.11
-      },
-      "openedOdds": {
-        "1/1": "4.23",
-        "X/1": "5.82",
-        "2/1": "35.00",
-        "1/X": "13.50",
-        "X/X": "3.89",
-        "2/X": "13.45",
-        "1/2": "33.50",
-        "X/2": "5.59",
-        "2/2": "3.97"
-      },
-      "sampleSize": 23,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 8,
-          "rate": 35
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 5,
-          "rate": 22
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 0,
-          "rate": 0
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 0,
-          "rate": 0
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 2,
-          "rate": 9
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 1,
-          "rate": 4
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 1,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 1,
-          "rate": 4
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 5,
-          "rate": 22
-        }
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 8,
-        "rate": 35
-      },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "b131bb1c-6744-4eb8-a0e1-628962ad3a15",
-          "date": "2026-10-05",
-          "homeTeam": "Ukrayna",
-          "awayTeam": "Macaristan",
-          "league": "AVUL",
-          "msScore": "1 - 2",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 2.53,
-          "ms0": 2.75,
-          "ms2": 2.4,
-          "iy1": 3.25,
-          "iy0": 1.83,
-          "iy2": 3.11
-        },
-        {
-          "id": "15e85121-2e2e-4d8c-a1c5-8a7c084f72b1",
-          "date": "2026-09-14",
-          "homeTeam": "Moreirense",
-          "awayTeam": "Maritimo",
-          "league": "POR",
-          "msScore": "3 - 1",
-          "iyScore": "2-0",
-          "outcome": "1/1",
-          "ms1": 2.5,
-          "ms0": 2.82,
-          "ms2": 2.36,
-          "iy1": 3.27,
-          "iy0": 1.81,
-          "iy2": 3.12
-        },
-        {
-          "id": "7e5f3cc3-a73c-412e-9298-4009a9e308cc",
-          "date": "2026-08-30",
-          "homeTeam": "Celta Vigo",
-          "awayTeam": "Athletic Bilbao",
-          "league": "İS1",
-          "msScore": "0 - 2",
-          "iyScore": "0-2",
-          "outcome": "2/2",
-          "ms1": 2.53,
-          "ms0": 2.77,
-          "ms2": 2.38,
-          "iy1": 3.26,
-          "iy0": 1.83,
-          "iy2": 3.1
-        },
-        {
-          "id": "ecd04faf-73db-4166-8f9f-39015c5f63bc",
-          "date": "2026-08-03",
-          "homeTeam": "Sarmiento",
-          "awayTeam": "Ind. Mendoza",
-          "league": "Arjantin : Premier Lig",
-          "msScore": "2 - 1",
-          "iyScore": "2-1",
-          "outcome": "1/1",
-          "ms1": 2.51,
-          "ms0": 2.67,
-          "ms2": 2.39,
-          "iy1": 3.22,
-          "iy0": 1.8,
-          "iy2": 3.1
-        },
-        {
-          "id": "7de3f047-2ea9-4fc1-af62-f99c870e8eee",
-          "date": "2026-03-29",
-          "homeTeam": "Diyarbekirspor",
-          "awayTeam": "Mazıdağı Fosfat",
-          "league": "Türkiye : Nesine 3. Lig",
-          "msScore": "0 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/2",
-          "ms1": 2.49,
-          "ms0": 2.69,
-          "ms2": 2.32,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "e258eaf1-eb06-4649-8b72-73613efff97d",
-          "date": "2026-02-10",
-          "homeTeam": "Napoli",
-          "awayTeam": "Como",
-          "league": "İtalya : Kupa",
-          "msScore": "1 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/X",
-          "ms1": 2.53,
-          "ms0": 2.7,
-          "ms2": 2.42,
-          "iy1": 3.28,
-          "iy0": 1.79,
-          "iy2": 3.16
-        },
-        {
-          "id": "b8546163-e7eb-468d-b4e3-1899b961a1d1",
-          "date": "2026-01-11",
-          "homeTeam": "Silivrispor",
-          "awayTeam": "Etimesgut Spor",
-          "league": "Türkiye : TFF 3. Lig",
-          "msScore": "2 - 1",
-          "iyScore": "1-1",
-          "outcome": "X/1",
-          "ms1": 2.46,
-          "ms0": 2.73,
-          "ms2": 2.45,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "21790e33-26b6-4e3a-ae49-a5b3a350c341",
-          "date": "2025-12-20",
-          "homeTeam": "Leeds United",
-          "awayTeam": "Crystal Palace",
-          "league": "İngiltere : Premier Lig",
-          "msScore": "4 - 1",
-          "iyScore": "2-0",
-          "outcome": "1/1",
-          "ms1": 2.52,
-          "ms0": 2.77,
-          "ms2": 2.36,
-          "iy1": 3.28,
-          "iy0": 1.81,
-          "iy2": 3.11
-        },
-        {
-          "id": "71eb3a73-41ca-4194-ad5a-9a94b6d87ccf",
-          "date": "2025-12-18",
-          "homeTeam": "Napoli",
-          "awayTeam": "Milan",
-          "league": "İtalya : Süper Kupa",
-          "msScore": "2 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 2.52,
-          "ms0": 2.7,
-          "ms2": 2.42,
-          "iy1": 3.24,
-          "iy0": 1.81,
-          "iy2": 3.12
-        },
-        {
-          "id": "b36e89aa-71cc-4152-9216-4f3d03cc986b",
-          "date": "2025-05-14",
-          "homeTeam": "Daejeon Citi.",
-          "awayTeam": "Jeonbuk",
-          "league": "Güney Kore : FA Kupa",
-          "msScore": "2 - 3",
-          "iyScore": "0-1",
-          "outcome": "2/2",
-          "ms1": 2.52,
-          "ms0": 2.75,
-          "ms2": 2.37,
-          "iy1": 3.25,
-          "iy0": 1.82,
-          "iy2": 3.08
-        }
-      ]
-    },
-    {
-      "id": "4445174",
-      "eventId": "3182975",
-      "code": "5174",
-      "homeTeam": "Kuzey İrlanda",
-      "awayTeam": "Gürcistan",
-      "league": "UEFA Uluslar Ligi - B Ligi Grup 2",
-      "date": "05.10.2026",
-      "time": "21:45",
-      "status": "MS",
-      "score": "0 - 0",
-      "iyScore": "0-0",
-      "actualOutcome": "X/X",
-      "isTopHit": false,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 2.26,
-        "ms0": 2.63,
-        "ms2": 2.83,
-        "iy1": 3.05,
-        "iy0": 1.73,
-        "iy2": 3.67
-      },
-      "openedOdds": {
-        "1/1": "3.75",
-        "X/1": "5.15",
-        "2/1": "35.00",
-        "1/X": "14.05",
-        "X/X": "3.54",
-        "2/X": "14.45",
-        "1/2": "35.00",
-        "X/2": "6.13",
-        "2/2": "4.88"
-      },
-      "sampleSize": 21,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 5,
-          "rate": 24
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 2,
-          "rate": 10
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 1,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 0,
-          "rate": 0
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 5,
-          "rate": 24
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 0,
-          "rate": 0
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 0,
-          "rate": 0
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 4,
-          "rate": 19
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 4,
-          "rate": 19
-        }
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 5,
-        "rate": 24
-      },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "8b24383d-59e3-4f4b-9dbd-d8b3e1333868",
-          "date": "2026-10-05",
-          "homeTeam": "Kuzey İrlanda",
-          "awayTeam": "Gürcistan",
-          "league": "AVUL",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 2.26,
-          "ms0": 2.63,
-          "ms2": 2.83,
-          "iy1": 3.06,
-          "iy0": 1.72,
-          "iy2": 3.69
-        },
-        {
-          "id": "375a8cad-425c-446c-802c-d5aba7bd87f5",
-          "date": "2026-09-09",
-          "homeTeam": "Santos",
-          "awayTeam": "Atletico Mg",
-          "league": "CSA",
-          "msScore": "2 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 2.24,
-          "ms0": 2.65,
-          "ms2": 2.83,
-          "iy1": 3,
-          "iy0": 1.75,
-          "iy2": 3.65
-        },
-        {
-          "id": "d7b893e9-ae92-4b2d-8265-51e10c628254",
-          "date": "2026-08-18",
-          "homeTeam": "Rivadavia",
-          "awayTeam": "Fluminense",
-          "league": "LKU",
-          "msScore": "1 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 2.23,
-          "ms0": 2.68,
-          "ms2": 2.81,
-          "iy1": 3.05,
-          "iy0": 1.73,
-          "iy2": 3.69
-        },
-        {
-          "id": "21ca6611-000c-475f-8526-cdf8577400a8",
-          "date": "2025-12-21",
-          "homeTeam": "Elche",
-          "awayTeam": "Rayo Vallecano",
-          "league": "İspanya : LaLiga",
-          "msScore": "4 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 2.22,
-          "ms0": 2.65,
-          "ms2": 2.82,
-          "iy1": 3,
-          "iy0": 1.75,
-          "iy2": 3.66
-        },
-        {
-          "id": "e1cfff45-e2f4-481b-b78c-45b810f943d1",
-          "date": "2025-11-14",
-          "homeTeam": "R. Valladolid",
-          "awayTeam": "Las Palmas",
-          "league": "İspanya : LaLiga 2",
-          "msScore": "0 - 1",
-          "iyScore": "0-1",
-          "outcome": "2/2",
-          "ms1": 2.22,
-          "ms0": 2.67,
-          "ms2": 2.81,
-          "iy1": 3,
-          "iy0": 1.75,
-          "iy2": 3.64
-        },
-        {
-          "id": "a1db0682-1430-453f-94f4-c60dadaf4033",
-          "date": "2025-05-11",
-          "homeTeam": "Tokyo Verdy",
-          "awayTeam": "S. Bellmare",
-          "league": "Japonya : J1 Lig",
-          "msScore": "0 - 2",
-          "iyScore": "0-0",
-          "outcome": "X/2",
-          "ms1": 2.24,
-          "ms0": 2.64,
-          "ms2": 2.81,
-          "iy1": 3.07,
-          "iy0": 1.7,
-          "iy2": 3.72
-        },
-        {
-          "id": "527f3ace-78fe-435c-b5df-a0fd217eebfd",
-          "date": "2025-05-04",
-          "homeTeam": "R. Sociedad",
-          "awayTeam": "Ath. Bilbao",
-          "league": "İspanya : LaLiga",
-          "msScore": "0 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 2.24,
-          "ms0": 2.61,
-          "ms2": 2.83,
-          "iy1": 3.01,
-          "iy0": 1.73,
-          "iy2": 3.67
-        },
-        {
-          "id": "19a4438d-8997-432e-b1dc-eba383c837ef",
-          "date": "2025-04-29",
-          "homeTeam": "Nagoya",
-          "awayTeam": "Kashiwa",
-          "league": "Japonya : J1 Lig",
-          "msScore": "1 - 2",
-          "iyScore": "1-1",
-          "outcome": "X/2",
-          "ms1": 2.22,
-          "ms0": 2.68,
-          "ms2": 2.79,
-          "iy1": 3.03,
-          "iy0": 1.72,
-          "iy2": 3.67
-        },
-        {
-          "id": "dfd129c7-b6bb-4da8-9c23-65fcdbe1739f",
-          "date": "2025-04-09",
-          "homeTeam": "Oxford Utd",
-          "awayTeam": "QPR",
-          "league": "İngiltere : Championship",
-          "msScore": "1 - 3",
-          "iyScore": "0-2",
-          "outcome": "2/2",
-          "ms1": 2.24,
-          "ms0": 2.67,
-          "ms2": 2.76,
-          "iy1": 3.05,
-          "iy0": 1.72,
-          "iy2": 3.63
-        },
-        {
-          "id": "93c493c6-4ca0-43dc-a270-46b179faaf0b",
-          "date": "2025-03-15",
-          "homeTeam": "Millwall",
-          "awayTeam": "Stoke City",
-          "league": "İngiltere : Championship",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 2.21,
-          "ms0": 2.63,
-          "ms2": 2.8,
-          "iy1": 3.02,
-          "iy0": 1.71,
-          "iy2": 3.68
-        }
-      ]
-    },
-    {
-      "id": "4445219",
-      "eventId": "3182936",
-      "code": "5219",
-      "homeTeam": "Karadağ",
-      "awayTeam": "Ermenistan",
-      "league": "UEFA Uluslar Ligi - C Ligi Grup 2",
-      "date": "05.10.2026",
-      "time": "21:45",
-      "status": "MS",
-      "score": "0 - 0",
-      "iyScore": "0-0",
-      "actualOutcome": "X/X",
-      "isTopHit": false,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 1.28,
-        "ms0": 4.32,
-        "ms2": 6.21,
-        "iy1": 1.71,
-        "iy0": 2.34,
-        "iy2": 6.13
-      },
-      "openedOdds": {
-        "1/1": "1.79",
-        "X/1": "3.95",
-        "2/1": "21.90",
-        "1/X": "17.45",
-        "X/X": "6.45",
-        "2/X": "19.90",
-        "1/2": "35.00",
-        "X/2": "13.35",
-        "2/2": "11.10"
-      },
-      "sampleSize": 14,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 8,
-          "rate": 57
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 1,
-          "rate": 7
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 1,
-          "rate": 7
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 0,
-          "rate": 0
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 3,
-          "rate": 21
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 1,
-          "rate": 7
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 0,
-          "rate": 0
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 0,
-          "rate": 0
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 0,
-          "rate": 0
-        }
-      },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 8,
-        "rate": 57
-      },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "303d0f77-a63d-401b-8e9d-ba6f18715123",
-          "date": "2026-09-19",
-          "homeTeam": "Weston-S-Mare",
-          "awayTeam": "Wimborne Town",
-          "league": "FAK",
-          "msScore": "1 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 1.22,
-          "ms0": 4.32,
-          "ms2": 6.24,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "f07aa5ac-04ab-49d8-ba96-d7783d6fe81d",
-          "date": "2026-01-24",
-          "homeTeam": "Club Brugge",
-          "awayTeam": "Zulte Waregem",
-          "league": "Belçika : Pro Lig",
-          "msScore": "4 - 3",
-          "iyScore": "1-2",
-          "outcome": "2/1",
-          "ms1": 1.27,
-          "ms0": 4.37,
-          "ms2": 6.24,
-          "iy1": 1.68,
-          "iy0": 2.36,
-          "iy2": 6.07
-        },
-        {
-          "id": "e9c9aea7-1cb1-4119-97fc-2c76a11052ad",
-          "date": "2025-10-28",
-          "homeTeam": "İngiltere (K)",
-          "awayTeam": "Avustralya (K)",
-          "league": "Dünya : Hazırlık Ülkeler Kadınlar",
-          "msScore": "3 - 0",
-          "iyScore": "2-0",
-          "outcome": "1/1",
-          "ms1": 1.25,
-          "ms0": 4.38,
-          "ms2": 6.22,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "594d284f-0108-4112-b60a-373f24cc8baa",
-          "date": "2025-06-07",
-          "homeTeam": "İspanya U19",
-          "awayTeam": "ABD U19",
-          "league": "Dünya : U19 Hazırlık Maçları Ülkeler",
-          "msScore": "1 - 1",
-          "iyScore": "1-1",
-          "outcome": "X/X",
-          "ms1": 1.22,
-          "ms0": 4.26,
-          "ms2": 6.18,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "391c4c31-6176-4c11-a91f-9de93a691c90",
-          "date": "2025-04-26",
-          "homeTeam": "Chelsea",
-          "awayTeam": "Everton",
-          "league": "İngiltere : Premier Lig",
-          "msScore": "1 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.27,
-          "ms0": 4.33,
-          "ms2": 6.29,
-          "iy1": 1.68,
-          "iy0": 2.37,
-          "iy2": 6.12
-        },
-        {
-          "id": "60d1feba-5e2c-410f-a2ae-9fe39475e7b8",
-          "date": "2025-03-22",
-          "homeTeam": "Stratford",
-          "awayTeam": "Biggleswade",
-          "league": "İngiltere : Non Lig Premier",
-          "msScore": "1 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.21,
-          "ms0": 4.34,
-          "ms2": 6.14,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "b3c267ea-5d13-4be1-a7c4-e51d7a5e65ab",
-          "date": "2025-03-15",
-          "homeTeam": "Annagh Utd",
-          "awayTeam": "Ballinamallard",
-          "league": "Kuzey İrlanda : IFA Şampiyonluk",
-          "msScore": "1 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 1.21,
-          "ms0": 4.25,
-          "ms2": 6.16,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "a67165e7-4e78-4bf6-be3d-718b772b809c",
-          "date": "2022-09-18",
-          "homeTeam": "Cusco",
-          "awayTeam": "Alianza Huanuco",
-          "league": "Peru : 2. Lig",
-          "msScore": "2 - 1",
-          "iyScore": "2-0",
-          "outcome": "1/1",
-          "ms1": 1.2,
-          "ms0": 4.26,
-          "ms2": 6.22,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "67604c57-be6a-4597-b973-bbdea3622010",
-          "date": "2021-09-28",
-          "homeTeam": "Elversberg",
-          "awayTeam": "Pirmasens",
-          "league": "Almanya : Bölgesel Lig",
-          "msScore": "1 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.2,
-          "ms0": 4.3,
-          "ms2": 6.2,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "b4623e71-5417-445f-be54-ea785787498d",
-          "date": "2021-09-25",
-          "homeTeam": "Hibernians",
-          "awayTeam": "Santa Lucia",
-          "league": "Malta : Premier Lig",
-          "msScore": "1 - 1",
-          "iyScore": "1-1",
-          "outcome": "X/X",
-          "ms1": 1.2,
-          "ms0": 4.3,
-          "ms2": 6.2,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        }
-      ]
-    },
-    {
-      "id": "4444923",
-      "eventId": "3183079",
-      "code": "4923",
-      "homeTeam": "Fransa",
-      "awayTeam": "Belçika",
-      "league": "UEFA Uluslar Ligi - A Ligi Grup 1",
-      "date": "05.10.2026",
-      "time": "21:45",
-      "status": "MS",
-      "score": "4 - 1",
-      "iyScore": "0-1",
+      "id": "4565332",
+      "eventId": "3241342",
+      "code": "72128",
+      "homeTeam": "Güney Kore",
+      "awayTeam": "Özbekistan",
+      "league": "HAZ",
+      "date": "06.10.2026",
+      "time": "14:00",
+      "score": "2 - 0",
+      "iyScore": "0 - 1",
       "actualOutcome": "2/1",
       "isTopHit": false,
-      "isSurpriseHit": false,
-      "odds": {
-        "ms1": 1.36,
-        "ms0": 4.15,
-        "ms2": 5.06,
-        "iy1": 1.78,
-        "iy0": 2.39,
-        "iy2": 5.08
-      },
       "openedOdds": {
-        "1/1": "1.91",
-        "X/1": "4.26",
-        "2/1": "20.15",
-        "1/X": "15.35",
-        "X/X": "6.69",
-        "2/X": "17.15",
-        "1/2": "35.00",
-        "X/2": "11.65",
-        "2/2": "8.75"
+        "1/1": "13.30",
+        "1/X": "21.50",
+        "1/2": "19.25",
+        "X/1": "16.95",
+        "X/X": "8.30",
+        "X/2": "3.93",
+        "2/1": "34.50",
+        "2/X": "18.85",
+        "2/2": "1.51"
       },
-      "sampleSize": 13,
-      "matchTier": "exact_ms_iy",
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "count": 7,
-          "rate": 54
-        },
-        "X/1": {
-          "key": "X/1",
-          "count": 1,
-          "rate": 8
-        },
-        "2/1": {
-          "key": "2/1",
-          "count": 0,
-          "rate": 0
-        },
-        "1/X": {
-          "key": "1/X",
-          "count": 0,
-          "rate": 0
-        },
-        "X/X": {
-          "key": "X/X",
-          "count": 4,
-          "rate": 31
-        },
-        "2/X": {
-          "key": "2/X",
-          "count": 0,
-          "rate": 0
-        },
-        "1/2": {
-          "key": "1/2",
-          "count": 0,
-          "rate": 0
-        },
-        "X/2": {
-          "key": "X/2",
-          "count": 1,
-          "rate": 8
-        },
-        "2/2": {
-          "key": "2/2",
-          "count": 0,
-          "rate": 0
-        }
+      "topOutcome": {
+        "key": "2/2",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4452091",
+      "eventId": "3185281",
+      "code": "72453",
+      "homeTeam": "Hebei Kungfu",
+      "awayTeam": "Dalian Huayi",
+      "league": "ÇİN2",
+      "date": "06.10.2026",
+      "time": "14:30",
+      "score": "1 - 0",
+      "iyScore": "0 - 0",
+      "actualOutcome": "X/1",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "2.63",
+        "1/X": "14.85",
+        "1/2": "34.50",
+        "X/1": "4.16",
+        "X/X": "4.02",
+        "X/2": "7.88",
+        "2/1": "29.00",
+        "2/X": "16.15",
+        "2/2": "6.89"
       },
       "topOutcome": {
         "key": "1/1",
-        "count": 7,
-        "rate": 54
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4445228",
+      "eventId": "3185382",
+      "code": "72311",
+      "homeTeam": "Kazakistan",
+      "awayTeam": "Faroe Adalari",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "17:00",
+      "score": "2 - 2",
+      "iyScore": "0 - 0",
+      "actualOutcome": "X/X",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "3.66",
+        "1/X": "14.50",
+        "1/2": "35.00",
+        "X/1": "4.98",
+        "X/X": "3.48",
+        "X/2": "6.21",
+        "2/1": "35.00",
+        "2/X": "14.95",
+        "2/2": "5.13"
       },
-      "surpriseOutcome": null,
-      "recentMatches": [
-        {
-          "id": "7ae4851b-9f69-4fbd-b9a2-2dd6d48db1f3",
-          "date": "2026-09-19",
-          "homeTeam": "United Of Manc",
-          "awayTeam": "Ossett United",
-          "league": "FAK",
-          "msScore": "4 - 1",
-          "iyScore": "3-0",
-          "outcome": "1/1",
-          "ms1": 1.3,
-          "ms0": 4.15,
-          "ms2": 5.11,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "638890bb-b2ae-4ed1-abbc-f0804be46209",
-          "date": "2026-09-16",
-          "homeTeam": "Terengganu",
-          "awayTeam": "Dpmm Fc",
-          "league": "MALEFK",
-          "msScore": "1 - 3",
-          "iyScore": "1-1",
-          "outcome": "X/2",
-          "ms1": 1.36,
-          "ms0": 4.13,
-          "ms2": 5.08,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "8f68c2f6-5b88-4332-ac05-bdb20043abdd",
-          "date": "2026-09-13",
-          "homeTeam": "Calavera U19",
-          "awayTeam": "Sporting Atléti",
-          "league": "ISPU18",
-          "msScore": "3 - 0",
-          "iyScore": "0-0",
-          "outcome": "X/1",
-          "ms1": 1.3,
-          "ms0": 4.14,
-          "ms2": 5.07,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "932803f6-1085-44fc-8113-131ab4543af3",
-          "date": "2026-09-09",
-          "homeTeam": "Oviedo Moderno",
-          "awayTeam": "Sporting Gijón",
-          "league": "ISPDLR",
-          "msScore": "3 - 0",
-          "iyScore": "2-0",
-          "outcome": "1/1",
-          "ms1": 1.3,
-          "ms0": 4.1,
-          "ms2": 5.1,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "93f4bf39-4c30-4f34-b96e-0a8e5a5d7867",
-          "date": "2026-01-18",
-          "homeTeam": "Ümraniyespor",
-          "awayTeam": "Serik Spor",
-          "league": "Türkiye : Trendyol 1. Lig",
-          "msScore": "5 - 0",
-          "iyScore": "3-0",
-          "outcome": "1/1",
-          "ms1": 1.34,
-          "ms0": 4.16,
-          "ms2": 5.13,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "2af0b524-5334-4f94-8898-8bf6047e9eb4",
-          "date": "2025-12-29",
-          "homeTeam": "Melbourne V.",
-          "awayTeam": "Wellington P.",
-          "league": "Avustralya : A Lig",
-          "msScore": "5 - 1",
-          "iyScore": "2-1",
-          "outcome": "1/1",
-          "ms1": 1.33,
-          "ms0": 4.23,
-          "ms2": 5.08,
-          "iy1": 1.77,
-          "iy0": 2.37,
-          "iy2": 5.14
-        },
-        {
-          "id": "5be81863-76a5-4ff0-9735-c32e3f85a486",
-          "date": "2025-11-23",
-          "homeTeam": "WSE",
-          "awayTeam": "Yuen Long",
-          "league": "Hong Kong : HKFA 1. Lig",
-          "msScore": "4 - 0",
-          "iyScore": "1-0",
-          "outcome": "1/1",
-          "ms1": 1.29,
-          "ms0": 4.14,
-          "ms2": 4.98,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "a0ecc524-09ee-4afa-88a3-dc5c6ebc9f4d",
-          "date": "2025-11-22",
-          "homeTeam": "WS Wanderers",
-          "awayTeam": "C. Mariners",
-          "league": "Avustralya : A Lig",
-          "msScore": "3 - 2",
-          "iyScore": "3-2",
-          "outcome": "1/1",
-          "ms1": 1.36,
-          "ms0": 4.07,
-          "ms2": 4.98,
-          "iy1": 1.79,
-          "iy0": 2.36,
-          "iy2": 5.03
-        },
-        {
-          "id": "86e5f992-5d7a-44c3-9ee7-c579aaffa663",
-          "date": "2025-11-15",
-          "homeTeam": "Radcliffe",
-          "awayTeam": "Bradford PA",
-          "league": "İngiltere : FA Trophy Kupası",
-          "msScore": "2 - 2",
-          "iyScore": "1-1",
-          "outcome": "X/X",
-          "ms1": 1.28,
-          "ms0": 4.23,
-          "ms2": 5.06,
-          "iy1": null,
-          "iy0": null,
-          "iy2": null
-        },
-        {
-          "id": "52cbe081-55d5-4877-90f9-4c3b2842dcd0",
-          "date": "2025-05-16",
-          "homeTeam": "Cambuur",
-          "awayTeam": "Den Bosch",
-          "league": "Hollanda : Eerste Divisie Play-off",
-          "msScore": "1 - 1",
-          "iyScore": "0-0",
-          "outcome": "X/X",
-          "ms1": 1.34,
-          "ms0": 4.2,
-          "ms2": 5.1,
-          "iy1": 1.76,
-          "iy0": 2.38,
-          "iy2": 5.14
-        }
-      ]
+      "topOutcome": {
+        "key": "1/1",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4445138",
+      "eventId": "3185400",
+      "code": "72303",
+      "homeTeam": "Hirvatistan",
+      "awayTeam": "İspanya",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "score": "1 - 2",
+      "iyScore": "0 - 1",
+      "actualOutcome": "2/2",
+      "isTopHit": true,
+      "openedOdds": {
+        "1/1": "14.20",
+        "1/X": "23.20",
+        "1/2": "20.50",
+        "X/1": "17.35",
+        "X/X": "8.26",
+        "X/2": "3.90",
+        "2/1": "35.00",
+        "2/X": "20.40",
+        "2/2": "1.56"
+      },
+      "topOutcome": {
+        "key": "2/2",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4445162",
+      "eventId": "3185246",
+      "code": "72305",
+      "homeTeam": "İskoçya",
+      "awayTeam": "Slovenya",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "score": "1 - 2",
+      "iyScore": "0 - 1",
+      "actualOutcome": "2/2",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "2.79",
+        "1/X": "14.25",
+        "1/2": "35.00",
+        "X/1": "4.45",
+        "X/X": "4.02",
+        "X/2": "7.75",
+        "2/1": "29.50",
+        "2/X": "15.45",
+        "2/2": "6.53"
+      },
+      "topOutcome": {
+        "key": "1/1",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4445139",
+      "eventId": "3185350",
+      "code": "72303",
+      "homeTeam": "İngiltere",
+      "awayTeam": "Çekya",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "score": "3 - 0",
+      "iyScore": "0 - 2",
+      "actualOutcome": "2/1",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "1.30",
+        "1/X": "27.00",
+        "1/2": "35.00",
+        "X/1": "4.05",
+        "X/X": "12.15",
+        "X/2": "29.50",
+        "2/1": "20.60",
+        "2/X": "32.00",
+        "2/2": "24.05"
+      },
+      "topOutcome": {
+        "key": "1/1",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4445163",
+      "eventId": "3185229",
+      "code": "72305",
+      "homeTeam": "İsviçre",
+      "awayTeam": "K. Makedonya",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "score": "3 - 0",
+      "iyScore": "0 - 1",
+      "actualOutcome": "2/1",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "1.23",
+        "1/X": "35.00",
+        "1/2": "35.00",
+        "X/1": "3.51",
+        "X/X": "10.75",
+        "X/2": "35.00",
+        "2/1": "35.00",
+        "2/X": "35.00",
+        "2/2": "35.00"
+      },
+      "topOutcome": {
+        "key": "1/1",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4445210",
+      "eventId": "3185214",
+      "code": "72309",
+      "homeTeam": "Arnavutluk",
+      "awayTeam": "San Marino",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "score": "2 - 1",
+      "iyScore": "0 - 1",
+      "actualOutcome": "2/1",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/X": "35.00",
+        "1/2": "35.00",
+        "X/1": "4.43",
+        "X/X": "22.75",
+        "X/2": "35.00",
+        "2/1": "35.00",
+        "2/X": "35.00",
+        "2/2": "35.00"
+      },
+      "topOutcome": {
+        "key": "1/X",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4445211",
+      "eventId": "3185439",
+      "code": "72309",
+      "homeTeam": "Belarus",
+      "awayTeam": "Finlandiya",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "score": "1 - 0",
+      "iyScore": "0 - 1",
+      "actualOutcome": "2/1",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "6.18",
+        "1/X": "15.45",
+        "1/2": "30.00",
+        "X/1": "7.37",
+        "X/X": "4.00",
+        "X/2": "4.50",
+        "2/1": "35.00",
+        "2/X": "14.40",
+        "2/2": "2.91"
+      },
+      "topOutcome": {
+        "key": "2/2",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4445229",
+      "eventId": "3185448",
+      "code": "72311",
+      "homeTeam": "Moldova",
+      "awayTeam": "Slovakya",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "score": "0 - 4",
+      "iyScore": "0 - 0",
+      "actualOutcome": "X/2",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "12.10",
+        "1/X": "21.05",
+        "1/2": "24.05",
+        "X/1": "13.75",
+        "X/X": "6.00",
+        "X/2": "3.82",
+        "2/1": "35.00",
+        "2/X": "18.30",
+        "2/2": "1.79"
+      },
+      "topOutcome": {
+        "key": "2/2",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4457629",
+      "eventId": "3185413",
+      "code": "72312",
+      "homeTeam": "Lüksemburg",
+      "awayTeam": "Bulgaristan",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "score": "0 - 2",
+      "iyScore": "0 - 0",
+      "actualOutcome": "X/2",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "3.87",
+        "1/X": "14.85",
+        "1/2": "35.00",
+        "X/1": "5.08",
+        "X/X": "3.54",
+        "X/2": "5.83",
+        "2/1": "35.00",
+        "2/X": "15.20",
+        "2/2": "4.76"
+      },
+      "topOutcome": {
+        "key": "1/1",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4445237",
+      "eventId": "3185332",
+      "code": "72312",
+      "homeTeam": "Estonya",
+      "awayTeam": "İzlanda",
+      "league": "AVUL",
+      "date": "06.10.2026",
+      "time": "21:45",
+      "score": "0 - 0",
+      "iyScore": "0 - 0",
+      "actualOutcome": "X/X",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "10.00",
+        "1/X": "19.45",
+        "1/2": "26.00",
+        "X/1": "11.25",
+        "X/X": "5.13",
+        "X/2": "3.86",
+        "2/1": "35.00",
+        "2/X": "17.15",
+        "2/2": "2.01"
+      },
+      "topOutcome": {
+        "key": "2/2",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4565346",
+      "eventId": "3257987",
+      "code": "72128",
+      "homeTeam": "Kolombiya",
+      "awayTeam": "Peru",
+      "league": "HAZ",
+      "date": "06.10.2026",
+      "time": "02:45",
+      "score": "2 - 0",
+      "iyScore": "0 - 0",
+      "actualOutcome": "X/1",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "1.79",
+        "1/X": "20.75",
+        "1/2": "35.00",
+        "X/1": "3.52",
+        "X/X": "5.23",
+        "X/2": "14.15",
+        "2/1": "28.00",
+        "2/X": "24.05",
+        "2/2": "13.75"
+      },
+      "topOutcome": {
+        "key": "1/1",
+        "count": 12,
+        "rate": 60
+      }
+    },
+    {
+      "id": "4565342",
+      "eventId": "3189283",
+      "code": "72128",
+      "homeTeam": "Abd",
+      "awayTeam": "Kanada",
+      "league": "HAZ",
+      "date": "06.10.2026",
+      "time": "03:00",
+      "score": "1 - 0",
+      "iyScore": "0 - 1",
+      "actualOutcome": "2/1",
+      "isTopHit": false,
+      "openedOdds": {
+        "1/1": "2.40",
+        "1/X": "12.95",
+        "1/2": "33.50",
+        "X/1": "4.78",
+        "X/X": "5.85",
+        "X/2": "8.49",
+        "2/1": "20.65",
+        "2/X": "13.90",
+        "2/2": "5.81"
+      },
+      "topOutcome": {
+        "key": "1/1",
+        "count": 12,
+        "rate": 60
+      }
     }
   ]
 }

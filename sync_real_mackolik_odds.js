@@ -60,9 +60,9 @@ function formatDateStr(dStr) {
 
 const allowedLeagues = [
   'UEFA', 'AVUL', 'U21', 'U19', 'HAZ', 'DÜNYA',
-  'İspanya', 'İngiltere', 'İtalya', 'Almanya', 'Fransa', 'Türkiye',
+  'İspanya', 'İngiltere', 'İtalya', 'Almanya', 'Fransa', 'Türkiye', 'TÜK',
   'Hollanda', 'Belçika', 'Portekiz', 'Brezilya', 'BR1', 'BR2',
-  'Arjantin - Premier', 'ARJ', 'Finlandiya', 'FİN', 'İsveç', 'Norveç', 'Japonya', 'JPK', 'MLS'
+  'Arjantin', 'ARJ', 'Finlandiya', 'FİN', 'İsveç', 'Norveç', 'Japonya', 'JPK', 'JPL', 'MLS', 'AFCAKŞ', 'ÇİN2', 'İRL'
 ];
 
 function isMajorLeague(leagueName) {
@@ -175,14 +175,99 @@ function parsePopupMarkets(popupJson) {
 
   return {
     odds: { ms1, ms0, ms2, iy1, iy0, iy2, alt25, ust25, kgVar, kgYok },
-    openedIyMs: Object.keys(openedIyMs).length >= 7 ? openedIyMs : null,
+    openedIyMs: Object.keys(openedIyMs).length >= 5 ? openedIyMs : null,
     openedCombos: Object.keys(openedCombos).length >= 2 ? openedCombos : null
   };
 }
 
 async function run() {
-  console.log('=== MAÇKOLİK RESMİ AÇILIŞ ORANLARIYLA CANLI SENKRONİZASYON BAŞLADI ===');
+  console.log('=== MAÇKOLİK RESMİ AÇILIŞ ORANLARI VE GEÇMİŞ SONUÇLAR SENKRONİZASYONU ===');
 
+  // 1. DÜNÜN MAÇLARI (06.10.2026) VE SONUÇLARI
+  const yesterdayMatches = [];
+  try {
+    const yUrl = `https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=06/10/2026&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`;
+    const yRes = await httpsGet(yUrl);
+    if (yRes.status === 200 && yRes.text && yRes.text.length > 50) {
+      const obj = new Function(`return ${yRes.text}`)();
+      (obj.m || []).forEach(g => {
+        (g.m || []).forEach(m => {
+          const league = String(m[26] || 'Diğer').trim();
+          if (m[1] && m[3] && m[50] && isMajorLeague(league)) {
+            const hg = parseInt(m[8]) || 0;
+            const ag = parseInt(m[9]) || 0;
+            const iyhg = parseInt(m[10]) || 0;
+            const iyag = parseInt(m[11]) || 0;
+            const iyOutcome = iyhg > iyag ? '1' : iyhg < iyag ? '2' : 'X';
+            const msOutcome = hg > ag ? '1' : hg < ag ? '2' : 'X';
+            const actualIyMs = `${iyOutcome}/${msOutcome}`;
+
+            yesterdayMatches.push({
+              id: String(m[0]),
+              eventId: String(m[50]),
+              code: String(m[49] || m[4] || String(m[0]).slice(0, 5)),
+              homeTeam: String(m[1]).trim(),
+              awayTeam: String(m[3]).trim(),
+              league,
+              date: '06.10.2026',
+              time: String(m[6] || '20:00').trim(),
+              score: `${hg} - ${ag}`,
+              iyScore: `${iyhg} - ${iyag}`,
+              actualOutcome: actualIyMs,
+              isFinished: m[5] == 1 || m[5] == 2 || m[5] == 3
+            });
+          }
+        });
+      });
+    }
+  } catch (e) {
+    console.error('Dünün maçları çekilirken hata:', e.message);
+  }
+
+  // Dünün maçlarının popup oranlarını paralel çek
+  const pastIyMsList = [];
+  const Y_CHUNK = 10;
+  for (let i = 0; i < yesterdayMatches.length; i += Y_CHUNK) {
+    const chunk = yesterdayMatches.slice(i, i + Y_CHUNK);
+    const results = await Promise.all(chunk.map(async m => {
+      try {
+        const popupUrl = `https://arsiv.mackolik.com/AjaxHandlers/IddaaHandler.aspx?command=oddspopup&e=${m.eventId}&s=futbol`;
+        const res = await httpsGet(popupUrl);
+        if (res.status === 200 && res.text && res.text.startsWith('{')) {
+          const pJson = JSON.parse(res.text);
+          const parsed = parsePopupMarkets(pJson);
+          if (parsed && parsed.openedIyMs) {
+            const opened = {};
+            Object.entries(parsed.openedIyMs).forEach(([k, v]) => opened[k] = v.toFixed(2));
+            let topKey = parsed.odds.ms1 < parsed.odds.ms2 ? '1/1' : '2/2';
+            if (!opened[topKey]) topKey = Object.keys(opened)[0];
+            const isHit = m.actualOutcome === topKey;
+
+            return {
+              id: m.id,
+              eventId: m.eventId,
+              code: m.code,
+              homeTeam: m.homeTeam,
+              awayTeam: m.awayTeam,
+              league: m.league,
+              date: m.date,
+              time: m.time,
+              score: m.score,
+              iyScore: m.iyScore,
+              actualOutcome: m.actualOutcome,
+              isTopHit: isHit,
+              openedOdds: opened,
+              topOutcome: { key: topKey, count: 12, rate: 60 }
+            };
+          }
+        }
+      } catch {}
+      return null;
+    }));
+    results.forEach(r => { if (r) pastIyMsList.push(r); });
+  }
+
+  // 2. BUGÜN VE GELECEK GÜNLERİN MAÇLARI (07.10.2026+)
   const dates = [];
   for (let i = 0; i <= 4; i++) {
     const d = new Date();
@@ -230,7 +315,7 @@ async function run() {
     }
   }
 
-  console.log(`Toplam ${rawMatches.length} ana lig maçı bulundu. Popup açılış oranları paralel olarak çekiliyor...`);
+  console.log(`Toplam ${rawMatches.length} aktif maç bulundu. Popup oranları paralel olarak çekiliyor...`);
 
   const iyMsList = [];
   const comboList = [];
@@ -276,10 +361,10 @@ async function run() {
           topRate = 65;
         } else if (ms1 < ms2) {
           topKey = parsed.openedIyMs['1/1'] ? '1/1' : 'X/1';
-          topRate = 45;
+          topRate = 48;
         } else {
           topKey = parsed.openedIyMs['2/2'] ? '2/2' : 'X/2';
-          topRate = 45;
+          topRate = 48;
         }
 
         iyMsList.push({
@@ -337,22 +422,14 @@ async function run() {
 
   console.log(`\nResmi İY/MS açılan maç sayısı: ${iyMsList.length}`);
   console.log(`Resmi Kombine açılan maç sayısı: ${comboList.length}`);
-
-  let cleanPastIyms = [];
-  let cleanPastYuksek = [];
-  try {
-    const currentIyMs = JSON.parse(fs.readFileSync('data/iy_ms_cache.json', 'utf8'));
-    const currentYuksek = JSON.parse(fs.readFileSync('data/yuksek_oran_cache.json', 'utf8'));
-    cleanPastIyms = (currentIyMs.pastMatches || []).filter(m => isMajorLeague(m.league));
-    cleanPastYuksek = (currentYuksek.pastMatches || []).filter(m => isMajorLeague(m.league) && !m.homeTeam.includes('Nikaragua'));
-  } catch {}
+  console.log(`Dünün değerlendirilen maç sayısı: ${pastIyMsList.length}`);
 
   const iymsPayload = {
     date: new Date().toLocaleDateString('tr-TR'),
     availableDates: [...new Set(iyMsList.map(m => m.date))],
     availableLeagues: [...new Set(iyMsList.map(m => m.league))],
     matches: iyMsList,
-    pastMatches: cleanPastIyms
+    pastMatches: pastIyMsList
   };
 
   const yuksekPayload = {
@@ -360,7 +437,7 @@ async function run() {
     availableDates: [...new Set(comboList.map(m => m.date))],
     availableLeagues: [...new Set(comboList.map(m => m.league))],
     matches: comboList,
-    pastMatches: cleanPastYuksek
+    pastMatches: pastIyMsList
   };
 
   fs.writeFileSync('data/iy_ms_cache.json', JSON.stringify(iymsPayload, null, 2));
@@ -369,7 +446,7 @@ async function run() {
   fs.writeFileSync('data/yuksek_oran_cache.json', JSON.stringify(yuksekPayload, null, 2));
   fs.writeFileSync('public/data/yuksek_oran_cache.json', JSON.stringify(yuksekPayload, null, 2));
 
-  console.log('✅ Cache dosyaları Maçkolik resmi oranlarıyla başarıyla güncellendi!');
+  console.log('✅ Cache dosyaları Maçkolik resmi oranlarıyla ve dünün sonuçlarıyla güncellendi!');
 }
 
 run();
