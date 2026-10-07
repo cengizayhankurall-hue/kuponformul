@@ -183,36 +183,19 @@ export async function GET() {
     const uniqueUpcomingDates = [...new Set(allUpcoming.map((m: any) => m.date))];
     const todayTargetDate = uniqueUpcomingDates[0] || '07.10.2026';
 
-    const rawIyms = (iymsCache?.matches || []).filter((m: any) => m.date === todayTargetDate && isMajorLeague(m.league));
-    const rawYuksek = (yuksekCache?.matches || []).filter((m: any) => m.date === todayTargetDate && isMajorLeague(m.league));
+    const rawIyms = (iymsCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
+    const rawYuksek = (yuksekCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
 
-    // Eğer o güne özel maç sayısı 10'dan azsa, genel aktif günlerden tamamla
-    const fallbackIyms = (iymsCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
-    const fallbackYuksek = (yuksekCache?.matches || []).filter((m: any) => isUpcomingDate(m.date) && isMajorLeague(m.league));
+    // KURAL: En az 2 tane 1.80 - 1.99 banko/dayanak oran + geri kalanı 3.00 ve üzeri yüksek çarpan oranları
+    const iymsAnchor: SystemMatch[] = [];
+    const iymsHigh: SystemMatch[] = [];
 
-    const iymsPool: SystemMatch[] = [];
-    const sourceIyms = rawIyms.length >= 8 ? rawIyms : fallbackIyms;
-
-    sourceIyms.forEach((m: any, idx: number) => {
+    rawIyms.forEach((m: any, idx: number) => {
       const op = m.openedOdds || {};
-      const top = m.topOutcome;
-      let chosenKey = top?.key || '1/1';
-      let oddVal = op[chosenKey] ? parseFloat(String(op[chosenKey]).replace(',', '.')) : 0;
-
-      if (!oddVal || oddVal < 1.30) {
-        const altKeys = ['1/1', '2/2', 'X/1', 'X/2'];
-        for (const k of altKeys) {
-          if (op[k] && parseFloat(op[k]) >= 1.30) {
-            chosenKey = k;
-            oddVal = parseFloat(op[k]);
-            break;
-          }
-        }
-      }
-
-      if (oddVal >= 1.30) {
-        iymsPool.push({
-          id: `iyms_${m.code || idx}_${m.homeTeam}`,
+      // 1.80 - 2.05 arası dayanak/anchor maçlar (1/1 veya 2/2)
+      if (op['1/1'] && parseFloat(op['1/1']) >= 1.70 && parseFloat(op['1/1']) <= 2.05) {
+        iymsAnchor.push({
+          id: `iyms_anc_${m.code || idx}_${m.homeTeam}`,
           code: m.code || String(100 + idx),
           homeTeam: m.homeTeam,
           awayTeam: m.awayTeam,
@@ -221,35 +204,90 @@ export async function GET() {
           time: m.time || '20:00',
           marketType: 'iy_ms',
           marketName: 'İY / MS',
-          choice: `${chosenKey} (İY/MS)`,
-          odd: oddVal,
-          reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Model Benzerliği: %${top?.rate || 50}`
+          choice: '1/1 (İY/MS)',
+          odd: parseFloat(op['1/1']),
+          reason: `İddaa Açılış Oranı: ${parseFloat(op['1/1']).toFixed(2)} | Dayanak Banko Tercih`
         });
-      }
-    });
-
-    const comboPool: SystemMatch[] = [];
-    const sourceYuksek = rawYuksek.length >= 8 ? rawYuksek : fallbackYuksek;
-
-    sourceYuksek.forEach((m: any, idx: number) => {
-      const tc = m.topCombo;
-      const oddVal = tc?.estOdd ? parseFloat(String(tc.estOdd).replace(',', '.')) : 0;
-      if (oddVal >= 1.30) {
-        comboPool.push({
-          id: `yuksek_${m.code || idx}_${m.homeTeam}`,
-          code: m.code || String(200 + idx),
+      } else if (op['2/2'] && parseFloat(op['2/2']) >= 1.70 && parseFloat(op['2/2']) <= 2.05) {
+        iymsAnchor.push({
+          id: `iyms_anc_${m.code || idx}_${m.homeTeam}`,
+          code: m.code || String(100 + idx),
           homeTeam: m.homeTeam,
           awayTeam: m.awayTeam,
           league: m.league || 'BÜLTEN',
           date: m.date || todayTargetDate,
-          time: m.time || '21:00',
-          marketType: 'combo',
-          marketName: 'Kombine & Skor',
-          choice: tc.name,
-          odd: oddVal,
-          reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Başarı Frekansı: %${tc.rate || 50}`
+          time: m.time || '20:00',
+          marketType: 'iy_ms',
+          marketName: 'İY / MS',
+          choice: '2/2 (İY/MS)',
+          odd: parseFloat(op['2/2']),
+          reason: `İddaa Açılış Oranı: ${parseFloat(op['2/2']).toFixed(2)} | Dayanak Banko Tercih`
         });
       }
+
+      // 3.00 - 4.95 arası yüksek çarpanlı sürpriz/değer maçlar
+      const highKeys = ['X/1', 'X/2', '1/1', '2/2'];
+      for (const k of highKeys) {
+        const val = parseFloat(op[k]);
+        if (val >= 3.00 && val <= 4.95) {
+          iymsHigh.push({
+            id: `iyms_high_${m.code || idx}_${m.homeTeam}`,
+            code: m.code || String(100 + idx),
+            homeTeam: m.homeTeam,
+            awayTeam: m.awayTeam,
+            league: m.league || 'BÜLTEN',
+            date: m.date || todayTargetDate,
+            time: m.time || '20:00',
+            marketType: 'iy_ms',
+            marketName: 'İY / MS',
+            choice: `${k} (İY/MS)`,
+            odd: val,
+            reason: `İddaa Açılış Oranı: ${val.toFixed(2)} | Yüksek Değer Çarpanı`
+          });
+          break;
+        }
+      }
+    });
+
+    const comboAnchor: SystemMatch[] = [];
+    const comboHigh: SystemMatch[] = [];
+
+    rawYuksek.forEach((m: any, idx: number) => {
+      const combos = m.combos || [];
+      combos.forEach((c: any) => {
+        const val = parseFloat(c.estOdd);
+        if (val >= 1.75 && val <= 2.05) {
+          comboAnchor.push({
+            id: `yuksek_anc_${m.code || idx}_${m.homeTeam}`,
+            code: m.code || String(200 + idx),
+            homeTeam: m.homeTeam,
+            awayTeam: m.awayTeam,
+            league: m.league || 'BÜLTEN',
+            date: m.date || todayTargetDate,
+            time: m.time || '21:00',
+            marketType: 'combo',
+            marketName: 'Kombine & Skor',
+            choice: c.name,
+            odd: val,
+            reason: `İddaa Açılış Oranı: ${val.toFixed(2)} | Dayanak Banko Tercih`
+          });
+        } else if (val >= 3.00 && val <= 4.95) {
+          comboHigh.push({
+            id: `yuksek_high_${m.code || idx}_${m.homeTeam}`,
+            code: m.code || String(200 + idx),
+            homeTeam: m.homeTeam,
+            awayTeam: m.awayTeam,
+            league: m.league || 'BÜLTEN',
+            date: m.date || todayTargetDate,
+            time: m.time || '21:00',
+            marketType: 'combo',
+            marketName: 'Kombine & Skor',
+            choice: c.name,
+            odd: val,
+            reason: `İddaa Açılış Oranı: ${val.toFixed(2)} | Yüksek Değer Çarpanı`
+          });
+        }
+      });
     });
 
     function getUniqueMatches(candidates: (SystemMatch | undefined)[], fallbackList: SystemMatch[], neededCount: number): SystemMatch[] {
@@ -257,7 +295,7 @@ export async function GET() {
       const seen = new Set<string>();
 
       candidates.forEach(c => {
-        if (c && c.homeTeam && !seen.has(c.homeTeam) && typeof c.odd === 'number' && c.odd > 0) {
+        if (c && c.homeTeam && !seen.has(c.homeTeam) && typeof c.odd === 'number' && c.odd > 0 && result.length < neededCount) {
           seen.add(c.homeTeam);
           result.push(c);
         }
@@ -275,23 +313,41 @@ export async function GET() {
       return result.slice(0, neededCount);
     }
 
-    const allMatchesPool = [...iymsPool, ...comboPool];
+    function buildFormulaCoupon(
+      anchorCount: number,
+      highCount: number,
+      anchorList: SystemMatch[],
+      highList: SystemMatch[],
+      fallbackPool: SystemMatch[]
+    ): SystemMatch[] {
+      const neededTotal = anchorCount + highCount;
+      const anchors = getUniqueMatches(anchorList, fallbackPool, anchorCount);
+      const anchorTeams = new Set(anchors.map(a => a.homeTeam));
+      const filteredHigh = highList.filter(h => !anchorTeams.has(h.homeTeam));
+      const highs = getUniqueMatches(filteredHigh, fallbackPool, highCount);
+      return getUniqueMatches([...anchors, ...highs], fallbackPool, neededTotal);
+    }
+
+    const allMatchesPool = [...comboAnchor, ...iymsAnchor, ...comboHigh, ...iymsHigh];
 
     // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
-    // En yüksek başarı oranına sahip Kombine ve İY/MS maçlarının dengeli karması
-    const c1Candidates = [
-      ...comboPool.slice(0, 5),
-      ...iymsPool.slice(0, 5)
-    ];
-    const coupon1Matches = getUniqueMatches(c1Candidates, allMatchesPool, 10);
+    // 2 Banko (1.80-1.99) + 8 Yüksek Oran (3.00+)
+    const coupon1Matches = buildFormulaCoupon(
+      2,
+      8,
+      [...comboAnchor, ...iymsAnchor],
+      [...comboHigh, ...iymsHigh],
+      allMatchesPool
+    );
     const c1Odds = coupon1Matches.map(m => m.odd);
     const c1Payouts = generatePayoutTable(c1Odds, [3, 4, 5], 1);
+    const c1Max = c1Payouts.length > 0 ? c1Payouts[c1Payouts.length - 1].maxPayout : 120000;
 
     const coupon1: SystemCoupon = {
       id: 'kupon-1',
       title: 'Hibrit / Karma Vurgun Kuponu',
       badge: 'EN ÇOK TERCİH EDİLEN',
-      description: 'Günün resmi bültendeki İY/MS, Kombine (MS+Gol) açılış oranlarından oluşan dengeli sistem kuponu.',
+      description: '2 adet dayanak (1.80-1.95) ve 8 adet 3.00+ çarpanlı maçtan oluşan yüksek kazanç odaklı sistem.',
       theme: 'amber',
       systemSizes: [3, 4, 5],
       systemLabel: 'Sistem 3, 4, 5',
@@ -304,21 +360,27 @@ export async function GET() {
       avgOdds: c1Odds.length > 0 ? Number((c1Odds.reduce((a, b) => a + b, 0) / c1Odds.length).toFixed(2)) : 0,
       matches: coupon1Matches,
       payoutTable: c1Payouts,
-      targetProfitBadge: '45.000 TL - 120.000 TL Hedef'
+      targetProfitBadge: `${c1Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
     // --- KUPON 2: İY/MS & SÜRPRİZ DEĞER (10 Maç - Sistem 3, 4, 5) ---
-    // Sadece bültende resmi açılışı olan İY/MS maçları
-    const c2Candidates = iymsPool.slice(0, 10);
-    const coupon2Matches = getUniqueMatches(c2Candidates, iymsPool, 10);
+    // 2 Banko İY/MS (1.75-1.99) + 8 Yüksek İY/MS (3.00+)
+    const coupon2Matches = buildFormulaCoupon(
+      2,
+      8,
+      iymsAnchor,
+      iymsHigh,
+      [...iymsAnchor, ...iymsHigh, ...allMatchesPool]
+    );
     const c2Odds = coupon2Matches.map(m => m.odd);
     const c2Payouts = generatePayoutTable(c2Odds, [3, 4, 5], 1);
+    const c2Max = c2Payouts.length > 0 ? c2Payouts[c2Payouts.length - 1].maxPayout : 175000;
 
     const coupon2: SystemCoupon = {
       id: 'kupon-2',
       title: 'İY/MS & Sürpriz Değer Kuponu',
       badge: 'YÜKSEK ÇARPAN',
-      description: 'Sadece bültende resmi açılış oranları bulunan X/1, X/2 ve İY/MS oranlarına dayalı sistem kuponu.',
+      description: '2 adet sağlam İY/MS açılışı ve 8 adet 3.00 - 4.80 arası sürpriz İY/MS oranlı sistem modeli.',
       theme: 'purple',
       systemSizes: [3, 4, 5],
       systemLabel: 'Sistem 3, 4, 5',
@@ -331,21 +393,27 @@ export async function GET() {
       avgOdds: c2Odds.length > 0 ? Number((c2Odds.reduce((a, b) => a + b, 0) / c2Odds.length).toFixed(2)) : 0,
       matches: coupon2Matches,
       payoutTable: c2Payouts,
-      targetProfitBadge: '60.000 TL - 175.000 TL Hedef'
+      targetProfitBadge: `${c2Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
     // --- KUPON 3: KOMBİNE & GOL KİLİDİ (10 Maç - Sistem 3, 4, 5) ---
-    // Resmi bülten MS + 2.5 Üst/Alt ve KG kombinasyonları
-    const c3Candidates = comboPool.slice(0, 10);
-    const coupon3Matches = getUniqueMatches(c3Candidates, allMatchesPool, 10);
+    // 2 Banko Kombine (1.80-1.99) + 8 Yüksek Kombine (3.00+)
+    const coupon3Matches = buildFormulaCoupon(
+      2,
+      8,
+      comboAnchor,
+      comboHigh,
+      [...comboAnchor, ...comboHigh, ...allMatchesPool]
+    );
     const c3Odds = coupon3Matches.map(m => m.odd);
     const c3Payouts = generatePayoutTable(c3Odds, [3, 4, 5], 1);
+    const c3Max = c3Payouts.length > 0 ? c3Payouts[c3Payouts.length - 1].maxPayout : 95000;
 
     const coupon3: SystemCoupon = {
       id: 'kupon-3',
       title: 'Kombine & Gol Kilidi',
       badge: 'GOL & SKOR MODELİ',
-      description: 'Resmi bülten MS 1 & 2.5 Üst, MS 2 & 2.5 Üst ve İY/MS kombinasyonlarına dayalı sistem.',
+      description: '2 adet güçlü MS+Gol kombinasyonu ve 8 adet 3.00+ çarpanlı MS&KG / MS&Üst bahisli sistem.',
       theme: 'cyan',
       systemSizes: [3, 4, 5],
       systemLabel: 'Sistem 3, 4, 5',
@@ -358,21 +426,27 @@ export async function GET() {
       avgOdds: c3Odds.length > 0 ? Number((c3Odds.reduce((a, b) => a + b, 0) / c3Odds.length).toFixed(2)) : 0,
       matches: coupon3Matches,
       payoutTable: c3Payouts,
-      targetProfitBadge: '25.000 TL - 65.000 TL Hedef'
+      targetProfitBadge: `${c3Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
     // --- KUPON 4: BÜYÜK VURGUN / ÇILGIN SİSTEM (9 Maç - Sistem 3, 4, 5, 6) ---
-    // Yüksek çarpanlı 9 maçlık mega sistem
-    const c4Candidates = [...comboPool.slice(0, 5), ...iymsPool.slice(0, 4)];
-    const coupon4Matches = getUniqueMatches(c4Candidates, allMatchesPool, 9);
+    // 2 Banko (1.80-1.99) + 7 Yüksek Oran (3.00+)
+    const coupon4Matches = buildFormulaCoupon(
+      2,
+      7,
+      [...comboAnchor, ...iymsAnchor],
+      [...comboHigh, ...iymsHigh],
+      allMatchesPool
+    );
     const c4Odds = coupon4Matches.map(m => m.odd);
     const c4Payouts = generatePayoutTable(c4Odds, [3, 4, 5, 6], 1);
+    const c4Max = c4Payouts.length > 0 ? c4Payouts[c4Payouts.length - 1].maxPayout : 160000;
 
     const coupon4: SystemCoupon = {
       id: 'kupon-4',
       title: 'Büyük Vurgun / Çılgın Sistem',
-      badge: '420 TL / 6 MAÇTA 75K',
-      description: '420 TL kupon maliyetiyle, 6 maç tuttuğunda 75.000 TL+, 7 maçta 250k+ kazandıran yüksek çarpanlı model.',
+      badge: '420 TL / 6 MAÇTA 75K+',
+      description: '420 TL kupon bedeliyle, 2 dayanak ve 7 adet 3.00+ oranlı maçtan oluşan mega kazanç modeli.',
       theme: 'emerald',
       systemSizes: [3, 4, 5, 6],
       systemLabel: 'Sistem 3, 4, 5, 6',
@@ -385,7 +459,7 @@ export async function GET() {
       avgOdds: c4Odds.length > 0 ? Number((c4Odds.reduce((a, b) => a + b, 0) / c4Odds.length).toFixed(2)) : 0,
       matches: coupon4Matches,
       payoutTable: c4Payouts,
-      targetProfitBadge: '75.000 TL - 280.000 TL Hedef'
+      targetProfitBadge: `${c4Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
     // 2. YESTERDAY'S EVALUATED COUPONS (06.10.2026)
