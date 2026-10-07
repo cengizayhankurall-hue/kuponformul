@@ -114,52 +114,52 @@
       "date": "07.10.2026",
       "time": "12:30",
       "odds": {
-        "ms1": 2.14,
+        "ms1": 2.18,
         "ms0": 2.65,
-        "ms2": 2.66,
-        "iy1": 2.89,
-        "iy0": 1.7,
-        "iy2": 3.47,
-        "alt25": 1.3,
-        "ust25": 11.7,
-        "kgVar": 1.85,
-        "kgYok": 1.47
+        "ms2": 2.58,
+        "iy1": 2.97,
+        "iy0": 1.68,
+        "iy2": 3.43,
+        "alt25": 1.29,
+        "ust25": 11.9,
+        "kgVar": 1.88,
+        "kgYok": 1.45
       },
       "combos": [
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "3.21",
+          "estOdd": "3.25",
           "rate": 52
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "4.05",
+          "estOdd": "3.89",
           "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.18",
+          "estOdd": "4.25",
           "rate": 35
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "5.60",
+          "estOdd": "5.82",
           "rate": 52
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "6.32",
+          "estOdd": "6.20",
           "rate": 35
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "6.87",
+          "estOdd": "6.82",
           "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 1 & KG YOK",
-        "estOdd": "3.21",
+        "estOdd": "3.25",
         "rate": 52
       }
     },
@@ -173,52 +173,52 @@
       "date": "07.10.2026",
       "time": "12:30",
       "odds": {
-        "ms1": 1.12,
-        "ms0": 5.05,
-        "ms2": 7.56,
-        "iy1": 1.46,
-        "iy0": 2.55,
-        "iy2": 6.78,
-        "alt25": 2.29,
-        "ust25": 1.27,
-        "kgVar": 1.59,
-        "kgYok": 1.68
+        "ms1": 1.09,
+        "ms0": 5.27,
+        "ms2": 8.43,
+        "iy1": 1.43,
+        "iy0": 2.57,
+        "iy2": 7.4,
+        "alt25": 2.26,
+        "ust25": 1.29,
+        "kgVar": 1.67,
+        "kgYok": 1.6
       },
       "combos": [
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "1.96",
+          "estOdd": "1.84",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.30",
+          "estOdd": "2.35",
           "rate": 52
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "6.50",
+          "estOdd": "6.99",
           "rate": 35
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "13.55",
+          "estOdd": "15.80",
           "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "17.00",
+          "estOdd": "18.30",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "20.55",
+          "estOdd": "20.05",
           "rate": 35
         }
       ],
       "topCombo": {
         "name": "MS 1 & KG YOK",
-        "estOdd": "1.96",
+        "estOdd": "1.84",
         "rate": 52
       }
     },
@@ -232,82 +232,52 @@
       "date": "07.10.2026",
       "time": "12:30",
       "odds": {
-        "ms1": 1.31,
-        "ms0": 3.83,
-        "ms2": 4.98,
-        "iy1": 1.75,
-        "iy0": 2.2,
-        "iy2": 5.15,
-        "alt25": 1.87,
-        "ust25": 1.45,
-        "kgVar": 1.58,
-        "kgYok": 1.71
+        "ms1": 1.22,
+        "ms0": 4.27,
+        "ms2": 6.11,
+        "iy1": 1.6,
+        "iy0": 2.32,
+        "iy2": 5.93,
+        "alt25": 1.98,
+        "ust25": 1.39,
+        "kgVar": 1.61,
+        "kgYok": 1.65
       },
       "combos": [
         {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.90",
-          "rate": 52
-        },
-        {
           "name": "MS 1 & KG YOK",
-          "estOdd": "2.28",
+          "estOdd": "2.07",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.75",
-          "rate": 52
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "estOdd": "3.65",
+          "estOdd": "2.57",
           "rate": 52
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "5.01",
+          "estOdd": "5.62",
           "rate": 35
         },
         {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "5.05",
-          "rate": 48
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "8.51",
-          "rate": 48
-        },
-        {
           "name": "MS 2 & KG VAR",
-          "estOdd": "9.41",
+          "estOdd": "11.50",
           "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "10.00",
-          "rate": 48
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "estOdd": "11.15",
-          "rate": 48
-        },
-        {
-          "name": "MS X & 2.5 ÜST",
-          "estOdd": "13.40",
+          "estOdd": "12.50",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "13.85",
+          "estOdd": "15.60",
           "rate": 35
         }
       ],
       "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.90",
+        "name": "MS 1 & KG YOK",
+        "estOdd": "2.07",
         "rate": 52
       }
     },
@@ -321,82 +291,82 @@
       "date": "07.10.2026",
       "time": "13:00",
       "odds": {
-        "ms1": 1.32,
-        "ms0": 3.68,
-        "ms2": 5.11,
-        "iy1": 1.77,
-        "iy0": 2.13,
-        "iy2": 5.33,
-        "alt25": 1.74,
-        "ust25": 1.54,
+        "ms1": 1.3,
+        "ms0": 3.76,
+        "ms2": 5.23,
+        "iy1": 1.74,
+        "iy0": 2.15,
+        "iy2": 5.41,
+        "alt25": 1.78,
+        "ust25": 1.51,
         "kgVar": 1.65,
         "kgYok": 1.62
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.00",
+          "estOdd": "1.95",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "2.19",
+          "estOdd": "2.17",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.95",
+          "estOdd": "2.89",
           "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "estOdd": "3.38",
+          "estOdd": "3.40",
           "rate": 52
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.66",
+          "estOdd": "4.80",
           "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "5.01",
+          "estOdd": "5.10",
           "rate": 35
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "9.32",
+          "estOdd": "9.45",
           "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "9.63",
+          "estOdd": "9.98",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "10.30",
+          "estOdd": "10.40",
           "rate": 48
         },
         {
           "name": "MS 2 & 2.5 ALT",
-          "estOdd": "10.65",
+          "estOdd": "11.00",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "11.90",
+          "estOdd": "12.45",
           "rate": 35
         },
         {
           "name": "MS X & 2.5 ÜST",
-          "estOdd": "14.60",
+          "estOdd": "14.65",
           "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.00",
+        "estOdd": "1.95",
         "rate": 52
       }
     },
@@ -410,82 +380,82 @@
       "date": "07.10.2026",
       "time": "13:00",
       "odds": {
-        "ms1": 1.5,
-        "ms0": 3.26,
-        "ms2": 4.07,
-        "iy1": 2,
-        "iy0": 1.99,
-        "iy2": 4.55,
+        "ms1": 1.56,
+        "ms0": 3.16,
+        "ms2": 3.76,
+        "iy1": 2.07,
+        "iy0": 1.97,
+        "iy2": 4.28,
         "alt25": 1.62,
-        "ust25": 7.45,
-        "kgVar": 1.64,
-        "kgYok": 1.64
+        "ust25": 6.76,
+        "kgVar": 1.6,
+        "kgYok": 1.67
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.38",
+          "estOdd": "2.49",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "2.48",
+          "estOdd": "2.63",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "3.33",
+          "estOdd": "3.41",
           "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "estOdd": "3.52",
+          "estOdd": "3.69",
           "rate": 52
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.05",
+          "estOdd": "3.96",
           "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.48",
+          "estOdd": "4.30",
           "rate": 35
         },
         {
-          "name": "MS 2 & KG YOK",
-          "estOdd": "7.38",
-          "rate": 48
-        },
-        {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "7.45",
+          "estOdd": "6.76",
           "rate": 48
         },
         {
-          "name": "MS 2 & 2.5 ALT",
-          "estOdd": "8.28",
+          "name": "MS 2 & KG YOK",
+          "estOdd": "6.89",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "8.39",
+          "estOdd": "7.67",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "7.81",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "10.20",
+          "estOdd": "10.10",
           "rate": 35
         },
         {
           "name": "MS X & 2.5 ÜST",
-          "estOdd": "13.50",
+          "estOdd": "12.70",
           "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.38",
+        "estOdd": "2.49",
         "rate": 52
       }
     },
@@ -499,52 +469,52 @@
       "date": "07.10.2026",
       "time": "13:00",
       "odds": {
-        "ms1": 1.91,
-        "ms0": 2.94,
-        "ms2": 2.8,
-        "iy1": 2.51,
+        "ms1": 1.95,
+        "ms0": 2.91,
+        "ms2": 2.72,
+        "iy1": 2.56,
         "iy0": 1.87,
-        "iy2": 3.45,
+        "iy2": 3.36,
         "alt25": 1.54,
         "ust25": 1.75,
         "kgVar": 1.58,
-        "kgYok": 1.69
+        "kgYok": 1.7
       },
       "combos": [
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "3.26",
+          "estOdd": "3.36",
           "rate": 52
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.03",
+          "estOdd": "3.97",
           "rate": 35
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "4.12",
+          "estOdd": "4.20",
           "rate": 52
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "4.94",
+          "estOdd": "4.82",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "5.87",
+          "estOdd": "5.71",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "9.19",
+          "estOdd": "9.10",
           "rate": 35
         }
       ],
       "topCombo": {
         "name": "MS 1 & KG YOK",
-        "estOdd": "3.26",
+        "estOdd": "3.36",
         "rate": 52
       }
     },
@@ -647,52 +617,52 @@
       "date": "07.10.2026",
       "time": "13:00",
       "odds": {
-        "ms1": 1.41,
-        "ms0": 3.66,
-        "ms2": 4.21,
-        "iy1": 1.83,
-        "iy0": 2.22,
-        "iy2": 4.42,
-        "alt25": 2.03,
-        "ust25": 6.1,
+        "ms1": 1.38,
+        "ms0": 3.7,
+        "ms2": 4.34,
+        "iy1": 1.8,
+        "iy0": 2.25,
+        "iy2": 4.51,
+        "alt25": 2.07,
+        "ust25": 5.93,
         "kgVar": 1.43,
-        "kgYok": 1.92
+        "kgYok": 1.93
       },
       "combos": [
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.63",
+          "estOdd": "2.59",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "2.70",
+          "estOdd": "2.68",
           "rate": 52
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.50",
+          "estOdd": "4.53",
           "rate": 35
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "7.24",
+          "estOdd": "7.41",
           "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "9.32",
+          "estOdd": "9.71",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "15.90",
+          "estOdd": "16.35",
           "rate": 35
         }
       ],
       "topCombo": {
         "name": "MS 1 & KG VAR",
-        "estOdd": "2.63",
+        "estOdd": "2.59",
         "rate": 52
       }
     },
@@ -765,52 +735,52 @@
       "date": "07.10.2026",
       "time": "14:30",
       "odds": {
-        "ms1": 4.84,
-        "ms0": 3.93,
-        "ms2": 1.31,
-        "iy1": 4.93,
+        "ms1": 5.02,
+        "ms0": 3.99,
+        "ms2": 1.3,
+        "iy1": 5.07,
         "iy0": 2.28,
-        "iy2": 1.72,
-        "alt25": 2.04,
+        "iy2": 1.7,
+        "alt25": 2.05,
         "ust25": 1.37,
-        "kgVar": 1.48,
-        "kgYok": 1.83
+        "kgVar": 1.5,
+        "kgYok": 1.8
       },
       "combos": [
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "2.43",
+          "estOdd": "2.38",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "2.55",
+          "estOdd": "2.54",
           "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.91",
+          "estOdd": "5.01",
           "rate": 35
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "8.51",
+          "estOdd": "8.88",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "10.60",
+          "estOdd": "10.90",
           "rate": 52
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "16.30",
+          "estOdd": "16.35",
           "rate": 35
         }
       ],
       "topCombo": {
         "name": "MS 2 & KG YOK",
-        "estOdd": "2.43",
+        "estOdd": "2.38",
         "rate": 48
       }
     },
@@ -883,52 +853,52 @@
       "date": "07.10.2026",
       "time": "15:00",
       "odds": {
-        "ms1": 1.14,
-        "ms0": 4.92,
-        "ms2": 7,
-        "iy1": 1.49,
-        "iy0": 2.53,
-        "iy2": 6.39,
-        "alt25": 2.31,
-        "ust25": 1.27,
-        "kgVar": 1.55,
-        "kgYok": 1.73
+        "ms1": 1.09,
+        "ms0": 5.22,
+        "ms2": 8.45,
+        "iy1": 1.44,
+        "iy0": 2.5,
+        "iy2": 7.57,
+        "alt25": 2.12,
+        "ust25": 1.33,
+        "kgVar": 1.75,
+        "kgYok": 1.54
       },
       "combos": [
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "2.05",
+          "estOdd": "1.78",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.28",
+          "estOdd": "2.48",
           "rate": 52
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "6.23",
+          "estOdd": "7.16",
           "rate": 35
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "12.25",
+          "estOdd": "16.65",
           "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "16.05",
+          "estOdd": "17.35",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "20.90",
+          "estOdd": "18.10",
           "rate": 35
         }
       ],
       "topCombo": {
         "name": "MS 1 & KG YOK",
-        "estOdd": "2.05",
+        "estOdd": "1.78",
         "rate": 52
       }
     },
@@ -942,82 +912,82 @@
       "date": "07.10.2026",
       "time": "15:00",
       "odds": {
-        "ms1": 1.38,
-        "ms0": 3.54,
-        "ms2": 4.57,
-        "iy1": 1.85,
+        "ms1": 1.4,
+        "ms0": 3.56,
+        "ms2": 4.38,
+        "iy1": 1.87,
         "iy0": 2.1,
-        "iy2": 4.89,
-        "alt25": 1.74,
-        "ust25": 1.54,
-        "kgVar": 1.6,
-        "kgYok": 1.67
+        "iy2": 4.73,
+        "alt25": 1.77,
+        "ust25": 1.52,
+        "kgVar": 1.58,
+        "kgYok": 1.7
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.09",
+          "estOdd": "2.10",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "2.35",
+          "estOdd": "2.42",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.99",
+          "estOdd": "2.96",
           "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "estOdd": "3.55",
+          "estOdd": "3.66",
           "rate": 52
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.54",
+          "estOdd": "4.62",
           "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.75",
+          "estOdd": "4.71",
           "rate": 35
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "8.09",
-          "rate": 48
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "estOdd": "8.72",
+          "estOdd": "7.59",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "9.01",
+          "estOdd": "8.46",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.50",
           "rate": 48
         },
         {
           "name": "MS 2 & 2.5 ALT",
-          "estOdd": "9.76",
+          "estOdd": "9.58",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "11.90",
+          "estOdd": "12.40",
           "rate": 35
         },
         {
           "name": "MS X & 2.5 ÜST",
-          "estOdd": "13.45",
+          "estOdd": "13.00",
           "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.09",
+        "estOdd": "2.10",
         "rate": 52
       }
     },
@@ -1120,82 +1090,82 @@
       "date": "07.10.2026",
       "time": "19:00",
       "odds": {
-        "ms1": 3.62,
-        "ms0": 3.37,
-        "ms2": 1.65,
-        "iy1": 4.06,
-        "iy0": 2.14,
-        "iy2": 2.16,
-        "alt25": 1.88,
-        "ust25": 1.55,
-        "kgVar": 1.51,
-        "kgYok": 1.95
+        "ms1": 3.84,
+        "ms0": 3.45,
+        "ms2": 1.59,
+        "iy1": 4.21,
+        "iy0": 2.18,
+        "iy2": 2.07,
+        "alt25": 1.95,
+        "ust25": 1.51,
+        "kgVar": 1.49,
+        "kgYok": 1.99
       },
       "combos": [
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "2.46",
+          "estOdd": "2.31",
           "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "3.13",
+          "estOdd": "3.06",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "3.26",
+          "estOdd": "3.09",
           "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.26",
+          "estOdd": "4.31",
           "rate": 35
         },
         {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "4.58",
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "4.60",
           "rate": 48
         },
         {
-          "name": "MS 2 & 2.5 ALT",
-          "estOdd": "4.58",
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.77",
           "rate": 48
         },
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "5.82",
+          "estOdd": "6.07",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "6.62",
+          "estOdd": "6.86",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "7.40",
+          "estOdd": "8.06",
           "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "estOdd": "8.75",
+          "estOdd": "9.49",
           "rate": 52
         },
         {
           "name": "MS X & 2.5 ÜST",
-          "estOdd": "10.85",
+          "estOdd": "10.65",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "13.25",
+          "estOdd": "14.15",
           "rate": 35
         }
       ],
       "topCombo": {
         "name": "MS 2 & 2.5 ÜST",
-        "estOdd": "2.46",
+        "estOdd": "2.31",
         "rate": 48
       }
     },
@@ -1624,82 +1594,82 @@
       "date": "08.10.2026",
       "time": "02:00",
       "odds": {
-        "ms1": 1.46,
-        "ms0": 3.58,
-        "ms2": 4.66,
-        "iy1": 1.97,
-        "iy0": 2.12,
-        "iy2": 5.05,
+        "ms1": 1.44,
+        "ms0": 3.63,
+        "ms2": 4.8,
+        "iy1": 1.94,
+        "iy0": 2.13,
+        "iy2": 5.18,
         "alt25": 1.73,
         "ust25": 1.66,
-        "kgVar": 1.7,
-        "kgYok": 1.7
+        "kgVar": 1.72,
+        "kgYok": 1.69
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.30",
+          "estOdd": "2.28",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "2.47",
+          "estOdd": "2.41",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "3.30",
+          "estOdd": "3.28",
           "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "estOdd": "3.65",
+          "estOdd": "3.58",
           "rate": 52
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.48",
+          "estOdd": "4.53",
           "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.87",
+          "estOdd": "4.97",
           "rate": 35
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "8.45",
+          "estOdd": "8.79",
           "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "8.58",
+          "estOdd": "8.84",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "9.45",
+          "estOdd": "9.80",
           "rate": 48
         },
         {
           "name": "MS 2 & 2.5 ALT",
-          "estOdd": "9.58",
+          "estOdd": "9.80",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "11.50",
+          "estOdd": "11.55",
           "rate": 35
         },
         {
           "name": "MS X & 2.5 ÜST",
-          "estOdd": "14.50",
+          "estOdd": "14.90",
           "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.30",
+        "estOdd": "2.28",
         "rate": 52
       }
     },
@@ -1713,56 +1683,56 @@
       "date": "08.10.2026",
       "time": "02:30",
       "odds": {
-        "ms1": 2.62,
-        "ms0": 3.16,
-        "ms2": 2.09,
-        "iy1": 3.16,
-        "iy0": 2.07,
-        "iy2": 2.63,
-        "alt25": 1.86,
-        "ust25": 1.56,
-        "kgVar": 1.45,
-        "kgYok": 2.05
+        "ms1": 2.68,
+        "ms0": 3.19,
+        "ms2": 2.04,
+        "iy1": 3.2,
+        "iy0": 2.09,
+        "iy2": 2.58,
+        "alt25": 1.9,
+        "ust25": 1.54,
+        "kgVar": 1.44,
+        "kgYok": 2.07
       },
       "combos": [
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "3.16",
+          "estOdd": "3.05",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "3.91",
+          "estOdd": "3.78",
           "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "3.95",
+          "estOdd": "3.96",
           "rate": 35
         },
         {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "4.04",
-          "rate": 52
-        },
-        {
           "name": "MS 2 & KG YOK",
-          "estOdd": "4.17",
+          "estOdd": "4.10",
           "rate": 48
         },
         {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "4.10",
+          "rate": 52
+        },
+        {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.37",
+          "estOdd": "4.46",
           "rate": 48
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "4.80",
+          "estOdd": "4.83",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "5.33",
+          "estOdd": "5.54",
           "rate": 52
         },
         {
@@ -1772,23 +1742,23 @@
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "estOdd": "6.73",
+          "estOdd": "6.98",
           "rate": 52
         },
         {
           "name": "MS X & 2.5 ÜST",
-          "estOdd": "9.80",
+          "estOdd": "9.67",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "12.95",
+          "estOdd": "13.45",
           "rate": 35
         }
       ],
       "topCombo": {
         "name": "MS 2 & 2.5 ÜST",
-        "estOdd": "3.16",
+        "estOdd": "3.05",
         "rate": 48
       }
     },
@@ -2178,65 +2148,6 @@
       }
     },
     {
-      "id": "4478179",
-      "eventId": "3189565",
-      "code": "73305",
-      "homeTeam": "Johor Dt",
-      "awayTeam": "Pkr Svay Rieng",
-      "league": "AFCAKŞ",
-      "date": "08.10.2026",
-      "time": "15:00",
-      "odds": {
-        "ms1": 0,
-        "ms0": 6.57,
-        "ms2": 15.45,
-        "iy1": 1.27,
-        "iy0": 2.84,
-        "iy2": 11.9,
-        "alt25": 2.28,
-        "ust25": 1.28,
-        "kgVar": 2.1,
-        "kgYok": 1.34
-      },
-      "combos": [
-        {
-          "name": "MS 1 & KG YOK",
-          "estOdd": "1.44",
-          "rate": 52
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "2.65",
-          "rate": 52
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "10.20",
-          "rate": 35
-        },
-        {
-          "name": "MS X & KG YOK",
-          "estOdd": "19.80",
-          "rate": 35
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "estOdd": "30.50",
-          "rate": 48
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "35.00",
-          "rate": 48
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & KG YOK",
-        "estOdd": "1.44",
-        "rate": 52
-      }
-    },
-    {
       "id": "4478178",
       "eventId": "3189229",
       "code": "73305",
@@ -2249,79 +2160,138 @@
         "ms1": 1.62,
         "ms0": 3.12,
         "ms2": 3.5,
-        "iy1": 2.15,
-        "iy0": 1.96,
-        "iy2": 4.04,
-        "alt25": 1.62,
-        "ust25": 6.16,
-        "kgVar": 1.58,
-        "kgYok": 1.7
+        "iy1": 2.14,
+        "iy0": 1.98,
+        "iy2": 4.01,
+        "alt25": 1.65,
+        "ust25": 6.03,
+        "kgVar": 1.55,
+        "kgYok": 1.73
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.58",
+          "estOdd": "2.54",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "2.78",
+          "estOdd": "2.83",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "3.47",
+          "estOdd": "3.40",
           "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "estOdd": "3.84",
+          "estOdd": "3.96",
           "rate": 52
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "3.96",
+          "estOdd": "4.02",
           "rate": 48
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.22",
+          "estOdd": "4.16",
           "rate": 35
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "6.16",
+          "estOdd": "6.03",
           "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "6.44",
+          "estOdd": "6.58",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "7.04",
+          "estOdd": "6.89",
           "rate": 48
         },
         {
           "name": "MS 2 & 2.5 ALT",
-          "estOdd": "7.39",
+          "estOdd": "7.60",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "10.25",
+          "estOdd": "10.65",
           "rate": 35
         },
         {
           "name": "MS X & 2.5 ÜST",
-          "estOdd": "12.20",
+          "estOdd": "11.65",
           "rate": 48
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.58",
+        "estOdd": "2.54",
+        "rate": 52
+      }
+    },
+    {
+      "id": "4478179",
+      "eventId": "3189565",
+      "code": "73305",
+      "homeTeam": "Johor Dt",
+      "awayTeam": "Pkr Svay Rieng",
+      "league": "AFCAKŞ",
+      "date": "08.10.2026",
+      "time": "15:00",
+      "odds": {
+        "ms1": 0,
+        "ms0": 6.7,
+        "ms2": 15.9,
+        "iy1": 1.27,
+        "iy0": 2.84,
+        "iy2": 12.2,
+        "alt25": 2.28,
+        "ust25": 1.28,
+        "kgVar": 2.14,
+        "kgYok": 1.32
+      },
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.43",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.68",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "10.50",
+          "rate": 35
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "19.90",
+          "rate": 35
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "31.00",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "35.00",
+          "rate": 48
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "1.43",
         "rate": 52
       }
     },
@@ -2338,79 +2308,79 @@
         "ms1": 1.44,
         "ms0": 3.77,
         "ms2": 4.67,
-        "iy1": 1.9,
-        "iy0": 2.24,
-        "iy2": 4.92,
-        "alt25": 1.95,
-        "ust25": 1.51,
-        "kgVar": 1.57,
-        "kgYok": 1.86
+        "iy1": 1.91,
+        "iy0": 2.22,
+        "iy2": 4.94,
+        "alt25": 1.92,
+        "ust25": 1.52,
+        "kgVar": 1.59,
+        "kgYok": 1.83
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.09",
+          "estOdd": "2.11",
           "rate": 52
         },
         {
           "name": "MS 1 & KG YOK",
-          "estOdd": "2.61",
+          "estOdd": "2.57",
           "rate": 52
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.93",
+          "estOdd": "2.98",
           "rate": 52
         },
         {
           "name": "MS 1 & 2.5 ALT",
-          "estOdd": "4.10",
+          "estOdd": "4.01",
           "rate": 52
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.82",
+          "estOdd": "4.87",
           "rate": 35
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "5.04",
+          "estOdd": "4.99",
           "rate": 48
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "7.73",
+          "estOdd": "7.83",
           "rate": 48
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "8.60",
+          "estOdd": "8.72",
           "rate": 48
         },
         {
           "name": "MS 2 & KG YOK",
-          "estOdd": "9.54",
+          "estOdd": "9.36",
           "rate": 48
         },
         {
           "name": "MS 2 & 2.5 ALT",
-          "estOdd": "10.85",
+          "estOdd": "10.65",
           "rate": 48
         },
         {
           "name": "MS X & 2.5 ÜST",
-          "estOdd": "12.55",
+          "estOdd": "12.90",
           "rate": 48
         },
         {
           "name": "MS X & KG YOK",
-          "estOdd": "14.35",
+          "estOdd": "13.95",
           "rate": 35
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.09",
+        "estOdd": "2.11",
         "rate": 52
       }
     },
@@ -2889,95 +2859,6 @@
       }
     },
     {
-      "id": "4423312",
-      "eventId": "3189471",
-      "code": "71950",
-      "homeTeam": "Palmeiras",
-      "awayTeam": "Bahia",
-      "league": "BR1",
-      "date": "09.10.2026",
-      "time": "03:30",
-      "odds": {
-        "ms1": 1.38,
-        "ms0": 3.89,
-        "ms2": 5.04,
-        "iy1": 1.83,
-        "iy0": 2.28,
-        "iy2": 5.17,
-        "alt25": 1.99,
-        "ust25": 1.49,
-        "kgVar": 1.58,
-        "kgYok": 1.84
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.00",
-          "rate": 52
-        },
-        {
-          "name": "MS 1 & KG YOK",
-          "estOdd": "2.51",
-          "rate": 52
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "2.85",
-          "rate": 52
-        },
-        {
-          "name": "MS 1 & 2.5 ALT",
-          "estOdd": "4.04",
-          "rate": 52
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "4.98",
-          "rate": 35
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "5.22",
-          "rate": 48
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "8.33",
-          "rate": 48
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "9.23",
-          "rate": 48
-        },
-        {
-          "name": "MS 2 & KG YOK",
-          "estOdd": "10.30",
-          "rate": 48
-        },
-        {
-          "name": "MS 2 & 2.5 ALT",
-          "estOdd": "11.70",
-          "rate": 48
-        },
-        {
-          "name": "MS X & 2.5 ÜST",
-          "estOdd": "12.90",
-          "rate": 48
-        },
-        {
-          "name": "MS X & KG YOK",
-          "estOdd": "14.85",
-          "rate": 35
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.00",
-        "rate": 52
-      }
-    },
-    {
       "id": "4423309",
       "eventId": "3189213",
       "code": "71950",
@@ -3065,9 +2946,248 @@
         "estOdd": "2.12",
         "rate": 52
       }
+    },
+    {
+      "id": "4423312",
+      "eventId": "3189471",
+      "code": "71950",
+      "homeTeam": "Palmeiras",
+      "awayTeam": "Bahia",
+      "league": "BR1",
+      "date": "09.10.2026",
+      "time": "03:30",
+      "odds": {
+        "ms1": 1.38,
+        "ms0": 3.89,
+        "ms2": 5.04,
+        "iy1": 1.83,
+        "iy0": 2.28,
+        "iy2": 5.17,
+        "alt25": 1.99,
+        "ust25": 1.49,
+        "kgVar": 1.58,
+        "kgYok": 1.84
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.00",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.51",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.85",
+          "rate": 52
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.04",
+          "rate": 52
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.98",
+          "rate": 35
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.22",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "8.33",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "9.23",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "10.30",
+          "rate": 48
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "11.70",
+          "rate": 48
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "12.90",
+          "rate": 48
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "14.85",
+          "rate": 35
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.00",
+        "rate": 52
+      }
     }
   ],
   "pastMatches": [
+    {
+      "id": "4452087",
+      "eventId": "3185321",
+      "code": "72453",
+      "homeTeam": "Wuxi Wugou",
+      "awayTeam": "Suzhou Dongwu",
+      "league": "ÇİN2",
+      "date": "06.10.2026",
+      "time": "14:00",
+      "score": "2 - 2",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.69",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.88",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.22",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.62",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.10",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.84",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "3.69",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4452088",
+      "eventId": "3185411",
+      "code": "72453",
+      "homeTeam": "Changchun Yata",
+      "awayTeam": "Yanbian Longdin",
+      "league": "ÇİN2",
+      "date": "06.10.2026",
+      "time": "14:00",
+      "score": "1 - 1",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.63",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.03",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.47",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.96",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.99",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.19",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "5.54",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "6.27",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.37",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "7.33",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "10.65",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "10.90",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.63",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
+    },
     {
       "id": "4565332",
       "eventId": "3241342",
@@ -3079,24 +3199,237 @@
       "time": "14:00",
       "score": "2 - 0",
       "iyScore": "0 - 1",
-      "actualOutcome": "2/1",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "13.30",
-        "1/X": "21.50",
-        "1/2": "19.25",
-        "X/1": "16.95",
-        "X/X": "8.30",
-        "X/2": "3.93",
-        "2/1": "34.50",
-        "2/X": "18.85",
-        "2/2": "1.51"
+      "combos": [
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "1.41",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.00",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.12",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "3.90",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.91",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "6.79",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "10.70",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "11.70",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "13.45",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "16.15",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "17.60",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "21.00",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "1.41",
+        "rate": 48,
+        "won": false
       },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": false
+    },
+    {
+      "id": "4452090",
+      "eventId": "3185249",
+      "code": "72453",
+      "homeTeam": "Heilongjiang L",
+      "awayTeam": "Meizhou Hakka",
+      "league": "ÇİN2",
+      "date": "06.10.2026",
+      "time": "14:30",
+      "score": "0 - 0",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.07",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.38",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.89",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.47",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "6.84",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "14.00",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG VAR",
+        "estOdd": "3.07",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4452089",
+      "eventId": "3185433",
+      "code": "72453",
+      "homeTeam": "Nantong Zhiyun",
+      "awayTeam": "Ningbo",
+      "league": "ÇİN2",
+      "date": "06.10.2026",
+      "time": "14:30",
+      "score": "1 - 0",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.04",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.24",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "2.95",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.42",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.09",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.17",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.88",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.23",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "9.63",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "11.05",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "12.20",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "18.05",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.24",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
     },
     {
       "id": "4452091",
@@ -3109,24 +3442,201 @@
       "time": "14:30",
       "score": "1 - 0",
       "iyScore": "0 - 0",
-      "actualOutcome": "X/1",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "2.63",
-        "1/X": "14.85",
-        "1/2": "34.50",
-        "X/1": "4.16",
-        "X/X": "4.02",
-        "X/2": "7.88",
-        "2/1": "29.00",
-        "2/X": "16.15",
-        "2/2": "6.89"
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.39",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.03",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.06",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.18",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.22",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.32",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.59",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "6.14",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "6.75",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "7.70",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.85",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "16.45",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.03",
+        "rate": 52,
+        "won": false
       },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": false
+    },
+    {
+      "id": "4289821",
+      "eventId": "3185372",
+      "code": "70127",
+      "homeTeam": "Azerbaycan (U2",
+      "awayTeam": "Cebelitarık U21",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "16:45",
+      "score": "3 - 0",
+      "iyScore": "0 - 2",
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.50",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.63",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "9.67",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "19.25",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "24.05",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "28.00",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "1.50",
+        "rate": 52,
+        "won": true
+      },
+      "isTopHit": true
+    },
+    {
+      "id": "4289882",
+      "eventId": "3185288",
+      "code": "70129",
+      "homeTeam": "Moldova (U21)",
+      "awayTeam": "Kazakistan (U21",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "17:00",
+      "score": "3 - 2",
+      "iyScore": "0 - 1",
+      "combos": [
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.79",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.99",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.38",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.42",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.79",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.84",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "3.99",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
     },
     {
       "id": "4445228",
@@ -3139,24 +3649,1179 @@
       "time": "17:00",
       "score": "2 - 2",
       "iyScore": "0 - 0",
-      "actualOutcome": "X/X",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "3.66",
-        "1/X": "14.50",
-        "1/2": "35.00",
-        "X/1": "4.98",
-        "X/X": "3.48",
-        "X/2": "6.21",
-        "2/1": "35.00",
-        "2/X": "14.95",
-        "2/2": "5.13"
+      "combos": [
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "2.92",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.22",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.80",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.33",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.38",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "4.80",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "4.87",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "5.91",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "6.26",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.69",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.12",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "18.75",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "4.80",
+        "rate": 52,
+        "won": false
       },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": false
+    },
+    {
+      "id": "4565366",
+      "eventId": "3261738",
+      "code": "72128",
+      "homeTeam": "Rusya",
+      "awayTeam": "Nijerya",
+      "league": "HAZ",
+      "date": "06.10.2026",
+      "time": "19:00",
+      "score": "3 - 3",
+      "iyScore": "0 - 2",
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "1.86",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.92",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.93",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.06",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.01",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.80",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "11.50",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "12.15",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "12.35",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "12.40",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "13.45",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "18.25",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "1.86",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4289942",
+      "eventId": "3185208",
+      "code": "70131",
+      "homeTeam": "Letonya (U21)",
+      "awayTeam": "Malta (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:00",
+      "score": "2 - 0",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "1.67",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.86",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.68",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.20",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.76",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.28",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "13.50",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "13.90",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "14.60",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "14.65",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "14.90",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "18.45",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "1.67",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4289823",
+      "eventId": "3185455",
+      "code": "70127",
+      "homeTeam": "Bulgaristan U2",
+      "awayTeam": "İskoçya (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:30",
+      "score": "0 - 2",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.82",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.95",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "3.96",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "5.04",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.18",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "8.25",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "3.82",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4289822",
+      "eventId": "3185223",
+      "code": "70127",
+      "homeTeam": "Portekiz (U21)",
+      "awayTeam": "Çek Cumhuriyeti",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:30",
+      "score": "2 - 0",
+      "iyScore": "0 - 1",
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "1.64",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.84",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.64",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.22",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.94",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.44",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "13.80",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "14.35",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "14.90",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "15.25",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "15.40",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "18.75",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "1.64",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4290002",
+      "eventId": "3185371",
+      "code": "70133",
+      "homeTeam": "Danimarka (U21",
+      "awayTeam": "Belçika (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:30",
+      "score": "0 - 0",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "3.82",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "3.97",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "4.17",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.69",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.88",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.14",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "3.97",
+        "rate": 48,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4290003",
+      "eventId": "3185352",
+      "code": "70133",
+      "homeTeam": "Galler (U21)",
+      "awayTeam": "Avusturya (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:30",
+      "score": "1 - 7",
+      "iyScore": "0 - 1",
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.77",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.27",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.24",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "6.86",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "6.97",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "11.20",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "2.77",
+        "rate": 48,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4289962",
+      "eventId": "3185436",
+      "code": "70132",
+      "homeTeam": "Hollanda (U21)",
+      "awayTeam": "Bosna Hersek (U",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "19:45",
+      "score": "4 - 0",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.53",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.32",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "10.75",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "27.00",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "29.00",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "31.50",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "1.53",
+        "rate": 52,
+        "won": true
+      },
+      "isTopHit": true
+    },
+    {
+      "id": "4289852",
+      "eventId": "3185259",
+      "code": "70128",
+      "homeTeam": "Fransa (U21)",
+      "awayTeam": "İsviçre (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "score": "7 - 1",
+      "iyScore": "0 - 3",
+      "combos": [
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.53",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.84",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.43",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.83",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "9.67",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "17.65",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG VAR",
+        "estOdd": "2.53",
+        "rate": 52,
+        "won": true
+      },
+      "isTopHit": true
+    },
+    {
+      "id": "4289853",
+      "eventId": "3185463",
+      "code": "70128",
+      "homeTeam": "Faroe Adalari",
+      "awayTeam": "İzlanda (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "score": "0 - 2",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "1.83",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.88",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.19",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "12.75",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "12.80",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "15.15",
+          "rate": 52,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "1.83",
+        "rate": 48,
+        "won": true
+      },
+      "isTopHit": true
+    },
+    {
+      "id": "4565367",
+      "eventId": "3286358",
+      "code": "72128",
+      "homeTeam": "Ürdün",
+      "awayTeam": "Venezuela",
+      "league": "HAZ",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "score": "0 - 0",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.33",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.47",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.92",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.03",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.16",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.24",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.76",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "4.90",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.94",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.78",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "7.76",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "13.50",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.92",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4289883",
+      "eventId": "3185329",
+      "code": "70129",
+      "homeTeam": "İrlanda Cumhur",
+      "awayTeam": "İngiltere (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "score": "3 - 1",
+      "iyScore": "0 - 2",
+      "combos": [
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.84",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.90",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.26",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "6.52",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "7.95",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "14.45",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG VAR",
+        "estOdd": "2.84",
+        "rate": 48,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4289851",
+      "eventId": "3185428",
+      "code": "70128",
+      "homeTeam": "Lüksemburg (U2",
+      "awayTeam": "Estonya (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "score": "3 - 0",
+      "iyScore": "0 - 1",
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.26",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.86",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.01",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.22",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.23",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.52",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "5.88",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.65",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "7.46",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "8.72",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "10.65",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "13.00",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.26",
+        "rate": 52,
+        "won": true
+      },
+      "isTopHit": true
+    },
+    {
+      "id": "4289982",
+      "eventId": "3185268",
+      "code": "70134",
+      "homeTeam": "Litvanya (U21)",
+      "awayTeam": "Hirvatistan (U2",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "score": "0 - 1",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "1.92",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.63",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.06",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "13.65",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "13.65",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "15.05",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "1.92",
+        "rate": 48,
+        "won": true
+      },
+      "isTopHit": true
+    },
+    {
+      "id": "4289791",
+      "eventId": "3185230",
+      "code": "70126",
+      "homeTeam": "İspanya (U21)",
+      "awayTeam": "Romanya (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "score": "7 - 1",
+      "iyScore": "0 - 4",
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.32",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.50",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "16.70",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "33.00",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "35.00",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "35.00",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "1.32",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4289881",
+      "eventId": "3185284",
+      "code": "70129",
+      "homeTeam": "Andorra (U21)",
+      "awayTeam": "Slovakya (U21)",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "score": "1 - 2",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "1.91",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.63",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.13",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "13.60",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "13.65",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "15.20",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "1.91",
+        "rate": 48,
+        "won": false
+      },
+      "isTopHit": false
+    },
+    {
+      "id": "4289793",
+      "eventId": "3185317",
+      "code": "70126",
+      "homeTeam": "Kosova (U21)",
+      "awayTeam": "Finlandiya (U21",
+      "league": "U21",
+      "date": "06.10.2026",
+      "time": "20:00",
+      "score": "4 - 4",
+      "iyScore": "0 - 2",
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.28",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.43",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.73",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "7.73",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.45",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "9.76",
+          "rate": 52,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "2.28",
+        "rate": 48,
+        "won": false
+      },
+      "isTopHit": false
     },
     {
       "id": "4445138",
@@ -3169,24 +4834,87 @@
       "time": "21:45",
       "score": "1 - 2",
       "iyScore": "0 - 1",
-      "actualOutcome": "2/2",
-      "isTopHit": true,
-      "openedOdds": {
-        "1/1": "14.20",
-        "1/X": "23.20",
-        "1/2": "20.50",
-        "X/1": "17.35",
-        "X/X": "8.26",
-        "X/2": "3.90",
-        "2/1": "35.00",
-        "2/X": "20.40",
-        "2/2": "1.56"
+      "combos": [
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "1.56",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.03",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.45",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "3.90",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.86",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "7.26",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "13.15",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "14.25",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "17.10",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "17.35",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "18.65",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "20.85",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "1.56",
+        "rate": 48,
+        "won": true
       },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": true
     },
     {
       "id": "4445162",
@@ -3199,24 +4927,87 @@
       "time": "21:45",
       "score": "1 - 2",
       "iyScore": "0 - 1",
-      "actualOutcome": "2/2",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "2.79",
-        "1/X": "14.25",
-        "1/2": "35.00",
-        "X/1": "4.45",
-        "X/X": "4.02",
-        "X/2": "7.75",
-        "2/1": "29.50",
-        "2/X": "15.45",
-        "2/2": "6.53"
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.75",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.36",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.36",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.52",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.45",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.63",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.86",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "6.54",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "7.43",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "7.69",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.93",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "16.40",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.36",
+        "rate": 52,
+        "won": false
       },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": false
     },
     {
       "id": "4445139",
@@ -3229,24 +5020,87 @@
       "time": "21:45",
       "score": "3 - 0",
       "iyScore": "0 - 2",
-      "actualOutcome": "2/1",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "1.30",
-        "1/X": "27.00",
-        "1/2": "35.00",
-        "X/1": "4.05",
-        "X/X": "12.15",
-        "X/2": "29.50",
-        "2/1": "20.60",
-        "2/X": "32.00",
-        "2/2": "24.05"
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "1.25",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.83",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.14",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "4.67",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "9.67",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "11.10",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "21.05",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "21.75",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "22.75",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "33.00",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "34.00",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "35.00",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "1.25",
+        "rate": 52,
+        "won": true
       },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": true
     },
     {
       "id": "4445163",
@@ -3259,53 +5113,87 @@
       "time": "21:45",
       "score": "3 - 0",
       "iyScore": "0 - 1",
-      "actualOutcome": "2/1",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "1.23",
-        "1/X": "35.00",
-        "1/2": "35.00",
-        "X/1": "3.51",
-        "X/X": "10.75",
-        "X/2": "35.00",
-        "2/1": "35.00",
-        "2/X": "35.00",
-        "2/2": "35.00"
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.24",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "1.42",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "2.70",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.74",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "9.84",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "16.30",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "18.15",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "35.00",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "35.00",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "35.00",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "35.00",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "35.00",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "1.42",
+        "rate": 52,
+        "won": true
       },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 60
-      }
-    },
-    {
-      "id": "4445210",
-      "eventId": "3185214",
-      "code": "72309",
-      "homeTeam": "Arnavutluk",
-      "awayTeam": "San Marino",
-      "league": "AVUL",
-      "date": "06.10.2026",
-      "time": "21:45",
-      "score": "2 - 1",
-      "iyScore": "0 - 1",
-      "actualOutcome": "2/1",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/X": "35.00",
-        "1/2": "35.00",
-        "X/1": "4.43",
-        "X/X": "22.75",
-        "X/2": "35.00",
-        "2/1": "35.00",
-        "2/X": "35.00",
-        "2/2": "35.00"
-      },
-      "topOutcome": {
-        "key": "1/X",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": true
     },
     {
       "id": "4445211",
@@ -3318,24 +5206,87 @@
       "time": "21:45",
       "score": "1 - 0",
       "iyScore": "0 - 1",
-      "actualOutcome": "2/1",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "6.18",
-        "1/X": "15.45",
-        "1/2": "30.00",
-        "X/1": "7.37",
-        "X/X": "4.00",
-        "X/2": "4.50",
-        "2/1": "35.00",
-        "2/X": "14.40",
-        "2/2": "2.91"
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.82",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.35",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "3.50",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "3.57",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.45",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.76",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "5.53",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "6.19",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "7.30",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "7.37",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "8.52",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "16.60",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "3.50",
+        "rate": 48,
+        "won": false
       },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": false
     },
     {
       "id": "4445229",
@@ -3348,24 +5299,87 @@
       "time": "21:45",
       "score": "0 - 4",
       "iyScore": "0 - 0",
-      "actualOutcome": "X/2",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "12.10",
-        "1/X": "21.05",
-        "1/2": "24.05",
-        "X/1": "13.75",
-        "X/X": "6.00",
-        "X/2": "3.82",
-        "2/1": "35.00",
-        "2/X": "18.30",
-        "2/2": "1.79"
+      "combos": [
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "1.98",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.00",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.14",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "3.19",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.10",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.99",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "11.75",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "12.30",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "12.70",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "13.00",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "14.20",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "19.40",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "1.98",
+        "rate": 48,
+        "won": true
       },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": true
     },
     {
       "id": "4457629",
@@ -3378,24 +5392,87 @@
       "time": "21:45",
       "score": "0 - 2",
       "iyScore": "0 - 0",
-      "actualOutcome": "X/2",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "3.87",
-        "1/X": "14.85",
-        "1/2": "35.00",
-        "X/1": "5.08",
-        "X/X": "3.54",
-        "X/2": "5.83",
-        "2/1": "35.00",
-        "2/X": "15.20",
-        "2/2": "4.76"
+      "combos": [
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "2.98",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.36",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.93",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "4.03",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.45",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "4.58",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "5.02",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "6.03",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.17",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "6.47",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.59",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "19.00",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "5.02",
+        "rate": 52,
+        "won": false
       },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": false
     },
     {
       "id": "4445237",
@@ -3408,24 +5485,237 @@
       "time": "21:45",
       "score": "0 - 0",
       "iyScore": "0 - 0",
-      "actualOutcome": "X/X",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "10.00",
-        "1/X": "19.45",
-        "1/2": "26.00",
-        "X/1": "11.25",
-        "X/X": "5.13",
-        "X/2": "3.86",
-        "2/1": "35.00",
-        "2/X": "17.15",
-        "2/2": "2.01"
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "2.11",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "2.35",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "3.06",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.61",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.32",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.51",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "9.14",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.80",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "9.89",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "11.45",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "12.65",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "19.55",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "2.35",
+        "rate": 48,
+        "won": false
       },
-      "topOutcome": {
-        "key": "2/2",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": false
+    },
+    {
+      "id": "4453998",
+      "eventId": "3185465",
+      "code": "72525",
+      "homeTeam": "Sport Recife",
+      "awayTeam": "Sao Bernardo",
+      "league": "BR2",
+      "date": "06.10.2026",
+      "time": "01:30",
+      "score": "2 - 1",
+      "iyScore": "0 - 1",
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.37",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.37",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.39",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.39",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "3.93",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.50",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "7.76",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "8.29",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "8.61",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "9.28",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.58",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "14.05",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.37",
+        "rate": 52,
+        "won": true
+      },
+      "isTopHit": true
+    },
+    {
+      "id": "4454002",
+      "eventId": "3185464",
+      "code": "72525",
+      "homeTeam": "Goias",
+      "awayTeam": "Athletic Club",
+      "league": "BR2",
+      "date": "06.10.2026",
+      "time": "02:30",
+      "score": "2 - 1",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.54",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.29",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.38",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "5.78",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "7.27",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.75",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & KG YOK",
+        "estOdd": "2.54",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
     },
     {
       "id": "4565346",
@@ -3438,24 +5728,87 @@
       "time": "02:45",
       "score": "2 - 0",
       "iyScore": "0 - 0",
-      "actualOutcome": "X/1",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "1.79",
-        "1/X": "20.75",
-        "1/2": "35.00",
-        "X/1": "3.52",
-        "X/X": "5.23",
-        "X/2": "14.15",
-        "2/1": "28.00",
-        "2/X": "24.05",
-        "2/2": "13.75"
+      "combos": [
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "1.70",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.18",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "2.49",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.71",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.29",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.40",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "8.53",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "10.55",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "11.15",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "17.10",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "18.45",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "27.50",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.18",
+        "rate": 52,
+        "won": false
       },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": false
     },
     {
       "id": "4565342",
@@ -3468,24 +5821,237 @@
       "time": "03:00",
       "score": "1 - 0",
       "iyScore": "0 - 1",
-      "actualOutcome": "2/1",
-      "isTopHit": false,
-      "openedOdds": {
-        "1/1": "2.40",
-        "1/X": "12.95",
-        "1/2": "33.50",
-        "X/1": "4.78",
-        "X/X": "5.85",
-        "X/2": "8.49",
-        "2/1": "20.65",
-        "2/X": "13.90",
-        "2/2": "5.81"
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.16",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.78",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "3.33",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.03",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.86",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.07",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "5.13",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.50",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "7.74",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "8.79",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "9.49",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "16.55",
+          "rate": 35,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.16",
+        "rate": 52,
+        "won": false
       },
-      "topOutcome": {
-        "key": "1/1",
-        "count": 12,
-        "rate": 60
-      }
+      "isTopHit": false
+    },
+    {
+      "id": "4453997",
+      "eventId": "3185211",
+      "code": "72525",
+      "homeTeam": "Ponte Preta",
+      "awayTeam": "Juventude",
+      "league": "BR2",
+      "date": "06.10.2026",
+      "time": "03:35",
+      "score": "0 - 2",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "1.45",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.81",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "8.18",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "9.14",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "15.35",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "30.50",
+          "rate": 52,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & KG YOK",
+        "estOdd": "1.45",
+        "rate": 48,
+        "won": true
+      },
+      "isTopHit": true
+    },
+    {
+      "id": "4565336",
+      "eventId": "3273818",
+      "code": "72128",
+      "homeTeam": "Meksika",
+      "awayTeam": "Şili",
+      "league": "HAZ",
+      "date": "06.10.2026",
+      "time": "05:30",
+      "score": "0 - 2",
+      "iyScore": "0 - 0",
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.14",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG YOK",
+          "estOdd": "2.21",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.14",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & 2.5 ALT",
+          "estOdd": "3.29",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.35",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.90",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG YOK",
+          "estOdd": "8.84",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "9.19",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ALT",
+          "estOdd": "9.71",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "10.15",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS X & KG YOK",
+          "estOdd": "10.75",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ÜST",
+          "estOdd": "15.05",
+          "rate": 48,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.14",
+        "rate": 52,
+        "won": false
+      },
+      "isTopHit": false
     }
   ]
 }

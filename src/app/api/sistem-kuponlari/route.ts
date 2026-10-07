@@ -391,16 +391,16 @@ export async function GET() {
     // 2. YESTERDAY'S EVALUATED COUPONS (06.10.2026)
     // Dünün resmi maç sonuçları ve açılış oranları
     const pastIyms = (iymsCache?.pastMatches || []).filter((m: any) => isMajorLeague(m.league));
+    const pastYuksek = (yuksekCache?.pastMatches || []).filter((m: any) => isMajorLeague(m.league));
 
-    const pastPool: SystemMatch[] = [];
-
+    const pastIymsPool: SystemMatch[] = [];
     pastIyms.forEach((m: any, idx: number) => {
       const topKey = m.topOutcome?.key || '1/1';
       if (!m.openedOdds || !m.openedOdds[topKey]) return;
       const oddVal = parseFloat(String(m.openedOdds[topKey]).replace(',', '.'));
       if (oddVal < 1.30) return;
 
-      pastPool.push({
+      pastIymsPool.push({
         id: `past_iyms_${m.id || idx}`,
         code: m.code || String(300 + idx),
         homeTeam: m.homeTeam,
@@ -419,6 +419,33 @@ export async function GET() {
       });
     });
 
+    const pastComboPool: SystemMatch[] = [];
+    pastYuksek.forEach((m: any, idx: number) => {
+      const tc = m.topCombo;
+      const oddVal = tc?.estOdd ? parseFloat(String(tc.estOdd).replace(',', '.')) : 0;
+      if (oddVal < 1.30) return;
+
+      pastComboPool.push({
+        id: `past_yuksek_${m.id || idx}`,
+        code: m.code || String(400 + idx),
+        homeTeam: m.homeTeam,
+        awayTeam: m.awayTeam,
+        league: m.league || 'BÜLTEN',
+        date: m.date || '06.10.2026',
+        time: m.time || '20:00',
+        marketType: 'combo',
+        marketName: 'Kombine & Skor',
+        choice: tc?.name || 'MS 1 & 2.5 ÜST',
+        odd: oddVal,
+        score: m.score || 'MS',
+        iyScore: m.iyScore || 'İY',
+        won: m.isTopHit === true,
+        reason: `İddaa Açılış Oranı: ${oddVal.toFixed(2)} | Sonuç: MS ${m.score || '-'}`
+      });
+    });
+
+    const allPastPool = [...pastComboPool, ...pastIymsPool];
+
     function evaluatePastCoupon(
       id: string,
       title: string,
@@ -428,9 +455,10 @@ export async function GET() {
       systemSizes: number[],
       systemLabel: string,
       neededCount: number,
-      selectedCandidates: (SystemMatch | undefined)[]
+      selectedCandidates: (SystemMatch | undefined)[],
+      poolToUse: SystemMatch[] = allPastPool
     ): SystemCoupon {
-      const matches = getUniqueMatches(selectedCandidates, pastPool, neededCount);
+      const matches = getUniqueMatches(selectedCandidates, poolToUse, neededCount);
       const odds = matches.map(m => m.odd);
       const hitIndices = matches.map((m, i) => m.won ? i : -1).filter(i => i !== -1);
       const hitCount = hitIndices.length;
@@ -459,9 +487,9 @@ export async function GET() {
         totalColumns,
         misli: 1,
         cost,
-        minOdds: Math.min(...odds),
-        maxOdds: Math.max(...odds),
-        avgOdds: Number((odds.reduce((a, b) => a + b, 0) / odds.length).toFixed(2)),
+        minOdds: odds.length > 0 ? Math.min(...odds) : 0,
+        maxOdds: odds.length > 0 ? Math.max(...odds) : 0,
+        avgOdds: odds.length > 0 ? Number((odds.reduce((a, b) => a + b, 0) / odds.length).toFixed(2)) : 0,
         matches,
         payoutTable,
         targetProfitBadge: isWinner ? `${wonAmount.toLocaleString('tr-TR')} TL KAZANDI` : 'İADE ALINAMADI',
@@ -472,20 +500,21 @@ export async function GET() {
       };
     }
 
-    // Past Coupon 1 (Hibrit / Karma Vurgun) - Tamamı resmi İddaa İY/MS açılış oranlı maçlar
+    // Past Coupon 1 (Hibrit / Karma Vurgun) - Dün Kombine + İY/MS Karması
     const pastC1 = evaluatePastCoupon(
       'past-kupon-1',
       'Hibrit / Karma Vurgun Kuponu (Dün)',
       '06.10.2026 SONUÇLARI',
-      'Dün resmi bültende İY/MS açılış oranları bulunan ana lig maçlarından derlenen sistem kuponu sonuçları.',
+      'Dün resmi bültende İY/MS ve Kombine açılış oranları bulunan ana lig maçlarından derlenen sistem kuponu sonuçları.',
       'amber',
       [3, 4, 5],
       'Sistem 3, 4, 5',
       10,
-      pastPool.slice(0, 10)
+      [...pastComboPool.slice(0, 5), ...pastIymsPool.slice(0, 5)],
+      allPastPool
     );
 
-    // Past Coupon 2 (İY/MS Değer)
+    // Past Coupon 2 (İY/MS Değer) - Dün İY/MS Oranları
     const pastC2 = evaluatePastCoupon(
       'past-kupon-2',
       'İY/MS & Sürpriz Değer Kuponu (Dün)',
@@ -495,23 +524,25 @@ export async function GET() {
       [3, 4, 5],
       'Sistem 3, 4, 5',
       10,
-      pastPool.slice(0, 10)
+      pastIymsPool.slice(0, 10),
+      pastIymsPool
     );
 
-    // Past Coupon 3 (Kombine & İY/MS Dengeli)
+    // Past Coupon 3 (Kombine & Gol Kilidi) - Dün Kombine (MS+Gol) Oranları
     const pastC3 = evaluatePastCoupon(
       'past-kupon-3',
-      'Kombine & İY/MS Kilidi (Dün)',
+      'Kombine & Gol Kilidi (Dün)',
       '06.10.2026 SONUÇLARI',
-      'Dün bültende resmi oranları bulunan maçların sonuçları.',
+      'Dün bültende resmi kombine ve gol oranları bulunan maçların sonuçları.',
       'cyan',
       [3, 4, 5],
       'Sistem 3, 4, 5',
       10,
-      pastPool.slice(0, 10)
+      pastComboPool.slice(0, 10),
+      pastComboPool
     );
 
-    // Past Coupon 4 (Büyük Vurgun 9 Maç)
+    // Past Coupon 4 (Büyük Vurgun 9 Maç) - Dün Yüksek Çarpanlı Sistem
     const pastC4 = evaluatePastCoupon(
       'past-kupon-4',
       'Büyük Vurgun / Çılgın Sistem (Dün)',
@@ -521,7 +552,8 @@ export async function GET() {
       [3, 4, 5, 6],
       'Sistem 3, 4, 5, 6',
       9,
-      pastPool.slice(0, 9)
+      [...pastComboPool.slice(0, 5), ...pastIymsPool.slice(0, 4)],
+      allPastPool
     );
 
     const pastCoupons = [pastC1, pastC2, pastC3, pastC4];

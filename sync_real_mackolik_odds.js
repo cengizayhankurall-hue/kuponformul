@@ -226,6 +226,7 @@ async function run() {
 
   // Dünün maçlarının popup oranlarını paralel çek
   const pastIyMsList = [];
+  const pastComboList = [];
   const Y_CHUNK = 10;
   for (let i = 0; i < yesterdayMatches.length; i += Y_CHUNK) {
     const chunk = yesterdayMatches.slice(i, i + Y_CHUNK);
@@ -236,14 +237,24 @@ async function run() {
         if (res.status === 200 && res.text && res.text.startsWith('{')) {
           const pJson = JSON.parse(res.text);
           const parsed = parsePopupMarkets(pJson);
-          if (parsed && parsed.openedIyMs) {
+          if (!parsed) return null;
+
+          const hgAg = m.score.split('-').map(s => parseInt(s.trim()) || 0);
+          const hg = hgAg[0];
+          const ag = hgAg[1];
+          const totalGoals = hg + ag;
+          const isKgVar = hg > 0 && ag > 0;
+          const msWinner = hg > ag ? '1' : hg < ag ? '2' : 'X';
+
+          let pastIyms = null;
+          if (parsed.openedIyMs) {
             const opened = {};
             Object.entries(parsed.openedIyMs).forEach(([k, v]) => opened[k] = v.toFixed(2));
             let topKey = parsed.odds.ms1 < parsed.odds.ms2 ? '1/1' : '2/2';
             if (!opened[topKey]) topKey = Object.keys(opened)[0];
             const isHit = m.actualOutcome === topKey;
 
-            return {
+            pastIyms = {
               id: m.id,
               eventId: m.eventId,
               code: m.code,
@@ -260,11 +271,68 @@ async function run() {
               topOutcome: { key: topKey, count: 12, rate: 60 }
             };
           }
+
+          let pastCombo = null;
+          if (parsed.openedCombos) {
+            const combos = Object.entries(parsed.openedCombos).map(([name, oddVal]) => {
+              let won = false;
+              if (name === 'MS 1 & 2.5 ÜST') won = msWinner === '1' && totalGoals >= 3;
+              else if (name === 'MS 2 & 2.5 ÜST') won = msWinner === '2' && totalGoals >= 3;
+              else if (name === 'MS 1 & 2.5 ALT') won = msWinner === '1' && totalGoals <= 2;
+              else if (name === 'MS 2 & 2.5 ALT') won = msWinner === '2' && totalGoals <= 2;
+              else if (name === 'MS 1 & KG VAR') won = msWinner === '1' && isKgVar;
+              else if (name === 'MS 2 & KG VAR') won = msWinner === '2' && isKgVar;
+              else if (name === 'MS 1 & KG YOK') won = msWinner === '1' && !isKgVar;
+              else if (name === 'MS 2 & KG YOK') won = msWinner === '2' && !isKgVar;
+
+              return {
+                name,
+                estOdd: oddVal.toFixed(2),
+                rate: name.includes('1') ? 52 : name.includes('2') ? 48 : 35,
+                won
+              };
+            }).sort((a, b) => parseFloat(a.estOdd) - parseFloat(b.estOdd));
+
+            if (combos.length > 0) {
+              const ms1 = parsed.odds.ms1 || 2.0;
+              const ms2 = parsed.odds.ms2 || 2.0;
+              let bestCombo = combos[0];
+              if (ms1 < ms2) {
+                const c1 = combos.find(c => c.name.includes('MS 1 & 2.5 ÜST')) || combos.find(c => c.name.includes('MS 1'));
+                if (c1) bestCombo = c1;
+              } else {
+                const c2 = combos.find(c => c.name.includes('MS 2 & 2.5 ÜST')) || combos.find(c => c.name.includes('MS 2'));
+                if (c2) bestCombo = c2;
+              }
+
+              pastCombo = {
+                id: m.id,
+                eventId: m.eventId,
+                code: m.code,
+                homeTeam: m.homeTeam,
+                awayTeam: m.awayTeam,
+                league: m.league,
+                date: m.date,
+                time: m.time,
+                score: m.score,
+                iyScore: m.iyScore,
+                combos,
+                topCombo: bestCombo,
+                isTopHit: bestCombo.won
+              };
+            }
+          }
+
+          return { pastIyms, pastCombo };
         }
       } catch {}
       return null;
     }));
-    results.forEach(r => { if (r) pastIyMsList.push(r); });
+
+    results.forEach(r => {
+      if (r?.pastIyms) pastIyMsList.push(r.pastIyms);
+      if (r?.pastCombo) pastComboList.push(r.pastCombo);
+    });
   }
 
   // 2. BUGÜN VE GELECEK GÜNLERİN MAÇLARI (07.10.2026+)
@@ -437,7 +505,7 @@ async function run() {
     availableDates: [...new Set(comboList.map(m => m.date))],
     availableLeagues: [...new Set(comboList.map(m => m.league))],
     matches: comboList,
-    pastMatches: pastIyMsList
+    pastMatches: pastComboList
   };
 
   fs.writeFileSync('data/iy_ms_cache.json', JSON.stringify(iymsPayload, null, 2));
