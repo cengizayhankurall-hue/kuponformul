@@ -62,7 +62,7 @@ interface SystemCoupon {
   title: string;
   badge: string;
   description: string;
-  theme: 'amber' | 'emerald' | 'purple' | 'cyan';
+  theme: 'amber' | 'emerald' | 'purple' | 'cyan' | 'indigo' | 'rose' | 'blue';
   systemSizes: number[];
   systemLabel: string;
   totalMatches: number;
@@ -403,13 +403,16 @@ export default function SistemKuponlariPage() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {(viewMode === 'today' ? data?.coupons : data?.yesterday?.coupons)?.map((coupon, idx) => {
                 const isActive = activeCoupon?.id === coupon.id;
                 let themeClasses = 'border-amber-500 bg-amber-500/10 text-amber-400';
                 if (coupon.theme === 'purple') themeClasses = 'border-purple-500 bg-purple-500/10 text-purple-400';
                 if (coupon.theme === 'cyan') themeClasses = 'border-cyan-500 bg-cyan-500/10 text-cyan-400';
                 if (coupon.theme === 'emerald') themeClasses = 'border-emerald-500 bg-emerald-500/10 text-emerald-400';
+                if (coupon.theme === 'indigo') themeClasses = 'border-indigo-500 bg-indigo-500/10 text-indigo-400';
+                if (coupon.theme === 'rose') themeClasses = 'border-rose-500 bg-rose-500/10 text-rose-400';
+                if (coupon.theme === 'blue') themeClasses = 'border-blue-500 bg-blue-500/10 text-blue-400';
 
                 return (
                   <button

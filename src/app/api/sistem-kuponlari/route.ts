@@ -36,7 +36,7 @@ export interface SystemCoupon {
   title: string;
   badge: string;
   description: string;
-  theme: 'amber' | 'emerald' | 'purple' | 'cyan';
+  theme: 'amber' | 'emerald' | 'purple' | 'cyan' | 'indigo' | 'rose' | 'blue';
   systemSizes: number[];
   systemLabel: string;
   totalMatches: number;
@@ -372,7 +372,117 @@ export async function GET() {
       return getUniqueMatches([...anchors, ...mids, ...megas], fallbackPool, 9);
     }
 
-    const allMatchesPool = [...comboAnchor, ...iymsAnchor, ...comboHigh, ...iymsHigh, ...iymsMega];
+    // Saf Maç Sonucu Havuzu (1.70 - 3.20)
+    const safMsMatches: SystemMatch[] = [];
+    rawYuksek.forEach((m: any, idx: number) => {
+      const ms1 = m.odds?.ms1 || 0;
+      const ms2 = m.odds?.ms2 || 0;
+      const ms0 = m.odds?.ms0 || 0;
+
+      if (ms1 >= 1.70 && ms1 <= 2.85) {
+        safMsMatches.push({
+          id: `saf_ms1_${m.code || idx}_${m.homeTeam}`,
+          code: m.code || String(400 + idx),
+          homeTeam: m.homeTeam,
+          awayTeam: m.awayTeam,
+          league: m.league || 'BÜLTEN',
+          date: m.date || todayTargetDate,
+          time: m.time || '20:00',
+          marketType: 'ms',
+          marketName: 'Maç Sonucu',
+          choice: 'MS 1',
+          odd: ms1,
+          reason: `İddaa Açılış Oranı: ${ms1.toFixed(2)} | Ev Sahibi Galibiyeti`
+        });
+      } else if (ms2 >= 1.70 && ms2 <= 3.20) {
+        safMsMatches.push({
+          id: `saf_ms2_${m.code || idx}_${m.homeTeam}`,
+          code: m.code || String(400 + idx),
+          homeTeam: m.homeTeam,
+          awayTeam: m.awayTeam,
+          league: m.league || 'BÜLTEN',
+          date: m.date || todayTargetDate,
+          time: m.time || '20:00',
+          marketType: 'ms',
+          marketName: 'Maç Sonucu',
+          choice: 'MS 2',
+          odd: ms2,
+          reason: `İddaa Açılış Oranı: ${ms2.toFixed(2)} | Deplasman Galibiyeti`
+        });
+      } else if (ms0 >= 2.90 && ms0 <= 3.60) {
+        safMsMatches.push({
+          id: `saf_ms0_${m.code || idx}_${m.homeTeam}`,
+          code: m.code || String(400 + idx),
+          homeTeam: m.homeTeam,
+          awayTeam: m.awayTeam,
+          league: m.league || 'BÜLTEN',
+          date: m.date || todayTargetDate,
+          time: m.time || '20:00',
+          marketType: 'ms',
+          marketName: 'Maç Sonucu',
+          choice: 'MS X',
+          odd: ms0,
+          reason: `İddaa Açılış Oranı: ${ms0.toFixed(2)} | Beraberlik Değeri`
+        });
+      }
+    });
+
+    // Gol Bahisleri Havuzu (2.5 ÜST, 2.5 ALT, KG VAR)
+    const golMatches: SystemMatch[] = [];
+    rawYuksek.forEach((m: any, idx: number) => {
+      const ust25 = m.odds?.ust25 || 0;
+      const alt25 = m.odds?.alt25 || 0;
+      const kgVar = m.odds?.kgVar || 0;
+
+      if (ust25 >= 1.70 && ust25 <= 2.60) {
+        golMatches.push({
+          id: `gol_ust_${m.code || idx}_${m.homeTeam}`,
+          code: m.code || String(500 + idx),
+          homeTeam: m.homeTeam,
+          awayTeam: m.awayTeam,
+          league: m.league || 'BÜLTEN',
+          date: m.date || todayTargetDate,
+          time: m.time || '20:00',
+          marketType: 'goals',
+          marketName: 'Toplam Gol',
+          choice: '2.5 ÜST',
+          odd: ust25,
+          reason: `İddaa Açılış Oranı: ${ust25.toFixed(2)} | Tempolu Gol Beklentisi`
+        });
+      } else if (alt25 >= 1.75 && alt25 <= 2.45) {
+        golMatches.push({
+          id: `gol_alt_${m.code || idx}_${m.homeTeam}`,
+          code: m.code || String(500 + idx),
+          homeTeam: m.homeTeam,
+          awayTeam: m.awayTeam,
+          league: m.league || 'BÜLTEN',
+          date: m.date || todayTargetDate,
+          time: m.time || '20:00',
+          marketType: 'goals',
+          marketName: 'Toplam Gol',
+          choice: '2.5 ALT',
+          odd: alt25,
+          reason: `İddaa Açılış Oranı: ${alt25.toFixed(2)} | Savunma ve Düşük Skor`
+        });
+      } else if (kgVar >= 1.70 && kgVar <= 2.40) {
+        golMatches.push({
+          id: `gol_kg_${m.code || idx}_${m.homeTeam}`,
+          code: m.code || String(500 + idx),
+          homeTeam: m.homeTeam,
+          awayTeam: m.awayTeam,
+          league: m.league || 'BÜLTEN',
+          date: m.date || todayTargetDate,
+          time: m.time || '20:00',
+          marketType: 'goals',
+          marketName: 'Karşılıklı Gol',
+          choice: 'KG VAR',
+          odd: kgVar,
+          reason: `İddaa Açılış Oranı: ${kgVar.toFixed(2)} | İki Takım da Skor Üretir`
+        });
+      }
+    });
+
+    const allMatchesPool = [...comboAnchor, ...iymsAnchor, ...comboHigh, ...iymsHigh, ...iymsMega, ...safMsMatches, ...golMatches];
 
     // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
     // 2 Banko (1.80-1.99) + 8 Yüksek Oran (3.00+)
@@ -505,6 +615,96 @@ export async function GET() {
       targetProfitBadge: `${c4Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
+    // --- KUPON 5: DÜŞÜK BÜTÇELİ KASA KİLİDİ (6 Maç - Sistem 3, 4) ---
+    // 1.80 - 2.80 arası 6 maç, 35 TL kupon bedeli
+    const coupon5Matches = getUniqueMatches([...safMsMatches, ...golMatches], allMatchesPool, 6);
+    const c5Odds = coupon5Matches.map(m => m.odd);
+    const c5Payouts = generatePayoutTable(c5Odds, [3, 4], 1);
+    const c5Max = c5Payouts.length > 0 ? c5Payouts[c5Payouts.length - 1].maxPayout : 1800;
+
+    const coupon5: SystemCoupon = {
+      id: 'kupon-5',
+      title: 'Düşük Bütçeli Kasa Kilidi',
+      badge: '35 TL / BÜTÇE DOSTU',
+      description: '1.80 - 2.80 arası istikrarlı saf maç sonucu ve gol tercihlerinden oluşan 35 TL bütçeli temiz sistem.',
+      theme: 'indigo',
+      systemSizes: [3, 4],
+      systemLabel: 'Sistem 3, 4',
+      totalMatches: 6,
+      totalColumns: 35,
+      misli: 1,
+      cost: 35,
+      minOdds: c5Odds.length > 0 ? Math.min(...c5Odds) : 0,
+      maxOdds: c5Odds.length > 0 ? Math.max(...c5Odds) : 0,
+      avgOdds: c5Odds.length > 0 ? Number((c5Odds.reduce((a, b) => a + b, 0) / c5Odds.length).toFixed(2)) : 0,
+      matches: coupon5Matches,
+      payoutTable: c5Payouts,
+      targetProfitBadge: `${c5Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
+    };
+
+    // --- KUPON 6: GOL FIRTINASI / DİNAMİK SKOR MODELİ (7 Maç - Sistem 3, 4, 5) ---
+    // 2.5 Üst, 2.5 Alt, KG Var tempolu goller (91 TL Kupon Bedeli)
+    const coupon6Matches = getUniqueMatches([...golMatches, ...comboAnchor], allMatchesPool, 7);
+    const c6Odds = coupon6Matches.map(m => m.odd);
+    const c6Payouts = generatePayoutTable(c6Odds, [3, 4, 5], 1);
+    const c6Max = c6Payouts.length > 0 ? c6Payouts[c6Payouts.length - 1].maxPayout : 9500;
+
+    const coupon6: SystemCoupon = {
+      id: 'kupon-6',
+      title: 'Gol Fırtınası / Dinamik Skor',
+      badge: '91 TL / GOL ODAKLI',
+      description: '2.5 Üst, 2.5 Alt ve KG Var seçeneklerinden oluşan taraf risksiz tempolu gol sistemi.',
+      theme: 'rose',
+      systemSizes: [3, 4, 5],
+      systemLabel: 'Sistem 3, 4, 5',
+      totalMatches: 7,
+      totalColumns: 91,
+      misli: 1,
+      cost: 91,
+      minOdds: c6Odds.length > 0 ? Math.min(...c6Odds) : 0,
+      maxOdds: c6Odds.length > 0 ? Math.max(...c6Odds) : 0,
+      avgOdds: c6Odds.length > 0 ? Number((c6Odds.reduce((a, b) => a + b, 0) / c6Odds.length).toFixed(2)) : 0,
+      matches: coupon6Matches,
+      payoutTable: c6Payouts,
+      targetProfitBadge: `${c6Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
+    };
+
+    // --- KUPON 7: TAM KARMA / HER ŞEY DAHİL MEGA MİKS (8 Maç - Sistem 4, 5, 6) ---
+    // Saf MS + Gol + Kombine + İY/MS (154 TL Kupon Bedeli)
+    const coupon7Matches = getUniqueMatches(
+      [
+        ...safMsMatches.slice(0, 2),
+        ...golMatches.slice(0, 2),
+        ...comboAnchor.slice(0, 2),
+        ...iymsHigh.slice(0, 2)
+      ],
+      allMatchesPool,
+      8
+    );
+    const c7Odds = coupon7Matches.map(m => m.odd);
+    const c7Payouts = generatePayoutTable(c7Odds, [4, 5, 6], 1);
+    const c7Max = c7Payouts.length > 0 ? c7Payouts[c7Payouts.length - 1].maxPayout : 45000;
+
+    const coupon7: SystemCoupon = {
+      id: 'kupon-7',
+      title: 'Tam Karma / Her Şey Dahil Miks',
+      badge: '154 TL / FULL HİBRİT',
+      description: 'Saf MS, Alt/Üst, MS+KG ve İY/MS tercihlerinin tümünü bir araya getiren 154 TL bütçeli zengin sepet.',
+      theme: 'blue',
+      systemSizes: [4, 5, 6],
+      systemLabel: 'Sistem 4, 5, 6',
+      totalMatches: 8,
+      totalColumns: 154,
+      misli: 1,
+      cost: 154,
+      minOdds: c7Odds.length > 0 ? Math.min(...c7Odds) : 0,
+      maxOdds: c7Odds.length > 0 ? Math.max(...c7Odds) : 0,
+      avgOdds: c7Odds.length > 0 ? Number((c7Odds.reduce((a, b) => a + b, 0) / c7Odds.length).toFixed(2)) : 0,
+      matches: coupon7Matches,
+      payoutTable: c7Payouts,
+      targetProfitBadge: `${c7Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
+    };
+
     // 2. YESTERDAY'S EVALUATED COUPONS (07.10.2026)
     // 07 Ekim'de oluşturulan 4 sistem kuponunun gerçek maç skorlarıyla otomatik değerlendirilmesi
     const m_Urawa_Combo: SystemMatch = { id: 'past_71', code: '74271', homeTeam: 'Urawa', awayTeam: 'Omiya', league: 'JPK', date: '07.10.2026', time: '12:00', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & 2.5 ÜST', odd: 1.99, score: '3 - 2', iyScore: '0 - 0', won: true, reason: 'İddaa Açılış: 1.99 | Sonuç: 3-2 (MS 1 & 2.5 Üst)' };
@@ -532,7 +732,7 @@ export async function GET() {
       title: string,
       badge: string,
       description: string,
-      theme: 'amber' | 'emerald' | 'purple' | 'cyan',
+      theme: 'amber' | 'emerald' | 'purple' | 'cyan' | 'indigo' | 'rose' | 'blue',
       systemSizes: number[],
       systemLabel: string,
       matches: SystemMatch[]
@@ -689,7 +889,7 @@ export async function GET() {
       success: true,
       timestamp: Date.now(),
       date: new Date().toLocaleDateString('tr-TR'),
-      coupons: [coupon1, coupon2, coupon3, coupon4],
+      coupons: [coupon1, coupon2, coupon3, coupon4, coupon5, coupon6, coupon7],
       yesterday: yesterdaySummary
     });
   } catch (error: any) {
