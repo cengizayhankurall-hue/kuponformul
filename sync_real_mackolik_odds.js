@@ -183,10 +183,18 @@ function parsePopupMarkets(popupJson) {
 async function run() {
   console.log('=== MAÇKOLİK RESMİ AÇILIŞ ORANLARI VE GEÇMİŞ SONUÇLAR SENKRONİZASYONU ===');
 
-  // 1. DÜNÜN MAÇLARI (06.10.2026) VE SONUÇLARI
+  // 1. DÜNÜN MAÇLARI (OTOMATİK: TODAY - 1) VE SONUÇLARI
   const yesterdayMatches = [];
+  const yd = new Date();
+  yd.setDate(yd.getDate() - 1);
+  const ydd = String(yd.getDate()).padStart(2, '0');
+  const ymm = String(yd.getMonth() + 1).padStart(2, '0');
+  const yyyyy = yd.getFullYear();
+  const yesterdaySlash = `${ydd}/${ymm}/${yyyyy}`;
+  const yesterdayDot = `${ydd}.${ymm}.${yyyyy}`;
+
   try {
-    const yUrl = `https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=06/10/2026&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`;
+    const yUrl = `https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${yesterdaySlash}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`;
     const yRes = await httpsGet(yUrl);
     if (yRes.status === 200 && yRes.text && yRes.text.length > 50) {
       const obj = new Function(`return ${yRes.text}`)();
@@ -209,7 +217,7 @@ async function run() {
               homeTeam: String(m[1]).trim(),
               awayTeam: String(m[3]).trim(),
               league,
-              date: '06.10.2026',
+              date: yesterdayDot,
               time: String(m[6] || '20:00').trim(),
               score: `${hg} - ${ag}`,
               iyScore: `${iyhg} - ${iyag}`,
