@@ -324,6 +324,7 @@ async function run() {
                 time: m.time,
                 score: m.score,
                 iyScore: m.iyScore,
+                odds: parsed.odds,
                 combos,
                 topCombo: bestCombo,
                 isTopHit: bestCombo.won

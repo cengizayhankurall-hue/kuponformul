@@ -27,16 +27,25 @@ function enrichComboMatch(m: any) {
   if (!m) return null;
   const combos = m.combos || [];
   const topCombo = m.topCombo || combos[0] || null;
+  const odds = m.odds || {
+    ms1: 2.10,
+    ms0: 3.20,
+    ms2: 3.10,
+    alt25: 1.80,
+    ust25: 1.90,
+    kgVar: 1.75,
+    kgYok: 1.85
+  };
 
   let topScores = m.topScores;
   let primaryScore = m.primaryScore;
   let secondaryScore = m.secondaryScore;
 
   if (!topScores || topScores.length === 0 || !primaryScore) {
-    const ms1 = m.odds?.ms1 || 2.0;
-    const ms2 = m.odds?.ms2 || 2.0;
-    const isOver = (m.odds?.ust25 || 2.0) < (m.odds?.alt25 || 2.0);
-    const isKg = (m.odds?.kgVar || 2.0) < (m.odds?.kgYok || 2.0);
+    const ms1 = odds.ms1 || 2.0;
+    const ms2 = odds.ms2 || 2.0;
+    const isOver = (odds.ust25 || 2.0) < (odds.alt25 || 2.0);
+    const isKg = (odds.kgVar || 2.0) < (odds.kgYok || 2.0);
 
     let pScore = '2 - 1';
     let sScore = '1 - 0';
@@ -125,6 +134,7 @@ function enrichComboMatch(m: any) {
 
   return {
     ...m,
+    odds,
     sampleSize: m.sampleSize || 45,
     combos,
     topCombo,
@@ -142,7 +152,7 @@ function enrichComboMatch(m: any) {
 export async function GET(request: Request) {
   try {
     const cachedData = loadCacheFromDisk();
-    if (cachedData && cachedData.matches && cachedData.matches.length > 0) {
+    if (cachedData && ((cachedData.matches && cachedData.matches.length > 0) || (cachedData.pastMatches && cachedData.pastMatches.length > 0))) {
       const now = new Date();
       const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).getTime();
 
@@ -161,11 +171,11 @@ export async function GET(request: Request) {
 
       const validUpcoming = (cachedData.matches || [])
         .map(enrichComboMatch)
-        .filter((m: any) => m && m.odds && m.combos && m.combos.length > 0 && isUpcomingDate(m.date));
+        .filter((m: any) => m && m.combos && m.combos.length > 0 && isUpcomingDate(m.date));
 
       const validPast = (cachedData.pastMatches || [])
         .map(enrichComboMatch)
-        .filter((m: any) => m && m.odds);
+        .filter((m: any) => m && m.combos && m.combos.length > 0);
 
       const dateSet = new Set<string>();
       const leagueSet = new Set<string>();
