@@ -189,6 +189,7 @@ export async function GET() {
     // KURAL: En az 2 tane 1.80 - 1.99 banko/dayanak oran + geri kalanı 3.00 ve üzeri yüksek çarpan oranları
     const iymsAnchor: SystemMatch[] = [];
     const iymsHigh: SystemMatch[] = [];
+    const iymsMega: SystemMatch[] = [];
 
     rawIyms.forEach((m: any, idx: number) => {
       const op = m.openedOdds || {};
@@ -243,6 +244,29 @@ export async function GET() {
             choice: `${k} (İY/MS)`,
             odd: val,
             reason: `İddaa Açılış Oranı: ${val.toFixed(2)} | Yüksek Değer Çarpanı`
+          });
+          break;
+        }
+      }
+
+      // 7.00 ve üzeri MEGA Çarpanlı sürpriz/vurgun maçlar (Çılgın Sistem İçin)
+      const megaKeys = ['X/2', '2/2', 'X/1', '1/X', '2/X', '2/1', '1/2'];
+      for (const k of megaKeys) {
+        const val = parseFloat(op[k]);
+        if (val >= 7.00 && val <= 35.00) {
+          iymsMega.push({
+            id: `iyms_mega_${m.code || idx}_${m.homeTeam}`,
+            code: m.code || String(300 + idx),
+            homeTeam: m.homeTeam,
+            awayTeam: m.awayTeam,
+            league: m.league || 'BÜLTEN',
+            date: m.date || todayTargetDate,
+            time: m.time || '20:00',
+            marketType: 'iy_ms',
+            marketName: 'İY / MS',
+            choice: `${k} (İY/MS)`,
+            odd: val,
+            reason: `İddaa Açılış Oranı: ${val.toFixed(2)} | Mega Vurgun Çarpanı`
           });
           break;
         }
@@ -328,7 +352,27 @@ export async function GET() {
       return getUniqueMatches([...anchors, ...highs], fallbackPool, neededTotal);
     }
 
-    const allMatchesPool = [...comboAnchor, ...iymsAnchor, ...comboHigh, ...iymsHigh];
+    // Çılgın Sistem Formülü: 2 Dayanak (1.80-2.00) + 3 Orta (3.00-5.00) + 4 Mega (7.00+)
+    function buildCrazyCoupon(
+      anchorList: SystemMatch[],
+      midList: SystemMatch[],
+      megaList: SystemMatch[],
+      fallbackPool: SystemMatch[]
+    ): SystemMatch[] {
+      const anchors = getUniqueMatches(anchorList, fallbackPool, 2);
+      const anchorTeams = new Set(anchors.map(a => a.homeTeam));
+
+      const filteredMid = midList.filter(m => !anchorTeams.has(m.homeTeam));
+      const mids = getUniqueMatches(filteredMid, fallbackPool, 3);
+      const midTeams = new Set([...anchorTeams, ...mids.map(m => m.homeTeam)]);
+
+      const filteredMega = megaList.filter(m => !midTeams.has(m.homeTeam));
+      const megas = getUniqueMatches(filteredMega, fallbackPool, 4);
+
+      return getUniqueMatches([...anchors, ...mids, ...megas], fallbackPool, 9);
+    }
+
+    const allMatchesPool = [...comboAnchor, ...iymsAnchor, ...comboHigh, ...iymsHigh, ...iymsMega];
 
     // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
     // 2 Banko (1.80-1.99) + 8 Yüksek Oran (3.00+)
@@ -430,23 +474,22 @@ export async function GET() {
     };
 
     // --- KUPON 4: BÜYÜK VURGUN / ÇILGIN SİSTEM (9 Maç - Sistem 3, 4, 5, 6) ---
-    // 2 Banko (1.80-1.99) + 7 Yüksek Oran (3.00+)
-    const coupon4Matches = buildFormulaCoupon(
-      2,
-      7,
+    // 2 Dayanak (1.80-2.00) + 3 Orta Değer (3.00-5.00) + 4 Mega Vurgun (7.00+)
+    const coupon4Matches = buildCrazyCoupon(
       [...comboAnchor, ...iymsAnchor],
       [...comboHigh, ...iymsHigh],
+      iymsMega,
       allMatchesPool
     );
     const c4Odds = coupon4Matches.map(m => m.odd);
     const c4Payouts = generatePayoutTable(c4Odds, [3, 4, 5, 6], 1);
-    const c4Max = c4Payouts.length > 0 ? c4Payouts[c4Payouts.length - 1].maxPayout : 160000;
+    const c4Max = c4Payouts.length > 0 ? c4Payouts[c4Payouts.length - 1].maxPayout : 350000;
 
     const coupon4: SystemCoupon = {
       id: 'kupon-4',
       title: 'Büyük Vurgun / Çılgın Sistem',
-      badge: '420 TL / 6 MAÇTA 75K+',
-      description: '420 TL kupon bedeliyle, 2 dayanak ve 7 adet 3.00+ oranlı maçtan oluşan mega kazanç modeli.',
+      badge: '420 TL / 3 KADEMELİ MEGA VURGUN',
+      description: '2 adet dayanak (1.80-2.00), 3 adet orta değer (3.00-5.00) ve 4 adet mega çarpanlı (7.00+) 9 maçlık çılgın sistem.',
       theme: 'emerald',
       systemSizes: [3, 4, 5, 6],
       systemLabel: 'Sistem 3, 4, 5, 6',
