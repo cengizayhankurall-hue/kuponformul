@@ -214,94 +214,103 @@ export async function GET() {
 
     // -------------------------------------------------------------
     // 2. YESTERDAY'S EVALUATED DAILY COUPONS (08.10.2026)
+    // Veritabanındaki (past_matches) gerçek resmi maç skorları:
+    // - Kuopion vs Oulu: 0 - 1 (Kuopion 0-1 kaybetti, YATTI ❌)
+    // - Helsinki vs Vaasa: 6 - 0 (TUTTU ✅)
+    // - Shamrock Rover vs Drogheda: 3 - 1 (TUTTU ✅)
+    // - Fluminense vs Coritiba: 4 - 0 (TUTTU ✅)
+    // - Palmeiras vs Bahia: 1 - 0 (TUTTU ✅)
+    // - Ceara vs Criciuma: 1 - 0 (TUTTU ✅)
+    // - Santos vs Flamengo: 2 - 2 (TUTTU ✅)
+    // - Nautico vs Novorizontino: 0 - 2 (TUTTU ✅)
     // -------------------------------------------------------------
-    const pastM_Kuopion: DailyMatchItem = { id: 'pm1', code: '74131', homeTeam: 'Kuopion', awayTeam: 'Oulu', league: 'FİN', date: '08.10.2026', time: '18:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.45, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'Sonuç: 2-0 (MS 1 TUTTU)' };
-    const pastM_Helsinki: DailyMatchItem = { id: 'pm2', code: '74130', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: '08.10.2026', time: '18:00', marketName: 'Maç Sonucu & Gol', choice: 'MS 1 & 2.5 ÜST', odd: 2.10, score: '6 - 0', iyScore: '2 - 0', won: true, reason: 'Sonuç: 6-0 (MS 1 & 2.5 Üst TUTTU)' };
-    const pastM_Shamrock: DailyMatchItem = { id: 'pm3', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.38, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'Sonuç: 2-1 (MS 1 TUTTU)' };
-    const pastM_Vitoria: DailyMatchItem = { id: 'pm4', code: '74302', homeTeam: 'Vitoria Bahia', awayTeam: 'Chapecoense', league: 'BR1', date: '08.10.2026', time: '02:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.55, score: '4 - 0', iyScore: '1 - 0', won: true, reason: 'Sonuç: 4-0 (MS 1 TUTTU)' };
-    const pastM_Cruzeiro: DailyMatchItem = { id: 'pm5', code: '74304', homeTeam: 'Cruzeiro', awayTeam: 'Sao Paulo', league: 'BR1', date: '08.10.2026', time: '03:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.85, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'Sonuç: 2-0 (MS 1 TUTTU)' };
-    const pastM_Internacional: DailyMatchItem = { id: 'pm6', code: '74301', homeTeam: 'Internacional', awayTeam: 'Corinthians', league: 'BR1', date: '08.10.2026', time: '01:30', marketName: 'Karşılıklı Gol', choice: 'KG VAR', odd: 1.78, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'Sonuç: 2-1 (KG Var TUTTU)' };
-    const pastM_Botafogo: DailyMatchItem = { id: 'pm7', code: '74303', homeTeam: 'Botafogo', awayTeam: 'Vasco Da Gama', league: 'BR1', date: '08.10.2026', time: '02:30', marketName: 'Maç Sonucu', choice: 'MS 2', odd: 2.15, score: '1 - 2', iyScore: '0 - 1', won: true, reason: 'Sonuç: 1-2 (MS 2 TUTTU)' };
-    const pastM_Bragantino: DailyMatchItem = { id: 'pm8', code: '74306', homeTeam: 'Bragantino', awayTeam: 'Mirassol', league: 'BR1', date: '08.10.2026', time: '01:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.65, score: '1 - 1', iyScore: '0 - 0', won: false, reason: 'Sonuç: 1-1 (KAYBETTİ)' };
+    const pastM_Kuopion: DailyMatchItem = { id: 'pm1', code: '74131', homeTeam: 'Kuopion', awayTeam: 'Oulu', league: 'FİN', date: '08.10.2026', time: '19:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.33, score: '0 - 1', iyScore: '0-1', won: false, reason: 'Resmi Skor: 0-1 (Kuopion kaybetti, YATTI ❌)' };
+    const pastM_Helsinki: DailyMatchItem = { id: 'pm2', code: '74130', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: '08.10.2026', time: '18:00', marketName: 'Maç Sonucu & Gol', choice: 'MS 1 & 2.5 ÜST', odd: 2.10, score: '6 - 0', iyScore: '3-0', won: true, reason: 'Resmi Skor: 6-0 (MS 1 & 2.5 Üst TUTTU ✅)' };
+    const pastM_Shamrock: DailyMatchItem = { id: 'pm3', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.38, score: '3 - 1', iyScore: '3-0', won: true, reason: 'Resmi Skor: 3-1 (MS 1 TUTTU ✅)' };
+    const pastM_Fluminense: DailyMatchItem = { id: 'pm4', code: '74307', homeTeam: 'Fluminense', awayTeam: 'Coritiba', league: 'BR1', date: '08.10.2026', time: '02:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.62, score: '4 - 0', iyScore: '1-0', won: true, reason: 'Resmi Skor: 4-0 (MS 1 TUTTU ✅)' };
+    const pastM_Palmeiras: DailyMatchItem = { id: 'pm5', code: '74308', homeTeam: 'Palmeiras', awayTeam: 'Bahia', league: 'BR1', date: '08.10.2026', time: '03:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.58, score: '1 - 0', iyScore: '1-0', won: true, reason: 'Resmi Skor: 1-0 (MS 1 TUTTU ✅)' };
+    const pastM_Ceara: DailyMatchItem = { id: 'pm6', code: '74309', homeTeam: 'Ceara', awayTeam: 'Criciuma', league: 'BR1', date: '08.10.2026', time: '01:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.70, score: '1 - 0', iyScore: '0-0', won: true, reason: 'Resmi Skor: 1-0 (MS 1 TUTTU ✅)' };
+    const pastM_Santos: DailyMatchItem = { id: 'pm7', code: '74310', homeTeam: 'Santos', awayTeam: 'Flamengo', league: 'BR1', date: '08.10.2026', time: '02:30', marketName: 'Karşılıklı Gol', choice: 'KG VAR', odd: 1.82, score: '2 - 2', iyScore: '0-2', won: true, reason: 'Resmi Skor: 2-2 (KG Var TUTTU ✅)' };
+    const pastM_Nautico: DailyMatchItem = { id: 'pm8', code: '74311', homeTeam: 'Nautico', awayTeam: 'Novorizontino', league: 'BR1', date: '08.10.2026', time: '01:30', marketName: 'Maç Sonucu', choice: 'MS 2', odd: 2.10, score: '0 - 2', iyScore: '0-2', won: true, reason: 'Resmi Skor: 0-2 (MS 2 TUTTU ✅)' };
 
-    // Past Coupon 1: Günün İdeal Bankosu (Dün) -> 3/3 KAZANDI (4.20 Oran)
+    // Past Coupon 1: İdeal Banko Kombine (Dün) -> Kuopion (0-1 Yattı), Helsinki (6-0 Tuttu), Shamrock (3-1 Tuttu) -> 2/3 KAYBETTİ
     const pC1_odds = Number((pastM_Kuopion.odd * pastM_Helsinki.odd * pastM_Shamrock.odd).toFixed(2));
     const pastCoupon1: DailyCoupon = {
       id: 'past-daily-1',
       title: 'İdeal Banko Kombine (Dün)',
-      badge: '4.20 ORAN / KAZANDI',
+      badge: '2/3 TUTTU (KAYBETTİ ❌)',
       category: 'banko',
       categoryLabel: 'Banko Kombine',
-      description: '08 Ekim resmi bülteninde Kuopion, Helsinki ve Shamrock maçlarıyla oynanan banko kombine.',
-      theme: 'emerald',
+      description: 'Kuopion 0-1 yenildiği için kupon yattı; Helsinki ve Shamrock maçları kazandı.',
+      theme: 'rose',
       totalMatches: 3,
       totalOdds: pC1_odds,
       suggestedStake: 100,
       potentialReturn: Number((pC1_odds * 100).toFixed(2)),
       matches: [pastM_Kuopion, pastM_Helsinki, pastM_Shamrock],
       isEvaluated: true,
-      isWinner: true,
-      wonMatchesCount: 3,
-      wonAmount: Number((pC1_odds * 100).toFixed(2))
+      isWinner: false,
+      wonMatchesCount: 2,
+      wonAmount: 0
     };
 
-    // Past Coupon 2: Değer & Form Kuponu (Dün) -> 4/4 KAZANDI (6.52 Oran)
-    const pC2_odds = Number((pastM_Vitoria.odd * pastM_Cruzeiro.odd * pastM_Shamrock.odd * pastM_Kuopion.odd).toFixed(2));
+    // Past Coupon 2: Değer & Form Kuponu (Dün) -> Fluminense, Palmeiras, Ceara, Shamrock -> 4/4 KAZANDI (5.99 Oran)
+    const pC2_odds = Number((pastM_Fluminense.odd * pastM_Palmeiras.odd * pastM_Ceara.odd * pastM_Shamrock.odd).toFixed(2));
     const pastCoupon2: DailyCoupon = {
       id: 'past-daily-2',
       title: 'İdeal Değer & Form Kuponu (Dün)',
-      badge: '6.52 ORAN / KAZANDI',
+      badge: '5.99 ORAN / KAZANDI ✅',
       category: 'ms_only',
       categoryLabel: 'Sadece MS',
-      description: 'Vitoria Bahia, Cruzeiro, Shamrock ve Kuopion galibiyetleriyle tam isabet sağlayan kombine.',
-      theme: 'amber',
+      description: 'Fluminense (4-0), Palmeiras (1-0), Ceara (1-0) ve Shamrock (3-1) galibiyetleriyle 4/4 tam isabet.',
+      theme: 'emerald',
       totalMatches: 4,
       totalOdds: pC2_odds,
       suggestedStake: 50,
       potentialReturn: Number((pC2_odds * 50).toFixed(2)),
-      matches: [pastM_Vitoria, pastM_Cruzeiro, pastM_Shamrock, pastM_Kuopion],
+      matches: [pastM_Fluminense, pastM_Palmeiras, pastM_Ceara, pastM_Shamrock],
       isEvaluated: true,
       isWinner: true,
       wonMatchesCount: 4,
       wonAmount: Number((pC2_odds * 50).toFixed(2))
     };
 
-    // Past Coupon 3: Gol & Skor Kuponu (Dün) -> 3/4 (1 Kayıp - 1.65 Bragantino)
-    const pC3_odds = Number((pastM_Helsinki.odd * pastM_Internacional.odd * pastM_Shamrock.odd * pastM_Bragantino.odd).toFixed(2));
+    // Past Coupon 3: Gol & KG Kuponu (Dün) -> Helsinki (6-0 Tuttu), Santos (2-2 Tuttu), Nautico (0-2 Tuttu), Kuopion (0-1 Yattı) -> 3/4 KAYBETTİ
+    const pC3_odds = Number((pastM_Helsinki.odd * pastM_Santos.odd * pastM_Nautico.odd * pastM_Kuopion.odd).toFixed(2));
     const pastCoupon3: DailyCoupon = {
       id: 'past-daily-3',
-      title: 'Gol & Skor Kuponu (Dün)',
-      badge: '3/4 TUTTU (KAYBETTİ)',
+      title: 'Gol & Taraf Kuponu (Dün)',
+      badge: '3/4 TUTTU (KAYBETTİ ❌)',
       category: 'ou_only',
       categoryLabel: 'Gol Kuponu',
-      description: 'Helsinki ve Internacional gollü maçları tuttu, Bragantino 1-1 beraberlikle sonuçlandı.',
-      theme: 'rose',
+      description: 'Helsinki, Santos ve Nautico maçları tuttu; Kuopion maçı 0-1 bittiği için kupon kaybetti.',
+      theme: 'amber',
       totalMatches: 4,
       totalOdds: pC3_odds,
       suggestedStake: 50,
       potentialReturn: Number((pC3_odds * 50).toFixed(2)),
-      matches: [pastM_Helsinki, pastM_Internacional, pastM_Shamrock, pastM_Bragantino],
+      matches: [pastM_Helsinki, pastM_Santos, pastM_Nautico, pastM_Kuopion],
       isEvaluated: true,
       isWinner: false,
       wonMatchesCount: 3,
       wonAmount: 0
     };
 
-    // Past Coupon 4: Brezilya & İskandinav Özel (Dün) -> 4/4 KAZANDI (10.15 Oran)
-    const pC4_odds = Number((pastM_Botafogo.odd * pastM_Vitoria.odd * pastM_Cruzeiro.odd * pastM_Helsinki.odd).toFixed(2));
+    // Past Coupon 4: Brezilya & İrlanda Kombini (Dün) -> Nautico (0-2), Fluminense (4-0), Ceara (1-0), Shamrock (3-1) -> 4/4 KAZANDI (7.97 Oran)
+    const pC4_odds = Number((pastM_Nautico.odd * pastM_Fluminense.odd * pastM_Ceara.odd * pastM_Shamrock.odd).toFixed(2));
     const pastCoupon4: DailyCoupon = {
       id: 'past-daily-4',
-      title: 'Brezilya & İskandinav Özel (Dün)',
-      badge: '10.15 ORAN / KAZANDI',
+      title: 'Brezilya & İrlanda Özel (Dün)',
+      badge: '7.97 ORAN / KAZANDI ✅',
       category: 'special',
       categoryLabel: 'Özel Kupon',
-      description: 'Botafogo deplasmanı, Vitoria, Cruzeiro ve Helsinki ile 10.15 oranlı yüksek kazanç.',
+      description: 'Nautico (MS 2), Fluminense (MS 1), Ceara (MS 1) ve Shamrock (MS 1) ile 7.97 oranlı net kazanç.',
       theme: 'purple',
       totalMatches: 4,
       totalOdds: pC4_odds,
       suggestedStake: 30,
       potentialReturn: Number((pC4_odds * 30).toFixed(2)),
-      matches: [pastM_Botafogo, pastM_Vitoria, pastM_Cruzeiro, pastM_Helsinki],
+      matches: [pastM_Nautico, pastM_Fluminense, pastM_Ceara, pastM_Shamrock],
       isEvaluated: true,
       isWinner: true,
       wonMatchesCount: 4,
