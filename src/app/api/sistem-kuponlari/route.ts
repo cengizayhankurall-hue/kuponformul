@@ -820,48 +820,46 @@ export async function GET() {
       };
     }
 
-    // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
-    // 2 Banko + 8 Yüksek Oranlı Majör Avrupa Maçları (Tamamı 09.10.2026)
+    // --- KUPON 1: HİBRİT / KARMA VURGUN (9 Maç - Sistem 4, 5, 6) ---
+    // 50.000+ TL Hedefli Dengeli Majör Avrupa Hibrit Sistemi (09.10.2026)
     const c1Defs = [
-      masterMatchCatalogue[0], // B.Dortmund vs Werder Bremen (1/1 1.51)
-      masterMatchCatalogue[1], // PSV Eindhoven vs Heerenveen (MS 1 & 2.5 ÜST 1.45)
-      masterMatchCatalogue[2], // Lens vs Lyon (KG VAR & 2.5 ÜST 1.85)
-      masterMatchCatalogue[3], // Braga vs Sporting CP (MS 2 & KG VAR 3.65)
-      masterMatchCatalogue[4], // Heidenheim vs Kaiserslautern (MS 1 & 2.5 ÜST 2.35)
-      masterMatchCatalogue[5], // Montpellier vs Grenoble (MS 1 1.44)
-      masterMatchCatalogue[6], // Breda vs Maastricht (1/1 1.47)
-      masterMatchCatalogue[7], // Shelbourne vs Sligo (MS 1 1.16)
-      masterMatchCatalogue[8], // Avellino vs Sampdoria (KG VAR 1.83)
-      masterMatchCatalogue[9]  // Sepsi vs Dinamo Bükreş (MS 2 1.45)
+      masterMatchCatalogue[4],  // Heidenheim vs Kaiserslautern (MS 1 & 2.5 ÜST 2.35)
+      masterMatchCatalogue[2],  // Lens vs Lyon (KG VAR & 2.5 ÜST 1.85)
+      masterMatchCatalogue[3],  // Braga vs Sporting CP (MS 2 & KG VAR 3.65)
+      masterMatchCatalogue[5],  // Montpellier vs Grenoble (MS 1 & 2.5 ALT 2.80)
+      masterMatchCatalogue[8],  // Avellino vs Sampdoria (KG VAR 1.83)
+      masterMatchCatalogue[10], // Nancy vs Guingamp (1/1 2.75)
+      masterMatchCatalogue[12], // Pau FC vs Stade Lavallois (1/1 2.85)
+      masterMatchCatalogue[9],  // Sepsi vs Dinamo Bükreş (2/2 2.25)
+      masterMatchCatalogue[34]  // Rakow Czestochowa vs Katowice (1/1 2.65)
     ];
     const coupon1Matches: SystemMatch[] = [
-      makeMatch(c1Defs[0], 'anchorIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c1Defs[0], 'anchorCombo', 'Kombine & Skor', 'combo'),
       makeMatch(c1Defs[1], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c1Defs[2], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c1Defs[3], 'highCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c1Defs[4], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c1Defs[5], 'safMs', 'Maç Sonucu', 'ms'),
-      makeMatch(c1Defs[6], 'anchorIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c1Defs[7], 'safMs', 'Maç Sonucu', 'ms'),
-      makeMatch(c1Defs[8], 'goals', 'Karşılıklı Gol', 'goals'),
-      makeMatch(c1Defs[9], 'safMs', 'Maç Sonucu', 'ms')
+      makeMatch(c1Defs[2], 'highCombo', 'Kombine & Skor', 'combo'),
+      makeMatch(c1Defs[3], 'anchorCombo', 'Kombine & Skor', 'combo'),
+      makeMatch(c1Defs[4], 'goals', 'Karşılıklı Gol', 'goals'),
+      makeMatch(c1Defs[5], 'highIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c1Defs[6], 'highIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c1Defs[7], 'highIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c1Defs[8], 'highIyms', 'İY / MS', 'iy_ms')
     ];
     const c1Odds = coupon1Matches.map(m => m.odd);
-    const c1Payouts = generatePayoutTable(c1Odds, [3, 4, 5], 1);
-    const c1Max = c1Payouts.length > 0 ? c1Payouts[c1Payouts.length - 1].maxPayout : 135000;
+    const c1Payouts = generatePayoutTable(c1Odds, [4, 5, 6], 1);
+    const c1Max = c1Payouts.length > 0 ? c1Payouts[c1Payouts.length - 1].maxPayout : 50000;
 
     const coupon1: SystemCoupon = {
       id: 'kupon-1',
       title: 'Hibrit / Karma Vurgun Kuponu',
-      badge: 'EN ÇOK TERCİH EDİLEN',
-      description: 'Dortmund, PSV, Lens, Braga ve Montpellier gibi majör lig maçlarından oluşan dengeli hibrit sistem.',
+      badge: '336 TL / 50.000 TL HEDEF',
+      description: 'Dortmund, Lens, Braga, Nancy ve Pau gibi majör lig maçlarından oluşan 50.000 TL kazanç hedefli Sistem 4, 5, 6 modeli.',
       theme: 'amber',
-      systemSizes: [3, 4, 5],
-      systemLabel: 'Sistem 3, 4, 5',
-      totalMatches: 10,
-      totalColumns: 582,
+      systemSizes: [4, 5, 6],
+      systemLabel: 'Sistem 4, 5, 6',
+      totalMatches: 9,
+      totalColumns: 336,
       misli: 1,
-      cost: 582,
+      cost: 336,
       minOdds: c1Odds.length > 0 ? Math.min(...c1Odds) : 0,
       maxOdds: c1Odds.length > 0 ? Math.max(...c1Odds) : 0,
       avgOdds: c1Odds.length > 0 ? Number((c1Odds.reduce((a, b) => a + b, 0) / c1Odds.length).toFixed(2)) : 0,
@@ -870,11 +868,9 @@ export async function GET() {
       targetProfitBadge: `${c1Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
-    // --- KUPON 2: İY/MS & SÜRPRİZ DEĞER (10 Maç - Sistem 3, 4, 5) ---
-    // Tamamı İY/MS baremleri İddaa'da resmi olarak AÇIK maçlar (09.10.2026)
+    // --- KUPON 2: İY/MS & SÜRPRİZ DEĞER (9 Maç - Sistem 4, 5, 6, 7) ---
+    // 400.000+ TL Hedefli Yüksek İY/MS Sistemi (09.10.2026)
     const c2Defs = [
-      masterMatchCatalogue[14], // Almere City vs Fc Eindhoven (1/1 1.65)
-      masterMatchCatalogue[18], // Dender vs Club Brugge II (1/1 1.75)
       masterMatchCatalogue[10], // Nancy vs Guingamp (1/1 2.75)
       masterMatchCatalogue[11], // Sochaux vs Boulogne (X/1 4.80)
       masterMatchCatalogue[12], // Pau FC vs Laval (1/1 2.85)
@@ -882,36 +878,36 @@ export async function GET() {
       masterMatchCatalogue[15], // Braunschweig vs Kiel (2/2 3.20)
       masterMatchCatalogue[16], // Amstetten vs Linz (2/2 2.95)
       masterMatchCatalogue[17], // Kapfenberg vs Wien II (X/2 4.90)
-      masterMatchCatalogue[19]  // Stade Nyonnais vs Aarau (2/2 1.85)
+      masterMatchCatalogue[34], // Rakow Czestochowa vs Katowice (1/1 2.65)
+      masterMatchCatalogue[32]  // Ajax B vs VVV Venlo (2/2 2.85)
     ];
     const coupon2Matches: SystemMatch[] = [
-      makeMatch(c2Defs[0], 'anchorIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c2Defs[1], 'anchorIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c2Defs[0], 'highIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c2Defs[1], 'highIyms', 'İY / MS', 'iy_ms'),
       makeMatch(c2Defs[2], 'highIyms', 'İY / MS', 'iy_ms'),
       makeMatch(c2Defs[3], 'highIyms', 'İY / MS', 'iy_ms'),
       makeMatch(c2Defs[4], 'highIyms', 'İY / MS', 'iy_ms'),
       makeMatch(c2Defs[5], 'highIyms', 'İY / MS', 'iy_ms'),
       makeMatch(c2Defs[6], 'highIyms', 'İY / MS', 'iy_ms'),
       makeMatch(c2Defs[7], 'highIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c2Defs[8], 'highIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c2Defs[9], 'highIyms', 'İY / MS', 'iy_ms')
+      makeMatch(c2Defs[8], 'highIyms', 'İY / MS', 'iy_ms')
     ];
     const c2Odds = coupon2Matches.map(m => m.odd);
-    const c2Payouts = generatePayoutTable(c2Odds, [3, 4, 5], 1);
-    const c2Max = c2Payouts.length > 0 ? c2Payouts[c2Payouts.length - 1].maxPayout : 185000;
+    const c2Payouts = generatePayoutTable(c2Odds, [4, 5, 6, 7], 1);
+    const c2Max = c2Payouts.length > 0 ? c2Payouts[c2Payouts.length - 1].maxPayout : 440000;
 
     const coupon2: SystemCoupon = {
       id: 'kupon-2',
       title: 'İY/MS & Sürpriz Değer Kuponu',
-      badge: 'YÜKSEK ÇARPAN',
-      description: 'Fransa 2, Almanya 2, Hollanda 2 ve Avusturya gibi İY/MS oranları açık majör liglerden 10 maçlık sistem.',
+      badge: '372 TL / 440.000 TL HEDEF',
+      description: 'Fransa 2, Almanya 2 ve Avusturya liglerinden İY/MS baremi açık maçlarla 440.000 TL hedefli Sistem 4, 5, 6, 7 modeli.',
       theme: 'purple',
-      systemSizes: [3, 4, 5],
-      systemLabel: 'Sistem 3, 4, 5',
-      totalMatches: 10,
-      totalColumns: 582,
+      systemSizes: [4, 5, 6, 7],
+      systemLabel: 'Sistem 4, 5, 6, 7',
+      totalMatches: 9,
+      totalColumns: 372,
       misli: 1,
-      cost: 582,
+      cost: 372,
       minOdds: c2Odds.length > 0 ? Math.min(...c2Odds) : 0,
       maxOdds: c2Odds.length > 0 ? Math.max(...c2Odds) : 0,
       avgOdds: c2Odds.length > 0 ? Number((c2Odds.reduce((a, b) => a + b, 0) / c2Odds.length).toFixed(2)) : 0,
@@ -920,8 +916,8 @@ export async function GET() {
       targetProfitBadge: `${c2Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
-    // --- KUPON 3: KOMBİNE & GOL KİLİDİ (10 Maç - Sistem 3, 4, 5) ---
-    // Hollanda, İrlanda ve Galler liglerinden MS + 2.5 ÜST / KG Kombinasyonları (09.10.2026)
+    // --- KUPON 3: KOMBİNE & GOL KİLİDİ (9 Maç - Sistem 4, 5, 6, 7) ---
+    // 140.000+ TL Hedefli MS + 2.5 Üst & Skor Kombine Sistemi (09.10.2026)
     const c3Defs = [
       masterMatchCatalogue[20], // De Graafschap vs Utrecht II (MS 1 & 2.5 ÜST 1.70)
       masterMatchCatalogue[21], // Heracles vs Waalwijk (MS 1 & 2.5 ÜST 1.62)
@@ -930,9 +926,8 @@ export async function GET() {
       masterMatchCatalogue[24], // RSC Anderlecht II vs Eupen (MS 2 & 2.5 ÜST 2.15)
       masterMatchCatalogue[25], // Bohemian vs Waterford (MS 1 & 2.5 ÜST 1.85)
       masterMatchCatalogue[26], // Bray Wanderers vs Wexford (MS 1 & 2.5 ÜST 1.80)
-      masterMatchCatalogue[27], // Athlone vs Treaty (MS 1 & 2.5 ÜST 1.68)
-      masterMatchCatalogue[28], // Cardiff MU vs Trefelin (MS 1 & 2.5 ÜST 1.55)
-      masterMatchCatalogue[29]  // Cambrian vs Ammanford (MS 1 & 2.5 ÜST 1.58)
+      masterMatchCatalogue[46], // Llandudno vs Airbus UK (MS 1 & KG VAR 3.20)
+      masterMatchCatalogue[3]   // Braga vs Sporting CP (MS 2 & KG VAR 3.65)
     ];
     const coupon3Matches: SystemMatch[] = [
       makeMatch(c3Defs[0], 'anchorCombo', 'Kombine & Skor', 'combo'),
@@ -942,26 +937,25 @@ export async function GET() {
       makeMatch(c3Defs[4], 'highCombo', 'Kombine & Skor', 'combo'),
       makeMatch(c3Defs[5], 'anchorCombo', 'Kombine & Skor', 'combo'),
       makeMatch(c3Defs[6], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[7], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[8], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[9], 'anchorCombo', 'Kombine & Skor', 'combo')
+      makeMatch(c3Defs[7], 'highCombo', 'Kombine & Skor', 'combo'),
+      makeMatch(c3Defs[8], 'highCombo', 'Kombine & Skor', 'combo')
     ];
     const c3Odds = coupon3Matches.map(m => m.odd);
-    const c3Payouts = generatePayoutTable(c3Odds, [3, 4, 5], 1);
-    const c3Max = c3Payouts.length > 0 ? c3Payouts[c3Payouts.length - 1].maxPayout : 110000;
+    const c3Payouts = generatePayoutTable(c3Odds, [4, 5, 6, 7], 1);
+    const c3Max = c3Payouts.length > 0 ? c3Payouts[c3Payouts.length - 1].maxPayout : 140000;
 
     const coupon3: SystemCoupon = {
       id: 'kupon-3',
       title: 'Kombine & Gol Kilidi',
-      badge: 'GOL & SKOR MODELİ',
-      description: 'Hollanda 2, İrlanda ve Galler liglerinden MS + 2.5 Üst ve MS & KG kombinasyonlu sistem.',
+      badge: '372 TL / 140.000 TL HEDEF',
+      description: 'Hollanda, İrlanda ve Portekiz liglerinden MS + 2.5 Üst ve MS & KG kombinasyonlu 140.000 TL kazanç hedefli sistem.',
       theme: 'cyan',
-      systemSizes: [3, 4, 5],
-      systemLabel: 'Sistem 3, 4, 5',
-      totalMatches: 10,
-      totalColumns: 582,
+      systemSizes: [4, 5, 6, 7],
+      systemLabel: 'Sistem 4, 5, 6, 7',
+      totalMatches: 9,
+      totalColumns: 372,
       misli: 1,
-      cost: 582,
+      cost: 372,
       minOdds: c3Odds.length > 0 ? Math.min(...c3Odds) : 0,
       maxOdds: c3Odds.length > 0 ? Math.max(...c3Odds) : 0,
       avgOdds: c3Odds.length > 0 ? Number((c3Odds.reduce((a, b) => a + b, 0) / c3Odds.length).toFixed(2)) : 0,
@@ -970,46 +964,46 @@ export async function GET() {
       targetProfitBadge: `${c3Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
-    // --- KUPON 4: BÜYÜK VURGUN / ÇILGIN SİSTEM (9 Maç - Sistem 3, 4, 5, 6) ---
-    // Yüksek Çarpanlı Sürpriz İY/MS Tercihleri (09.10.2026)
+    // --- KUPON 4: BÜYÜK VURGUN / ÇILGIN MİLYONER SİSTEMİ (9 Maç - Sistem 5, 6, 7) ---
+    // 6.200.000+ TL MİLYONLUK VURGUN HEDEFİ (09.10.2026)
     const c4Defs = [
-      masterMatchCatalogue[37], // P. Bielsko vs Pogon Siedlce (1/1 2.50)
-      masterMatchCatalogue[38], // Waasland Beveren vs Lommel (1/1 2.45)
-      masterMatchCatalogue[34], // Rakow Czestochowa vs Katowice (1/1 2.65)
-      masterMatchCatalogue[35], // Belçika K vs Polonya K (1/1 2.45)
-      masterMatchCatalogue[36], // First Vienna vs St Polten (1/1 2.80)
+      masterMatchCatalogue[11], // Sochaux vs Boulogne (X/1 4.80)
+      masterMatchCatalogue[13], // Dunkerque vs Annecy (X/1 4.60)
       masterMatchCatalogue[30], // Malaga vs Espanyol (X/2 5.20)
       masterMatchCatalogue[31], // Dordrecht vs Emmen (X/2 4.75)
-      masterMatchCatalogue[32], // Ajax B vs VVV Venlo (2/2 2.85)
-      masterMatchCatalogue[33]  // Etoile Carouge vs Yverdon (X/2 4.40)
+      masterMatchCatalogue[33], // Etoile Carouge vs Yverdon (X/2 4.40)
+      masterMatchCatalogue[17], // Kapfenberg vs Wien II (X/2 4.90)
+      masterMatchCatalogue[8],  // Avellino vs Sampdoria (X/1 4.80)
+      masterMatchCatalogue[2],  // Lens vs Lyon (X/1 4.60)
+      masterMatchCatalogue[3]   // Braga vs Sporting CP (X/2 4.75)
     ];
     const coupon4Matches: SystemMatch[] = [
       makeMatch(c4Defs[0], 'highIyms', 'İY / MS', 'iy_ms'),
       makeMatch(c4Defs[1], 'highIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c4Defs[2], 'highIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c4Defs[3], 'highIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c4Defs[4], 'highIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c4Defs[5], 'megaIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c4Defs[6], 'megaIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c4Defs[2], 'megaIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c4Defs[3], 'megaIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c4Defs[4], 'megaIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c4Defs[5], 'highIyms', 'İY / MS', 'iy_ms'),
+      makeMatch(c4Defs[6], 'highIyms', 'İY / MS', 'iy_ms'),
       makeMatch(c4Defs[7], 'highIyms', 'İY / MS', 'iy_ms'),
-      makeMatch(c4Defs[8], 'megaIyms', 'İY / MS', 'iy_ms')
+      makeMatch(c4Defs[8], 'highIyms', 'İY / MS', 'iy_ms')
     ];
     const c4Odds = coupon4Matches.map(m => m.odd);
-    const c4Payouts = generatePayoutTable(c4Odds, [3, 4, 5, 6], 1);
-    const c4Max = c4Payouts.length > 0 ? c4Payouts[c4Payouts.length - 1].maxPayout : 395000;
+    const c4Payouts = generatePayoutTable(c4Odds, [5, 6, 7], 1);
+    const c4Max = c4Payouts.length > 0 ? c4Payouts[c4Payouts.length - 1].maxPayout : 6200000;
 
     const coupon4: SystemCoupon = {
       id: 'kupon-4',
-      title: 'Büyük Vurgun / Çılgın Sistem',
-      badge: '420 TL / 3 KADEMELİ MEGA VURGUN',
-      description: 'İspanya, Hollanda, İsviçre ve Polonya liglerinden yüksek çarpanlı İY/MS seçimli 9 maçlık çılgın sistem.',
+      title: 'Büyük Vurgun / Çılgın Milyoner',
+      badge: '246 TL / 6.2 MİLYON TL VURGUN',
+      description: 'İspanya, Portekiz, Fransa ve İsviçre liglerinden 4.40 - 5.20 arası İY/MS oranlarıyla 6.2 Milyon TL jackpot hedefli Sistem 5, 6, 7 modeli.',
       theme: 'emerald',
-      systemSizes: [3, 4, 5, 6],
-      systemLabel: 'Sistem 3, 4, 5, 6',
+      systemSizes: [5, 6, 7],
+      systemLabel: 'Sistem 5, 6, 7',
       totalMatches: 9,
-      totalColumns: 420,
+      totalColumns: 246,
       misli: 1,
-      cost: 420,
+      cost: 246,
       minOdds: c4Odds.length > 0 ? Math.min(...c4Odds) : 0,
       maxOdds: c4Odds.length > 0 ? Math.max(...c4Odds) : 0,
       avgOdds: c4Odds.length > 0 ? Number((c4Odds.reduce((a, b) => a + b, 0) / c4Odds.length).toFixed(2)) : 0,
