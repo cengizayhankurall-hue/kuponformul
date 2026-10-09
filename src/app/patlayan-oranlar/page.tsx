@@ -526,21 +526,21 @@ export default function PatlayanOranlarPage() {
 
                     {/* TEAMS & SCORES */}
                     <div className={`p-4 rounded-2xl border my-3 ${
-                      isDark ? 'bg-black/30 border-white/5' : 'bg-slate-50 border-slate-200/90'
+                      isDark ? 'bg-black/40 border-white/10' : 'bg-slate-50 border-slate-200/90'
                     }`}>
                       <div className="flex items-center justify-between gap-4">
-                        <div className="flex-1 space-y-1.5">
+                        <div className="flex-1 space-y-2">
                           {/* Ev Sahibi */}
                           <div className="flex items-center gap-2">
-                            <span className={`text-sm md:text-base font-black truncate ${
+                            <span className={`text-sm md:text-base font-black tracking-tight truncate ${
                               isHomeFav 
-                                ? 'text-rose-500' 
+                                ? 'text-rose-400' 
                                 : isDark ? 'text-white' : 'text-slate-900'
                             }`}>
                               {m.homeTeam}
                             </span>
                             {isHomeFav && (
-                              <span className={`px-1.5 py-0.5 rounded text-[10px] font-black shrink-0 ${
+                              <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black shrink-0 ${
                                 isDark 
                                   ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' 
                                   : 'bg-rose-100 text-rose-800 border border-rose-300'
@@ -552,15 +552,15 @@ export default function PatlayanOranlarPage() {
 
                           {/* Deplasman */}
                           <div className="flex items-center gap-2">
-                            <span className={`text-sm md:text-base font-black truncate ${
+                            <span className={`text-sm md:text-base font-black tracking-tight truncate ${
                               !isHomeFav 
-                                ? 'text-rose-500' 
-                                : isDark ? 'text-slate-300' : 'text-slate-800'
+                                ? 'text-rose-400' 
+                                : isDark ? 'text-slate-100' : 'text-slate-800'
                             }`}>
                               {m.awayTeam}
                             </span>
                             {!isHomeFav && (
-                              <span className={`px-1.5 py-0.5 rounded text-[10px] font-black shrink-0 ${
+                              <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black shrink-0 ${
                                 isDark 
                                   ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' 
                                   : 'bg-rose-100 text-rose-800 border border-rose-300'
@@ -573,10 +573,10 @@ export default function PatlayanOranlarPage() {
 
                         {/* SCORE BADGES */}
                         <div className="flex flex-col items-center gap-1 shrink-0 text-right">
-                          <div className="text-xl md:text-2xl font-black text-rose-600 tracking-wider">
+                          <div className="text-xl md:text-2xl font-black text-rose-500 tracking-wider">
                             {m.score}
                           </div>
-                          <span className={`text-[11px] font-bold ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>
+                          <span className={`text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                             İY: {m.iyScore}
                           </span>
                         </div>

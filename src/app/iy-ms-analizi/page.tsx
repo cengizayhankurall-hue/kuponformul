@@ -933,21 +933,21 @@ export default function IyMsAnaliziPage() {
 
                       {/* TEAMS BOX */}
                       <div className={`p-4 rounded-2xl border my-3 ${
-                        isDark ? 'bg-black/30 border-white/5' : 'bg-slate-50 border-slate-200/90'
+                        isDark ? 'bg-black/40 border-white/10' : 'bg-slate-50 border-slate-200/90'
                       }`}>
-                        <div className="space-y-1.5">
+                        <div className="space-y-2">
                           <div className="flex items-center justify-between gap-2">
-                            <span className={`text-base md:text-lg font-black truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            <span className={`text-base md:text-lg font-black tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
                               {m.homeTeam}
                             </span>
-                            <span className={`text-xs font-bold ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Ev</span>
+                            <span className={`text-xs font-bold shrink-0 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Ev</span>
                           </div>
 
                           <div className="flex items-center justify-between gap-2">
-                            <span className={`text-base md:text-lg font-black truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                            <span className={`text-base md:text-lg font-black tracking-tight truncate ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
                               {m.awayTeam}
                             </span>
-                            <span className={`text-xs font-bold ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Dep</span>
+                            <span className={`text-xs font-bold shrink-0 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Dep</span>
                           </div>
                         </div>
                       </div>

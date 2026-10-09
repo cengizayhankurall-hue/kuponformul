@@ -788,34 +788,38 @@ export default function YuksekOranAnaliziPage() {
                   )}
 
                   {/* Team Names */}
-                  <div className="mb-4">
-                    <div className="text-base font-black truncate">{m.homeTeam}</div>
-                    <div className="text-base font-black truncate mt-0.5">{m.awayTeam}</div>
+                  <div className={`p-4 rounded-2xl border my-3 ${
+                    isDark ? 'bg-black/40 border-white/10' : 'bg-slate-50 border-slate-200/90'
+                  }`}>
+                    <div className="space-y-1.5">
+                      <div className={`text-base md:text-lg font-black tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{m.homeTeam}</div>
+                      <div className={`text-base md:text-lg font-black tracking-tight truncate ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>{m.awayTeam}</div>
+                    </div>
                   </div>
 
                   {/* Odds Box */}
                   <div className={`p-2.5 rounded-2xl border mb-4 text-xs font-semibold grid grid-cols-5 gap-1 text-center ${
-                    isDark ? 'bg-slate-950/80 border-slate-800/80 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                    isDark ? 'bg-slate-950/80 border-slate-800/80 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-800'
                   }`}>
                     <div>
-                      <span className="opacity-70 text-[10px] block">MS 1</span>
-                      <strong className="text-amber-400">{m.odds.ms1?.toFixed(2)}</strong>
+                      <span className={`text-[10px] font-bold block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>MS 1</span>
+                      <strong className="text-amber-400 text-xs">{m.odds.ms1?.toFixed(2)}</strong>
                     </div>
                     <div>
-                      <span className="opacity-70 text-[10px] block">MS X</span>
-                      <strong className="text-amber-400">{m.odds.ms0?.toFixed(2)}</strong>
+                      <span className={`text-[10px] font-bold block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>MS X</span>
+                      <strong className="text-amber-400 text-xs">{m.odds.ms0?.toFixed(2)}</strong>
                     </div>
                     <div>
-                      <span className="opacity-70 text-[10px] block">MS 2</span>
-                      <strong className="text-amber-400">{m.odds.ms2?.toFixed(2)}</strong>
+                      <span className={`text-[10px] font-bold block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>MS 2</span>
+                      <strong className="text-amber-400 text-xs">{m.odds.ms2?.toFixed(2)}</strong>
                     </div>
                     <div>
-                      <span className="opacity-70 text-[10px] block">2.5 ÜST</span>
-                      <strong className="text-emerald-400">{m.odds.ust25 ? m.odds.ust25.toFixed(2) : '-'}</strong>
+                      <span className={`text-[10px] font-bold block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>2.5 ÜST</span>
+                      <strong className="text-emerald-400 text-xs">{m.odds.ust25 ? m.odds.ust25.toFixed(2) : '-'}</strong>
                     </div>
                     <div>
-                      <span className="opacity-70 text-[10px] block">KG VAR</span>
-                      <strong className="text-purple-400">{m.odds.kgVar ? m.odds.kgVar.toFixed(2) : '-'}</strong>
+                      <span className={`text-[10px] font-bold block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>KG VAR</span>
+                      <strong className="text-purple-400 text-xs">{m.odds.kgVar ? m.odds.kgVar.toFixed(2) : '-'}</strong>
                     </div>
                   </div>
 

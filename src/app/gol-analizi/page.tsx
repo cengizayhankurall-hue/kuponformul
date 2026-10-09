@@ -844,21 +844,21 @@ export default function GolAnaliziPage() {
 
                           {/* TEAMS */}
                           <div className={`p-4 rounded-2xl border my-3 ${
-                            isDark ? 'bg-black/30 border-white/5' : 'bg-slate-50 border-slate-200/90'
+                            isDark ? 'bg-black/40 border-white/10' : 'bg-slate-50 border-slate-200/90'
                           }`}>
-                            <div className="space-y-1.5">
+                            <div className="space-y-2">
                               <div className="flex items-center justify-between gap-2">
-                                <span className={`text-base md:text-lg font-black truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                <span className={`text-base md:text-lg font-black tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
                                   {m.homeTeam}
                                 </span>
-                                <span className={`text-xs font-bold ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Ev Sahibi</span>
+                                <span className={`text-xs font-bold shrink-0 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Ev Sahibi</span>
                               </div>
 
                               <div className="flex items-center justify-between gap-2">
-                                <span className={`text-base md:text-lg font-black truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                                <span className={`text-base md:text-lg font-black tracking-tight truncate ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
                                   {m.awayTeam}
                                 </span>
-                                <span className={`text-xs font-bold ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Deplasman</span>
+                                <span className={`text-xs font-bold shrink-0 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Deplasman</span>
                               </div>
                             </div>
                           </div>
@@ -866,37 +866,37 @@ export default function GolAnaliziPage() {
                           {/* COMPARISON BOX */}
                           <div className={`p-3.5 rounded-2xl border mb-3 ${
                             isDark 
-                              ? 'bg-gradient-to-r from-emerald-950/30 via-slate-900/60 to-teal-950/30 border-emerald-900/40' 
+                              ? 'bg-gradient-to-r from-emerald-950/40 via-slate-900/80 to-teal-950/40 border-emerald-800/50' 
                               : 'bg-gradient-to-r from-emerald-50 via-slate-50 to-teal-50 border-emerald-200'
                           }`}>
                             <div className="grid grid-cols-2 gap-3">
                               <div className={`p-3 rounded-xl border text-center transition ${
-                                isDark ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+                                isDark ? 'bg-slate-900/90 border-slate-700' : 'bg-white border-slate-200 shadow-sm'
                               }`}>
-                                <div className={`text-[10px] font-black uppercase tracking-wider mb-1 ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>
+                                <div className={`text-xs font-black uppercase tracking-wider mb-1 ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>
                                   ⚽ Toplam 4.5 Gol Üst
                                 </div>
-                                <div className="text-2xl font-black text-emerald-500">
+                                <div className="text-2xl font-black text-emerald-400">
                                   {m.odd45Ust.toFixed(2)}
                                 </div>
                                 {m.odd45Alt && (
-                                  <div className={`text-[10px] mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-500 font-semibold'}`}>
+                                  <div className={`text-[11px] font-semibold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                                     Alt: {m.odd45Alt.toFixed(2)}
                                   </div>
                                 )}
                               </div>
 
                               <div className={`p-3 rounded-xl border text-center transition ${
-                                isDark ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+                                isDark ? 'bg-slate-900/90 border-slate-700' : 'bg-white border-slate-200 shadow-sm'
                               }`}>
-                                <div className={`text-[10px] font-black uppercase tracking-wider mb-1 ${isDark ? 'text-teal-400' : 'text-teal-700'}`}>
+                                <div className={`text-xs font-black uppercase tracking-wider mb-1 ${isDark ? 'text-teal-400' : 'text-teal-700'}`}>
                                   ⏱️ Her İki Yarı 1.5 Üst
                                 </div>
-                                <div className="text-2xl font-black text-teal-500">
+                                <div className="text-2xl font-black text-teal-400">
                                   {m.oddHerIkiYari15Ust.toFixed(2)}
                                 </div>
                                 {m.oddHerIkiYari15Alt && (
-                                  <div className={`text-[10px] mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-500 font-semibold'}`}>
+                                  <div className={`text-[11px] font-semibold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                                     Alt: {m.oddHerIkiYari15Alt.toFixed(2)}
                                   </div>
                                 )}
@@ -905,25 +905,25 @@ export default function GolAnaliziPage() {
                           </div>
 
                           {/* ODDS BAR */}
-                          <div className="grid grid-cols-5 gap-1.5 text-center text-[11px]">
-                            <div className={`p-1.5 rounded-lg border ${isDark ? 'bg-slate-900/50 border-slate-800 text-slate-300' : 'bg-slate-100/90 border-slate-200 text-slate-800 font-bold'}`}>
-                              <span className={`block text-[9px] font-semibold ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>MS 1</span>
+                          <div className="grid grid-cols-5 gap-1.5 text-center text-xs">
+                            <div className={`p-1.5 rounded-lg border font-bold ${isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-slate-100/90 border-slate-200 text-slate-800'}`}>
+                              <span className={`block text-[10px] font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>MS 1</span>
                               <span>{m.odds.ms1}</span>
                             </div>
-                            <div className={`p-1.5 rounded-lg border ${isDark ? 'bg-slate-900/50 border-slate-800 text-slate-300' : 'bg-slate-100/90 border-slate-200 text-slate-800 font-bold'}`}>
-                              <span className={`block text-[9px] font-semibold ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>MS 0</span>
+                            <div className={`p-1.5 rounded-lg border font-bold ${isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-slate-100/90 border-slate-200 text-slate-800'}`}>
+                              <span className={`block text-[10px] font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>MS 0</span>
                               <span>{m.odds.ms0}</span>
                             </div>
-                            <div className={`p-1.5 rounded-lg border ${isDark ? 'bg-slate-900/50 border-slate-800 text-slate-300' : 'bg-slate-100/90 border-slate-200 text-slate-800 font-bold'}`}>
-                              <span className={`block text-[9px] font-semibold ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>MS 2</span>
+                            <div className={`p-1.5 rounded-lg border font-bold ${isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-slate-100/90 border-slate-200 text-slate-800'}`}>
+                              <span className={`block text-[10px] font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>MS 2</span>
                               <span>{m.odds.ms2}</span>
                             </div>
-                            <div className={`p-1.5 rounded-lg border ${isDark ? 'bg-slate-900/50 border-slate-800 text-slate-300' : 'bg-slate-100/90 border-slate-200 text-slate-800 font-bold'}`}>
-                              <span className={`block text-[9px] font-semibold ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>2.5 ÜST</span>
+                            <div className={`p-1.5 rounded-lg border font-bold ${isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-slate-100/90 border-slate-200 text-slate-800'}`}>
+                              <span className={`block text-[10px] font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>2.5 ÜST</span>
                               <span>{m.odds.ust25}</span>
                             </div>
-                            <div className={`p-1.5 rounded-lg border ${isDark ? 'bg-slate-900/50 border-slate-800 text-slate-300' : 'bg-slate-100/90 border-slate-200 text-slate-800 font-bold'}`}>
-                              <span className={`block text-[9px] font-semibold ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>KG VAR</span>
+                            <div className={`p-1.5 rounded-lg border font-bold ${isDark ? 'bg-slate-900/80 border-slate-800 text-slate-200' : 'bg-slate-100/90 border-slate-200 text-slate-800'}`}>
+                              <span className={`block text-[10px] font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>KG VAR</span>
                               <span>{m.odds.kgVar}</span>
                             </div>
                           </div>
