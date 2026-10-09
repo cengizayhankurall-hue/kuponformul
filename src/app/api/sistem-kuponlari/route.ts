@@ -157,12 +157,6 @@ function getLiveOddForChoice(liveMatch: any, choice: string, fallbackOdd: number
   if (ch === '1-X' || ch === '1X' || ch === 'ÇŞ 1-X' || ch === 'ÇŞ 1X') return parseOdd(o.cs1X) ?? fallbackOdd;
   if (ch === 'X-2' || ch === 'X2' || ch === 'ÇŞ X-2' || ch === 'ÇŞ X2') return parseOdd(o.csX2) ?? fallbackOdd;
   if (ch === '1-2' || ch === '12' || ch === 'ÇŞ 1-2' || ch === 'ÇŞ 12') return parseOdd(o.cs12) ?? fallbackOdd;
-  if (ch.includes('&')) {
-    const ms1 = parseOdd(o.ms1);
-    const ust = parseOdd(o.ust25) || parseOdd(o.ust15);
-    if (ms1 && ust) return Number((ms1 * 1.20).toFixed(2));
-    if (ms1) return Number((ms1 * 1.22).toFixed(2));
-  }
   return fallbackOdd;
 }
 
@@ -262,8 +256,6 @@ export async function GET() {
         anchorIyms?: { choice: string; odd: number; reason: string };
         highIyms?: { choice: string; odd: number; reason: string };
         megaIyms?: { choice: string; odd: number; reason: string };
-        anchorCombo?: { choice: string; odd: number; reason: string };
-        highCombo?: { choice: string; odd: number; reason: string };
         safMs?: { choice: string; odd: number; reason: string };
         goals?: { choice: string; odd: number; reason: string };
       };
@@ -292,7 +284,6 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:00',
         markets: {
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.45, reason: 'İddaa Açılış: 1.45 | PSV İç Saha Hücum Gücü' },
           safMs: { choice: 'MS 1', odd: 1.14, reason: 'İddaa Açılış: 1.14 | Liderlik Hedefi ve Net Galibiyet' },
           goals: { choice: '2.5 ÜST', odd: 1.20, reason: 'İddaa Açılış: 1.20 | Hollanda Eredivisie Yüksek Skor' }
         }
@@ -305,7 +296,6 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:45',
         markets: {
-          anchorCombo: { choice: 'KG VAR & 2.5 ÜST', odd: 1.85, reason: 'İddaa Açılış: 1.85 | Fransa Ligue 1 Tempolu Kapışma' },
           highIyms: { choice: 'X/1 (İY/MS)', odd: 4.60, reason: 'İddaa Açılış: 4.60 | İkinci Yarı Bollaert-Delelis Baskısı' },
           goals: { choice: 'KG VAR', odd: 1.62, reason: 'İddaa Açılış: 1.62 | İki Tarafın Karşılıklı Skor Üretkenliği' },
           safMs: { choice: 'MS 1', odd: 2.11, reason: 'İddaa Açılış: 2.11 | Saha ve Seyirci Avantajı' }
@@ -320,7 +310,6 @@ export async function GET() {
         time: '22:15',
         markets: {
           highIyms: { choice: 'X/2 (İY/MS)', odd: 4.75, reason: 'İddaa Açılış: 4.75 | Portekiz Dev Maç İkinci Yarı Kilidi' },
-          highCombo: { choice: 'MS 2 & KG VAR', odd: 3.65, reason: 'İddaa Açılış: 3.65 | Sporting Galibiyeti ve Karşılıklı Skor' },
           goals: { choice: '2.5 ÜST', odd: 1.78, reason: 'İddaa Açılış: 1.78 | Tempolu Zirve Mücadelesi' },
           safMs: { choice: 'MS 2', odd: 2.07, reason: 'İddaa Açılış: 2.07 | Lider Formu' }
         }
@@ -334,8 +323,8 @@ export async function GET() {
         time: '19:30',
         markets: {
           anchorIyms: { choice: '1/1 (İY/MS)', odd: 2.50, reason: 'İddaa Açılış: 2.50 | Bundesliga 2 Erken Üstünlük' },
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 2.35, reason: 'İddaa Açılış: 2.35 | Ev Sahibi Temposu ve 3+ Gol' },
-          safMs: { choice: 'MS 1', odd: 1.76, reason: 'İddaa Açılış: 1.76 | İç Saha Gücü' }
+          safMs: { choice: 'MS 1', odd: 1.76, reason: 'İddaa Açılış: 1.76 | İç Saha Gücü' },
+          goals: { choice: '2.5 ÜST', odd: 1.55, reason: 'İddaa Açılış: 1.55 | Tempolu Hücum Mücadelesi' }
         }
       },
       {
@@ -348,7 +337,7 @@ export async function GET() {
         markets: {
           anchorIyms: { choice: '1/1 (İY/MS)', odd: 2.15, reason: 'İddaa Açılış: 2.15 | Kalite Farkı ve Erken Gol' },
           safMs: { choice: 'MS 1', odd: 1.44, reason: 'İddaa Açılış: 1.44 | Stade de la Mosson Avantajı' },
-          anchorCombo: { choice: 'MS 1 & 2.5 ALT', odd: 2.80, reason: 'İddaa Açılış: 2.80 | Kontrollü 2-0 Galibiyeti' }
+          goals: { choice: '2.5 ALT', odd: 1.85, reason: 'İddaa Açılış: 1.85 | Kontrollü Savunma Futbolu' }
         }
       },
       {
@@ -361,7 +350,7 @@ export async function GET() {
         markets: {
           anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.47, reason: 'İddaa Açılış: 1.47 | Breda Net Erken Hakimiyet' },
           safMs: { choice: 'MS 1', odd: 1.14, reason: 'İddaa Açılış: 1.14 | Farklı Sınıf Farkı' },
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.48, reason: 'İddaa Açılış: 1.48 | Farklı Galibiyet ve Çok Gol' }
+          goals: { choice: '2.5 ÜST', odd: 1.30, reason: 'İddaa Açılış: 1.30 | Farklı Galibiyet ve Bol Gol' }
         }
       },
       {
@@ -374,7 +363,7 @@ export async function GET() {
         markets: {
           anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.51, reason: 'İddaa Açılış: 1.51 | Şampiyonluk Adayı Erken Gol' },
           safMs: { choice: 'MS 1', odd: 1.16, reason: 'İddaa Açılış: 1.16 | İrlanda Premier Ligi Zirve Takibi' },
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.70, reason: 'İddaa Açılış: 1.70 | Rahat Galibiyet' }
+          goals: { choice: '2.5 ÜST', odd: 1.45, reason: 'İddaa Açılış: 1.45 | Rahat Galibiyet ve Skor Üretimi' }
         }
       },
       {
@@ -532,9 +521,8 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:00',
         markets: {
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.70, reason: 'İddaa Açılış: 1.70 | De Vijverberg Hücum Fırtınası' },
-          safMs: { choice: 'MS 1', odd: 1.44, reason: 'İddaa Açılış: 1.44 | Kalite Üstünlüğü' },
-          goals: { choice: '2.5 ÜST', odd: 1.17, reason: 'İddaa Açılış: 1.17 | Bol Pozisyon ve Yüksek Skor' }
+          safMs: { choice: 'MS 1', odd: 1.44, reason: 'İddaa Açılış: 1.44 | Kalite Üstünlüğü ve De Vijverberg Baskısı' },
+          goals: { choice: '2.5 ÜST', odd: 1.45, reason: 'İddaa Açılış: 1.45 | Bol Pozisyon ve Yüksek Skor' }
         }
       },
       {
@@ -545,8 +533,8 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:00',
         markets: {
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.62, reason: 'İddaa Açılış: 1.62 | Heracles İç Saha Üretkenliği' },
-          safMs: { choice: 'MS 1', odd: 1.31, reason: 'İddaa Açılış: 1.31 | Net Ev Galibiyeti' }
+          safMs: { choice: 'MS 1', odd: 1.31, reason: 'İddaa Açılış: 1.31 | Net Ev Galibiyeti' },
+          goals: { choice: '2.5 ÜST', odd: 1.40, reason: 'İddaa Açılış: 1.40 | Heracles Hücum Üretkenliği' }
         }
       },
       {
@@ -557,7 +545,7 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:00',
         markets: {
-          highCombo: { choice: 'MS 1 & KG VAR', odd: 3.30, reason: 'İddaa Açılış: 3.30 | Gollü Ev Sahibi Galibiyeti' },
+          safMs: { choice: 'MS 1', odd: 1.45, reason: 'İddaa Açılış: 1.45 | Ev Sahibi Formu' },
           goals: { choice: '2.5 ÜST', odd: 1.23, reason: 'İddaa Açılış: 1.23 | Tempolu Açık Futbol' }
         }
       },
@@ -569,8 +557,8 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:00',
         markets: {
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.85, reason: 'İddaa Açılış: 1.85 | Parkstad Limburg Galibiyeti ve 3+ Gol' },
-          safMs: { choice: 'MS 1', odd: 1.51, reason: 'İddaa Açılış: 1.51 | Liderlik Mücadelesi' }
+          safMs: { choice: 'MS 1', odd: 1.51, reason: 'İddaa Açılış: 1.51 | Liderlik Mücadelesi ve Parkstad Galibiyeti' },
+          goals: { choice: '2.5 ÜST', odd: 1.45, reason: 'İddaa Açılış: 1.45 | Tempolu Hücum Mücadelesi' }
         }
       },
       {
@@ -581,8 +569,8 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:00',
         markets: {
-          highCombo: { choice: 'MS 2 & 2.5 ÜST', odd: 2.15, reason: 'İddaa Açılış: 2.15 | Eupen Deplasman Temposu' },
-          safMs: { choice: 'MS 2', odd: 1.67, reason: 'İddaa Açılış: 1.67 | Tecrübe Farkı' }
+          safMs: { choice: 'MS 2', odd: 1.67, reason: 'İddaa Açılış: 1.67 | Tecrübe Farkı ve Eupen Deplasman Baskısı' },
+          goals: { choice: '2.5 ÜST', odd: 1.50, reason: 'İddaa Açılış: 1.50 | Bol Pozisyonlu Oyun' }
         }
       },
       {
@@ -593,8 +581,7 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:45',
         markets: {
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.85, reason: 'İddaa Açılış: 1.85 | Dalymount Park Baskısı ve 3+ Gol' },
-          safMs: { choice: 'MS 1', odd: 1.37, reason: 'İddaa Açılış: 1.37 | Kupa Motivasyonu' },
+          safMs: { choice: 'MS 1', odd: 1.37, reason: 'İddaa Açılış: 1.37 | Kupa Motivasyonu ve Dalymount Park Baskısı' },
           goals: { choice: '2.5 ÜST', odd: 1.50, reason: 'İddaa Açılış: 1.50 | Bol Pozisyonlu Oyun' }
         }
       },
@@ -606,8 +593,8 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:45',
         markets: {
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.80, reason: 'İddaa Açılış: 1.80 | Carlisle Grounds Gollü Ev Galibiyeti' },
-          safMs: { choice: 'MS 1', odd: 1.38, reason: 'İddaa Açılış: 1.38 | Playoff Hedefi' }
+          safMs: { choice: 'MS 1', odd: 1.38, reason: 'İddaa Açılış: 1.38 | Carlisle Grounds Ev Galibiyeti ve Playoff Hedefi' },
+          goals: { choice: '2.5 ÜST', odd: 1.55, reason: 'İddaa Açılış: 1.55 | İrlanda 1. Ligi Gollü Mücadele' }
         }
       },
       {
@@ -618,8 +605,8 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:45',
         markets: {
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.68, reason: 'İddaa Açılış: 1.68 | Athlone Hücum Gücü ve 3+ Gol' },
-          safMs: { choice: 'MS 1', odd: 1.26, reason: 'İddaa Açılış: 1.26 | Net İç Saha Favorisi' }
+          safMs: { choice: 'MS 1', odd: 1.26, reason: 'İddaa Açılış: 1.26 | Net İç Saha Favorisi ve Hücum Gücü' },
+          goals: { choice: '2.5 ÜST', odd: 1.52, reason: 'İddaa Açılış: 1.52 | Karşılıklı Pozisyonlar' }
         }
       },
       {
@@ -630,8 +617,8 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:45',
         markets: {
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.55, reason: 'İddaa Açılış: 1.55 | Galler Premier Sınıf Farkı' },
-          safMs: { choice: 'MS 1', odd: 1.21, reason: 'İddaa Açılış: 1.21 | Farklı Kadro Kalitesi' }
+          safMs: { choice: 'MS 1', odd: 1.21, reason: 'İddaa Açılış: 1.21 | Farklı Kadro Kalitesi ve Galler Premier Sınıfı' },
+          goals: { choice: '2.5 ÜST', odd: 1.42, reason: 'İddaa Açılış: 1.42 | Skor Üretkenliği' }
         }
       },
       {
@@ -642,8 +629,8 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:45',
         markets: {
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.58, reason: 'İddaa Açılış: 1.58 | Gollü İç Saha Hakimiyeti' },
-          safMs: { choice: 'MS 1', odd: 1.22, reason: 'İddaa Açılış: 1.22 | Zirve Takibi' }
+          safMs: { choice: 'MS 1', odd: 1.22, reason: 'İddaa Açılış: 1.22 | Zirve Takibi ve İç Saha Hakimiyeti' },
+          goals: { choice: '2.5 ÜST', odd: 1.40, reason: 'İddaa Açılış: 1.40 | Galler Ligi Bol Pozisyon' }
         }
       },
 
@@ -847,7 +834,8 @@ export async function GET() {
         date: '09.10.2026',
         time: '21:45',
         markets: {
-          highCombo: { choice: 'MS 1 & KG VAR', odd: 3.20, reason: 'İddaa Açılış: 3.20 | Karşılıklı Skorlu Ev Galibiyeti' }
+          goals: { choice: 'KG VAR', odd: 1.64, reason: 'İddaa Açılış: 1.64 | Karşılıklı Pozisyonlu Mücadele' },
+          safMs: { choice: 'MS 1', odd: 1.60, reason: 'İddaa Açılış: 1.60 | Ev Sahibi Saha Avantajı' }
         }
       },
       {
@@ -905,11 +893,7 @@ export async function GET() {
               if (ch === '2.5 ÜST' && parseNum(lm.odds.ust25)) def.markets.goals.odd = parseNum(lm.odds.ust25)!;
               if (ch === '2.5 ALT' && parseNum(lm.odds.alt25)) def.markets.goals.odd = parseNum(lm.odds.alt25)!;
               if (ch === 'KG VAR' && parseNum(lm.odds.kgVar)) def.markets.goals.odd = parseNum(lm.odds.kgVar)!;
-            }
-            if (def.markets.anchorCombo && parseNum(lm.odds.ms1) && parseNum(lm.odds.ust25)) {
-              if (def.markets.anchorCombo.choice.includes('MS 1 & 2.5 ÜST')) {
-                def.markets.anchorCombo.odd = Number((parseNum(lm.odds.ms1)! * 1.25).toFixed(2));
-              }
+              if (ch === 'KG YOK' && parseNum(lm.odds.kgYok)) def.markets.goals.odd = parseNum(lm.odds.kgYok)!;
             }
           }
         });
@@ -955,23 +939,23 @@ export async function GET() {
     }
 
     // --- KUPON 1: HİBRİT / KARMA VURGUN (9 Maç - Sistem 4, 5, 6) ---
-    // 50.000+ TL Hedefli Dengeli Majör Avrupa Hibrit Sistemi (09.10.2026)
+    // Dengeli Majör Avrupa Hibrit Sistemi (09.10.2026)
     const c1Defs = [
-      masterMatchCatalogue[4],  // Heidenheim vs Kaiserslautern (MS 1 & 2.5 ÜST 2.35)
-      masterMatchCatalogue[2],  // Lens vs Lyon (KG VAR & 2.5 ÜST 1.85)
-      masterMatchCatalogue[3],  // Braga vs Sporting CP (MS 2 & KG VAR 3.65)
-      masterMatchCatalogue[5],  // Montpellier vs Grenoble (MS 1 & 2.5 ALT 2.80)
-      masterMatchCatalogue[8],  // Avellino vs Sampdoria (KG VAR 1.83)
-      masterMatchCatalogue[10], // Nancy vs Guingamp (1/1 2.75)
-      masterMatchCatalogue[12], // Pau FC vs Stade Lavallois (1/1 2.85)
-      masterMatchCatalogue[9],  // Sepsi vs Dinamo Bükreş (2/2 2.25)
-      masterMatchCatalogue[34]  // Rakow Czestochowa vs Katowice (1/1 2.65)
+      masterMatchCatalogue[4],  // Heidenheim vs Kaiserslautern (safMs: MS 1 1.76)
+      masterMatchCatalogue[2],  // Lens vs Lyon (goals: KG VAR 1.62)
+      masterMatchCatalogue[3],  // Braga vs Sporting CP (safMs: MS 2 2.07)
+      masterMatchCatalogue[5],  // Montpellier vs Grenoble (safMs: MS 1 1.44)
+      masterMatchCatalogue[8],  // Avellino vs Sampdoria (goals: KG VAR 1.83)
+      masterMatchCatalogue[10], // Nancy vs Guingamp (highIyms: 1/1 2.75)
+      masterMatchCatalogue[12], // Pau FC vs Stade Lavallois (highIyms: 1/1 2.85)
+      masterMatchCatalogue[9],  // Sepsi vs Dinamo Bükreş (highIyms: 2/2 2.25)
+      masterMatchCatalogue[34]  // Rakow Czestochowa vs Katowice (highIyms: 1/1 2.65)
     ];
     const coupon1Matches: SystemMatch[] = [
-      makeMatch(c1Defs[0], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c1Defs[1], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c1Defs[2], 'highCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c1Defs[3], 'anchorCombo', 'Kombine & Skor', 'combo'),
+      makeMatch(c1Defs[0], 'safMs', 'Maç Sonucu', 'ms'),
+      makeMatch(c1Defs[1], 'goals', 'Karşılıklı Gol', 'goals'),
+      makeMatch(c1Defs[2], 'safMs', 'Maç Sonucu', 'ms'),
+      makeMatch(c1Defs[3], 'safMs', 'Maç Sonucu', 'ms'),
       makeMatch(c1Defs[4], 'goals', 'Karşılıklı Gol', 'goals'),
       makeMatch(c1Defs[5], 'highIyms', 'İY / MS', 'iy_ms'),
       makeMatch(c1Defs[6], 'highIyms', 'İY / MS', 'iy_ms'),
@@ -980,13 +964,13 @@ export async function GET() {
     ];
     const c1Odds = coupon1Matches.map(m => m.odd);
     const c1Payouts = generatePayoutTable(c1Odds, [4, 5, 6], 1);
-    const c1Max = c1Payouts.length > 0 ? c1Payouts[c1Payouts.length - 1].maxPayout : 50000;
+    const c1Max = c1Payouts.length > 0 ? c1Payouts[c1Payouts.length - 1].maxPayout : 35000;
 
     const coupon1: SystemCoupon = {
       id: 'kupon-1',
       title: 'Hibrit / Karma Vurgun Kuponu',
-      badge: '336 TL / 50.000 TL HEDEF',
-      description: 'Dortmund, Lens, Braga, Nancy ve Pau gibi majör lig maçlarından oluşan 50.000 TL kazanç hedefli Sistem 4, 5, 6 modeli.',
+      badge: '336 TL / DENGELİ HİBRİT',
+      description: 'Heidenheim, Lens, Braga, Nancy ve Pau gibi maçlardan oluşan Sistem 4, 5, 6 karma modeli.',
       theme: 'amber',
       systemSizes: [4, 5, 6],
       systemLabel: 'Sistem 4, 5, 6',
@@ -1050,39 +1034,39 @@ export async function GET() {
       targetProfitBadge: `${c2Max.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
-    // --- KUPON 3: KOMBİNE & GOL KİLİDİ (9 Maç - Sistem 4, 5, 6, 7) ---
-    // 140.000+ TL Hedefli MS + 2.5 Üst & Skor Kombine Sistemi (09.10.2026)
+    // --- KUPON 3: TARAF & GOL DİNAMİK SİSTEMİ (9 Maç - Sistem 4, 5, 6, 7) ---
+    // Hollanda ve İrlanda Liglerinden Saf MS & 2.5 Üst Sistemi (09.10.2026)
     const c3Defs = [
-      masterMatchCatalogue[20], // De Graafschap vs Utrecht II (MS 1 & 2.5 ÜST 1.70)
-      masterMatchCatalogue[21], // Heracles vs Waalwijk (MS 1 & 2.5 ÜST 1.62)
-      masterMatchCatalogue[22], // Volendam vs Vitesse (MS 1 & KG VAR 3.30)
-      masterMatchCatalogue[23], // Roda vs PSV B (MS 1 & 2.5 ÜST 1.85)
-      masterMatchCatalogue[24], // RSC Anderlecht II vs Eupen (MS 2 & 2.5 ÜST 2.15)
-      masterMatchCatalogue[25], // Bohemian vs Waterford (MS 1 & 2.5 ÜST 1.85)
-      masterMatchCatalogue[26], // Bray Wanderers vs Wexford (MS 1 & 2.5 ÜST 1.80)
-      masterMatchCatalogue[46], // Llandudno vs Airbus UK (MS 1 & KG VAR 3.20)
-      masterMatchCatalogue[3]   // Braga vs Sporting CP (MS 2 & KG VAR 3.65)
+      masterMatchCatalogue[20], // De Graafschap vs Utrecht II (goals: 2.5 ÜST 1.45)
+      masterMatchCatalogue[21], // Heracles vs Waalwijk (safMs: MS 1 1.31)
+      masterMatchCatalogue[22], // Volendam vs Vitesse (goals: 2.5 ÜST 1.23)
+      masterMatchCatalogue[23], // Roda vs PSV B (safMs: MS 1 1.51)
+      masterMatchCatalogue[24], // RSC Anderlecht II vs Eupen (safMs: MS 2 1.67)
+      masterMatchCatalogue[25], // Bohemian vs Waterford (goals: 2.5 ÜST 1.50)
+      masterMatchCatalogue[26], // Bray Wanderers vs Wexford (safMs: MS 1 1.38)
+      masterMatchCatalogue[46], // Llandudno vs Airbus UK (goals: KG VAR 1.64)
+      masterMatchCatalogue[3]   // Braga vs Sporting CP (goals: 2.5 ÜST 1.78)
     ];
     const coupon3Matches: SystemMatch[] = [
-      makeMatch(c3Defs[0], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[1], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[2], 'highCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[3], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[4], 'highCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[5], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[6], 'anchorCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[7], 'highCombo', 'Kombine & Skor', 'combo'),
-      makeMatch(c3Defs[8], 'highCombo', 'Kombine & Skor', 'combo')
+      makeMatch(c3Defs[0], 'goals', 'Toplam Gol', 'goals'),
+      makeMatch(c3Defs[1], 'safMs', 'Maç Sonucu', 'ms'),
+      makeMatch(c3Defs[2], 'goals', 'Toplam Gol', 'goals'),
+      makeMatch(c3Defs[3], 'safMs', 'Maç Sonucu', 'ms'),
+      makeMatch(c3Defs[4], 'safMs', 'Maç Sonucu', 'ms'),
+      makeMatch(c3Defs[5], 'goals', 'Toplam Gol', 'goals'),
+      makeMatch(c3Defs[6], 'safMs', 'Maç Sonucu', 'ms'),
+      makeMatch(c3Defs[7], 'goals', 'Karşılıklı Gol', 'goals'),
+      makeMatch(c3Defs[8], 'goals', 'Toplam Gol', 'goals')
     ];
     const c3Odds = coupon3Matches.map(m => m.odd);
     const c3Payouts = generatePayoutTable(c3Odds, [4, 5, 6, 7], 1);
-    const c3Max = c3Payouts.length > 0 ? c3Payouts[c3Payouts.length - 1].maxPayout : 140000;
+    const c3Max = c3Payouts.length > 0 ? c3Payouts[c3Payouts.length - 1].maxPayout : 35000;
 
     const coupon3: SystemCoupon = {
       id: 'kupon-3',
-      title: 'Kombine & Gol Kilidi',
-      badge: '372 TL / 140.000 TL HEDEF',
-      description: 'Hollanda, İrlanda ve Portekiz liglerinden MS + 2.5 Üst ve MS & KG kombinasyonlu 140.000 TL kazanç hedefli sistem.',
+      title: 'Taraf & Gol Dinamik Sistemi',
+      badge: '372 TL / SİSTEM 4, 5, 6, 7',
+      description: 'Hollanda 2, İrlanda ve Portekiz liglerinden resmi MS ve 2.5 Üst baremlerinden oluşan 9 maçlık sistem.',
       theme: 'cyan',
       systemSizes: [4, 5, 6, 7],
       systemLabel: 'Sistem 4, 5, 6, 7',
@@ -1233,13 +1217,13 @@ export async function GET() {
     };
 
     // --- KUPON 7: TAM KARMA / HER ŞEY DAHİL MEGA MİKS (8 Maç - Sistem 4, 5, 6) ---
-    // Saf MS + Gol + Kombine Dengeli Sepet (154 TL Kupon Bedeli - 09.10.2026)
+    // Saf MS + Gol Dengeli Sepet (154 TL Kupon Bedeli - 09.10.2026)
     const c7Defs = [
       masterMatchCatalogue[44], // Penybont vs Barry Town (safMs: MS 1 1.60)
       masterMatchCatalogue[45], // Bala Town vs Buckley Town (safMs: MS 1 1.33)
       masterMatchCatalogue[26], // Bray Wanderers vs Wexford (safMs: MS 1 1.38)
       masterMatchCatalogue[27], // Athlone vs Treaty (safMs: MS 1 1.26)
-      masterMatchCatalogue[46], // Llandudno vs Airbus UK (highCombo: MS 1 & KG VAR 3.20)
+      masterMatchCatalogue[46], // Llandudno vs Airbus UK (goals: KG VAR 1.64)
       masterMatchCatalogue[12], // Pau FC vs Stade Lavallois (safMs: MS 1 1.83)
       masterMatchCatalogue[47], // Vejle vs Hvidovre (safMs: MS 1 1.49)
       masterMatchCatalogue[48]  // Sutton United vs Boreham Wood (safMs: MS 2 1.52)
@@ -1249,7 +1233,7 @@ export async function GET() {
       makeMatch(c7Defs[1], 'safMs', 'Maç Sonucu', 'ms'),
       makeMatch(c7Defs[2], 'safMs', 'Maç Sonucu', 'ms'),
       makeMatch(c7Defs[3], 'safMs', 'Maç Sonucu', 'ms'),
-      makeMatch(c7Defs[4], 'highCombo', 'Kombine & Skor', 'combo'),
+      makeMatch(c7Defs[4], 'goals', 'Karşılıklı Gol', 'goals'),
       makeMatch(c7Defs[5], 'safMs', 'Maç Sonucu', 'ms'),
       makeMatch(c7Defs[6], 'safMs', 'Maç Sonucu', 'ms'),
       makeMatch(c7Defs[7], 'safMs', 'Maç Sonucu', 'ms')
@@ -1262,7 +1246,7 @@ export async function GET() {
       id: 'kupon-7',
       title: 'Tam Karma / Her Şey Dahil Miks',
       badge: '154 TL / FULL HİBRİT',
-      description: 'Galler, İrlanda, Fransa ve Danimarka liglerinden 154 TL bütçeli tam karma sistem modeli.',
+      description: 'Galler, İrlanda, Fransa ve Danimarka liglerinden resmi bülten seçenekleriyle 154 TL bütçeli tam karma sistem modeli.',
       theme: 'blue',
       systemSizes: [4, 5, 6],
       systemLabel: 'Sistem 4, 5, 6',
@@ -1281,34 +1265,34 @@ export async function GET() {
     // 2. YESTERDAY'S EVALUATED COUPONS (08.10.2026)
     // 08 Ekim'de sonuçlanan resmi maç skorlarıyla 4 sistem kuponunun tam ve doğru değerlendirilmesi
     const m_Helsinki_IyMs: SystemMatch = { id: 'past_81_i', code: '74130', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: '08.10.2026', time: '18:00', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.07, score: '6 - 0', iyScore: '2 - 0', won: true, reason: 'İddaa Açılış: 2.07 | Sonuç: İY 2-0 / MS 6-0 (1/1 TUTTU)' };
-    const m_Helsinki_Combo: SystemMatch = { id: 'past_81_c', code: '74130', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: '08.10.2026', time: '18:00', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & 2.5 ÜST', odd: 2.10, score: '6 - 0', iyScore: '2 - 0', won: true, reason: 'İddaa Açılış: 2.10 | Sonuç: 6-0 (MS 1 & 2.5 Üst TUTTU)' };
+    const m_Helsinki_Goals: SystemMatch = { id: 'past_81_c', code: '74130', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: '08.10.2026', time: '18:00', marketType: 'goals', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.55, score: '6 - 0', iyScore: '2 - 0', won: true, reason: 'İddaa Açılış: 1.55 | Sonuç: 6-0 (2.5 Üst TUTTU)' };
 
     const m_Kuopion_IyMs: SystemMatch = { id: 'past_82_i', code: '74131', homeTeam: 'Kuopion', awayTeam: 'Oulu', league: 'FİN', date: '08.10.2026', time: '18:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.07, score: '0 - 1', iyScore: '0 - 1', won: false, reason: 'Resmi Sonuç: İY 0-1 / MS 0-1 (Kuopion 0-1 kaybetti, YATTI ❌)' };
-    const m_Kuopion_Combo: SystemMatch = { id: 'past_82_c', code: '74131', homeTeam: 'Kuopion', awayTeam: 'Oulu', league: 'FİN', date: '08.10.2026', time: '18:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG YOK', odd: 2.15, score: '0 - 1', iyScore: '0 - 1', won: false, reason: 'Resmi Sonuç: 0-1 (Kuopion 0-1 kaybetti, YATTI ❌)' };
+    const m_Kuopion_Ms: SystemMatch = { id: 'past_82_c', code: '74131', homeTeam: 'Kuopion', awayTeam: 'Oulu', league: 'FİN', date: '08.10.2026', time: '18:30', marketType: 'ms', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.33, score: '0 - 1', iyScore: '0 - 1', won: false, reason: 'Resmi Sonuç: 0-1 (Kuopion 0-1 kaybetti, YATTI ❌)' };
 
     const m_Shamrock_IyMs: SystemMatch = { id: 'past_83_i', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 1.88, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 1.88 | Sonuç: İY 1-0 / MS 2-1 (1/1 TUTTU)' };
-    const m_Shamrock_Combo: SystemMatch = { id: 'past_83_c', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & 2.5 ÜST', odd: 2.05, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.05 | Sonuç: 2-1 (MS 1 & 2.5 Üst TUTTU)' };
+    const m_Shamrock_Goals: SystemMatch = { id: 'past_83_c', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketType: 'goals', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.55, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 1.55 | Sonuç: 2-1 (2.5 Üst TUTTU)' };
 
     const m_Internacional_IyMs: SystemMatch = { id: 'past_84_i', code: '74301', homeTeam: 'Internacional', awayTeam: 'Corinthians', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 3.21, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 3.21 | Sonuç: İY 1-0 / MS 2-1 (1/1 TUTTU)' };
-    const m_Internacional_Combo: SystemMatch = { id: 'past_84_c', code: '74301', homeTeam: 'Internacional', awayTeam: 'Corinthians', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG VAR', odd: 3.65, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 3.65 | Sonuç: 2-1 (MS 1 & KG Var TUTTU)' };
+    const m_Internacional_Goals: SystemMatch = { id: 'past_84_c', code: '74301', homeTeam: 'Internacional', awayTeam: 'Corinthians', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'goals', marketName: 'Karşılıklı Gol', choice: 'KG VAR', odd: 1.85, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 1.85 | Sonuç: 2-1 (KG Var TUTTU)' };
 
     const m_Vitoria_IyMs: SystemMatch = { id: 'past_85_i', code: '74302', homeTeam: 'Vitoria Bahia', awayTeam: 'Chapecoense', league: 'BR1', date: '08.10.2026', time: '02:00', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.10, score: '4 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.10 | Sonuç: İY 1-0 / MS 4-0 (1/1 TUTTU)' };
-    const m_Vitoria_Combo: SystemMatch = { id: 'past_85_c', code: '74302', homeTeam: 'Vitoria Bahia', awayTeam: 'Chapecoense', league: 'BR1', date: '08.10.2026', time: '02:00', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG YOK', odd: 2.35, score: '4 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.35 | Sonuç: 4-0 (MS 1 & KG Yok TUTTU)' };
+    const m_Vitoria_Ms: SystemMatch = { id: 'past_85_c', code: '74302', homeTeam: 'Vitoria Bahia', awayTeam: 'Chapecoense', league: 'BR1', date: '08.10.2026', time: '02:00', marketType: 'ms', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.62, score: '4 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 1.62 | Sonuç: 4-0 (MS 1 TUTTU)' };
 
     const m_Botafogo_IyMs: SystemMatch = { id: 'past_86_i', code: '74303', homeTeam: 'Botafogo', awayTeam: 'Vasco Da Gama', league: 'BR1', date: '08.10.2026', time: '02:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '2/2 (İY/MS)', odd: 3.19, score: '1 - 2', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 3.19 | Sonuç: İY 0-1 / MS 1-2 (2/2 TUTTU)' };
-    const m_Botafogo_Combo: SystemMatch = { id: 'past_86_c', code: '74303', homeTeam: 'Botafogo', awayTeam: 'Vasco Da Gama', league: 'BR1', date: '08.10.2026', time: '02:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 2 & KG VAR', odd: 4.20, score: '1 - 2', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 4.20 | Sonuç: 1-2 (MS 2 & KG Var TUTTU)' };
+    const m_Botafogo_Goals: SystemMatch = { id: 'past_86_c', code: '74303', homeTeam: 'Botafogo', awayTeam: 'Vasco Da Gama', league: 'BR1', date: '08.10.2026', time: '02:30', marketType: 'goals', marketName: 'Karşılıklı Gol', choice: 'KG VAR', odd: 1.78, score: '1 - 2', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 1.78 | Sonuç: 1-2 (KG Var TUTTU)' };
 
     const m_Cruzeiro_IyMs: SystemMatch = { id: 'past_87_i', code: '74304', homeTeam: 'Cruzeiro', awayTeam: 'Sao Paulo', league: 'BR1', date: '08.10.2026', time: '03:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.63, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.63 | Sonuç: İY 1-0 / MS 2-0 (1/1 TUTTU)' };
-    const m_Cruzeiro_Combo: SystemMatch = { id: 'past_87_c', code: '74304', homeTeam: 'Cruzeiro', awayTeam: 'Sao Paulo', league: 'BR1', date: '08.10.2026', time: '03:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG YOK', odd: 2.85, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.85 | Sonuç: 2-0 (MS 1 & KG Yok TUTTU)' };
+    const m_Cruzeiro_Ms: SystemMatch = { id: 'past_87_c', code: '74304', homeTeam: 'Cruzeiro', awayTeam: 'Sao Paulo', league: 'BR1', date: '08.10.2026', time: '03:30', marketType: 'ms', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.70, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 1.70 | Sonuç: 2-0 (MS 1 TUTTU)' };
 
     const m_America_IyMs: SystemMatch = { id: 'past_88_i', code: '74305', homeTeam: 'America Mineir', awayTeam: 'Fortaleza Ce', league: 'BR2', date: '08.10.2026', time: '02:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '2/2 (İY/MS)', odd: 3.90, score: '0 - 1', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 3.90 | Sonuç: İY 0-1 / MS 0-1 (2/2 TUTTU)' };
-    const m_America_Combo: SystemMatch = { id: 'past_88_c', code: '74305', homeTeam: 'America Mineir', awayTeam: 'Fortaleza Ce', league: 'BR2', date: '08.10.2026', time: '02:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 2 & KG YOK', odd: 2.95, score: '0 - 1', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 2.95 | Sonuç: 0-1 (MS 2 & KG Yok TUTTU)' };
+    const m_America_Ms: SystemMatch = { id: 'past_88_c', code: '74305', homeTeam: 'America Mineir', awayTeam: 'Fortaleza Ce', league: 'BR2', date: '08.10.2026', time: '02:30', marketType: 'ms', marketName: 'Maç Sonucu', choice: 'MS 2', odd: 2.10, score: '0 - 1', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 2.10 | Sonuç: 0-1 (MS 2 TUTTU)' };
 
     const m_Bragantino_IyMs: SystemMatch = { id: 'past_89_i', code: '74306', homeTeam: 'Bragantino', awayTeam: 'Mirassol', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.37, score: '1 - 1', iyScore: '0 - 0', won: false, reason: 'İddaa Açılış: 2.37 | Sonuç: İY 0-0 / MS 1-1 (X/X)' };
-    const m_Bragantino_Combo: SystemMatch = { id: 'past_89_c', code: '74306', homeTeam: 'Bragantino', awayTeam: 'Mirassol', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & 2.5 ÜST', odd: 3.10, score: '1 - 1', iyScore: '0 - 0', won: false, reason: 'İddaa Açılış: 3.10 | Sonuç: 1-1' };
+    const m_Bragantino_Goals: SystemMatch = { id: 'past_89_c', code: '74306', homeTeam: 'Bragantino', awayTeam: 'Mirassol', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'goals', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.75, score: '1 - 1', iyScore: '0 - 0', won: false, reason: 'İddaa Açılış: 1.75 | Sonuç: 1-1 (2.5 Üst Yattı ❌)' };
 
     const m_Remo_IyMs: SystemMatch = { id: 'past_90_i', code: '74307', homeTeam: 'Remo', awayTeam: 'Gremio', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 3.35, score: '1 - 1', iyScore: '0 - 1', won: false, reason: 'İddaa Açılış: 3.35 | Sonuç: İY 0-1 / MS 1-1 (2/X)' };
-    const m_Remo_Combo: SystemMatch = { id: 'past_90_c', code: '74307', homeTeam: 'Remo', awayTeam: 'Gremio', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG VAR', odd: 3.45, score: '1 - 1', iyScore: '0 - 1', won: false, reason: 'İddaa Açılış: 3.45 | Sonuç: 1-1' };
+    const m_Remo_Goals: SystemMatch = { id: 'past_90_c', code: '74307', homeTeam: 'Remo', awayTeam: 'Gremio', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'goals', marketName: 'Karşılıklı Gol', choice: 'KG VAR', odd: 1.82, score: '1 - 1', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 1.82 | Sonuç: 1-1 (KG Var TUTTU ✅)' };
 
     function createEvaluatedCoupon(
       id: string,
@@ -1366,14 +1350,14 @@ export async function GET() {
       'past-kupon-1',
       'Hibrit / Karma Vurgun Kuponu (Dün)',
       '08.10.2026 SONUÇLARI',
-      'Dün resmi bültendeki İY/MS ve Kombine (MS+Gol) açılış oranlarından oluşan dengeli sistem kuponu sonuçları.',
+      'Dün resmi bültendeki İY/MS ve Taraf/Gol açılış oranlarından oluşan dengeli sistem kuponu sonuçları.',
       'amber',
       [3, 4, 5],
       'Sistem 3, 4, 5',
       [
-        m_Helsinki_Combo,
-        m_Kuopion_Combo,
-        m_Shamrock_Combo,
+        m_Helsinki_Goals,
+        m_Kuopion_Ms,
+        m_Shamrock_Goals,
         m_Internacional_IyMs,
         m_Vitoria_IyMs,
         m_Botafogo_IyMs,
@@ -1407,26 +1391,26 @@ export async function GET() {
       ]
     );
 
-    // Past Coupon 3: Kombine & Gol Kilidi (Dün - 08.10.2026) -> 8/10 TUTTU! (Tamamı Kombine & Gol)
+    // Past Coupon 3: Taraf & Gol Sistemi (Dün - 08.10.2026) -> 8/10 TUTTU!
     const pastC3 = createEvaluatedCoupon(
       'past-kupon-3',
-      'Kombine & Gol Kilidi (Dün)',
+      'Taraf & Gol Sistemi (Dün)',
       '08.10.2026 SONUÇLARI',
-      'Dün bültendeki kombine ve gol odaklı açılış oranlarına sahip maçların sonuçları.',
+      'Dün bültendeki taraf ve gol odaklı açılış oranlarına sahip maçların sonuçları.',
       'cyan',
       [3, 4, 5],
       'Sistem 3, 4, 5',
       [
-        m_Helsinki_Combo,
-        m_Kuopion_Combo,
-        m_Shamrock_Combo,
-        m_Internacional_Combo,
-        m_Vitoria_Combo,
-        m_Botafogo_Combo,
-        m_Cruzeiro_Combo,
-        m_America_Combo,
-        m_Bragantino_Combo,
-        m_Remo_Combo
+        m_Helsinki_Goals,
+        m_Kuopion_Ms,
+        m_Shamrock_Goals,
+        m_Internacional_Goals,
+        m_Vitoria_Ms,
+        m_Botafogo_Goals,
+        m_Cruzeiro_Ms,
+        m_America_Ms,
+        m_Bragantino_Goals,
+        m_Remo_Goals
       ]
     );
 
