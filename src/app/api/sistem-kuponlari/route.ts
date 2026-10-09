@@ -132,6 +132,95 @@ function generatePayoutTable(odds: number[], systemSizes: number[], misli: numbe
   return table;
 }
 
+function parseOdd(val: any): number | null {
+  if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
+  const num = Number(String(val).replace(',', '.'));
+  return isNaN(num) || num <= 1.01 ? null : num;
+}
+
+function getLiveOddForChoice(liveMatch: any, choice: string, fallbackOdd: number): number {
+  if (!liveMatch) return fallbackOdd;
+  const o = liveMatch.odds || liveMatch;
+  const ch = choice.toUpperCase().trim();
+
+  if (ch === 'MS 1' || ch === '1') return parseOdd(o.ms1) ?? fallbackOdd;
+  if (ch === 'MS 0' || ch === 'MS X' || ch === 'X' || ch === '0') return parseOdd(o.msX) ?? parseOdd(o.ms0) ?? fallbackOdd;
+  if (ch === 'MS 2' || ch === '2') return parseOdd(o.ms2) ?? fallbackOdd;
+  if (ch === '2.5 ÜST' || ch === '2.5 UST' || ch === 'ÜST' || ch === 'UST') return parseOdd(o.ust25) ?? parseOdd(o.ust) ?? fallbackOdd;
+  if (ch === '2.5 ALT' || ch === '2.5 ALT' || ch === 'ALT') return parseOdd(o.alt25) ?? parseOdd(o.alt) ?? fallbackOdd;
+  if (ch === '1.5 ÜST' || ch === '1.5 UST') return parseOdd(o.ust15) ?? fallbackOdd;
+  if (ch === '1.5 ALT') return parseOdd(o.alt15) ?? fallbackOdd;
+  if (ch === '3.5 ÜST' || ch === '3.5 UST') return parseOdd(o.ust35) ?? fallbackOdd;
+  if (ch === '3.5 ALT') return parseOdd(o.alt35) ?? fallbackOdd;
+  if (ch === 'KG VAR') return parseOdd(o.kgVar) ?? fallbackOdd;
+  if (ch === 'KG YOK') return parseOdd(o.kgYok) ?? fallbackOdd;
+  if (ch === '1-X' || ch === '1X' || ch === 'ÇŞ 1-X' || ch === 'ÇŞ 1X') return parseOdd(o.cs1X) ?? fallbackOdd;
+  if (ch === 'X-2' || ch === 'X2' || ch === 'ÇŞ X-2' || ch === 'ÇŞ X2') return parseOdd(o.csX2) ?? fallbackOdd;
+  if (ch === '1-2' || ch === '12' || ch === 'ÇŞ 1-2' || ch === 'ÇŞ 12') return parseOdd(o.cs12) ?? fallbackOdd;
+  if (ch.includes('&')) {
+    const ms1 = parseOdd(o.ms1);
+    const ust = parseOdd(o.ust25) || parseOdd(o.ust15);
+    if (ms1 && ust) return Number((ms1 * 1.20).toFixed(2));
+    if (ms1) return Number((ms1 * 1.22).toFixed(2));
+  }
+  return fallbackOdd;
+}
+
+function cleanTeamWord(w: string): string {
+  return (w || '')
+    .toLowerCase()
+    .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/i/g, 'i').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
+    .replace(/[^a-z0-9]/g, '');
+}
+
+function matchSingleTeam(t1: string, t2: string): boolean {
+  if (!t1 || !t2) return false;
+  const c1 = cleanTeamWord(t1);
+  const c2 = cleanTeamWord(t2);
+  if (c1 === c2) return true;
+  if (c1.length >= 4 && c2.length >= 4) {
+    if (c1.includes(c2) || c2.includes(c1)) return true;
+  }
+  const ignore = new Set(['b', 'borussia', 'fc', 'fk', 'sk', 'jk', 'w', 'sv', 'tsg', 'sc']);
+  const words1 = t1.split(/[\s\.\-]+/).map(cleanTeamWord).filter(w => w.length >= 3 && !ignore.has(w));
+  const words2 = t2.split(/[\s\.\-]+/).map(cleanTeamWord).filter(w => w.length >= 3 && !ignore.has(w));
+  for (const w1 of words1) {
+    for (const w2 of words2) {
+      if (w1 === w2 || (w1.length >= 4 && w2.length >= 4 && (w1.includes(w2) || w2.includes(w1)))) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function syncSystemCouponsWithMackolik(coupons: SystemCoupon[], liveMatches: any[]) {
+  if (!liveMatches || liveMatches.length === 0) return;
+
+  coupons.forEach(coupon => {
+    coupon.matches.forEach(m => {
+      let liveMatch = liveMatches.find(lm => lm.code && m.code && String(lm.code) === String(m.code));
+      if (!liveMatch) {
+        liveMatch = liveMatches.find(lm => matchSingleTeam(lm.homeTeam, m.homeTeam) && matchSingleTeam(lm.awayTeam, m.awayTeam));
+      }
+      if (liveMatch) {
+        const liveOdd = getLiveOddForChoice(liveMatch, m.choice, m.odd);
+        m.odd = liveOdd;
+        if (liveMatch.score) m.score = liveMatch.score;
+        if (liveMatch.iyScore) m.iyScore = liveMatch.iyScore;
+        if (liveMatch.code) m.code = String(liveMatch.code);
+        if (liveMatch.time) m.time = liveMatch.time;
+      }
+    });
+
+    const odds = coupon.matches.map(m => m.odd);
+    coupon.minOdds = Math.min(...odds);
+    coupon.maxOdds = Math.max(...odds);
+    coupon.avgOdds = Number((odds.reduce((a, b) => a + b, 0) / odds.length).toFixed(2));
+    coupon.payoutTable = generatePayoutTable(odds, coupon.systemSizes, coupon.misli || 1);
+  });
+}
+
 function loadJsonCache(filename: string) {
   try {
     const p1 = path.join(process.cwd(), 'data', filename);
@@ -1379,11 +1468,22 @@ export async function GET() {
       coupons: pastCoupons
     };
 
+    const todayCoupons = [coupon1, coupon2, coupon3, coupon4, coupon5, coupon6, coupon7];
+
+    try {
+      const liveMatches = await fetchMackolikMatches();
+      if (liveMatches && liveMatches.length > 0) {
+        syncSystemCouponsWithMackolik(todayCoupons, liveMatches);
+      }
+    } catch (e) {
+      console.warn('Live odds sync skipped for system coupons:', e);
+    }
+
     return NextResponse.json({
       success: true,
       timestamp: Date.now(),
       date: '09.10.2026',
-      coupons: [coupon1, coupon2, coupon3, coupon4, coupon5, coupon6, coupon7],
+      coupons: todayCoupons,
       yesterday: yesterdaySummary
     });
   } catch (error: any) {

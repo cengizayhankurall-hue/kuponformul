@@ -49,58 +49,91 @@ export interface YesterdayDailySummary {
   coupons: DailyCoupon[];
 }
 
-function normalizeTeam(t: string): string {
-  return (t || '')
-    .toLowerCase()
-    .replace(/İ/g, 'i')
-    .replace(/I/g, 'i')
-    .replace(/ı/g, 'i')
-    .replace(/ğ/g, 'g')
-    .replace(/ü/g, 'u')
-    .replace(/ş/g, 's')
-    .replace(/ö/g, 'o')
-    .replace(/ç/g, 'c')
-    .replace(/[^a-z0-9]/g, '');
+function parseOdd(val: any): number | null {
+  if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
+  const num = Number(String(val).replace(',', '.'));
+  return isNaN(num) || num <= 1.01 ? null : num;
 }
 
 function getLiveOddForChoice(liveMatch: any, choice: string, fallbackOdd: number): number {
-  if (!liveMatch || !liveMatch.odds) return fallbackOdd;
-  const o = liveMatch.odds;
-  const parseNum = (val: any) => {
-    if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
-    const num = Number(String(val).replace(',', '.'));
-    return isNaN(num) || num <= 1.01 ? null : num;
-  };
-
+  if (!liveMatch) return fallbackOdd;
+  const o = liveMatch.odds || liveMatch;
   const ch = choice.toUpperCase().trim();
-  if (ch === 'MS 1' || ch === '1') return parseNum(o.ms1) ?? fallbackOdd;
-  if (ch === 'MS 0' || ch === 'MS X' || ch === 'X' || ch === '0') return parseNum(o.ms0) ?? fallbackOdd;
-  if (ch === 'MS 2' || ch === '2') return parseNum(o.ms2) ?? fallbackOdd;
-  if (ch === '2.5 ÜST' || ch === '2.5 UST') return parseNum(o.ust25) ?? fallbackOdd;
-  if (ch === '2.5 ALT') return parseNum(o.alt25) ?? fallbackOdd;
-  if (ch === 'KG VAR') return parseNum(o.kgVar) ?? fallbackOdd;
-  if (ch === 'KG YOK') return parseNum(o.kgYok) ?? fallbackOdd;
-  if (ch === 'MS 1 & 1.5 ÜST' || ch === 'MS 1 & 2.5 ÜST') {
-    const ms1 = parseNum(o.ms1);
-    const ust = parseNum(o.ust25);
-    if (ms1 && ust) return Number((ms1 * 1.25).toFixed(2));
+
+  if (ch === 'MS 1' || ch === '1') return parseOdd(o.ms1) ?? fallbackOdd;
+  if (ch === 'MS 0' || ch === 'MS X' || ch === 'X' || ch === '0') return parseOdd(o.msX) ?? parseOdd(o.ms0) ?? fallbackOdd;
+  if (ch === 'MS 2' || ch === '2') return parseOdd(o.ms2) ?? fallbackOdd;
+  if (ch === '2.5 ÜST' || ch === '2.5 UST' || ch === 'ÜST' || ch === 'UST') return parseOdd(o.ust25) ?? parseOdd(o.ust) ?? fallbackOdd;
+  if (ch === '2.5 ALT' || ch === '2.5 ALT' || ch === 'ALT') return parseOdd(o.alt25) ?? parseOdd(o.alt) ?? fallbackOdd;
+  if (ch === '1.5 ÜST' || ch === '1.5 UST') return parseOdd(o.ust15) ?? fallbackOdd;
+  if (ch === '1.5 ALT') return parseOdd(o.alt15) ?? fallbackOdd;
+  if (ch === '3.5 ÜST' || ch === '3.5 UST') return parseOdd(o.ust35) ?? fallbackOdd;
+  if (ch === '3.5 ALT') return parseOdd(o.alt35) ?? fallbackOdd;
+  if (ch === 'KG VAR') return parseOdd(o.kgVar) ?? fallbackOdd;
+  if (ch === 'KG YOK') return parseOdd(o.kgYok) ?? fallbackOdd;
+  if (ch === '1-X' || ch === '1X' || ch === 'ÇŞ 1-X' || ch === 'ÇŞ 1X') return parseOdd(o.cs1X) ?? fallbackOdd;
+  if (ch === 'X-2' || ch === 'X2' || ch === 'ÇŞ X-2' || ch === 'ÇŞ X2') return parseOdd(o.csX2) ?? fallbackOdd;
+  if (ch === '1-2' || ch === '12' || ch === 'ÇŞ 1-2' || ch === 'ÇŞ 12') return parseOdd(o.cs12) ?? fallbackOdd;
+  if (ch.includes('&')) {
+    const ms1 = parseOdd(o.ms1);
+    const ust = parseOdd(o.ust25) || parseOdd(o.ust15);
+    if (ms1 && ust) return Number((ms1 * 1.20).toFixed(2));
+    if (ms1) return Number((ms1 * 1.22).toFixed(2));
   }
   return fallbackOdd;
 }
 
-function syncCouponLive(coupon: DailyCoupon, liveMap: Map<string, any>) {
-  coupon.matches.forEach(m => {
-    const liveMatch = liveMap.get(m.code) || liveMap.get(`${normalizeTeam(m.homeTeam)}_${normalizeTeam(m.awayTeam)}`);
-    if (liveMatch) {
-      m.odd = getLiveOddForChoice(liveMatch, m.choice, m.odd);
-      if (liveMatch.score) m.score = liveMatch.score;
-      if (liveMatch.halfTimeScore) m.iyScore = liveMatch.halfTimeScore;
-    }
-  });
+function cleanTeamWord(w: string): string {
+  return (w || '')
+    .toLowerCase()
+    .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/i/g, 'i').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
+    .replace(/[^a-z0-9]/g, '');
+}
 
-  const totalOdds = Number(coupon.matches.reduce((acc, m) => acc * m.odd, 1).toFixed(2));
-  coupon.totalOdds = totalOdds;
-  coupon.potentialReturn = Number((totalOdds * coupon.suggestedStake).toFixed(2));
+function matchSingleTeam(t1: string, t2: string): boolean {
+  if (!t1 || !t2) return false;
+  const c1 = cleanTeamWord(t1);
+  const c2 = cleanTeamWord(t2);
+  if (c1 === c2) return true;
+  if (c1.length >= 4 && c2.length >= 4) {
+    if (c1.includes(c2) || c2.includes(c1)) return true;
+  }
+  const ignore = new Set(['b', 'borussia', 'fc', 'fk', 'sk', 'jk', 'w', 'sv', 'tsg', 'sc']);
+  const words1 = t1.split(/[\s\.\-]+/).map(cleanTeamWord).filter(w => w.length >= 3 && !ignore.has(w));
+  const words2 = t2.split(/[\s\.\-]+/).map(cleanTeamWord).filter(w => w.length >= 3 && !ignore.has(w));
+  for (const w1 of words1) {
+    for (const w2 of words2) {
+      if (w1 === w2 || (w1.length >= 4 && w2.length >= 4 && (w1.includes(w2) || w2.includes(w1)))) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function syncCouponsWithMackolik(coupons: DailyCoupon[], liveMatches: any[]) {
+  if (!liveMatches || liveMatches.length === 0) return;
+
+  coupons.forEach(coupon => {
+    coupon.matches.forEach(m => {
+      let liveMatch = liveMatches.find(lm => lm.code && m.code && String(lm.code) === String(m.code));
+      if (!liveMatch) {
+        liveMatch = liveMatches.find(lm => matchSingleTeam(lm.homeTeam, m.homeTeam) && matchSingleTeam(lm.awayTeam, m.awayTeam));
+      }
+      if (liveMatch) {
+        const liveOdd = getLiveOddForChoice(liveMatch, m.choice, m.odd);
+        m.odd = liveOdd;
+        if (liveMatch.score) m.score = liveMatch.score;
+        if (liveMatch.iyScore) m.iyScore = liveMatch.iyScore;
+        if (liveMatch.code) m.code = String(liveMatch.code);
+        if (liveMatch.time) m.time = liveMatch.time;
+      }
+    });
+
+    const totalOdds = Number(coupon.matches.reduce((acc, m) => acc * m.odd, 1).toFixed(2));
+    coupon.totalOdds = totalOdds;
+    coupon.potentialReturn = Number((totalOdds * coupon.suggestedStake).toFixed(2));
+  });
 }
 
 export async function GET() {
@@ -110,7 +143,7 @@ export async function GET() {
     // -------------------------------------------------------------
     
     // KUPON 1: ⚽ SADECE MAÇ SONUCU (MS 1 / MS X / MS 2) KUPONU (5 Maç - Oran: 6.30)
-    const m_ms_1: DailyMatchItem = { id: 'ms_1', code: '71101', homeTeam: 'B.Dortmund', awayTeam: 'Werder Bremen', league: 'AL1', date: '09.10.2026', time: '21:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.34, reason: 'Dortmund ev sahibi baskısı ve net kadro kalitesi' };
+    const m_ms_1: DailyMatchItem = { id: 'ms_1', code: '71101', homeTeam: 'B.Dortmund', awayTeam: 'Werder Bremen', league: 'AL1', date: '09.10.2026', time: '21:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.21, reason: 'Dortmund ev sahibi baskısı ve net kadro kalitesi' };
     const m_ms_2: DailyMatchItem = { id: 'ms_2', code: '71106', homeTeam: 'Montpellier', awayTeam: 'Grenoble', league: 'FR2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.44, reason: 'Stade de la Mosson ev sahibi galibiyet serisi' };
     const m_ms_3: DailyMatchItem = { id: 'ms_3', code: '71105', homeTeam: 'Heidenheim', awayTeam: 'Kaiserslautern', league: 'AL2', date: '09.10.2026', time: '19:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.76, reason: 'Bundesliga 2 iç saha istikrarı' };
     const m_ms_4: DailyMatchItem = { id: 'ms_4', code: '71110', homeTeam: 'Sepsi', awayTeam: 'Dinamo Bükreş', league: 'ROM', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 2', odd: 1.45, reason: 'Dinamo Bükreş deplasman performansı' };
@@ -270,13 +303,7 @@ export async function GET() {
     try {
       const liveMatches = await fetchMackolikMatches();
       if (liveMatches && liveMatches.length > 0) {
-        const liveMap = new Map<string, any>();
-        liveMatches.forEach((lm: any) => {
-          if (lm.code) liveMap.set(String(lm.code), lm);
-          const key = `${normalizeTeam(lm.homeTeam)}_${normalizeTeam(lm.awayTeam)}`;
-          liveMap.set(key, lm);
-        });
-        todayCoupons.forEach(c => syncCouponLive(c, liveMap));
+        syncCouponsWithMackolik(todayCoupons, liveMatches);
       }
     } catch (e) {
       console.warn('Live odds sync skipped:', e);
