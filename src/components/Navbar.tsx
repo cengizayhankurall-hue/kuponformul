@@ -209,14 +209,26 @@ export default function Navbar() {
             </div>
 
             {user && (
-              <Link
-                href="/kupon-takip"
-                className={`px-3 py-2 rounded-xl text-xs lg:text-sm font-semibold transition whitespace-nowrap ${
-                  pathname === '/kupon-takip' ? 'bg-neutral-800 text-white' : 'text-neutral-400 hover:text-white hover:bg-neutral-900'
-                }`}
-              >
-                Canlı Takip
-              </Link>
+              <>
+                <Link
+                  href="/dashboard"
+                  className={`px-3 py-2 rounded-xl text-xs lg:text-sm font-semibold transition whitespace-nowrap flex items-center gap-1.5 ${
+                    pathname === '/dashboard' ? 'bg-sky-500/20 text-sky-400 border border-sky-500/30 font-bold' : 'text-neutral-300 hover:text-white hover:bg-neutral-900'
+                  }`}
+                >
+                  <User className="w-3.5 h-3.5 text-sky-400" />
+                  <span>Hesabım</span>
+                </Link>
+
+                <Link
+                  href="/kupon-takip"
+                  className={`px-3 py-2 rounded-xl text-xs lg:text-sm font-semibold transition whitespace-nowrap ${
+                    pathname === '/kupon-takip' ? 'bg-neutral-800 text-white' : 'text-neutral-400 hover:text-white hover:bg-neutral-900'
+                  }`}
+                >
+                  Canlı Takip
+                </Link>
+              </>
             )}
 
             {user?.is_admin && (
@@ -248,11 +260,11 @@ export default function Navbar() {
                 
                 <Link
                   href="/dashboard"
-                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 text-xs font-bold transition"
-                  title="Hesabım"
+                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 text-xs font-bold transition border border-neutral-800 hover:border-neutral-700"
+                  title="Hesabım ve Kayıtlı Kuponlar"
                 >
-                  <User className="h-3.5 w-3.5 text-neutral-400" />
-                  <span className="max-w-[100px] truncate">{user.full_name}</span>
+                  <User className="h-3.5 w-3.5 text-sky-400" />
+                  <span className="max-w-[120px] truncate">{user.full_name}</span>
                 </Link>
 
                 <Link
