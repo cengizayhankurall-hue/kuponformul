@@ -30,8 +30,12 @@ import {
   History,
   Trophy,
   Ticket,
-  Filter
+  Filter,
+  BookmarkPlus,
+  BookmarkCheck,
+  Loader2
 } from 'lucide-react';
+import { supabase, isMockMode, mockService } from '@/lib/supabase';
 import { DailyCoupon, DailyMatchItem, YesterdayDailySummary } from '@/app/api/gunun-kuponlari/route';
 
 interface ApiResponse {
@@ -48,10 +52,79 @@ export default function GununKuponlariPage() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'today' | 'yesterday'>('today');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [savedId, setSavedId] = useState<string | null>(null);
+  const [savingId, setSavingId] = useState<string | null>(null);
   const [expandedCoupons, setExpandedCoupons] = useState<Record<string, boolean>>({});
   const [stakes, setStakes] = useState<Record<string, number>>({});
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  const handleSaveCoupon = async (coupon: DailyCoupon) => {
+    try {
+      setSavingId(coupon.id);
+      let userId: string | null = null;
+      let email: string | null = null;
+
+      if (isMockMode) {
+        const { data: { session } } = await mockService.getSession();
+        if (session && session.user) {
+          userId = session.user.id;
+          email = session.user.email || 'user@example.com';
+        }
+      } else if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session && session.user) {
+          userId = session.user.id;
+          email = session.user.email || null;
+        }
+      }
+
+      if (!userId) {
+        alert('Kuponu profilinize kaydetmek için lütfen önce giriş yapın.');
+        window.location.href = '/auth';
+        return;
+      }
+
+      const currentStake = stakes[coupon.id] || coupon.suggestedStake || 50;
+      const potentialWin = Number((coupon.totalOdds * currentStake).toFixed(2));
+
+      const formattedMatches = coupon.matches.map(m => ({
+        code: m.code,
+        homeTeam: m.homeTeam,
+        awayTeam: m.awayTeam,
+        date: m.date,
+        time: m.time,
+        league: m.league,
+        pickLabel: m.choice,
+        pickOdd: m.odd
+      }));
+
+      const res = await fetch('/api/iddaa-coupons/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          matches: formattedMatches,
+          totalOdds: coupon.totalOdds,
+          stake: currentStake,
+          potentialWin: potentialWin,
+          email: email || 'user@kuponformul.com',
+          userId: userId
+        })
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || 'Kaydedilemedi');
+      }
+
+      setSavedId(coupon.id);
+      setTimeout(() => setSavedId(null), 3500);
+    } catch (err: any) {
+      alert(err.message || 'Kupon kaydedilirken bir hata oluştu.');
+    } finally {
+      setSavingId(null);
+    }
+  };
 
   // Fetch Coupons
   const fetchCoupons = async () => {
@@ -523,18 +596,46 @@ export default function GununKuponlariPage() {
                       {/* Action Buttons */}
                       <div className="flex items-center gap-2 pt-1">
                         <button
+                          onClick={() => handleSaveCoupon(coupon)}
+                          disabled={savingId === coupon.id}
+                          className={`flex-1 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 ${
+                            savedId === coupon.id
+                              ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20'
+                              : 'bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30'
+                          }`}
+                        >
+                          {savingId === coupon.id ? (
+                            <>
+                              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                              <span>Kaydediliyor...</span>
+                            </>
+                          ) : savedId === coupon.id ? (
+                            <>
+                              <BookmarkCheck className="w-3.5 h-3.5" />
+                              <span>Hesabıma Eklendi!</span>
+                            </>
+                          ) : (
+                            <>
+                              <BookmarkPlus className="w-3.5 h-3.5" />
+                              <span>Kuponu Kaydet</span>
+                            </>
+                          )}
+                        </button>
+
+                        <button
                           onClick={() => handleCopyCoupon(coupon)}
-                          className="flex-1 py-2.5 px-3 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95"
+                          className="py-2.5 px-3 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 border border-neutral-700/50"
+                          title="Kuponu Metin Olarak Kopyala"
                         >
                           {copiedId === coupon.id ? (
                             <>
                               <Check className="w-3.5 h-3.5 text-emerald-400" />
-                              <span className="text-emerald-400">Kopyalandı!</span>
+                              <span className="text-emerald-400">Kopyalandı</span>
                             </>
                           ) : (
                             <>
                               <Copy className="w-3.5 h-3.5" />
-                              <span>Kuponu Kopyala</span>
+                              <span>Kopyala</span>
                             </>
                           )}
                         </button>
@@ -542,17 +643,12 @@ export default function GununKuponlariPage() {
                         <button
                           onClick={() => toggleExpand(coupon.id)}
                           className="py-2.5 px-3 rounded-xl border border-neutral-800 hover:bg-neutral-800 text-neutral-400 hover:text-white text-xs font-semibold flex items-center justify-center gap-1 transition"
+                          title={isExpanded ? 'Maçları Gizle' : 'Maçları Göster'}
                         >
                           {isExpanded ? (
-                            <>
-                              <ChevronUp className="w-3.5 h-3.5" />
-                              <span>Gizle</span>
-                            </>
+                            <ChevronUp className="w-3.5 h-3.5" />
                           ) : (
-                            <>
-                              <ChevronDown className="w-3.5 h-3.5" />
-                              <span>Göster</span>
-                            </>
+                            <ChevronDown className="w-3.5 h-3.5" />
                           )}
                         </button>
                       </div>

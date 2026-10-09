@@ -28,8 +28,12 @@ import {
   ArrowRight,
   Info,
   History,
-  Trophy
+  Trophy,
+  BookmarkPlus,
+  BookmarkCheck,
+  Loader2
 } from 'lucide-react';
+import { supabase, isMockMode, mockService } from '@/lib/supabase';
 
 interface SystemMatch {
   id: string;
@@ -119,6 +123,8 @@ export default function SistemKuponlariPage() {
   const [activeTodayCouponId, setActiveTodayCouponId] = useState<string>('kupon-1');
   const [activePastCouponId, setActivePastCouponId] = useState<string>('past-kupon-1');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [savingId, setSavingId] = useState<string | null>(null);
+  const [savedId, setSavedId] = useState<string | null>(null);
 
   // Canlı Simülatör (Seçili kupondaki tutan maçların indeksleri)
   const [selectedMatchIndices, setSelectedMatchIndices] = useState<Record<string, Set<number>>>({
@@ -228,6 +234,74 @@ export default function SistemKuponlariPage() {
     navigator.clipboard.writeText(text);
     setCopiedId(coupon.id);
     setTimeout(() => setCopiedId(null), 2500);
+  };
+
+  const handleSaveCoupon = async (coupon: SystemCoupon) => {
+    try {
+      setSavingId(coupon.id);
+
+      let userId: string | null = null;
+      let email: string | null = null;
+
+      if (isMockMode) {
+        const { data: { session } } = await mockService.getSession();
+        if (session && session.user) {
+          userId = session.user.id;
+          email = session.user.email || 'user@example.com';
+        }
+      } else if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session && session.user) {
+          userId = session.user.id;
+          email = session.user.email || null;
+        }
+      }
+
+      if (!userId) {
+        alert('Kuponu profilinize kaydetmek için lütfen önce giriş yapın.');
+        window.location.href = '/auth';
+        return;
+      }
+
+      const matchDate = viewMode === 'today' ? (data?.date || new Date().toISOString().split('T')[0]) : (data?.yesterday?.date || 'Dün');
+      const maxPossibleWin = coupon.payoutTable?.[coupon.payoutTable.length - 1]?.maxPayout || (coupon.avgOdds * coupon.cost);
+
+      const formattedMatches = coupon.matches.map(m => ({
+        code: m.code || 'ID',
+        homeTeam: m.homeTeam,
+        awayTeam: m.awayTeam,
+        date: m.date || matchDate,
+        time: m.time || '20:00',
+        league: m.league || 'Süper Lig',
+        pickLabel: m.choice,
+        pickOdd: m.odd
+      }));
+
+      const res = await fetch('/api/iddaa-coupons/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          matches: formattedMatches,
+          totalOdds: Number((coupon.avgOdds || coupon.maxOdds || 10).toFixed(2)),
+          stake: coupon.cost || 50,
+          potentialWin: Number(maxPossibleWin.toFixed(2)),
+          email: email || 'user@kuponformul.com',
+          userId: userId
+        })
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || 'Kaydedilemedi');
+      }
+
+      setSavedId(coupon.id);
+      setTimeout(() => setSavedId(null), 3500);
+    } catch (err: any) {
+      alert(err.message || 'Kupon kaydedilirken bir hata oluştu.');
+    } finally {
+      setSavingId(null);
+    }
   };
 
   const formatCurrency = (val: number) => {
@@ -495,6 +569,33 @@ export default function SistemKuponlariPage() {
                     </div>
 
                     <div className="flex flex-wrap items-center gap-3 shrink-0">
+                      <button
+                        onClick={() => handleSaveCoupon(activeCoupon)}
+                        disabled={savingId === activeCoupon.id}
+                        className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 transition active:scale-95 shadow-lg ${
+                          savedId === activeCoupon.id
+                            ? 'bg-emerald-600 text-white shadow-emerald-600/30'
+                            : 'bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/40'
+                        }`}
+                      >
+                        {savingId === activeCoupon.id ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span>Kaydediliyor...</span>
+                          </>
+                        ) : savedId === activeCoupon.id ? (
+                          <>
+                            <BookmarkCheck className="w-4 h-4" />
+                            <span>Hesabıma Eklendi!</span>
+                          </>
+                        ) : (
+                          <>
+                            <BookmarkPlus className="w-4 h-4" />
+                            <span>Kuponu Kaydet</span>
+                          </>
+                        )}
+                      </button>
+
                       <button
                         onClick={() => handleCopyCoupon(activeCoupon)}
                         className={`px-4 py-2.5 rounded-xl border text-xs font-bold flex items-center space-x-2 transition ${
