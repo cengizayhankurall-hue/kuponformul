@@ -508,6 +508,32 @@ function evaluatePick(
   return { isEvaluated: false, won: false };
 }
 
+function normalizeDateStr(dStr?: string): string {
+  if (!dStr) return '';
+  const parts = dStr.trim().split('.');
+  if (parts.length === 3) {
+    return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+  }
+  return dStr.trim();
+}
+
+function isMatchPastStartTime(mDate?: string, mTime?: string): boolean {
+  if (!mDate) return false;
+  const isoDate = normalizeDateStr(mDate);
+  if (!isoDate) return false;
+  let hours = 23;
+  let mins = 59;
+  if (mTime && mTime.includes(':')) {
+    const [h, mi] = mTime.split(':').map(Number);
+    if (!isNaN(h)) hours = h;
+    if (!isNaN(mi)) mins = mi;
+  }
+  
+  const matchDate = new Date(`${isoDate}T${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:00+03:00`);
+  const now = new Date();
+  return now.getTime() >= matchDate.getTime();
+}
+
 // Gerçek Supabase Veri Erişim Fonksiyonları
 export const dbService = {
   async saveCoupon(userId: string, email: string, roundId: string, predictions: string[][], columnsCount: number, guaranteeLevel: number, generatedColumns?: string[][], matchesData?: any[]) {
@@ -627,32 +653,27 @@ export const dbService = {
   async evaluateIddaaCoupons(userId?: string) {
     if (isMockMode || !supabase) return { error: null };
     
-    // Fetch pending coupons
+    // Fetch all user coupons (to correct erroneously marked ones as well)
     let query = supabase
       .from('iddaa_saved_coupons')
-      .select('*')
-      .eq('status', 'pending');
+      .select('*');
       
     if (userId) {
       query = query.eq('user_id', userId);
     }
       
-    const { data: pendingCoupons, error: fetchErr } = await query;
+    const { data: allCoupons, error: fetchErr } = await query;
       
-    if (fetchErr || !pendingCoupons || pendingCoupons.length === 0) return { error: fetchErr };
+    if (fetchErr || !allCoupons || allCoupons.length === 0) return { error: fetchErr };
 
-    // Fetch past matches specifically for the dates of the pending coupon matches
+    // Fetch past matches specifically for dates of matches that have started
     const dates = new Set<string>();
-    pendingCoupons.forEach((c: any) => {
+    allCoupons.forEach((c: any) => {
       if (Array.isArray(c.matches)) {
         c.matches.forEach((m: any) => {
-          if (m.date) {
-            const parts = m.date.split('.');
-            if (parts.length === 3) {
-              dates.add(`${parts[2]}-${parts[1]}-${parts[0]}`);
-            } else if (m.date.includes('-')) {
-              dates.add(m.date);
-            }
+          if (m.date && isMatchPastStartTime(m.date, m.time)) {
+            const iso = normalizeDateStr(m.date);
+            if (iso) dates.add(iso);
           }
         });
       }
@@ -669,23 +690,34 @@ export const dbService = {
       if (dateMatches) pastMatches = dateMatches;
     }
 
-    if (pastMatches.length === 0) {
-      const fourteenDaysAgo = new Date(Date.now() - 14 * 86400000).toISOString().split('T')[0];
-      const { data: recentMatches } = await supabase
-        .from('past_matches')
-        .select('home_team, away_team, ms_score, iy_score, match_date')
-        .gte('match_date', fourteenDaysAgo);
-      if (recentMatches) pastMatches = recentMatches;
-    }
-
-    const updatePromises = pendingCoupons.map(async (coupon) => {
+    const updatePromises = allCoupons.map(async (coupon) => {
       let allWon = true;
       let anyPending = false;
       let matchesChanged = false;
       let hasLost = false;
       
       const updatedMatches = coupon.matches.map((m: any) => {
-        const matchResult = pastMatches.find(p => isTeamMatch(p.home_team, m.homeTeam) && isTeamMatch(p.away_team, m.awayTeam));
+        const mDateIso = normalizeDateStr(m.date);
+        const hasStarted = isMatchPastStartTime(m.date, m.time);
+
+        // If match has NOT started yet, it MUST be pending!
+        if (!hasStarted) {
+          anyPending = true;
+          if (m.result || m.msScore || m.iyScore) {
+            delete m.result;
+            delete m.msScore;
+            delete m.iyScore;
+            matchesChanged = true;
+          }
+          return m;
+        }
+
+        // Match MUST have the exact same match_date in past_matches
+        const matchResult = pastMatches.find(p => 
+          p.match_date === mDateIso && 
+          isTeamMatch(p.home_team, m.homeTeam) && 
+          isTeamMatch(p.away_team, m.awayTeam)
+        );
         
         if (matchResult && matchResult.ms_score) {
           const scores = matchResult.ms_score.split('-').map(Number);
@@ -721,6 +753,12 @@ export const dbService = {
           }
         } else {
           anyPending = true;
+          if (m.result || m.msScore || m.iyScore) {
+            delete m.result;
+            delete m.msScore;
+            delete m.iyScore;
+            matchesChanged = true;
+          }
         }
 
         if (m.result === 'lost') {
@@ -731,7 +769,7 @@ export const dbService = {
         return m;
       });
       
-      const newStatus = hasLost ? 'lost' : (anyPending ? 'pending' : 'won');
+      const newStatus = hasLost ? 'lost' : (anyPending ? 'pending' : (allWon ? 'won' : 'pending'));
       
       if (newStatus !== coupon.status || matchesChanged) {
         const { error: updateErr } = await supabase
@@ -741,8 +779,6 @@ export const dbService = {
 
         if (updateErr) {
           console.error('[evaluateIddaaCoupons] Failed to update coupon:', coupon.id, updateErr);
-        } else {
-          console.log('[evaluateIddaaCoupons] Updated coupon:', coupon.id, '-> newStatus:', newStatus);
         }
       }
       return null;
