@@ -240,64 +240,6 @@ export async function GET() {
         }
       },
       {
-        code: '74141',
-        homeTeam: 'Seinajoen Jk',
-        awayTeam: 'Lahti',
-        league: 'FİN',
-        date: '09.10.2026',
-        time: '18:30',
-        markets: {
-          anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.90, reason: 'İddaa Açılış: 1.90 | Finlandiya Ligi Erken Baskı' },
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.94, reason: 'İddaa Açılış: 1.94 | Bol Pozisyonlu Ev Galibiyeti' },
-          highCombo: { choice: 'MS 1 & KG VAR', odd: 3.15, reason: 'İddaa Açılış: 3.15 | Karşılıklı Skorlu Ev Üstünlüğü' },
-          safMs: { choice: 'MS 1', odd: 1.55, reason: 'İddaa Açılış: 1.55 | Form Grafiği Üstünlüğü' },
-          goals: { choice: '2.5 ÜST', odd: 1.76, reason: 'İddaa Açılış: 1.76 | İskandinav Tempolu Futbol' }
-        }
-      },
-      {
-        code: '74142',
-        homeTeam: 'Haka',
-        awayTeam: 'Pk-35 Ry',
-        league: 'FİN',
-        date: '09.10.2026',
-        time: '18:30',
-        markets: {
-          highIyms: { choice: 'X/1 (İY/MS)', odd: 4.25, reason: 'İddaa Açılış: 4.25 | İkinci Yarı Haka Çözümü' },
-          highCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 3.20, reason: 'İddaa Açılış: 3.20 | Açık Alan ve Tempolu İkinci Yarı' },
-          safMs: { choice: 'MS 1', odd: 1.75, reason: 'İddaa Açılış: 1.75 | Saha Avantajı' },
-          goals: { choice: 'KG VAR', odd: 1.85, reason: 'İddaa Açılış: 1.85 | İki Takımın da Savunma Zaafı' }
-        }
-      },
-      {
-        code: '74143',
-        homeTeam: 'Portadown Fc',
-        awayTeam: 'Glentoran',
-        league: 'KUZ İRL',
-        date: '09.10.2026',
-        time: '21:45',
-        markets: {
-          highIyms: { choice: '2/2 (İY/MS)', odd: 3.15, reason: 'İddaa Açılış: 3.15 | Glentoran İlk Yarı Üstünlüğü' },
-          megaIyms: { choice: 'X/2 (İY/MS)', odd: 7.25, reason: 'İddaa Açılış: 7.25 | İkinci Yarı Deplasman Baskısı' },
-          highCombo: { choice: 'MS 2 & 2.5 ÜST', odd: 3.35, reason: 'İddaa Açılış: 3.35 | Glentoran Deplasman Galibiyeti ve 3+ Gol' },
-          safMs: { choice: 'MS 2', odd: 1.95, reason: 'İddaa Açılış: 1.95 | Kalite Farkı' },
-          goals: { choice: '2.5 ÜST', odd: 1.80, reason: 'İddaa Açılış: 1.80 | Kuzey İrlanda Açık Oyun Yapısı' }
-        }
-      },
-      {
-        code: '74144',
-        homeTeam: 'Shelbourne',
-        awayTeam: 'Sligo Rovers',
-        league: 'İRL',
-        date: '09.10.2026',
-        time: '21:45',
-        markets: {
-          anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.98, reason: 'İddaa Açılış: 1.98 | Şampiyonluk Adayı Shelbourne' },
-          highCombo: { choice: 'MS 1 & KG YOK', odd: 3.05, reason: 'İddaa Açılış: 3.05 | Shelbourne Gol Yemeden Galibiyet' },
-          safMs: { choice: 'MS 1', odd: 1.62, reason: 'İddaa Açılış: 1.62 | Liderlik Motivasyonu' },
-          goals: { choice: '2.5 ALT', odd: 1.82, reason: 'İddaa Açılış: 1.82 | Sağlam Savunma Disiplini' }
-        }
-      },
-      {
         code: '74145',
         homeTeam: 'Ceara',
         awayTeam: 'Criciuma',
@@ -327,164 +269,118 @@ export async function GET() {
         }
       },
       {
-        code: '74147',
-        homeTeam: 'Gimnasia La Plata',
-        awayTeam: 'Atletico Tucuman',
-        league: 'ARJ',
-        date: '10.10.2026',
-        time: '20:00',
+        code: '74141',
+        homeTeam: 'Seinajoen Jk',
+        awayTeam: 'Lahti',
+        league: 'FİN',
+        date: '09.10.2026',
+        time: '18:00',
         markets: {
-          anchorIyms: { choice: '1/1 (İY/MS)', odd: 2.05, reason: 'İddaa Açılış: 2.05 | La Plata Saha Üstünlüğü' },
-          highIyms: { choice: 'X/1 (İY/MS)', odd: 4.40, reason: 'İddaa Açılış: 4.40 | İkinci Yarıda Gelen Gol' },
-          highCombo: { choice: 'MS 1 & KG YOK', odd: 3.25, reason: 'İddaa Açılış: 3.25 | Tek Taraflı Kontrol' },
-          safMs: { choice: 'MS 1', odd: 1.85, reason: 'İddaa Açılış: 1.85 | Ev Sahibi İstikrarı' },
-          goals: { choice: '2.5 ALT', odd: 1.70, reason: 'İddaa Açılış: 1.70 | Arjantin Savunma Ekolü' }
+          anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.90, reason: 'İddaa Açılış: 1.90 | Finlandiya Ligi Erken Baskı' },
+          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.94, reason: 'İddaa Açılış: 1.94 | Bol Pozisyonlu Ev Galibiyeti' },
+          highCombo: { choice: 'MS 1 & KG VAR', odd: 3.15, reason: 'İddaa Açılış: 3.15 | Karşılıklı Skorlu Ev Üstünlüğü' },
+          safMs: { choice: 'MS 1', odd: 1.55, reason: 'İddaa Açılış: 1.55 | Form Grafiği Üstünlüğü' },
+          goals: { choice: '2.5 ÜST', odd: 1.76, reason: 'İddaa Açılış: 1.76 | İskandinav Tempolu Futbol' }
         }
       },
       {
-        code: '74148',
-        homeTeam: 'Instituto Cordoba',
-        awayTeam: 'Boca Juniors',
-        league: 'ARJ',
-        date: '10.10.2026',
-        time: '22:30',
+        code: '74142',
+        homeTeam: 'Haka',
+        awayTeam: 'Pk-35 Ry',
+        league: 'FİN2',
+        date: '09.10.2026',
+        time: '19:00',
         markets: {
-          highIyms: { choice: '2/2 (İY/MS)', odd: 3.60, reason: 'İddaa Açılış: 3.60 | Boca Juniors Yıldız Üstünlüğü' },
-          megaIyms: { choice: 'X/2 (İY/MS)', odd: 7.50, reason: 'İddaa Açılış: 7.50 | İkinci Yarı Boca Baskısı' },
-          highCombo: { choice: 'MS 2 & 2.5 ALT', odd: 3.65, reason: 'İddaa Açılış: 3.65 | 0-1 / 0-2 Deplasman Kontrolü' },
-          safMs: { choice: 'MS 2', odd: 2.10, reason: 'İddaa Açılış: 2.10 | Büyük Takım Refleksi' },
-          goals: { choice: '2.5 ALT', odd: 1.68, reason: 'İddaa Açılış: 1.68 | Düşük Skorlu Taktik Mücadele' }
+          highIyms: { choice: 'X/1 (İY/MS)', odd: 4.25, reason: 'İddaa Açılış: 4.25 | İkinci Yarı Haka Çözümü' },
+          highCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 3.20, reason: 'İddaa Açılış: 3.20 | Açık Alan ve Tempolu İkinci Yarı' },
+          safMs: { choice: 'MS 1', odd: 1.75, reason: 'İddaa Açılış: 1.75 | Saha Avantajı' },
+          goals: { choice: 'KG VAR', odd: 1.85, reason: 'İddaa Açılış: 1.85 | İki Takımın da Savunma Zaafı' }
         }
       },
       {
-        code: '74149',
-        homeTeam: 'Union Santa Fe',
-        awayTeam: 'Defensa Justici',
-        league: 'ARJ',
-        date: '10.10.2026',
-        time: '23:00',
+        code: '74143',
+        homeTeam: 'Kapa',
+        awayTeam: 'Mikkelin',
+        league: 'FİN2',
+        date: '09.10.2026',
+        time: '19:00',
         markets: {
-          highIyms: { choice: 'X/X (İY/MS)', odd: 4.20, reason: 'İddaa Açılış: 4.20 | Orta Saha Kilitlenmesi' },
-          megaIyms: { choice: '1/X (İY/MS)', odd: 13.00, reason: 'İddaa Açılış: 13.00 | Son Dakika Eşitliği' },
-          highCombo: { choice: 'MS X & KG VAR', odd: 3.90, reason: 'İddaa Açılış: 3.90 | 1-1 Beraberlik Tahmini' },
-          safMs: { choice: 'MS X', odd: 3.00, reason: 'İddaa Açılış: 3.00 | Puan Paylaşımı' },
-          goals: { choice: 'KG VAR', odd: 1.92, reason: 'İddaa Açılış: 1.92 | Karşılıklı Pozisyon Zenginliği' }
+          highIyms: { choice: 'X/1 (İY/MS)', odd: 4.30, reason: 'İddaa Açılış: 4.30 | İkinci Yarı Ev Sahibi Üstünlüğü' },
+          megaIyms: { choice: '2/1 (İY/MS)', odd: 27.00, reason: 'İddaa Açılış: 27.00 | Finlandiya 2 Ligi Geri Dönüşü' },
+          highCombo: { choice: 'MS 1 & KG VAR', odd: 3.30, reason: 'İddaa Açılış: 3.30 | Karşılıklı Gollü Ev Galibiyeti' },
+          safMs: { choice: 'MS 1', odd: 1.80, reason: 'İddaa Açılış: 1.80 | İç Saha Üstünlüğü' },
+          goals: { choice: '2.5 ÜST', odd: 1.80, reason: 'İddaa Açılış: 1.80 | Tempolu Gol Pozisyonları' }
         }
       },
       {
-        code: '74150',
-        homeTeam: 'San Lorenzo',
-        awayTeam: 'Riestra',
-        league: 'ARJ',
-        date: '11.10.2026',
-        time: '20:00',
+        code: '73406',
+        homeTeam: 'Portadown Fc',
+        awayTeam: 'Glentoran',
+        league: 'KİRL',
+        date: '09.10.2026',
+        time: '21:45',
         markets: {
-          anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.95, reason: 'İddaa Açılış: 1.95 | San Lorenzo İç Saha Baskısı' },
-          highCombo: { choice: 'MS 1 & KG YOK', odd: 2.95, reason: 'İddaa Açılış: 2.95 | Gol Yemeden Rahat Galibiyet' },
-          safMs: { choice: 'MS 1', odd: 1.52, reason: 'İddaa Açılış: 1.52 | Kadro Kalitesi' },
-          goals: { choice: '2.5 ALT', odd: 1.72, reason: 'İddaa Açılış: 1.72 | Savunma Ağırlıklı' }
+          highIyms: { choice: '2/2 (İY/MS)', odd: 3.15, reason: 'İddaa Açılış: 3.15 | Glentoran İlk Yarı Üstünlüğü' },
+          megaIyms: { choice: 'X/2 (İY/MS)', odd: 7.25, reason: 'İddaa Açılış: 7.25 | İkinci Yarı Deplasman Baskısı' },
+          highCombo: { choice: 'MS 2 & 2.5 ÜST', odd: 3.35, reason: 'İddaa Açılış: 3.35 | Glentoran Deplasman Galibiyeti ve 3+ Gol' },
+          safMs: { choice: 'MS 2', odd: 1.95, reason: 'İddaa Açılış: 1.95 | Kalite Farkı' },
+          goals: { choice: '2.5 ÜST', odd: 1.80, reason: 'İddaa Açılış: 1.80 | Kuzey İrlanda Açık Oyun Yapısı' }
         }
       },
       {
-        code: '74151',
-        homeTeam: 'Atletico Mg',
-        awayTeam: 'Santos',
-        league: 'BR1',
-        date: '11.10.2026',
-        time: '21:00',
+        code: '72037',
+        homeTeam: 'Shelbourne',
+        awayTeam: 'Sligo Rovers',
+        league: 'İRL',
+        date: '09.10.2026',
+        time: '21:45',
         markets: {
-          anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.90, reason: 'İddaa Açılış: 1.90 | Mineirao Stadı Atmosferi' },
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 1.96, reason: 'İddaa Açılış: 1.96 | Atletico Mg Hücum Gücü ve 3+ Gol' },
-          safMs: { choice: 'MS 1', odd: 1.45, reason: 'İddaa Açılış: 1.45 | Net Ev Galibiyeti' },
-          goals: { choice: '2.5 ÜST', odd: 1.82, reason: 'İddaa Açılış: 1.82 | Yüksek Tempolu Maç' }
+          anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.98, reason: 'İddaa Açılış: 1.98 | Şampiyonluk Adayı Shelbourne' },
+          highCombo: { choice: 'MS 1 & KG YOK', odd: 3.05, reason: 'İddaa Açılış: 3.05 | Shelbourne Gol Yemeden Galibiyet' },
+          safMs: { choice: 'MS 1', odd: 1.62, reason: 'İddaa Açılış: 1.62 | Liderlik Motivasyonu' },
+          goals: { choice: '2.5 ALT', odd: 1.82, reason: 'İddaa Açılış: 1.82 | Sağlam Savunma Disiplini' }
         }
       },
       {
-        code: '74152',
-        homeTeam: 'Flamengo',
-        awayTeam: 'Fluminense',
-        league: 'BR1',
-        date: '11.10.2026',
-        time: '22:00',
+        code: '73654',
+        homeTeam: 'Rathfriland Ra',
+        awayTeam: 'Armagh',
+        league: 'KİRL1',
+        date: '09.10.2026',
+        time: '21:45',
         markets: {
-          highIyms: { choice: 'X/1 (İY/MS)', odd: 4.30, reason: 'İddaa Açılış: 4.30 | Fla-Flu Fla Galibiyeti İkinci Yarı' },
-          megaIyms: { choice: '2/1 (İY/MS)', odd: 26.00, reason: 'İddaa Açılış: 26.00 | Tarihi Derbi Geri Dönüşü' },
-          highCombo: { choice: 'MS 1 & KG VAR', odd: 3.75, reason: 'İddaa Açılış: 3.75 | Maracana Derbisinde Karşılıklı Goller' },
-          safMs: { choice: 'MS 1', odd: 1.90, reason: 'İddaa Açılış: 1.90 | Ev Sahibi Üstünlüğü' },
-          goals: { choice: 'KG VAR', odd: 1.76, reason: 'İddaa Açılış: 1.76 | Her İki Takım da Gol Bulur' }
+          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 2.19, reason: 'İddaa Açılış: 2.19 | Tempolu ve Gollü Ev Galibiyeti' },
+          highCombo: { choice: 'MS 1 & KG VAR', odd: 2.90, reason: 'İddaa Açılış: 2.90 | Karşılıklı Skorlu Ev Üstünlüğü' },
+          safMs: { choice: 'MS 1', odd: 1.52, reason: 'İddaa Açılış: 1.52 | Form Farkı' },
+          goals: { choice: '2.5 ÜST', odd: 1.85, reason: 'İddaa Açılış: 1.85 | Yüksek Skor Potansiyeli' }
         }
       },
       {
-        code: '74153',
-        homeTeam: 'Gremio',
-        awayTeam: 'Internacional',
-        league: 'BR1',
-        date: '11.10.2026',
-        time: '22:30',
+        code: '73655',
+        homeTeam: 'Newington Yc',
+        awayTeam: 'Ards Fc',
+        league: 'KİRL1',
+        date: '09.10.2026',
+        time: '21:45',
         markets: {
-          highIyms: { choice: 'X/X (İY/MS)', odd: 4.40, reason: 'İddaa Açılış: 4.40 | Gre-Nal Derbisi Taktiksel Kilit' },
-          megaIyms: { choice: '1/X (İY/MS)', odd: 14.00, reason: 'İddaa Açılış: 14.00 | Beraberlikle Biten Kıran Kırana Derbi' },
-          highCombo: { choice: 'MS X & KG VAR', odd: 4.10, reason: 'İddaa Açılış: 4.10 | 1-1 Gre-Nal Skoru' },
-          safMs: { choice: 'MS X', odd: 3.10, reason: 'İddaa Açılış: 3.10 | Puanlar Paylaşılır' },
-          goals: { choice: '2.5 ALT', odd: 1.70, reason: 'İddaa Açılış: 1.70 | Yoğun Faullü ve Düşük Skorlu' }
+          highIyms: { choice: 'X/1 (İY/MS)', odd: 4.15, reason: 'İddaa Açılış: 4.15 | İkinci Yarı Newington Baskısı' },
+          highCombo: { choice: 'MS 1 & KG VAR', odd: 2.67, reason: 'İddaa Açılış: 2.67 | Ev Sahibi Galibiyeti ve Karşılıklı Gol' },
+          safMs: { choice: 'MS 1', odd: 1.57, reason: 'İddaa Açılış: 1.57 | İç Saha Üstünlüğü' },
+          goals: { choice: 'KG VAR', odd: 1.75, reason: 'İddaa Açılış: 1.75 | Savunma Zaafiyetleri' }
         }
       },
       {
-        code: '74154',
-        homeTeam: 'Racing Club',
-        awayTeam: 'Belgrano',
-        league: 'ARJ',
-        date: '12.10.2026',
-        time: '20:00',
+        code: '73656',
+        homeTeam: 'Newry City Afc',
+        awayTeam: 'Dundela',
+        league: 'KİRL1',
+        date: '09.10.2026',
+        time: '21:45',
         markets: {
-          anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.95, reason: 'İddaa Açılış: 1.95 | Avellaneda Baskısı' },
-          anchorCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 2.05, reason: 'İddaa Açılış: 2.05 | Racing Ofansif Gücü' },
-          highCombo: { choice: 'MS 1 & 2.5 ÜST', odd: 3.10, reason: 'İddaa Açılış: 3.10 | Racing 3+ Golle Kazanır' },
-          safMs: { choice: 'MS 1', odd: 1.50, reason: 'İddaa Açılış: 1.50 | Favori Galibiyeti' },
-          goals: { choice: '2.5 ÜST', odd: 1.88, reason: 'İddaa Açılış: 1.88 | Tempolu Arjantin Maçı' }
-        }
-      },
-      {
-        code: '74155',
-        homeTeam: 'Bahia',
-        awayTeam: 'Mirassol',
-        league: 'BR1',
-        date: '12.10.2026',
-        time: '21:00',
-        markets: {
-          anchorIyms: { choice: '1/1 (İY/MS)', odd: 1.92, reason: 'İddaa Açılış: 1.92 | Fonte Nova Tribün Gücü' },
-          highCombo: { choice: 'MS 1 & KG YOK', odd: 3.10, reason: 'İddaa Açılış: 3.10 | Bahia Temiz Galibiyet' },
-          safMs: { choice: 'MS 1', odd: 1.58, reason: 'İddaa Açılış: 1.58 | İç Saha Formu' },
-          goals: { choice: '2.5 ALT', odd: 1.74, reason: 'İddaa Açılış: 1.74 | Kontrollü Oyun' }
-        }
-      },
-      {
-        code: '74156',
-        homeTeam: 'Lanus',
-        awayTeam: 'Velez Sarsfield',
-        league: 'ARJ',
-        date: '12.10.2026',
-        time: '21:30',
-        markets: {
-          highIyms: { choice: 'X/X (İY/MS)', odd: 4.10, reason: 'İddaa Açılış: 4.10 | İki Formda Takımın Taktik Düğümü' },
-          megaIyms: { choice: '2/X (İY/MS)', odd: 13.50, reason: 'İddaa Açılış: 13.50 | Lanus İkinci Yarı Beraberlik' },
-          highCombo: { choice: 'MS X & 2.5 ALT', odd: 3.40, reason: 'İddaa Açılış: 3.40 | 0-0 / 1-1 Skoru' },
-          safMs: { choice: 'MS X', odd: 2.95, reason: 'İddaa Açılış: 2.95 | Beraberlik Değeri' },
-          goals: { choice: '2.5 ALT', odd: 1.65, reason: 'İddaa Açılış: 1.65 | Savunma Emniyeti' }
-        }
-      },
-      {
-        code: '74157',
-        homeTeam: 'Coritiba',
-        awayTeam: 'Botafogo',
-        league: 'BR1',
-        date: '12.10.2026',
-        time: '22:00',
-        markets: {
-          highIyms: { choice: '2/2 (İY/MS)', odd: 3.20, reason: 'İddaa Açılış: 3.20 | Botafogo Liderlik Deplasmanı' },
-          highCombo: { choice: 'MS 2 & KG YOK', odd: 3.35, reason: 'İddaa Açılış: 3.35 | Botafogo Gol Yemeden Kazanır' },
-          safMs: { choice: 'MS 2', odd: 1.95, reason: 'İddaa Açılış: 1.95 | Şampiyonluk Yolu' },
-          goals: { choice: '2.5 ALT', odd: 1.72, reason: 'İddaa Açılış: 1.72 | Deplasman Disiplini' }
+          highIyms: { choice: 'X/1 (İY/MS)', odd: 4.20, reason: 'İddaa Açılış: 4.20 | İkinci Yarıda Gelen Goller' },
+          highCombo: { choice: 'MS 1 & KG VAR', odd: 2.68, reason: 'İddaa Açılış: 2.68 | Karşılıklı Pozisyonlu Ev Galibiyeti' },
+          safMs: { choice: 'MS 1', odd: 1.51, reason: 'İddaa Açılış: 1.51 | Kalite Üstünlüğü' },
+          goals: { choice: 'KG VAR', odd: 1.72, reason: 'İddaa Açılış: 1.72 | Karşılıklı Gol Beklentisi' }
         }
       }
     ];
@@ -526,18 +422,18 @@ export async function GET() {
     }
 
     // --- KUPON 1: HİBRİT / KARMA VURGUN (10 Maç - Sistem 3, 4, 5) ---
-    // 2 Banko (1.80-1.99) + 8 Yüksek Oran (3.00+) - Gerçek Hibrit Miks (İY/MS + Kombine + MS)
+    // 2 Banko (1.80-1.99) + 8 Yüksek Oran (3.00+) - Tamamen 09.10.2026 Bugünün Maçları
     const c1Defs = [
-      masterMatchCatalogue[2], // Palmeiras (anchorIyms: 1/1 1.95)
-      masterMatchCatalogue[4], // Seinajoen (anchorIyms: 1/1 1.90)
-      masterMatchCatalogue[0], // Santos vs Flamengo (highIyms: 2/2 3.45)
-      masterMatchCatalogue[1], // Atletico Pr vs Atletico Mg (highIyms: X/1 4.60)
-      masterMatchCatalogue[5], // Haka vs Pk-35 (highCombo: MS 1 & 2.5 ÜST 3.20)
-      masterMatchCatalogue[6], // Portadown vs Glentoran (highIyms: 2/2 3.15)
-      masterMatchCatalogue[9], // Nautico vs Novorizontino (highCombo: MS X & 2.5 ALT 3.50)
-      masterMatchCatalogue[10], // Gimnasia vs Tucuman (highIyms: X/1 4.40)
-      masterMatchCatalogue[11], // Instituto vs Boca (highCombo: MS 2 & 2.5 ALT 3.65)
-      masterMatchCatalogue[12]  // Union Santa Fe vs Defensa (highCombo: MS X & KG VAR 3.90)
+      masterMatchCatalogue[2],  // Palmeiras vs Bahia (anchorIyms: 1/1 1.95)
+      masterMatchCatalogue[6],  // Seinajoen vs Lahti (anchorIyms: 1/1 1.90)
+      masterMatchCatalogue[0],  // Santos vs Flamengo (highIyms: 2/2 3.45)
+      masterMatchCatalogue[1],  // Atletico Pr vs Atletico Mg (highIyms: X/1 4.60)
+      masterMatchCatalogue[7],  // Haka vs Pk-35 (highCombo: MS 1 & 2.5 ÜST 3.20)
+      masterMatchCatalogue[9],  // Portadown vs Glentoran (highIyms: 2/2 3.15)
+      masterMatchCatalogue[5],  // Nautico vs Novorizontino (highCombo: MS X & 2.5 ALT 3.50)
+      masterMatchCatalogue[8],  // Kapa vs Mikkelin (highIyms: X/1 4.30)
+      masterMatchCatalogue[12], // Newington vs Ards (highCombo: MS 1 & KG VAR 2.67)
+      masterMatchCatalogue[13]  // Newry City vs Dundela (highCombo: MS 1 & KG VAR 2.68)
     ];
     const coupon1Matches: SystemMatch[] = [
       makeMatch(c1Defs[0], 'anchorIyms', 'İY / MS', 'iy_ms'),
@@ -576,18 +472,18 @@ export async function GET() {
     };
 
     // --- KUPON 2: İY/MS & SÜRPRİZ DEĞER (10 Maç - Sistem 3, 4, 5) ---
-    // 2 Banko İY/MS (1.75-1.99) + 8 Yüksek İY/MS (3.00+) - Tamamen İY/MS Odaklı
+    // 2 Banko İY/MS + 8 Yüksek İY/MS (Tamamı 09.10.2026 Bugünün İY/MS Maçları)
     const c2Defs = [
-      masterMatchCatalogue[3], // Fluminense (anchorIyms: 1/1 1.92)
-      masterMatchCatalogue[7], // Shelbourne (anchorIyms: 1/1 1.98)
-      masterMatchCatalogue[0], // Santos vs Flamengo (highIyms: 2/2 3.45)
-      masterMatchCatalogue[1], // Atletico Pr vs Atletico Mg (highIyms: X/1 4.60)
-      masterMatchCatalogue[5], // Haka vs Pk-35 (highIyms: X/1 4.25)
-      masterMatchCatalogue[6], // Portadown vs Glentoran (highIyms: 2/2 3.15)
-      masterMatchCatalogue[9], // Nautico vs Novorizontino (highIyms: X/X 4.35)
-      masterMatchCatalogue[10], // Gimnasia (highIyms: X/1 4.40)
-      masterMatchCatalogue[11], // Instituto vs Boca (highIyms: 2/2 3.60)
-      masterMatchCatalogue[12]  // Union Santa Fe (highIyms: X/X 4.20)
+      masterMatchCatalogue[3],  // Fluminense vs Coritiba (anchorIyms: 1/1 1.92)
+      masterMatchCatalogue[10], // Shelbourne (anchorIyms: 1/1 1.98)
+      masterMatchCatalogue[0],  // Santos vs Flamengo (highIyms: 2/2 3.45)
+      masterMatchCatalogue[1],  // Atletico Pr vs Atletico Mg (highIyms: X/1 4.60)
+      masterMatchCatalogue[7],  // Haka vs Pk-35 (highIyms: X/1 4.25)
+      masterMatchCatalogue[9],  // Portadown vs Glentoran (highIyms: 2/2 3.15)
+      masterMatchCatalogue[5],  // Nautico vs Novorizontino (highIyms: X/X 4.35)
+      masterMatchCatalogue[8],  // Kapa vs Mikkelin (highIyms: X/1 4.30)
+      masterMatchCatalogue[12], // Newington vs Ards (highIyms: X/1 4.15)
+      masterMatchCatalogue[13]  // Newry City vs Dundela (highIyms: X/1 4.20)
     ];
     const coupon2Matches: SystemMatch[] = [
       makeMatch(c2Defs[0], 'anchorIyms', 'İY / MS', 'iy_ms'),
@@ -626,18 +522,18 @@ export async function GET() {
     };
 
     // --- KUPON 3: KOMBİNE & GOL KİLİDİ (10 Maç - Sistem 3, 4, 5) ---
-    // 2 Banko Kombine (1.80-1.99) + 8 Yüksek Kombine (3.00+) - Tamamen MS+Gol Kombine Odaklı
+    // 2 Banko Kombine + 8 Yüksek Kombine (Tamamı 09.10.2026 MS+Gol Tercihleri)
     const c3Defs = [
-      masterMatchCatalogue[2], // Palmeiras (anchorCombo: MS 1 & 2.5 ÜST 1.98)
-      masterMatchCatalogue[4], // Seinajoen (anchorCombo: MS 1 & 2.5 ÜST 1.94)
-      masterMatchCatalogue[0], // Santos vs Flamengo (highCombo: MS 2 & KG VAR 3.85)
-      masterMatchCatalogue[1], // Atletico Pr vs Atletico Mg (highCombo: MS 1 & 2.5 ALT 3.40)
-      masterMatchCatalogue[3], // Fluminense vs Coritiba (highCombo: MS 1 & 2.5 ÜST 3.10)
-      masterMatchCatalogue[6], // Portadown vs Glentoran (highCombo: MS 2 & 2.5 ÜST 3.35)
-      masterMatchCatalogue[7], // Shelbourne (highCombo: MS 1 & KG YOK 3.05)
-      masterMatchCatalogue[8], // Ceara vs Criciuma (highCombo: MS 1 & 2.5 ALT 3.15)
-      masterMatchCatalogue[15], // Flamengo vs Fluminense (highCombo: MS 1 & KG VAR 3.75)
-      masterMatchCatalogue[16]  // Gremio vs Internacional (highCombo: MS X & KG VAR 4.10)
+      masterMatchCatalogue[2],  // Palmeiras (anchorCombo: MS 1 & 2.5 ÜST 1.98)
+      masterMatchCatalogue[6],  // Seinajoen (anchorCombo: MS 1 & 2.5 ÜST 1.94)
+      masterMatchCatalogue[0],  // Santos vs Flamengo (highCombo: MS 2 & KG VAR 3.85)
+      masterMatchCatalogue[1],  // Atletico Pr vs Atletico Mg (highCombo: MS 1 & 2.5 ALT 3.40)
+      masterMatchCatalogue[3],  // Fluminense vs Coritiba (highCombo: MS 1 & 2.5 ÜST 3.10)
+      masterMatchCatalogue[9],  // Portadown vs Glentoran (highCombo: MS 2 & 2.5 ÜST 3.35)
+      masterMatchCatalogue[10], // Shelbourne (highCombo: MS 1 & KG YOK 3.05)
+      masterMatchCatalogue[4],  // Ceara vs Criciuma (highCombo: MS 1 & 2.5 ALT 3.15)
+      masterMatchCatalogue[11], // Rathfriland vs Armagh (highCombo: MS 1 & KG VAR 2.90)
+      masterMatchCatalogue[8]   // Kapa vs Mikkelin (highCombo: MS 1 & KG VAR 3.30)
     ];
     const coupon3Matches: SystemMatch[] = [
       makeMatch(c3Defs[0], 'anchorCombo', 'Kombine & Skor', 'combo'),
@@ -676,17 +572,17 @@ export async function GET() {
     };
 
     // --- KUPON 4: BÜYÜK VURGUN / ÇILGIN SİSTEM (9 Maç - Sistem 3, 4, 5, 6) ---
-    // 2 Dayanak (1.80-2.00) + 3 Orta Değer (3.00-5.00) + 4 Mega Vurgun (7.00+)
+    // 2 Dayanak (1.80-2.00) + 3 Orta Değer (3.00-5.00) + 4 Mega Vurgun (7.00+) - 09.10.2026
     const c4Defs = [
-      masterMatchCatalogue[13], // San Lorenzo (anchorIyms: 1/1 1.95)
-      masterMatchCatalogue[14], // Atletico Mg vs Santos (anchorCombo: MS 1 & 2.5 ÜST 1.96)
-      masterMatchCatalogue[5],  // Haka vs Pk-35 (highIyms: X/1 4.25)
-      masterMatchCatalogue[10], // Gimnasia (highIyms: X/1 4.40)
-      masterMatchCatalogue[19], // Lanus vs Velez (highIyms: X/X 4.10)
+      masterMatchCatalogue[4],  // Ceara vs Criciuma (anchorIyms: 1/1 1.95)
+      masterMatchCatalogue[11], // Rathfriland (anchorCombo: MS 1 & 2.5 ÜST 2.19)
+      masterMatchCatalogue[7],  // Haka vs Pk-35 (highIyms: X/1 4.25)
+      masterMatchCatalogue[12], // Newington vs Ards (highIyms: X/1 4.15)
+      masterMatchCatalogue[13], // Newry City vs Dundela (highIyms: X/1 4.20)
       masterMatchCatalogue[0],  // Santos vs Flamengo (megaIyms: 1/2 26.00)
       masterMatchCatalogue[1],  // Atletico Pr vs Atletico Mg (megaIyms: 2/1 28.00)
-      masterMatchCatalogue[6],  // Portadown vs Glentoran (megaIyms: X/2 7.25)
-      masterMatchCatalogue[15]  // Flamengo vs Fluminense (megaIyms: 2/1 26.00)
+      masterMatchCatalogue[9],  // Portadown vs Glentoran (megaIyms: X/2 7.25)
+      masterMatchCatalogue[8]   // Kapa vs Mikkelin (megaIyms: 2/1 27.00)
     ];
     const coupon4Matches: SystemMatch[] = [
       makeMatch(c4Defs[0], 'anchorIyms', 'İY / MS', 'iy_ms'),
@@ -724,14 +620,14 @@ export async function GET() {
     };
 
     // --- KUPON 5: DÜŞÜK BÜTÇELİ KASA KİLİDİ (6 Maç - Sistem 3, 4) ---
-    // 1.80 - 2.80 arası 6 maç, 35 TL kupon bedeli (Saf MS ve Goller)
+    // 1.80 - 2.80 arası 6 maç, 35 TL kupon bedeli (Saf MS Tercihleri - 09.10.2026)
     const c5Defs = [
-      masterMatchCatalogue[0],  // Santos vs Flamengo (safMs: MS 2 2.15)
-      masterMatchCatalogue[1],  // Atletico Pr (safMs: MS 1 2.35)
-      masterMatchCatalogue[6],  // Portadown vs Glentoran (safMs: MS 2 1.95)
-      masterMatchCatalogue[8],  // Ceara vs Criciuma (safMs: MS 1 1.70)
-      masterMatchCatalogue[11], // Instituto vs Boca (safMs: MS 2 2.10)
-      masterMatchCatalogue[19]  // Lanus vs Velez (safMs: MS X 2.95)
+      masterMatchCatalogue[0], // Santos vs Flamengo (safMs: MS 2 2.15)
+      masterMatchCatalogue[1], // Atletico Pr vs Atletico Mg (safMs: MS 1 2.35)
+      masterMatchCatalogue[9], // Portadown vs Glentoran (safMs: MS 2 1.95)
+      masterMatchCatalogue[4], // Ceara vs Criciuma (safMs: MS 1 1.70)
+      masterMatchCatalogue[7], // Haka vs Pk-35 (safMs: MS 1 1.75)
+      masterMatchCatalogue[5]  // Nautico vs Novorizontino (safMs: MS X 3.05)
     ];
     const coupon5Matches: SystemMatch[] = [
       makeMatch(c5Defs[0], 'safMs', 'Maç Sonucu', 'ms'),
@@ -766,15 +662,15 @@ export async function GET() {
     };
 
     // --- KUPON 6: GOL FIRTINASI / DİNAMİK SKOR MODELİ (7 Maç - Sistem 3, 4, 5) ---
-    // 2.5 Üst, 2.5 Alt, KG Var tempolu goller (91 TL Kupon Bedeli) - TEZATSIZ VE TUTARLI
+    // 2.5 Üst ve KG Var tempolu goller (91 TL Kupon Bedeli - 09.10.2026)
     const c6Defs = [
       masterMatchCatalogue[0],  // Santos vs Flamengo (goals: KG VAR 1.82)
       masterMatchCatalogue[2],  // Palmeiras vs Bahia (goals: 2.5 ÜST 1.84)
       masterMatchCatalogue[3],  // Fluminense vs Coritiba (goals: 2.5 ÜST 1.90)
-      masterMatchCatalogue[4],  // Seinajoen vs Lahti (goals: 2.5 ÜST 1.76)
-      masterMatchCatalogue[5],  // Haka vs Pk-35 (goals: KG VAR 1.85)
-      masterMatchCatalogue[14], // Atletico Mg vs Santos (goals: 2.5 ÜST 1.82)
-      masterMatchCatalogue[17]  // Racing Club vs Belgrano (goals: 2.5 ÜST 1.88)
+      masterMatchCatalogue[6],  // Seinajoen vs Lahti (goals: 2.5 ÜST 1.76)
+      masterMatchCatalogue[7],  // Haka vs Pk-35 (goals: KG VAR 1.85)
+      masterMatchCatalogue[9],  // Portadown vs Glentoran (goals: 2.5 ÜST 1.80)
+      masterMatchCatalogue[11]  // Rathfriland vs Armagh (goals: 2.5 ÜST 1.85)
     ];
     const coupon6Matches: SystemMatch[] = [
       makeMatch(c6Defs[0], 'goals', 'Karşılıklı Gol', 'goals'),
@@ -810,22 +706,22 @@ export async function GET() {
     };
 
     // --- KUPON 7: TAM KARMA / HER ŞEY DAHİL MEGA MİKS (8 Maç - Sistem 4, 5, 6) ---
-    // Saf MS + Gol + Kombine + İY/MS (154 TL Kupon Bedeli)
+    // Saf MS + Gol + Kombine + İY/MS (154 TL Kupon Bedeli - 09.10.2026)
     const c7Defs = [
-      masterMatchCatalogue[18], // Bahia vs Mirassol (safMs: MS 1 1.58)
-      masterMatchCatalogue[20], // Coritiba vs Botafogo (safMs: MS 2 1.95)
-      masterMatchCatalogue[12], // Union Santa Fe (goals: KG VAR 1.92)
-      masterMatchCatalogue[17], // Racing Club (anchorCombo: MS 1 & 2.5 ÜST 2.05)
-      masterMatchCatalogue[15], // Flamengo vs Fluminense (highCombo: MS 1 & KG VAR 3.75)
-      masterMatchCatalogue[16], // Gremio vs Inter (highCombo: MS X & KG VAR 4.10)
-      masterMatchCatalogue[14], // Atletico Mg (anchorIyms: 1/1 1.90)
-      masterMatchCatalogue[10]  // Gimnasia (highIyms: X/1 4.40)
+      masterMatchCatalogue[10], // Shelbourne vs Sligo (safMs: MS 1 1.62)
+      masterMatchCatalogue[12], // Newington vs Ards (safMs: MS 1 1.57)
+      masterMatchCatalogue[13], // Newry City vs Dundela (goals: KG VAR 1.72)
+      masterMatchCatalogue[8],  // Kapa vs Mikkelin (highCombo: MS 1 & KG VAR 3.30)
+      masterMatchCatalogue[4],  // Ceara vs Criciuma (highCombo: MS 1 & 2.5 ALT 3.15)
+      masterMatchCatalogue[5],  // Nautico vs Novorizontino (highCombo: MS X & 2.5 ALT 3.50)
+      masterMatchCatalogue[6],  // Seinajoen vs Lahti (anchorIyms: 1/1 1.90)
+      masterMatchCatalogue[1]   // Atletico Pr vs Atletico Mg (highIyms: X/1 4.60)
     ];
     const coupon7Matches: SystemMatch[] = [
       makeMatch(c7Defs[0], 'safMs', 'Maç Sonucu', 'ms'),
       makeMatch(c7Defs[1], 'safMs', 'Maç Sonucu', 'ms'),
       makeMatch(c7Defs[2], 'goals', 'Karşılıklı Gol', 'goals'),
-      makeMatch(c7Defs[3], 'anchorCombo', 'Kombine & Skor', 'combo'),
+      makeMatch(c7Defs[3], 'highCombo', 'Kombine & Skor', 'combo'),
       makeMatch(c7Defs[4], 'highCombo', 'Kombine & Skor', 'combo'),
       makeMatch(c7Defs[5], 'highCombo', 'Kombine & Skor', 'combo'),
       makeMatch(c7Defs[6], 'anchorIyms', 'İY / MS', 'iy_ms'),
