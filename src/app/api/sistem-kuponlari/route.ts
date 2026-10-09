@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { fetchMackolikMatches } from '../fetch-iddaa/route';
 import fs from 'fs';
 import path from 'path';
 
@@ -783,6 +784,50 @@ export async function GET() {
         }
       }
     ];
+
+    // Canlı Maçkolik Oran Senkronizasyonu
+    try {
+      const liveMatches = await fetchMackolikMatches();
+      if (liveMatches && liveMatches.length > 0) {
+        const liveMap = new Map<string, any>();
+        const normalizeT = (t: string) => (t || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        liveMatches.forEach((lm: any) => {
+          if (lm.code) liveMap.set(String(lm.code), lm);
+          liveMap.set(`${normalizeT(lm.homeTeam)}_${normalizeT(lm.awayTeam)}`, lm);
+        });
+
+        const parseNum = (val: any) => {
+          if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
+          const num = Number(String(val).replace(',', '.'));
+          return isNaN(num) || num <= 1.01 ? null : num;
+        };
+
+        masterMatchCatalogue.forEach(def => {
+          const lm = liveMap.get(def.code) || liveMap.get(`${normalizeT(def.homeTeam)}_${normalizeT(def.awayTeam)}`);
+          if (lm && lm.odds) {
+            if (def.markets.safMs) {
+              const ch = def.markets.safMs.choice;
+              if (ch === 'MS 1' && parseNum(lm.odds.ms1)) def.markets.safMs.odd = parseNum(lm.odds.ms1)!;
+              if (ch === 'MS 2' && parseNum(lm.odds.ms2)) def.markets.safMs.odd = parseNum(lm.odds.ms2)!;
+              if ((ch === 'MS 0' || ch === 'MS X') && parseNum(lm.odds.ms0)) def.markets.safMs.odd = parseNum(lm.odds.ms0)!;
+            }
+            if (def.markets.goals) {
+              const ch = def.markets.goals.choice;
+              if (ch === '2.5 ÜST' && parseNum(lm.odds.ust25)) def.markets.goals.odd = parseNum(lm.odds.ust25)!;
+              if (ch === '2.5 ALT' && parseNum(lm.odds.alt25)) def.markets.goals.odd = parseNum(lm.odds.alt25)!;
+              if (ch === 'KG VAR' && parseNum(lm.odds.kgVar)) def.markets.goals.odd = parseNum(lm.odds.kgVar)!;
+            }
+            if (def.markets.anchorCombo && parseNum(lm.odds.ms1) && parseNum(lm.odds.ust25)) {
+              if (def.markets.anchorCombo.choice.includes('MS 1 & 2.5 ÜST')) {
+                def.markets.anchorCombo.odd = Number((parseNum(lm.odds.ms1)! * 1.25).toFixed(2));
+              }
+            }
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('Sistem kuponları live sync skipped:', e);
+    }
 
     function makeMatch(def: MasterMatchDef, marketKey: keyof MasterMatchDef['markets'], marketName: string, marketType: string): SystemMatch {
       const m = def.markets[marketKey];

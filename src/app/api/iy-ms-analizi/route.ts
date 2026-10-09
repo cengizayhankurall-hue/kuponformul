@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { fetchMackolikMatches } from '../fetch-iddaa/route';
 import { supabase } from '@/lib/supabase';
 import fs from 'fs';
 import path from 'path';
@@ -339,6 +340,45 @@ export async function GET(request: Request) {
 
       const validUpcoming = (cachedData.matches || []).filter((m: any) => isStrictValidMatch(m) && isUpcomingDate(m.date));
       const validPast = (cachedData.pastMatches || []).filter(isStrictValidMatch);
+
+      // Canlı Maçkolik Oran Senkronizasyonu
+      try {
+        const liveMatches = await fetchMackolikMatches();
+        if (liveMatches && liveMatches.length > 0) {
+          const liveMap = new Map<string, any>();
+          const normalizeT = (t: string) => (t || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+          liveMatches.forEach((lm: any) => {
+            if (lm.code) liveMap.set(String(lm.code), lm);
+            liveMap.set(`${normalizeT(lm.homeTeam)}_${normalizeT(lm.awayTeam)}`, lm);
+          });
+
+          const parseNum = (val: any) => {
+            if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
+            const num = Number(String(val).replace(',', '.'));
+            return isNaN(num) || num <= 1.01 ? null : num;
+          };
+
+          validUpcoming.forEach((m: any) => {
+            const lm = liveMap.get(m.code) || liveMap.get(`${normalizeT(m.homeTeam)}_${normalizeT(m.awayTeam)}`);
+            if (lm && lm.odds && m.odds) {
+              if (parseNum(lm.odds.ms1)) m.odds.ms1 = parseNum(lm.odds.ms1);
+              if (parseNum(lm.odds.ms0)) m.odds.ms0 = parseNum(lm.odds.ms0);
+              if (parseNum(lm.odds.ms2)) m.odds.ms2 = parseNum(lm.odds.ms2);
+              if (parseNum(lm.odds.iy1)) m.odds.iy1 = parseNum(lm.odds.iy1);
+              if (parseNum(lm.odds.iy0)) m.odds.iy0 = parseNum(lm.odds.iy0);
+              if (parseNum(lm.odds.iy2)) m.odds.iy2 = parseNum(lm.odds.iy2);
+              if (lm.odds.ust25) m.odds.ust25 = String(lm.odds.ust25);
+              if (lm.odds.alt25) m.odds.alt25 = String(lm.odds.alt25);
+              if (lm.odds.kgVar) m.odds.kgVar = String(lm.odds.kgVar);
+              if (lm.odds.kgYok) m.odds.kgYok = String(lm.odds.kgYok);
+              if (lm.score) m.score = lm.score;
+              if (lm.halfTimeScore) m.iyScore = lm.halfTimeScore;
+            }
+          });
+        }
+      } catch (e) {
+        console.warn('IY/MS Live odds sync skipped:', e);
+      }
 
       const dateSet = new Set<string>();
       const leagueSet = new Set<string>();

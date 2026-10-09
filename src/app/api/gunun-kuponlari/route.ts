@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { fetchMackolikMatches } from '../fetch-iddaa/route';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -46,6 +47,60 @@ export interface YesterdayDailySummary {
   wonCoupons: number;
   successRate: number;
   coupons: DailyCoupon[];
+}
+
+function normalizeTeam(t: string): string {
+  return (t || '')
+    .toLowerCase()
+    .replace(/İ/g, 'i')
+    .replace(/I/g, 'i')
+    .replace(/ı/g, 'i')
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/ö/g, 'o')
+    .replace(/ç/g, 'c')
+    .replace(/[^a-z0-9]/g, '');
+}
+
+function getLiveOddForChoice(liveMatch: any, choice: string, fallbackOdd: number): number {
+  if (!liveMatch || !liveMatch.odds) return fallbackOdd;
+  const o = liveMatch.odds;
+  const parseNum = (val: any) => {
+    if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
+    const num = Number(String(val).replace(',', '.'));
+    return isNaN(num) || num <= 1.01 ? null : num;
+  };
+
+  const ch = choice.toUpperCase().trim();
+  if (ch === 'MS 1' || ch === '1') return parseNum(o.ms1) ?? fallbackOdd;
+  if (ch === 'MS 0' || ch === 'MS X' || ch === 'X' || ch === '0') return parseNum(o.ms0) ?? fallbackOdd;
+  if (ch === 'MS 2' || ch === '2') return parseNum(o.ms2) ?? fallbackOdd;
+  if (ch === '2.5 ÜST' || ch === '2.5 UST') return parseNum(o.ust25) ?? fallbackOdd;
+  if (ch === '2.5 ALT') return parseNum(o.alt25) ?? fallbackOdd;
+  if (ch === 'KG VAR') return parseNum(o.kgVar) ?? fallbackOdd;
+  if (ch === 'KG YOK') return parseNum(o.kgYok) ?? fallbackOdd;
+  if (ch === 'MS 1 & 1.5 ÜST' || ch === 'MS 1 & 2.5 ÜST') {
+    const ms1 = parseNum(o.ms1);
+    const ust = parseNum(o.ust25);
+    if (ms1 && ust) return Number((ms1 * 1.25).toFixed(2));
+  }
+  return fallbackOdd;
+}
+
+function syncCouponLive(coupon: DailyCoupon, liveMap: Map<string, any>) {
+  coupon.matches.forEach(m => {
+    const liveMatch = liveMap.get(m.code) || liveMap.get(`${normalizeTeam(m.homeTeam)}_${normalizeTeam(m.awayTeam)}`);
+    if (liveMatch) {
+      m.odd = getLiveOddForChoice(liveMatch, m.choice, m.odd);
+      if (liveMatch.score) m.score = liveMatch.score;
+      if (liveMatch.halfTimeScore) m.iyScore = liveMatch.halfTimeScore;
+    }
+  });
+
+  const totalOdds = Number(coupon.matches.reduce((acc, m) => acc * m.odd, 1).toFixed(2));
+  coupon.totalOdds = totalOdds;
+  coupon.potentialReturn = Number((totalOdds * coupon.suggestedStake).toFixed(2));
 }
 
 export async function GET() {
@@ -98,7 +153,6 @@ export async function GET() {
     };
 
     // KUPON 3: ⚡ HEM MAÇ SONUCU HEM DE 2.5 ALT / ÜST KUPONU (KARMA - 4 Maç - Oran: 6.11)
-    // (Ayrı ayrı normal MS ve normal 2.5 Alt/Üst maçları)
     const m_mix_1: DailyMatchItem = { id: 'mix_1', code: '71102', homeTeam: 'PSV Eindhoven', awayTeam: 'Heerenveen', league: 'HOL', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.22, reason: 'PSV ligin mutlak favorisi' };
     const m_mix_2: DailyMatchItem = { id: 'mix_2', code: '71113', homeTeam: 'Pau FC', awayTeam: 'Stade Lavallois', league: 'FR2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.83, reason: 'Pau FC iç saha galibiyet serisi' };
     const m_mix_3: DailyMatchItem = { id: 'mix_3', code: '71144', homeTeam: 'UCD', awayTeam: 'Longford', league: 'İR1', date: '09.10.2026', time: '21:45', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.48, reason: 'İrlanda 1. Liginde bol gollü eşleşme' };
@@ -211,6 +265,22 @@ export async function GET() {
       coupon5,
       coupon7
     ];
+
+    // Canlı Maçkolik Oran Senkronizasyonu
+    try {
+      const liveMatches = await fetchMackolikMatches();
+      if (liveMatches && liveMatches.length > 0) {
+        const liveMap = new Map<string, any>();
+        liveMatches.forEach((lm: any) => {
+          if (lm.code) liveMap.set(String(lm.code), lm);
+          const key = `${normalizeTeam(lm.homeTeam)}_${normalizeTeam(lm.awayTeam)}`;
+          liveMap.set(key, lm);
+        });
+        todayCoupons.forEach(c => syncCouponLive(c, liveMap));
+      }
+    } catch (e) {
+      console.warn('Live odds sync skipped:', e);
+    }
 
     // -------------------------------------------------------------
     // 2. YESTERDAY'S EVALUATED DAILY COUPONS (08.10.2026)
