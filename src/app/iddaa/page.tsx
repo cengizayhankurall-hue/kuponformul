@@ -1129,73 +1129,8 @@ export default function IddaaPage() {
                 <Award className="w-4 h-4 text-emerald-400" />
                 Dünkü Sonuçlar & Başarı
               </button>
-              <button
-                onClick={handleGenerateCoupons}
-                disabled={loadingCoupons || matches.length === 0}
-                className={`flex-1 md:flex-none px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold flex items-center justify-center gap-2 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-md cursor-pointer ${
-                  isDark 
-                    ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 border-none' 
-                    : 'bg-emerald-500 hover:bg-emerald-600 text-white'
-                }`}
-              >
-                {loadingCoupons ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                Kuponları Oluştur
-              </button>
             </div>
           </div>
-
-          {couponsError && (
-            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-xs font-bold mb-4">
-              {couponsError}
-            </div>
-          )}
-
-          {dailyCoupons && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {dailyCoupons.map((coupon, cIdx) => (
-                <div key={cIdx} className={`p-4 rounded-xl border relative overflow-hidden ${
-                  isDark 
-                    ? cIdx === 0 ? 'bg-[#0f172a] border-sky-500/30' : 'bg-[#0f172a] border-purple-500/30'
-                    : cIdx === 0 ? 'bg-white border-sky-200' : 'bg-white border-purple-200'
-                }`}>
-                  <div className={`absolute top-0 right-0 px-3 py-1 text-[10px] font-black uppercase rounded-bl-lg ${
-                    cIdx === 0 ? 'bg-sky-500 text-white' : 'bg-purple-500 text-white'
-                  }`}>
-                    Toplam Oran: {coupon.odds.toFixed(2)}
-                  </div>
-                  <h4 className={`font-bold text-sm mb-3 flex items-center gap-2 ${
-                    cIdx === 0 ? (isDark ? 'text-sky-400' : 'text-sky-600') : (isDark ? 'text-purple-400' : 'text-purple-600')
-                  }`}>
-                    {cIdx === 0 ? '🛡️' : '🎯'} {coupon.title}
-                  </h4>
-                  {coupon.matches.length > 0 ? (
-                    <div className="space-y-2">
-                      {coupon.matches.map((m: any, mIdx: number) => (
-                        <div key={mIdx} className={`p-2 rounded-lg border flex justify-between items-center ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                          <div>
-                            <div className={`text-[10px] mb-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{m.date} {m.time}</div>
-                            <div className={`text-xs font-bold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>{m.match}</div>
-                          </div>
-                          <div className="text-right flex flex-col items-end">
-                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${isDark ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'}`}>% {m.percent}</span>
-                            <div className="flex gap-2 items-baseline mt-1">
-                              <span className={`text-xs font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>{m.label}</span>
-                              <span className={`text-[10px] font-bold ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>({m.odd.toFixed(2)})</span>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                      <button onClick={() => saveCart(coupon.matches.map((m: any) => ({ matchId: Date.now() + Math.random(), homeTeam: m.match.split(' - ')[0] || '', awayTeam: m.match.split(' - ')[1] || '', date: m.date, time: m.time, pickLabel: m.label, pickOdd: m.odd })), 10)} className="w-full mt-3 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg transition text-xs">Kuponu Kaydet</button>
-                    </div>
-                  ) : (
-                    <div className={`text-xs italic p-4 text-center ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-                      Kriterlere uygun yeterli maç bulunamadı.
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
 
         {/* LOADING SKELETON */}
