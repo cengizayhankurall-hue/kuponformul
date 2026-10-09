@@ -33,7 +33,7 @@ import {
   BookmarkCheck,
   Loader2
 } from 'lucide-react';
-import { supabase, isMockMode, mockService } from '@/lib/supabase';
+import { supabase, isMockMode, mockService, dbService } from '@/lib/supabase';
 
 interface SystemMatch {
   id: string;
@@ -277,22 +277,16 @@ export default function SistemKuponlariPage() {
         pickOdd: m.odd
       }));
 
-      const res = await fetch('/api/iddaa-coupons/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          matches: formattedMatches,
-          totalOdds: Number((coupon.avgOdds || coupon.maxOdds || 10).toFixed(2)),
-          stake: coupon.cost || 50,
-          potentialWin: Number(maxPossibleWin.toFixed(2)),
-          email: email || 'user@kuponformul.com',
-          userId: userId
-        })
+      const { error: saveError } = await dbService.saveIddaaCoupon({
+        userId: userId,
+        matches: formattedMatches,
+        totalOdds: Number((coupon.avgOdds || coupon.maxOdds || 10).toFixed(2)),
+        stake: coupon.cost || 50,
+        potentialWin: Number(maxPossibleWin.toFixed(2))
       });
 
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.error || 'Kaydedilemedi');
+      if (saveError) {
+        throw new Error(saveError.message || 'Kaydedilemedi');
       }
 
       setSavedId(coupon.id);

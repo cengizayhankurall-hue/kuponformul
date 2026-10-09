@@ -201,6 +201,42 @@ class MockService {
     return true;
   }
 
+  // İddaa Kuponları (Mock)
+  async saveIddaaCoupon(coupon: {
+    userId: string;
+    matches: any[];
+    totalOdds: number;
+    stake: number;
+    potentialWin: number;
+  }) {
+    const coupons = this.getStorageItem<any[]>('mock_iddaa_saved_coupons', []);
+    const newCoupon = {
+      id: 'mock-iddaa-' + Math.random().toString(36).substr(2, 9),
+      user_id: coupon.userId,
+      matches: coupon.matches,
+      total_odds: coupon.totalOdds,
+      stake: coupon.stake,
+      potential_win: coupon.potentialWin,
+      status: 'pending',
+      created_at: new Date().toISOString()
+    };
+    coupons.push(newCoupon);
+    this.setStorageItem('mock_iddaa_saved_coupons', coupons);
+    return { data: newCoupon, error: null };
+  }
+
+  async getIddaaSavedCoupons(userId: string) {
+    const coupons = this.getStorageItem<any[]>('mock_iddaa_saved_coupons', []);
+    return coupons.filter(c => c.user_id === userId).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  }
+
+  async deleteIddaaCoupon(couponId: string): Promise<boolean> {
+    const coupons = this.getStorageItem<any[]>('mock_iddaa_saved_coupons', []);
+    const filtered = coupons.filter(c => c.id !== couponId);
+    this.setStorageItem('mock_iddaa_saved_coupons', filtered);
+    return true;
+  }
+
   // Liderlik Tablosunu Hesapla / Getir
   async getLeaderboard(roundId: string, matches: any[]): Promise<any[]> {
     const coupons = this.getStorageItem<SavedCoupon[]>('mock_saved_coupons', []);
@@ -524,9 +560,37 @@ export const dbService = {
     return { data, error };
   },
 
+  async saveIddaaCoupon(coupon: {
+    userId: string;
+    matches: any[];
+    totalOdds: number;
+    stake: number;
+    potentialWin: number;
+  }) {
+    if (isMockMode) {
+      return await mockService.saveIddaaCoupon(coupon);
+    }
+    if (!supabase) {
+      return { data: null, error: new Error('Supabase bağlantısı bulunamadı.') };
+    }
+    const { data, error } = await supabase
+      .from('iddaa_saved_coupons')
+      .insert([{
+        user_id: coupon.userId,
+        matches: coupon.matches,
+        total_odds: coupon.totalOdds,
+        stake: coupon.stake,
+        potential_win: coupon.potentialWin,
+        status: 'pending'
+      }])
+      .select();
+
+    return { data: data ? data[0] : null, error };
+  },
+
   async getIddaaSavedCoupons(userId: string) {
     if (isMockMode) {
-      return { data: [], error: null };
+      return { data: await mockService.getIddaaSavedCoupons(userId), error: null };
     }
     const { data, error } = await supabase!
       .from('iddaa_saved_coupons')
@@ -550,7 +614,8 @@ export const dbService = {
 
   async deleteIddaaCoupon(couponId: string) {
     if (isMockMode) {
-      return { error: null };
+      const success = await mockService.deleteIddaaCoupon(couponId);
+      return { error: success ? null : new Error('Silinemedi') };
     }
     const { error } = await supabase!
       .from('iddaa_saved_coupons')
