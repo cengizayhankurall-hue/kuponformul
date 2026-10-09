@@ -29,7 +29,8 @@ import {
   Info,
   History,
   Trophy,
-  Ticket
+  Ticket,
+  Filter
 } from 'lucide-react';
 import { DailyCoupon, DailyMatchItem, YesterdayDailySummary } from '@/app/api/gunun-kuponlari/route';
 
@@ -50,7 +51,7 @@ export default function GununKuponlariPage() {
   const [expandedCoupons, setExpandedCoupons] = useState<Record<string, boolean>>({});
   const [stakes, setStakes] = useState<Record<string, number>>({});
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [filterTheme, setFilterTheme] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   // Fetch Coupons
   const fetchCoupons = async () => {
@@ -169,9 +170,9 @@ export default function GununKuponlariPage() {
 
   const filteredCoupons = useMemo(() => {
     if (!data?.coupons) return [];
-    if (filterTheme === 'all') return data.coupons;
-    return data.coupons.filter(c => c.theme === filterTheme);
-  }, [data, filterTheme]);
+    if (selectedCategory === 'all') return data.coupons;
+    return data.coupons.filter(c => c.category === selectedCategory);
+  }, [data, selectedCategory]);
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-neutral-950 text-neutral-100' : 'bg-neutral-50 text-neutral-900'} transition-colors duration-200 pb-20`}>
@@ -197,7 +198,7 @@ export default function GununKuponlariPage() {
                 </span>
               </h1>
               <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-2xl">
-                Yapay zeka analiz motoru tarafından günün bülteninden 3-5 maçlık optimum güven ve oran dengesiyle hazırlanmış 7 özel kupon ve dünün şeffaf sonuçları.
+                Sadece Maç Sonucu, Sadece 2.5 Alt/Üst ve Karma Kuponlar dahil günün bülteninden 3-5 maçlık optimum güven ve oran dengesiyle hazırlanmış özel kuponlar.
               </p>
             </div>
 
@@ -213,7 +214,7 @@ export default function GununKuponlariPage() {
                   }`}
                 >
                   <Flame className="w-3.5 h-3.5 text-amber-300" />
-                  Bugün (7 Kupon)
+                  Bugünün Kuponları
                 </button>
                 <button
                   onClick={() => setActiveTab('yesterday')}
@@ -275,14 +276,73 @@ export default function GununKuponlariPage() {
 
         {!loading && !error && data && activeTab === 'today' && (
           <div>
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
+              <button
+                onClick={() => setSelectedCategory('all')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 ${
+                  selectedCategory === 'all'
+                    ? 'bg-neutral-100 text-neutral-900 shadow-md font-black dark:bg-white dark:text-neutral-950'
+                    : 'bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:bg-neutral-800'
+                }`}
+              >
+                <Ticket className="w-3.5 h-3.5" />
+                Tüm Kuponlar ({data.coupons.length})
+              </button>
+
+              <button
+                onClick={() => setSelectedCategory('ms_only')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 ${
+                  selectedCategory === 'ms_only'
+                    ? 'bg-emerald-500 text-white shadow-md font-black shadow-emerald-500/20'
+                    : 'bg-neutral-900 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10'
+                }`}
+              >
+                <span>⚽ Sadece Maç Sonucu (MS)</span>
+              </button>
+
+              <button
+                onClick={() => setSelectedCategory('ou_only')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 ${
+                  selectedCategory === 'ou_only'
+                    ? 'bg-rose-500 text-white shadow-md font-black shadow-rose-500/20'
+                    : 'bg-neutral-900 border border-rose-500/30 text-rose-400 hover:bg-rose-500/10'
+                }`}
+              >
+                <span>🔥 Sadece 2.5 Alt / Üst</span>
+              </button>
+
+              <button
+                onClick={() => setSelectedCategory('ms_ou_mix')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 ${
+                  selectedCategory === 'ms_ou_mix'
+                    ? 'bg-amber-500 text-white shadow-md font-black shadow-amber-500/20'
+                    : 'bg-neutral-900 border border-amber-500/30 text-amber-400 hover:bg-amber-500/10'
+                }`}
+              >
+                <span>⚡ MS & 2.5 Alt/Üst Karma</span>
+              </button>
+
+              <button
+                onClick={() => setSelectedCategory('banko')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 ${
+                  selectedCategory === 'banko'
+                    ? 'bg-cyan-500 text-white shadow-md font-black shadow-cyan-500/20'
+                    : 'bg-neutral-900 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10'
+                }`}
+              >
+                <span>🛡️ Günün Bankosu</span>
+              </button>
+            </div>
+
             {/* Quick Stats Banner */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
               <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-neutral-900/50 border-neutral-800' : 'bg-white border-neutral-200 shadow-sm'}`}>
                 <div className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
                   <Ticket className="w-3.5 h-3.5 text-emerald-400" />
-                  Toplam Kupon
+                  Gösterilen Kupon
                 </div>
-                <div className="text-2xl font-black text-emerald-400">7 Farklı Kupon</div>
+                <div className="text-2xl font-black text-emerald-400">{filteredCoupons.length} Kupon</div>
                 <div className="text-[10px] text-neutral-500 mt-0.5">3-5 Maçlık Kombineler</div>
               </div>
 
@@ -301,7 +361,7 @@ export default function GununKuponlariPage() {
                   Kasa Uyumluluğu
                 </div>
                 <div className="text-2xl font-black text-cyan-400">%85 Güvenilirlik</div>
-                <div className="text-[10px] text-neutral-500 mt-0.5">Banko, İdeal & Sürpriz</div>
+                <div className="text-[10px] text-neutral-500 mt-0.5">MS, Alt/Üst ve Karma</div>
               </div>
 
               <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-neutral-900/50 border-neutral-800' : 'bg-white border-neutral-200 shadow-sm'}`}>
@@ -316,7 +376,7 @@ export default function GununKuponlariPage() {
 
             {/* Coupons List */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {filteredCoupons.map((coupon, idx) => {
+              {filteredCoupons.map((coupon) => {
                 const style = themeStyles[coupon.theme] || themeStyles.emerald;
                 const isExpanded = expandedCoupons[coupon.id] ?? true;
                 const currentStake = stakes[coupon.id] || coupon.suggestedStake || 50;
@@ -334,13 +394,16 @@ export default function GununKuponlariPage() {
                     {/* Header */}
                     <div className="p-5 border-b border-neutral-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                       <div>
-                        <div className="flex items-center gap-2 mb-1.5">
+                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                           <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${style.badge}`}>
                             {coupon.badge}
                           </span>
                           <span className="text-xs text-neutral-400 font-semibold flex items-center gap-1">
                             <Layers className="w-3.5 h-3.5" />
                             {coupon.totalMatches} Maç
+                          </span>
+                          <span className="text-[10px] px-2 py-0.5 rounded-md bg-neutral-800 text-neutral-300 font-bold">
+                            {coupon.categoryLabel}
                           </span>
                         </div>
                         <h2 className="text-lg sm:text-xl font-black tracking-tight flex items-center gap-2">
@@ -366,7 +429,7 @@ export default function GununKuponlariPage() {
                           Seçilen Maçlar ({coupon.matches.length})
                         </div>
 
-                        {coupon.matches.map((m, mIdx) => (
+                        {coupon.matches.map((m) => (
                           <div 
                             key={m.id}
                             className={`p-3 rounded-2xl border transition-all ${
@@ -547,7 +610,6 @@ export default function GununKuponlariPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {data.yesterday.coupons.map((coupon) => {
                 const isWinner = coupon.isWinner;
-                const style = themeStyles[coupon.theme] || themeStyles.emerald;
                 const isExpanded = expandedCoupons[coupon.id] ?? true;
 
                 return (
@@ -562,7 +624,7 @@ export default function GununKuponlariPage() {
                     {/* Header */}
                     <div className="p-5 border-b border-neutral-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                       <div>
-                        <div className="flex items-center gap-2 mb-1.5">
+                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                           {isWinner ? (
                             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center gap-1">
                               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />

@@ -24,6 +24,8 @@ export interface DailyCoupon {
   id: string;
   title: string;
   badge: string;
+  category: 'ms_only' | 'ou_only' | 'ms_ou_mix' | 'banko' | 'special';
+  categoryLabel: string;
   description: string;
   theme: 'emerald' | 'amber' | 'purple' | 'cyan' | 'rose' | 'indigo' | 'blue';
   totalMatches: number;
@@ -48,9 +50,76 @@ export interface YesterdayDailySummary {
 
 export async function GET() {
   try {
-    // 1. TODAY'S 7 DAILY COUPONS (09.10.2026) - All odds between 3.00 and 15.00, 3-5 matches
+    // -------------------------------------------------------------
+    // 1. TODAY'S DAILY COUPONS (09.10.2026)
+    // -------------------------------------------------------------
     
-    // Kupon 1: 🛡️ İdeal Banko Kombine (3 Maç - Toplam Oran: 3.42)
+    // KUPON 1: ⚽ SADECE MAÇ SONUCU (MS 1 / MS X / MS 2) KUPONU (5 Maç - Oran: 6.30)
+    const m_ms_1: DailyMatchItem = { id: 'ms_1', code: '71101', homeTeam: 'B.Dortmund', awayTeam: 'Werder Bremen', league: 'AL1', date: '09.10.2026', time: '21:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.34, reason: 'Dortmund ev sahibi baskısı ve net kadro kalitesi' };
+    const m_ms_2: DailyMatchItem = { id: 'ms_2', code: '71106', homeTeam: 'Montpellier', awayTeam: 'Grenoble', league: 'FR2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.44, reason: 'Stade de la Mosson ev sahibi galibiyet serisi' };
+    const m_ms_3: DailyMatchItem = { id: 'ms_3', code: '71105', homeTeam: 'Heidenheim', awayTeam: 'Kaiserslautern', league: 'AL2', date: '09.10.2026', time: '19:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.76, reason: 'Bundesliga 2 iç saha istikrarı' };
+    const m_ms_4: DailyMatchItem = { id: 'ms_4', code: '71110', homeTeam: 'Sepsi', awayTeam: 'Dinamo Bükreş', league: 'ROM', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 2', odd: 1.45, reason: 'Dinamo Bükreş deplasman performansı' };
+    const m_ms_5: DailyMatchItem = { id: 'ms_5', code: '71119', homeTeam: 'Dender', awayTeam: 'Club Brugge II', league: 'BEL2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.28, reason: 'Belçika ligi sınıf ve tecrübe farkı' };
+    const c_ms_odds = Number((m_ms_1.odd * m_ms_2.odd * m_ms_3.odd * m_ms_4.odd * m_ms_5.odd).toFixed(2));
+    const coupon_ms_only: DailyCoupon = {
+      id: 'daily-kupon-ms-only',
+      title: 'Sadece Maç Sonucu (MS) Kuponu',
+      badge: 'SADECE MS (1-X-2)',
+      category: 'ms_only',
+      categoryLabel: 'Sadece Maç Sonucu',
+      description: 'Sadece Maç Sonucu (1-X-2) tercihlerinden oluşan 5 maçlık net galibiyet kombini.',
+      theme: 'emerald',
+      totalMatches: 5,
+      totalOdds: c_ms_odds,
+      suggestedStake: 100,
+      potentialReturn: Number((c_ms_odds * 100).toFixed(2)),
+      matches: [m_ms_1, m_ms_2, m_ms_3, m_ms_4, m_ms_5]
+    };
+
+    // KUPON 2: 🔥 SADECE 2.5 ALT / ÜST KUPONU (4 Maç - Oran: 6.39)
+    const m_ou_1: DailyMatchItem = { id: 'ou_1', code: '71103', homeTeam: 'Lens', awayTeam: 'Lyon', league: 'FR1', date: '09.10.2026', time: '21:45', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.65, reason: 'İki takımın da hücum gücü yüksek, açık futbol' };
+    const m_ou_2: DailyMatchItem = { id: 'ou_2', code: '71104', homeTeam: 'Braga', awayTeam: 'Sporting CP', league: 'POR', date: '09.10.2026', time: '22:15', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.78, reason: 'Portekiz zirve mücadelesinde tempolu bol pozisyon' };
+    const m_ou_3: DailyMatchItem = { id: 'ou_3', code: '71142', homeTeam: 'Jong AZ Alkmaar', awayTeam: 'Den Bosch', league: 'HOL2', date: '09.10.2026', time: '21:00', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.45, reason: 'Hollanda 2. Ligi yüksek gol ortalaması' };
+    const m_ou_4: DailyMatchItem = { id: 'ou_4', code: '71126', homeTeam: 'Bohemian', awayTeam: 'Waterford', league: 'İRK', date: '09.10.2026', time: '21:45', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.50, reason: 'İrlanda Kupa maçlarında yüksek skor üretimi' };
+    const c_ou_odds = Number((m_ou_1.odd * m_ou_2.odd * m_ou_3.odd * m_ou_4.odd).toFixed(2));
+    const coupon_ou_only: DailyCoupon = {
+      id: 'daily-kupon-ou-only',
+      title: 'Sadece 2.5 Alt / Üst Kuponu',
+      badge: 'SADECE 2.5 ALT/ÜST',
+      category: 'ou_only',
+      categoryLabel: 'Sadece 2.5 Alt/Üst',
+      description: 'Taraf bahsi olmadan sırf 2.5 Alt ve 2.5 Üst baremlerinden seçilmiş 4 maçlık gol kuponu.',
+      theme: 'rose',
+      totalMatches: 4,
+      totalOdds: c_ou_odds,
+      suggestedStake: 50,
+      potentialReturn: Number((c_ou_odds * 50).toFixed(2)),
+      matches: [m_ou_1, m_ou_2, m_ou_3, m_ou_4]
+    };
+
+    // KUPON 3: ⚡ HEM MAÇ SONUCU HEM DE 2.5 ALT / ÜST KUPONU (KARMA - 4 Maç - Oran: 6.11)
+    // (Ayrı ayrı normal MS ve normal 2.5 Alt/Üst maçları)
+    const m_mix_1: DailyMatchItem = { id: 'mix_1', code: '71102', homeTeam: 'PSV Eindhoven', awayTeam: 'Heerenveen', league: 'HOL', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.22, reason: 'PSV ligin mutlak favorisi' };
+    const m_mix_2: DailyMatchItem = { id: 'mix_2', code: '71113', homeTeam: 'Pau FC', awayTeam: 'Stade Lavallois', league: 'FR2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.83, reason: 'Pau FC iç saha galibiyet serisi' };
+    const m_mix_3: DailyMatchItem = { id: 'mix_3', code: '71144', homeTeam: 'UCD', awayTeam: 'Longford', league: 'İR1', date: '09.10.2026', time: '21:45', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.48, reason: 'İrlanda 1. Liginde bol gollü eşleşme' };
+    const m_mix_4: DailyMatchItem = { id: 'mix_4', code: '71145', homeTeam: 'Penybont', awayTeam: 'Barry Town', league: 'GAL', date: '09.10.2026', time: '21:45', marketName: 'Toplam Gol', choice: '2.5 ALT', odd: 1.85, reason: 'Galler liginde defansif ve kontrollü mücadele' };
+    const c_mix_odds = Number((m_mix_1.odd * m_mix_2.odd * m_mix_3.odd * m_mix_4.odd).toFixed(2));
+    const coupon_ms_ou_mix: DailyCoupon = {
+      id: 'daily-kupon-ms-ou-mix',
+      title: 'Maç Sonucu & 2.5 Alt/Üst Karma Kupon',
+      badge: 'MS + 2.5 ALT/ÜST KARMA',
+      category: 'ms_ou_mix',
+      categoryLabel: 'MS & 2.5 Alt/Üst Karma',
+      description: 'Kupon içinde ayrı maçlarda hem normal Maç Sonucu hem de normal 2.5 Alt/Üst tercihlerini birleştiren 4 maçlık dengeli kupon.',
+      theme: 'amber',
+      totalMatches: 4,
+      totalOdds: c_mix_odds,
+      suggestedStake: 50,
+      potentialReturn: Number((c_mix_odds * 50).toFixed(2)),
+      matches: [m_mix_1, m_mix_2, m_mix_3, m_mix_4]
+    };
+
+    // KUPON 4: 🛡️ İdeal Banko Kombine (3 Maç - Toplam Oran: 3.42)
     const m1_1: DailyMatchItem = { id: 'c1_1', code: '71101', homeTeam: 'B.Dortmund', awayTeam: 'Werder Bremen', league: 'AL1', date: '09.10.2026', time: '21:30', marketName: 'Maç Sonucu & Gol', choice: 'MS 1 & 1.5 ÜST', odd: 1.34, reason: 'Dortmund iç saha baskısı ve en az 2 gol' };
     const m1_2: DailyMatchItem = { id: 'c1_2', code: '71102', homeTeam: 'PSV Eindhoven', awayTeam: 'Heerenveen', league: 'HOL', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu & Gol', choice: 'MS 1 & 2.5 ÜST', odd: 1.45, reason: 'PSV ligin en yüksek skor üreten iç saha takımı' };
     const m1_3: DailyMatchItem = { id: 'c1_3', code: '71106', homeTeam: 'Montpellier', awayTeam: 'Grenoble', league: 'FR2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.44, reason: 'Kadro kalitesi ve Stade de la Mosson avantajı' };
@@ -59,8 +128,10 @@ export async function GET() {
       id: 'daily-kupon-1',
       title: 'İdeal Banko Kombine',
       badge: 'GÜNÜN BANKOSU',
+      category: 'banko',
+      categoryLabel: 'Banko Kombineler',
       description: 'Dortmund, PSV ve Montpellier gibi günün en güvenilir maçlarından oluşan kasa kombini.',
-      theme: 'emerald',
+      theme: 'cyan',
       totalMatches: 3,
       totalOdds: c1_odds,
       suggestedStake: 100,
@@ -68,45 +139,7 @@ export async function GET() {
       matches: [m1_1, m1_2, m1_3]
     };
 
-    // Kupon 2: ⚡ İdeal Değer & Form Kuponu (4 Maç - Toplam Oran: 5.68)
-    const m2_1: DailyMatchItem = { id: 'c2_1', code: '71105', homeTeam: 'Heidenheim', awayTeam: 'Kaiserslautern', league: 'AL2', date: '09.10.2026', time: '19:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.76, reason: 'Bundesliga 2 iç saha form grafiği' };
-    const m2_2: DailyMatchItem = { id: 'c2_2', code: '71110', homeTeam: 'Sepsi', awayTeam: 'Dinamo Bükreş', league: 'ROM', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 2', odd: 1.45, reason: 'Dinamo Bükreş deplasman galibiyet serisi' };
-    const m2_3: DailyMatchItem = { id: 'c2_3', code: '71119', homeTeam: 'Dender', awayTeam: 'Club Brugge II', league: 'BEL2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.28, reason: 'Belçika ligi sınıf ve tecrübe farkı' };
-    const m2_4: DailyMatchItem = { id: 'c2_4', code: '71113', homeTeam: 'Pau FC', awayTeam: 'Stade Lavallois', league: 'FR2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.83, reason: 'İç saha istikrarı ve rakibin deplasman zaafı' };
-    const c2_odds = Number((m2_1.odd * m2_2.odd * m2_3.odd * m2_4.odd).toFixed(2));
-    const coupon2: DailyCoupon = {
-      id: 'daily-kupon-2',
-      title: 'İdeal Değer & Form Kuponu',
-      badge: 'YÜKSEK GÜVEN',
-      description: 'Almanya 2, Romanya, Belçika ve Fransa 2 liglerinden formda ekiplerin 4 maçlık kombini.',
-      theme: 'amber',
-      totalMatches: 4,
-      totalOdds: c2_odds,
-      suggestedStake: 50,
-      potentialReturn: Number((c2_odds * 50).toFixed(2)),
-      matches: [m2_1, m2_2, m2_3, m2_4]
-    };
-
-    // Kupon 3: 🔥 Gol Fırtınası / Taraf Risksiz (4 Maç - Toplam Oran: 5.12)
-    const m3_1: DailyMatchItem = { id: 'c3_1', code: '71103', homeTeam: 'Lens', awayTeam: 'Lyon', league: 'FR1', date: '09.10.2026', time: '21:45', marketName: 'Karşılıklı Gol', choice: 'KG VAR', odd: 1.62, reason: 'İki takımın da hücum gücü yüksek, karşılıklı gol beklentisi' };
-    const m3_2: DailyMatchItem = { id: 'c3_2', code: '71104', homeTeam: 'Braga', awayTeam: 'Sporting CP', league: 'POR', date: '09.10.2026', time: '22:15', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.78, reason: 'Portekiz zirve mücadelesinde tempolu açık oyun' };
-    const m3_3: DailyMatchItem = { id: 'c3_3', code: '71142', homeTeam: 'Jong AZ Alkmaar', awayTeam: 'Den Bosch', league: 'HOL2', date: '09.10.2026', time: '21:00', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.45, reason: 'Hollanda 2. Ligi gol istatistikleri' };
-    const m3_4: DailyMatchItem = { id: 'c3_4', code: '71126', homeTeam: 'Bohemian', awayTeam: 'Waterford', league: 'İRK', date: '09.10.2026', time: '21:45', marketName: 'Toplam Gol', choice: '2.5 ÜST', odd: 1.50, reason: 'İrlanda Kupa maçlarında yüksek gol ortalaması' };
-    const c3_odds = Number((m3_1.odd * m3_2.odd * m3_3.odd * m3_4.odd).toFixed(2));
-    const coupon3: DailyCoupon = {
-      id: 'daily-kupon-3',
-      title: 'Gol Fırtınası / KG & Üst',
-      badge: 'TARAF RİSKSİZ',
-      description: 'Fransa, Portekiz, Hollanda ve İrlanda liglerinden bol pozisyonlu ve 2.5 Üst/KG Var odaklı gol sepeti.',
-      theme: 'rose',
-      totalMatches: 4,
-      totalOdds: c3_odds,
-      suggestedStake: 50,
-      potentialReturn: Number((c3_odds * 50).toFixed(2)),
-      matches: [m3_1, m3_2, m3_3, m3_4]
-    };
-
-    // Kupon 4: 🎯 Kombine & Skor Güvencesi (4 Maç - Toplam Oran: 8.74)
+    // KUPON 5: 🎯 Kombine & Skor Güvencesi (4 Maç - Toplam Oran: 8.74)
     const m4_1: DailyMatchItem = { id: 'c4_1', code: '71121', homeTeam: 'De Graafschap', awayTeam: 'Utrecht (II)', league: 'HOL2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu & Gol', choice: 'MS 1 & 2.5 ÜST', odd: 1.70, reason: 'De Graafschap iç sahada farklı kazanmaya yakın' };
     const m4_2: DailyMatchItem = { id: 'c4_2', code: '71122', homeTeam: 'Heracles', awayTeam: 'Waalwijk', league: 'HOL2', date: '09.10.2026', time: '21:00', marketName: 'Maç Sonucu & Gol', choice: 'MS 1 & 2.5 ÜST', odd: 1.62, reason: 'Heracles hücum üretkenliği ve galibiyet' };
     const m4_3: DailyMatchItem = { id: 'c4_3', code: '71127', homeTeam: 'Bray Wanderers', awayTeam: 'Wexford Youths', league: 'İR1', date: '09.10.2026', time: '21:45', marketName: 'Maç Sonucu & Gol', choice: 'MS 1 & 2.5 ÜST', odd: 1.80, reason: 'İrlanda 1. Ligi gollü ev sahibi galibiyeti' };
@@ -116,8 +149,10 @@ export async function GET() {
       id: 'daily-kupon-4',
       title: 'Kombine & Skor Güvencesi',
       badge: 'MS + GOL KOMBİNLERİ',
+      category: 'special',
+      categoryLabel: 'Özel Kombineler',
       description: 'Hollanda 2 ve İrlanda 1. Liglerinden MS 1 & 2.5 Üst odaklı çarpanı yüksek kombine kuponu.',
-      theme: 'cyan',
+      theme: 'purple',
       totalMatches: 4,
       totalOdds: c4_odds,
       suggestedStake: 30,
@@ -125,7 +160,7 @@ export async function GET() {
       matches: [m4_1, m4_2, m4_3, m4_4]
     };
 
-    // Kupon 5: 💥 Sürpriz Değer / Çarpan Kuponu (4 Maç - Toplam Oran: 13.65)
+    // KUPON 6: 💥 Sürpriz Değer / Çarpan Kuponu (4 Maç - Toplam Oran: 13.65)
     const m5_1: DailyMatchItem = { id: 'c5_1', code: '71111', homeTeam: 'Nancy', awayTeam: 'Guingamp', league: 'FR2', date: '09.10.2026', time: '21:00', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.75, reason: 'Nancy ilk yarıdan skor üstünlüğünü kurar' };
     const m5_2: DailyMatchItem = { id: 'c5_2', code: '71135', homeTeam: 'Rakow Czestochowa', awayTeam: 'GKS Katowice', league: 'POL', date: '09.10.2026', time: '21:30', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.65, reason: 'Polonya Ekstraklasa erken baskı ve galibiyet' };
     const m5_3: DailyMatchItem = { id: 'c5_3', code: '71136', homeTeam: 'Belçika (K)', awayTeam: 'Polonya (K)', league: 'KDK', date: '09.10.2026', time: '21:15', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.45, reason: 'Belçika kalite üstünlüğü ile devreyi önde kapatır' };
@@ -135,8 +170,10 @@ export async function GET() {
       id: 'daily-kupon-5',
       title: 'Sürpriz Değer & Çarpan Kuponu',
       badge: '13.65 YÜKSEK ORAN',
+      category: 'special',
+      categoryLabel: 'Özel Kombineler',
       description: 'Fransa, Polonya ve Danimarka liglerinden İY/MS ve değer tercihlerinden oluşan yüksek kazanç kuponu.',
-      theme: 'purple',
+      theme: 'indigo',
       totalMatches: 4,
       totalOdds: c5_odds,
       suggestedStake: 20,
@@ -144,25 +181,7 @@ export async function GET() {
       matches: [m5_1, m5_2, m5_3, m5_4]
     };
 
-    // Kupon 6: ⏱️ İlk Yarı / İkinci Yarı Dinamik Kupon (3 Maç - Toplam Oran: 7.25)
-    const m6_1: DailyMatchItem = { id: 'c6_1', code: '71105', homeTeam: 'Heidenheim', awayTeam: 'Kaiserslautern', league: 'AL2', date: '09.10.2026', time: '19:30', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.50, reason: 'Almanya 2. Ligi erken gol üstünlüğü' };
-    const m6_2: DailyMatchItem = { id: 'c6_2', code: '71138', homeTeam: 'P. Bielsko', awayTeam: 'Pogon Siedlce', league: 'POL1', date: '09.10.2026', time: '21:30', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.50, reason: 'Polonya 1. Ligi iç saha erken hakimiyeti' };
-    const m6_3: DailyMatchItem = { id: 'c6_3', code: '71108', homeTeam: 'Shelbourne', awayTeam: 'Sligo Rovers', league: 'İRL', date: '09.10.2026', time: '21:45', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.16, reason: 'Şampiyonluk adayı Shelbourne net galibiyeti' };
-    const c6_odds = Number((m6_1.odd * m6_2.odd * m6_3.odd).toFixed(2));
-    const coupon6: DailyCoupon = {
-      id: 'daily-kupon-6',
-      title: 'İY / MS Dinamik Kombin',
-      badge: '7.25 ORAN',
-      description: 'İlk yarıdan sonuca giden 1/1 İY/MS baremleri açık maçlardan oluşan 3 maçlık kupon.',
-      theme: 'indigo',
-      totalMatches: 3,
-      totalOdds: c6_odds,
-      suggestedStake: 50,
-      potentialReturn: Number((c6_odds * 50).toFixed(2)),
-      matches: [m6_1, m6_2, m6_3]
-    };
-
-    // Kupon 7: 🌟 Akşam Özel Zirve Miksi (4 Maç - Toplam Oran: 9.85)
+    // KUPON 7: 🌟 Akşam Özel Zirve Miksi (4 Maç - Toplam Oran: 9.85)
     const m7_1: DailyMatchItem = { id: 'c7_1', code: '71147', homeTeam: 'Llandudno', awayTeam: 'Airbus UK', league: 'GAL', date: '09.10.2026', time: '21:45', marketName: 'Maç Sonucu & KG', choice: 'MS 1 & KG VAR', odd: 3.20, reason: 'Galler liginde karşılıklı gollü ev galibiyeti' };
     const m7_2: DailyMatchItem = { id: 'c7_2', code: '71145', homeTeam: 'Penybont', awayTeam: 'Barry Town', league: 'GAL', date: '09.10.2026', time: '21:45', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.60, reason: 'SDM Glass Stadyumu saha avantajı' };
     const m7_3: DailyMatchItem = { id: 'c7_3', code: '71146', homeTeam: 'Bala Town', awayTeam: 'Buckley Town', league: 'GALFAW', date: '09.10.2026', time: '21:45', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.33, reason: 'Kadro kalite farkı ve rahat galibiyet' };
@@ -172,6 +191,8 @@ export async function GET() {
       id: 'daily-kupon-7',
       title: 'Akşam Özel Zirve Miksi',
       badge: '9.85 AKŞAM ÖZEL',
+      category: 'special',
+      categoryLabel: 'Özel Kombineler',
       description: 'Galler ve İrlanda gece bülteninden özenle seçilen 4 maçlık dengeli miks kupon.',
       theme: 'blue',
       totalMatches: 4,
@@ -181,9 +202,19 @@ export async function GET() {
       matches: [m7_1, m7_2, m7_3, m7_4]
     };
 
-    const todayCoupons = [coupon1, coupon2, coupon3, coupon4, coupon5, coupon6, coupon7];
+    const todayCoupons = [
+      coupon_ms_only,
+      coupon_ou_only,
+      coupon_ms_ou_mix,
+      coupon1,
+      coupon4,
+      coupon5,
+      coupon7
+    ];
 
+    // -------------------------------------------------------------
     // 2. YESTERDAY'S EVALUATED DAILY COUPONS (08.10.2026)
+    // -------------------------------------------------------------
     const pastM_Kuopion: DailyMatchItem = { id: 'pm1', code: '74131', homeTeam: 'Kuopion', awayTeam: 'Oulu', league: 'FİN', date: '08.10.2026', time: '18:30', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.45, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'Sonuç: 2-0 (MS 1 TUTTU)' };
     const pastM_Helsinki: DailyMatchItem = { id: 'pm2', code: '74130', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: '08.10.2026', time: '18:00', marketName: 'Maç Sonucu & Gol', choice: 'MS 1 & 2.5 ÜST', odd: 2.10, score: '6 - 0', iyScore: '2 - 0', won: true, reason: 'Sonuç: 6-0 (MS 1 & 2.5 Üst TUTTU)' };
     const pastM_Shamrock: DailyMatchItem = { id: 'pm3', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketName: 'Maç Sonucu', choice: 'MS 1', odd: 1.38, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'Sonuç: 2-1 (MS 1 TUTTU)' };
@@ -199,6 +230,8 @@ export async function GET() {
       id: 'past-daily-1',
       title: 'İdeal Banko Kombine (Dün)',
       badge: '4.20 ORAN / KAZANDI',
+      category: 'banko',
+      categoryLabel: 'Banko Kombine',
       description: '08 Ekim resmi bülteninde Kuopion, Helsinki ve Shamrock maçlarıyla oynanan banko kombine.',
       theme: 'emerald',
       totalMatches: 3,
@@ -218,6 +251,8 @@ export async function GET() {
       id: 'past-daily-2',
       title: 'İdeal Değer & Form Kuponu (Dün)',
       badge: '6.52 ORAN / KAZANDI',
+      category: 'ms_only',
+      categoryLabel: 'Sadece MS',
       description: 'Vitoria Bahia, Cruzeiro, Shamrock ve Kuopion galibiyetleriyle tam isabet sağlayan kombine.',
       theme: 'amber',
       totalMatches: 4,
@@ -237,6 +272,8 @@ export async function GET() {
       id: 'past-daily-3',
       title: 'Gol & Skor Kuponu (Dün)',
       badge: '3/4 TUTTU (KAYBETTİ)',
+      category: 'ou_only',
+      categoryLabel: 'Gol Kuponu',
       description: 'Helsinki ve Internacional gollü maçları tuttu, Bragantino 1-1 beraberlikle sonuçlandı.',
       theme: 'rose',
       totalMatches: 4,
@@ -256,6 +293,8 @@ export async function GET() {
       id: 'past-daily-4',
       title: 'Brezilya & İskandinav Özel (Dün)',
       badge: '10.15 ORAN / KAZANDI',
+      category: 'special',
+      categoryLabel: 'Özel Kupon',
       description: 'Botafogo deplasmanı, Vitoria, Cruzeiro ve Helsinki ile 10.15 oranlı yüksek kazanç.',
       theme: 'purple',
       totalMatches: 4,
