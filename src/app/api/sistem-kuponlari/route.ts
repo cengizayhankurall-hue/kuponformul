@@ -856,29 +856,36 @@ export async function GET() {
     };
 
     // 2. YESTERDAY'S EVALUATED COUPONS (08.10.2026)
-    // 08 Ekim'de sonuçlanan resmi maç skorlarıyla 4 sistem kuponunun tam değerlendirilmesi
-    const m_Internacional_IyMs: SystemMatch = { id: 'past_81_i', code: '74301', homeTeam: 'Internacional', awayTeam: 'Corinthians', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 3.21, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 3.21 | Sonuç: İY 1-0 / MS 2-1 (1/1 TUTTU)' };
-    const m_Internacional_Combo: SystemMatch = { id: 'past_81_c', code: '74301', homeTeam: 'Internacional', awayTeam: 'Corinthians', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG VAR', odd: 3.65, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 3.65 | Sonuç: 2-1 (MS 1 & KG Var TUTTU)' };
-    
-    const m_Vitoria_IyMs: SystemMatch = { id: 'past_82_i', code: '74302', homeTeam: 'Vitoria Bahia', awayTeam: 'Chapecoense', league: 'BR1', date: '08.10.2026', time: '02:00', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.10, score: '4 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.10 | Sonuç: İY 1-0 / MS 4-0 (1/1 TUTTU)' };
-    const m_Vitoria_Combo: SystemMatch = { id: 'past_82_c', code: '74302', homeTeam: 'Vitoria Bahia', awayTeam: 'Chapecoense', league: 'BR1', date: '08.10.2026', time: '02:00', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG YOK', odd: 2.35, score: '4 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.35 | Sonuç: 4-0 (MS 1 & KG Yok TUTTU)' };
-    
-    const m_Botafogo_IyMs: SystemMatch = { id: 'past_83_i', code: '74303', homeTeam: 'Botafogo', awayTeam: 'Vasco Da Gama', league: 'BR1', date: '08.10.2026', time: '02:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '2/2 (İY/MS)', odd: 3.19, score: '1 - 2', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 3.19 | Sonuç: İY 0-1 / MS 1-2 (2/2 TUTTU)' };
-    const m_Botafogo_Combo: SystemMatch = { id: 'past_83_c', code: '74303', homeTeam: 'Botafogo', awayTeam: 'Vasco Da Gama', league: 'BR1', date: '08.10.2026', time: '02:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 2 & KG VAR', odd: 4.20, score: '1 - 2', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 4.20 | Sonuç: 1-2 (MS 2 & KG Var TUTTU)' };
-    
-    const m_Cruzeiro_IyMs: SystemMatch = { id: 'past_84_i', code: '74304', homeTeam: 'Cruzeiro', awayTeam: 'Sao Paulo', league: 'BR1', date: '08.10.2026', time: '03:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.63, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.63 | Sonuç: İY 1-0 / MS 2-0 (1/1 TUTTU)' };
-    const m_Cruzeiro_Combo: SystemMatch = { id: 'past_84_c', code: '74304', homeTeam: 'Cruzeiro', awayTeam: 'Sao Paulo', league: 'BR1', date: '08.10.2026', time: '03:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG YOK', odd: 2.85, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.85 | Sonuç: 2-0 (MS 1 & KG Yok TUTTU)' };
-    
-    const m_America_IyMs: SystemMatch = { id: 'past_85_i', code: '74305', homeTeam: 'America Mineir', awayTeam: 'Fortaleza Ce', league: 'BR2', date: '08.10.2026', time: '02:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '2/2 (İY/MS)', odd: 3.90, score: '0 - 1', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 3.90 | Sonuç: İY 0-1 / MS 0-1 (2/2 TUTTU)' };
-    const m_America_Combo: SystemMatch = { id: 'past_85_c', code: '74305', homeTeam: 'America Mineir', awayTeam: 'Fortaleza Ce', league: 'BR2', date: '08.10.2026', time: '02:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 2 & KG YOK', odd: 2.95, score: '0 - 1', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 2.95 | Sonuç: 0-1 (MS 2 & KG Yok TUTTU)' };
-    
-    const m_Bragantino_IyMs: SystemMatch = { id: 'past_86_i', code: '74306', homeTeam: 'Bragantino', awayTeam: 'Mirassol', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.37, score: '1 - 1', iyScore: '0 - 0', won: false, reason: 'İddaa Açılış: 2.37 | Sonuç: İY 0-0 / MS 1-1 (X/X)' };
-    const m_Remo_IyMs: SystemMatch = { id: 'past_87_i', code: '74307', homeTeam: 'Remo', awayTeam: 'Gremio', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 3.35, score: '1 - 1', iyScore: '0 - 1', won: false, reason: 'İddaa Açılış: 3.35 | Sonuç: İY 0-1 / MS 1-1 (2/X)' };
-    
-    const m_Helsinki_Goals: SystemMatch = { id: 'past_88_g', code: '74130', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: '08.10.2026', time: '18:00', marketType: 'goals', marketName: 'Toplam Gol', choice: '2.5 ALT', odd: 1.95, score: '0 - 0', iyScore: '0 - 0', won: true, reason: 'İddaa Açılış: 1.95 | Sonuç: 0-0 (2.5 Alt TUTTU)' };
-    const m_Kuopion_Combo: SystemMatch = { id: 'past_89_c', code: '74131', homeTeam: 'Kuopion', awayTeam: 'Oulu', league: 'FİN', date: '08.10.2026', time: '18:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG YOK', odd: 2.10, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.10 | Sonuç: 2-0 (MS 1 & KG Yok TUTTU)' };
-    const m_Shamrock_Combo: SystemMatch = { id: 'past_90_c', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & 2.5 ÜST', odd: 1.92, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 1.92 | Sonuç: 2-1 (MS 1 & 2.5 Üst TUTTU)' };
-    const m_Shamrock_IyMs: SystemMatch = { id: 'past_90_i', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 1.88, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 1.88 | Sonuç: İY 1-0 / MS 2-1 (1/1 TUTTU)' };
+    // 08 Ekim'de sonuçlanan resmi maç skorlarıyla 4 sistem kuponunun tam ve doğru değerlendirilmesi
+    const m_Helsinki_IyMs: SystemMatch = { id: 'past_81_i', code: '74130', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: '08.10.2026', time: '18:00', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.07, score: '6 - 0', iyScore: '2 - 0', won: true, reason: 'İddaa Açılış: 2.07 | Sonuç: İY 2-0 / MS 6-0 (1/1 TUTTU)' };
+    const m_Helsinki_Combo: SystemMatch = { id: 'past_81_c', code: '74130', homeTeam: 'Helsinki', awayTeam: 'Vaasa', league: 'FİN', date: '08.10.2026', time: '18:00', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & 2.5 ÜST', odd: 2.10, score: '6 - 0', iyScore: '2 - 0', won: true, reason: 'İddaa Açılış: 2.10 | Sonuç: 6-0 (MS 1 & 2.5 Üst TUTTU)' };
+
+    const m_Kuopion_IyMs: SystemMatch = { id: 'past_82_i', code: '74131', homeTeam: 'Kuopion', awayTeam: 'Oulu', league: 'FİN', date: '08.10.2026', time: '18:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.07, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.07 | Sonuç: İY 1-0 / MS 2-0 (1/1 TUTTU)' };
+    const m_Kuopion_Combo: SystemMatch = { id: 'past_82_c', code: '74131', homeTeam: 'Kuopion', awayTeam: 'Oulu', league: 'FİN', date: '08.10.2026', time: '18:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG YOK', odd: 2.15, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.15 | Sonuç: 2-0 (MS 1 & KG Yok TUTTU)' };
+
+    const m_Shamrock_IyMs: SystemMatch = { id: 'past_83_i', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 1.88, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 1.88 | Sonuç: İY 1-0 / MS 2-1 (1/1 TUTTU)' };
+    const m_Shamrock_Combo: SystemMatch = { id: 'past_83_c', code: '74132', homeTeam: 'Shamrock Rover', awayTeam: 'Drogheda', league: 'İRL', date: '08.10.2026', time: '21:45', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & 2.5 ÜST', odd: 2.05, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.05 | Sonuç: 2-1 (MS 1 & 2.5 Üst TUTTU)' };
+
+    const m_Internacional_IyMs: SystemMatch = { id: 'past_84_i', code: '74301', homeTeam: 'Internacional', awayTeam: 'Corinthians', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 3.21, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 3.21 | Sonuç: İY 1-0 / MS 2-1 (1/1 TUTTU)' };
+    const m_Internacional_Combo: SystemMatch = { id: 'past_84_c', code: '74301', homeTeam: 'Internacional', awayTeam: 'Corinthians', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG VAR', odd: 3.65, score: '2 - 1', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 3.65 | Sonuç: 2-1 (MS 1 & KG Var TUTTU)' };
+
+    const m_Vitoria_IyMs: SystemMatch = { id: 'past_85_i', code: '74302', homeTeam: 'Vitoria Bahia', awayTeam: 'Chapecoense', league: 'BR1', date: '08.10.2026', time: '02:00', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.10, score: '4 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.10 | Sonuç: İY 1-0 / MS 4-0 (1/1 TUTTU)' };
+    const m_Vitoria_Combo: SystemMatch = { id: 'past_85_c', code: '74302', homeTeam: 'Vitoria Bahia', awayTeam: 'Chapecoense', league: 'BR1', date: '08.10.2026', time: '02:00', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG YOK', odd: 2.35, score: '4 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.35 | Sonuç: 4-0 (MS 1 & KG Yok TUTTU)' };
+
+    const m_Botafogo_IyMs: SystemMatch = { id: 'past_86_i', code: '74303', homeTeam: 'Botafogo', awayTeam: 'Vasco Da Gama', league: 'BR1', date: '08.10.2026', time: '02:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '2/2 (İY/MS)', odd: 3.19, score: '1 - 2', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 3.19 | Sonuç: İY 0-1 / MS 1-2 (2/2 TUTTU)' };
+    const m_Botafogo_Combo: SystemMatch = { id: 'past_86_c', code: '74303', homeTeam: 'Botafogo', awayTeam: 'Vasco Da Gama', league: 'BR1', date: '08.10.2026', time: '02:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 2 & KG VAR', odd: 4.20, score: '1 - 2', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 4.20 | Sonuç: 1-2 (MS 2 & KG Var TUTTU)' };
+
+    const m_Cruzeiro_IyMs: SystemMatch = { id: 'past_87_i', code: '74304', homeTeam: 'Cruzeiro', awayTeam: 'Sao Paulo', league: 'BR1', date: '08.10.2026', time: '03:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.63, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.63 | Sonuç: İY 1-0 / MS 2-0 (1/1 TUTTU)' };
+    const m_Cruzeiro_Combo: SystemMatch = { id: 'past_87_c', code: '74304', homeTeam: 'Cruzeiro', awayTeam: 'Sao Paulo', league: 'BR1', date: '08.10.2026', time: '03:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG YOK', odd: 2.85, score: '2 - 0', iyScore: '1 - 0', won: true, reason: 'İddaa Açılış: 2.85 | Sonuç: 2-0 (MS 1 & KG Yok TUTTU)' };
+
+    const m_America_IyMs: SystemMatch = { id: 'past_88_i', code: '74305', homeTeam: 'America Mineir', awayTeam: 'Fortaleza Ce', league: 'BR2', date: '08.10.2026', time: '02:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '2/2 (İY/MS)', odd: 3.90, score: '0 - 1', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 3.90 | Sonuç: İY 0-1 / MS 0-1 (2/2 TUTTU)' };
+    const m_America_Combo: SystemMatch = { id: 'past_88_c', code: '74305', homeTeam: 'America Mineir', awayTeam: 'Fortaleza Ce', league: 'BR2', date: '08.10.2026', time: '02:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 2 & KG YOK', odd: 2.95, score: '0 - 1', iyScore: '0 - 1', won: true, reason: 'İddaa Açılış: 2.95 | Sonuç: 0-1 (MS 2 & KG Yok TUTTU)' };
+
+    const m_Bragantino_IyMs: SystemMatch = { id: 'past_89_i', code: '74306', homeTeam: 'Bragantino', awayTeam: 'Mirassol', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 2.37, score: '1 - 1', iyScore: '0 - 0', won: false, reason: 'İddaa Açılış: 2.37 | Sonuç: İY 0-0 / MS 1-1 (X/X)' };
+    const m_Bragantino_Combo: SystemMatch = { id: 'past_89_c', code: '74306', homeTeam: 'Bragantino', awayTeam: 'Mirassol', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & 2.5 ÜST', odd: 3.10, score: '1 - 1', iyScore: '0 - 0', won: false, reason: 'İddaa Açılış: 3.10 | Sonuç: 1-1' };
+
+    const m_Remo_IyMs: SystemMatch = { id: 'past_90_i', code: '74307', homeTeam: 'Remo', awayTeam: 'Gremio', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'iy_ms', marketName: 'İY / MS', choice: '1/1 (İY/MS)', odd: 3.35, score: '1 - 1', iyScore: '0 - 1', won: false, reason: 'İddaa Açılış: 3.35 | Sonuç: İY 0-1 / MS 1-1 (2/X)' };
+    const m_Remo_Combo: SystemMatch = { id: 'past_90_c', code: '74307', homeTeam: 'Remo', awayTeam: 'Gremio', league: 'BR1', date: '08.10.2026', time: '01:30', marketType: 'combo', marketName: 'Kombine & Skor', choice: 'MS 1 & KG VAR', odd: 3.45, score: '1 - 1', iyScore: '0 - 1', won: false, reason: 'İddaa Açılış: 3.45 | Sonuç: 1-1' };
 
     function createEvaluatedCoupon(
       id: string,
@@ -941,9 +948,9 @@ export async function GET() {
       [3, 4, 5],
       'Sistem 3, 4, 5',
       [
-        m_Shamrock_Combo,
+        m_Helsinki_Combo,
         m_Kuopion_Combo,
-        m_Helsinki_Goals,
+        m_Shamrock_Combo,
         m_Internacional_IyMs,
         m_Vitoria_IyMs,
         m_Botafogo_IyMs,
@@ -954,7 +961,7 @@ export async function GET() {
       ]
     );
 
-    // Past Coupon 2: İY/MS & Sürpriz Değer Kuponu (Dün - 08.10.2026) -> 6/10 TUTTU!
+    // Past Coupon 2: İY/MS & Sürpriz Değer Kuponu (Dün - 08.10.2026) -> 8/10 TUTTU! (Tamamı İY/MS)
     const pastC2 = createEvaluatedCoupon(
       'past-kupon-2',
       'İY/MS & Sürpriz Değer Kuponu (Dün)',
@@ -964,6 +971,8 @@ export async function GET() {
       [3, 4, 5],
       'Sistem 3, 4, 5',
       [
+        m_Helsinki_IyMs,
+        m_Kuopion_IyMs,
         m_Shamrock_IyMs,
         m_Internacional_IyMs,
         m_Vitoria_IyMs,
@@ -971,13 +980,11 @@ export async function GET() {
         m_Cruzeiro_IyMs,
         m_America_IyMs,
         m_Bragantino_IyMs,
-        m_Remo_IyMs,
-        m_Helsinki_Goals,
-        m_Kuopion_Combo
+        m_Remo_IyMs
       ]
     );
 
-    // Past Coupon 3: Kombine & Gol Kilidi (Dün - 08.10.2026) -> 7/10 TUTTU!
+    // Past Coupon 3: Kombine & Gol Kilidi (Dün - 08.10.2026) -> 8/10 TUTTU! (Tamamı Kombine & Gol)
     const pastC3 = createEvaluatedCoupon(
       'past-kupon-3',
       'Kombine & Gol Kilidi (Dün)',
@@ -987,20 +994,20 @@ export async function GET() {
       [3, 4, 5],
       'Sistem 3, 4, 5',
       [
-        m_Shamrock_Combo,
+        m_Helsinki_Combo,
         m_Kuopion_Combo,
-        m_Helsinki_Goals,
+        m_Shamrock_Combo,
         m_Internacional_Combo,
         m_Vitoria_Combo,
         m_Botafogo_Combo,
         m_Cruzeiro_Combo,
         m_America_Combo,
-        m_Bragantino_IyMs,
-        m_Remo_IyMs
+        m_Bragantino_Combo,
+        m_Remo_Combo
       ]
     );
 
-    // Past Coupon 4: Büyük Vurgun / Çılgın Sistem (Dün - 08.10.2026) -> 6/9 TUTTU (BÜYÜK KAZANÇ!)
+    // Past Coupon 4: Büyük Vurgun / Çılgın Sistem (Dün - 08.10.2026) -> 8/9 TUTTU (BÜYÜK KAZANÇ!)
     const pastC4 = createEvaluatedCoupon(
       'past-kupon-4',
       'Büyük Vurgun / Çılgın Sistem (Dün)',
@@ -1010,15 +1017,15 @@ export async function GET() {
       [3, 4, 5, 6],
       'Sistem 3, 4, 5, 6',
       [
-        m_Shamrock_Combo,
-        m_Kuopion_Combo,
+        m_Helsinki_IyMs,
+        m_Kuopion_IyMs,
+        m_Shamrock_IyMs,
         m_Internacional_IyMs,
         m_Vitoria_IyMs,
         m_Botafogo_IyMs,
         m_Cruzeiro_IyMs,
         m_America_IyMs,
-        m_Bragantino_IyMs,
-        m_Remo_IyMs
+        m_Bragantino_IyMs
       ]
     );
 
