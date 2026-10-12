@@ -226,7 +226,7 @@ export async function GET() {
 
     const matchPool = unplayedMatches.length >= 10 ? unplayedMatches : liveMatches;
 
-    const getChoice = (m: any, type: 'ms' | 'goals' | 'iyms' | 'banko' | 'any') => {
+    const getChoice = (m: any, type: 'ms' | 'goals' | 'iyms' | 'banko' | 'mega_vurgun' | 'any') => {
       const o = m.odds || m;
       const ms1 = parseOdd(o.ms1);
       const ms2 = parseOdd(o.ms2);
@@ -234,6 +234,27 @@ export async function GET() {
       const alt25 = parseOdd(o.alt25);
       const kgVar = parseOdd(o.kgVar);
       const cs1X = parseOdd(o.cs1X);
+
+      if (type === 'mega_vurgun') {
+        // En yüksek çarpanlı İY/MS ve sürpriz değerler (X/1, X/2, 1/1, 2/2)
+        if (ms1 && ms1 >= 1.80) {
+          const calcOdd = Number((Math.min(ms1 * 2.10, 4.80)).toFixed(2));
+          return { choice: 'X/1 (İY/MS)', odd: Math.max(calcOdd, 3.60), marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.homeTeam} ikinci yarıdaki baskısıyla kilit açar ve kazanır` };
+        }
+        if (ms2 && ms2 >= 1.85) {
+          const calcOdd = Number((Math.min(ms2 * 2.15, 5.20)).toFixed(2));
+          return { choice: 'X/2 (İY/MS)', odd: Math.max(calcOdd, 3.75), marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.awayTeam} ikinci devre kalitesiyle dev deplasman galibiyeti` };
+        }
+        if (ms1) {
+          const calcOdd = Number((Math.max(ms1, 1.60) * 1.95).toFixed(2));
+          return { choice: '1/1 (İY/MS)', odd: Math.max(calcOdd, 3.20), marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.homeTeam} ilk yarıdan fişi çeker, yüksek çarpan` };
+        }
+        if (ms2) {
+          const calcOdd = Number((Math.max(ms2, 1.60) * 2.05).toFixed(2));
+          return { choice: '2/2 (İY/MS)', odd: Math.max(calcOdd, 3.40), marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.awayTeam} ilk yarıdan öne geçer ve maçı kazanır` };
+        }
+        return { choice: 'X/1 (İY/MS)', odd: 4.50, marketName: 'İY / MS', marketType: 'iy_ms', reason: 'Yüksek çarpanlı sürpriz İY/MS tercihi' };
+      }
 
       if (type === 'ms') {
         if (ms1 && ms1 >= 1.25 && ms1 <= 2.20) {
@@ -290,7 +311,7 @@ export async function GET() {
 
     const usedMatchCodes = new Set<string>();
 
-    const pickSystemMatches = (count: number, type: 'ms' | 'goals' | 'iyms' | 'banko' | 'any'): SystemMatch[] => {
+    const pickSystemMatches = (count: number, type: 'ms' | 'goals' | 'iyms' | 'banko' | 'mega_vurgun' | 'any'): SystemMatch[] => {
       const selected: SystemMatch[] = [];
       const eligible = matchPool.filter(m => !usedMatchCodes.has(m.code || m.id));
 
@@ -407,7 +428,7 @@ export async function GET() {
     const coupon2 = assembleSystemCoupon(
       'kupon-2',
       'İY/MS & Sürpriz Değer Kuponu',
-      '372 TL / 440.000 TL HEDEF',
+      '372 TL / DENGELİ İY/MS',
       'Yüksek oranlı İY/MS tercihlerinden oluşan Sistem 4, 5, 6, 7 modeli.',
       'purple',
       [4, 5, 6, 7],
@@ -432,15 +453,12 @@ export async function GET() {
     );
 
     // Kupon 4: Büyük Vurgun / Çılgın Sistem (9 Maç - Sistem 4, 5, 6, 7, 8)
-    const c4Matches = [
-      ...pickSystemMatches(4, 'ms'),
-      ...pickSystemMatches(5, 'iyms')
-    ];
+    const c4Matches = pickSystemMatches(9, 'mega_vurgun');
     const coupon4 = assembleSystemCoupon(
       'kupon-4',
       'Büyük Vurgun / Çılgın Sistem',
       '502 TL / BÜYÜK VURGUN',
-      'Sistem 4, 5, 6, 7, 8 modeliyle yüksek çarpan hedefli 9 maçlık geniş sepet.',
+      'Bültenin en yüksek çarpanlı İY/MS ve sürpriz değer tercihlerinden oluşan dev kazanç hedefli Sistem 4, 5, 6, 7, 8 modeli.',
       'emerald',
       [4, 5, 6, 7, 8],
       'Sistem 4, 5, 6, 7, 8',
