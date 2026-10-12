@@ -96,7 +96,11 @@ export default function GununKuponlariPage() {
         time: m.time,
         league: m.league,
         pickLabel: m.choice,
-        pickOdd: m.odd
+        pickOdd: m.odd,
+        couponType: 'daily',
+        couponTitle: coupon.title,
+        badge: coupon.badge,
+        categoryLabel: coupon.categoryLabel
       }));
 
       const { error: saveError } = await dbService.saveIddaaCoupon({

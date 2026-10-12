@@ -274,7 +274,18 @@ export default function SistemKuponlariPage() {
         time: m.time || '20:00',
         league: m.league || 'Süper Lig',
         pickLabel: m.choice,
-        pickOdd: m.odd
+        pickOdd: m.odd,
+        isSystem: true,
+        couponType: 'system',
+        systemLabel: coupon.systemLabel,
+        couponTitle: coupon.title,
+        badge: coupon.badge,
+        systemSizes: coupon.systemSizes,
+        columnsCount: coupon.totalColumns,
+        targetProfitBadge: coupon.targetProfitBadge,
+        minOdds: coupon.minOdds,
+        maxOdds: coupon.maxOdds,
+        avgOdds: coupon.avgOdds
       }));
 
       const { error: saveError } = await dbService.saveIddaaCoupon({

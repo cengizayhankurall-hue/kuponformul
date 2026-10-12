@@ -230,9 +230,25 @@ class MockService {
     return coupons.filter(c => c.user_id === userId).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   }
 
+  async deleteMultipleCoupons(couponIds: string[]): Promise<boolean> {
+    const set = new Set(couponIds);
+    const coupons = this.getStorageItem<SavedCoupon[]>('mock_saved_coupons', []);
+    const filtered = coupons.filter(c => !set.has(c.id));
+    this.setStorageItem('mock_saved_coupons', filtered);
+    return true;
+  }
+
   async deleteIddaaCoupon(couponId: string): Promise<boolean> {
     const coupons = this.getStorageItem<any[]>('mock_iddaa_saved_coupons', []);
     const filtered = coupons.filter(c => c.id !== couponId);
+    this.setStorageItem('mock_iddaa_saved_coupons', filtered);
+    return true;
+  }
+
+  async deleteMultipleIddaaCoupons(couponIds: string[]): Promise<boolean> {
+    const set = new Set(couponIds);
+    const coupons = this.getStorageItem<any[]>('mock_iddaa_saved_coupons', []);
+    const filtered = coupons.filter(c => !set.has(c.id));
     this.setStorageItem('mock_iddaa_saved_coupons', filtered);
     return true;
   }
@@ -647,6 +663,32 @@ export const dbService = {
       .from('iddaa_saved_coupons')
       .delete()
       .eq('id', couponId);
+    return { error };
+  },
+
+  async deleteMultipleCoupons(couponIds: string[]) {
+    if (!couponIds || couponIds.length === 0) return { error: null };
+    if (isMockMode) {
+      const success = await mockService.deleteMultipleCoupons(couponIds);
+      return { error: success ? null : new Error('Silinemedi') };
+    }
+    const { error } = await supabase!
+      .from('saved_coupons')
+      .delete()
+      .in('id', couponIds);
+    return { error };
+  },
+
+  async deleteMultipleIddaaCoupons(couponIds: string[]) {
+    if (!couponIds || couponIds.length === 0) return { error: null };
+    if (isMockMode) {
+      const success = await mockService.deleteMultipleIddaaCoupons(couponIds);
+      return { error: success ? null : new Error('Silinemedi') };
+    }
+    const { error } = await supabase!
+      .from('iddaa_saved_coupons')
+      .delete()
+      .in('id', couponIds);
     return { error };
   },
 
