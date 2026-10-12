@@ -388,7 +388,7 @@ export default function SistemKuponlariPage() {
 
           <div className="flex items-center gap-2 self-start sm:self-center">
             <span className={`text-[11px] font-semibold px-3 py-1.5 rounded-xl border ${isDark ? 'bg-neutral-900 border-neutral-800 text-neutral-400' : 'bg-neutral-100 border-neutral-200 text-neutral-700'}`}>
-              📅 {viewMode === 'today' ? 'Bugünün Bülteni:' : 'Sonuçlanan Tarih:'} <strong className="text-amber-400">{viewMode === 'today' ? (data?.date || '06.10.2026') : (data?.yesterday?.date || '05.10.2026')}</strong>
+              📅 {viewMode === 'today' ? 'Bugünün Bülteni:' : 'Sonuçlanan Tarih:'} <strong className="text-amber-400">{viewMode === 'today' ? (data?.date || 'Bugün') : (data?.yesterday?.date || 'Dün')}</strong>
             </span>
           </div>
         </div>

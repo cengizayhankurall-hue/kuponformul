@@ -4,7 +4,9 @@ import https from 'https';
 export const dynamic = 'force-dynamic';
 
 const agent = new https.Agent({
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
+  keepAlive: true,
+  maxSockets: 10
 });
 
 function httpsGet(urlStr: string, referer = 'https://arsiv.mackolik.com/Genis-Iddaa-Programi', retries = 2): Promise<{ status: number; text: string }> {
@@ -22,7 +24,7 @@ function httpsGet(urlStr: string, referer = 'https://arsiv.mackolik.com/Genis-Id
           'Referer': referer,
           'X-Requested-With': 'XMLHttpRequest'
         },
-        timeout: 10000
+        timeout: 8000
       };
 
       const req = https.request(options, (res) => {
@@ -32,7 +34,7 @@ function httpsGet(urlStr: string, referer = 'https://arsiv.mackolik.com/Genis-Id
           if ((res.statusCode === 502 || res.statusCode === 503) && retries > 0) {
             setTimeout(() => {
               httpsGet(urlStr, referer, retries - 1).then(resolve).catch(reject);
-            }, 1000);
+            }, 600);
           } else {
             resolve({ status: res.statusCode || 200, text: data });
           }
@@ -43,7 +45,7 @@ function httpsGet(urlStr: string, referer = 'https://arsiv.mackolik.com/Genis-Id
         if (retries > 0) {
           setTimeout(() => {
             httpsGet(urlStr, referer, retries - 1).then(resolve).catch(reject);
-          }, 1000);
+          }, 600);
         } else {
           resolve({ status: 500, text: '' });
         }
@@ -67,7 +69,7 @@ let iddaaCache: {
   timestamp: number;
   data: any[];
 } | null = null;
-const CACHE_TTL = 30 * 1000; // 30 saniye canlı önbellek
+const CACHE_TTL = 3 * 60 * 1000; // 3 dakika canlı önbellek
 let inFlightPromise: Promise<any[]> | null = null;
 
 async function doFetch(): Promise<any[]> {
@@ -157,30 +159,39 @@ async function doFetch(): Promise<any[]> {
     } catch (e) {}
   };
 
-  // 1A. np=1 Canlı İddaa Bülteni (Canlı açılış oranları)
-  const liveProgRes = await httpsGet(`https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${todayStr}&sort=-1&sortDir=-1&groupId=-1&np=1&sport=1`);
-  if (liveProgRes.status === 200 && liveProgRes.text?.length > 100) {
-    parseIddaaBulletin(liveProgRes.text, true);
-  }
+  // 1A. Canlı & Bugünün bülteni eşzamanlı çek (Paralel)
+  try {
+    const [liveProgRes, todayProgRes] = await Promise.all([
+      httpsGet(`https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${todayStr}&sort=-1&sortDir=-1&groupId=-1&np=1&sport=1`),
+      httpsGet(`https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${todayStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`)
+    ]);
 
-  await sleep(150);
-
-  // 1B. np=0 7 Günlük Resmi Geniş Bülten Maçları (sport=1 Futbol)
-  for (let offset = 0; offset <= 6; offset++) {
-    const d = new Date();
-    const tNow = new Date(d.toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
-    tNow.setDate(tNow.getDate() + offset);
-    const dayStr = `${String(tNow.getDate()).padStart(2, '0')}/${String(tNow.getMonth() + 1).padStart(2, '0')}/${tNow.getFullYear()}`;
-
-    const res = await httpsGet(`https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dayStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`);
-    if (res.status === 200 && res.text?.length > 100) {
-      parseIddaaBulletin(res.text, false);
+    if (liveProgRes.status === 200 && liveProgRes.text?.length > 100) {
+      parseIddaaBulletin(liveProgRes.text, true);
     }
-    await sleep(150);
-  }
+    if (todayProgRes.status === 200 && todayProgRes.text?.length > 100) {
+      parseIddaaBulletin(todayProgRes.text, false);
+    }
+  } catch (e) {}
+
+  // 1B. Yarın ve sonraki günlerin bülteni (Paralel)
+  try {
+    const futurePromises = [1, 2, 3].map(offset => {
+      const tNow = new Date(trNow);
+      tNow.setDate(tNow.getDate() + offset);
+      const dayStr = `${String(tNow.getDate()).padStart(2, '0')}/${String(tNow.getMonth() + 1).padStart(2, '0')}/${tNow.getFullYear()}`;
+      return httpsGet(`https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dayStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`);
+    });
+
+    const futureResults = await Promise.all(futurePromises);
+    futureResults.forEach(res => {
+      if (res.status === 200 && res.text?.length > 100) {
+        parseIddaaBulletin(res.text, false);
+      }
+    });
+  } catch (e) {}
 
   // 2. Canlı Sonuçlar (LiveData.aspx) -> SADECE VE SADECE OYNANMAKTA OLAN CANLI FUTBOL MAÇLARI (state 1, 2, 3)!
-  // Başlamamış (state 0) dünya maçları veya basketbol maçları ASLA bültene eklenmez!
   try {
     const liveDataRes = await httpsGet('https://arsiv.mackolik.com/LiveScores/LiveData.aspx?group=0', 'https://arsiv.mackolik.com/Canli-Sonuclar');
     if (liveDataRes.status === 200 && liveDataRes.text?.startsWith('{')) {
@@ -189,13 +200,11 @@ async function doFetch(): Promise<any[]> {
         if (m[2] && m[4]) {
           const state = typeof m[5] === 'number' ? m[5] : parseInt(m[5]) || 0;
           
-          // KESİN KURAL: Sadece oynanmakta olan canlı maçlar (state 1, 2, 3)
           if (state !== 1 && state !== 2 && state !== 3) return;
 
           const leagueName = (Array.isArray(m[36]) ? (m[36][3] || m[36][9]) : 'Diğer') || 'Diğer';
           const leagueLower = String(leagueName).toLowerCase();
           
-          // Basketbol veya diğer sporları filtrele
           if (leagueLower.includes('basket') || leagueLower.includes('voleybol') || leagueLower.includes('hentbol') || leagueLower.includes('tenis')) {
             return;
           }
@@ -273,7 +282,15 @@ async function doFetch(): Promise<any[]> {
 
 export async function fetchMackolikMatches(): Promise<any[]> {
   const now = Date.now();
-  if (iddaaCache && (now - iddaaCache.timestamp < CACHE_TTL)) {
+  if (iddaaCache && iddaaCache.data.length > 0) {
+    // If cache is fresh, return immediately (< 1ms)
+    if (now - iddaaCache.timestamp < CACHE_TTL) {
+      return iddaaCache.data;
+    }
+    // Stale-while-revalidate: return immediately and trigger background refresh
+    if (!inFlightPromise) {
+      inFlightPromise = doFetch().catch(() => []).finally(() => { inFlightPromise = null; });
+    }
     return iddaaCache.data;
   }
 
@@ -281,12 +298,7 @@ export async function fetchMackolikMatches(): Promise<any[]> {
     return inFlightPromise;
   }
 
-  if (iddaaCache && iddaaCache.data.length > 0) {
-    inFlightPromise = doFetch().finally(() => { inFlightPromise = null; });
-    return iddaaCache.data;
-  }
-
-  inFlightPromise = doFetch().finally(() => { inFlightPromise = null; });
+  inFlightPromise = doFetch().catch(() => []).finally(() => { inFlightPromise = null; });
   return inFlightPromise;
 }
 

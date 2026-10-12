@@ -255,7 +255,7 @@ export default function GununKuponlariPage() {
                 </span>
                 <span className="text-xs text-neutral-500 flex items-center gap-1">
                   <Calendar className="w-3.5 h-3.5" />
-                  {data?.date || '09.10.2026'}
+                  {data?.date || 'Bugün'}
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2.5">
@@ -671,10 +671,10 @@ export default function GununKuponlariPage() {
                     </span>
                   </div>
                   <h2 className="text-xl sm:text-2xl font-black tracking-tight">
-                    Dünün Günlük Kupon Karnesi (08.10.2026)
+                    Dünün Günlük Kupon Karnesi ({data.yesterday.date})
                   </h2>
                   <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-2xl">
-                    08 Ekim tarihinde yayınlanan kuponların resmi maç skorları ve kazandı/kaybetti durumları şeffaf bir şekilde aşağıda listelenmiştir.
+                    {data.yesterday.formattedDate} tarihinde yayınlanan kuponların resmi maç skorları ve kazandı/kaybetti durumları şeffaf bir şekilde aşağıda listelenmiştir.
                   </p>
                 </div>
 
