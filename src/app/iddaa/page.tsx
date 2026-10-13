@@ -454,7 +454,7 @@ export default function IddaaPage() {
       const targetDate = selectedDate !== 'Tümü' ? selectedDate : todayStr;
       let dateMatches = matches.filter(m => (m.date === targetDate || String(m.date).replace(/\//g, '.') === targetDate) && !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
       if (dateMatches.length === 0) {
-        dateMatches = matches.filter(m => !isMatchStarted(m.date, m.time) && m.ms1 !== '0' && m.ms1 !== '-');
+        dateMatches = matches.filter(m => (m.date === targetDate || String(m.date).replace(/\//g, '.') === targetDate) && m.ms1 !== '0' && m.ms1 !== '-');
       }
 
       const validMatches = dateMatches.slice(0, 80);

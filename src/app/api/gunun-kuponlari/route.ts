@@ -117,6 +117,26 @@ function evaluateScoreWon(choice: string, msScore: string): boolean {
   return false;
 }
 
+function isMatchPast(dateStr?: string, timeStr?: string): boolean {
+  if (!dateStr || !timeStr) return false;
+  try {
+    const dParts = dateStr.replace(/\//g, '.').split('.').map(Number);
+    if (dParts.length !== 3) return false;
+    const [day, month, year] = dParts;
+    const tParts = timeStr.split(':').map(Number);
+    if (tParts.length < 2) return false;
+    const [hour, minute] = tParts;
+
+    const nowIstanbul = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Istanbul' }));
+    const matchIstanbul = new Date(year, month - 1, day, hour, minute);
+
+    // If kick-off was more than 10 minutes ago, treat as started/past
+    return nowIstanbul.getTime() > (matchIstanbul.getTime() + 10 * 60 * 1000);
+  } catch {
+    return false;
+  }
+}
+
 export async function GET() {
   const dates = getIstanbulDates();
   const now = Date.now();
@@ -137,14 +157,28 @@ export async function GET() {
       console.warn('Mackolik fetch error:', e);
     }
 
-    // Filter unplayed matches for today
-    const unplayedMatches = (liveMatches || []).filter(m => {
-      // Must not be finished
+    const normalizeDate = (d?: string) => (d || '').replace(/\//g, '.').trim();
+
+    // STRICTLY FILTER FOR TODAY'S UNPLAYED / UPCOMING MATCHES
+    const todayUnplayedMatches = (liveMatches || []).filter(m => {
+      const matchDate = normalizeDate(m.date);
+      const isToday = matchDate === dates.todayDot;
       const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
-      return !isFinished && m.homeTeam && m.awayTeam;
+      const isPast = isMatchPast(m.date, m.time);
+      return isToday && !isFinished && !isPast && m.homeTeam && m.awayTeam;
     });
 
-    const matchPool = unplayedMatches.length >= 10 ? unplayedMatches : liveMatches;
+    const todayAllUnfinished = (liveMatches || []).filter(m => {
+      const matchDate = normalizeDate(m.date);
+      const isToday = matchDate === dates.todayDot;
+      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
+      return isToday && !isFinished && m.homeTeam && m.awayTeam;
+    });
+
+    // Günün kuponları SADECE VE SADECE BUGÜN oynanacak maçlardan oluşmalı
+    const matchPool = todayUnplayedMatches.length >= 10 
+      ? todayUnplayedMatches 
+      : (todayAllUnfinished.length > 0 ? todayAllUnfinished : (liveMatches || []).filter(m => normalizeDate(m.date) === dates.todayDot));
 
     // Helper to find odds and format choice
     const getBestChoiceForMatch = (m: any, preferredMarket: 'ms' | 'ou' | 'banko' | 'surprise' | 'any') => {
