@@ -262,54 +262,58 @@ export async function GET() {
       const cs1X = parseOdd(o.cs1X);
 
       if (preferredMarket === 'ms') {
-        if (ms1 && ms1 >= 1.15 && ms1 <= 2.20) {
+        if (ms1 && ms1 >= 1.20 && ms1 <= 2.25) {
           return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', reason: `${m.homeTeam} ev sahibi saha avantajı ve form üstünlüğü` };
         }
-        if (ms2 && ms2 >= 1.20 && ms2 <= 2.20) {
+        if (ms2 && ms2 >= 1.20 && ms2 <= 2.25) {
           return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', reason: `${m.awayTeam} deplasman kadro kalitesi ve galibiyet hedefi` };
         }
-        if (ms1) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', reason: `${m.homeTeam} kazanmaya yakın` };
+        return null;
       }
 
       if (preferredMarket === 'ou') {
-        if (ust25 && ust25 >= 1.35 && ust25 <= 2.05) {
+        if (ust25 && ust25 >= 1.35 && ust25 <= 2.15) {
           return { choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', reason: 'İki takımın da hücum gücü yüksek, gollü mücadele' };
         }
-        if (alt25 && alt25 >= 1.35 && alt25 <= 2.05) {
+        if (alt25 && alt25 >= 1.35 && alt25 <= 2.15) {
           return { choice: '2.5 ALT', odd: alt25, marketName: 'Toplam Gol', reason: 'Kontrollü savunma hattı ve düşük skor beklentisi' };
         }
-        if (ust25) return { choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', reason: 'Tempolu ve bol pozisyonlu karşılaşma' };
+        return null;
       }
 
       if (preferredMarket === 'banko') {
-        if (ms1 && ms1 >= 1.15 && ms1 <= 1.60) {
+        if (ms1 && ms1 >= 1.18 && ms1 <= 1.65) {
           return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', reason: `${m.homeTeam} net kadro kalitesi ve mutlak favori` };
         }
-        if (ms2 && ms2 >= 1.20 && ms2 <= 1.60) {
+        if (ms2 && ms2 >= 1.20 && ms2 <= 1.65) {
           return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', reason: `${m.awayTeam} sınıf farkı ve istikrarlı deplasman performansı` };
         }
-        if (cs1X && cs1X >= 1.15 && cs1X <= 1.50) {
+        if (cs1X && cs1X >= 1.18 && cs1X <= 1.50) {
           return { choice: 'ÇŞ 1-X', odd: cs1X, marketName: 'Çifte Şans', reason: `${m.homeTeam} iç saha yenilgisizliği güvencesi` };
         }
+        if (ust25 && ust25 >= 1.35 && ust25 <= 1.70) {
+          return { choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', reason: 'Tempolu gol beklentisi' };
+        }
+        return null;
       }
 
       if (preferredMarket === 'surprise') {
-        if (ms2 && ms2 >= 1.80 && ms2 <= 2.80) {
+        if (ms2 && ms2 >= 1.85 && ms2 <= 3.20) {
           return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', reason: `${m.awayTeam} yüksek çarpanlı değer ve sürpriz galibiyet potansiyeli` };
         }
-        if (ms1 && ms1 >= 1.85 && ms1 <= 2.70) {
+        if (ms1 && ms1 >= 1.85 && ms1 <= 3.00) {
           return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', reason: `${m.homeTeam} cazip oran ve ev sahibi baskısı` };
         }
         if (kgVar && kgVar >= 1.70 && kgVar <= 2.30) {
           return { choice: 'KG VAR', odd: kgVar, marketName: 'Karşılıklı Gol', reason: 'Yüksek çarpanlı karşılıklı gol beklentisi' };
         }
+        return null;
       }
 
-      // Fallback
-      if (ms1 && ms1 <= 2.10) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', reason: `${m.homeTeam} ev sahibi avantajı` };
-      if (ust25) return { choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', reason: 'Tempolu oyun' };
-      if (ms2) return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', reason: `${m.awayTeam} galibiyeti` };
-      if (ms1) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', reason: `${m.homeTeam} galibiyeti` };
+      // Sadece 'any' (Genel Miks) için makul oranlar
+      if (ms1 && ms1 >= 1.25 && ms1 <= 2.20) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', reason: `${m.homeTeam} ev sahibi avantajı` };
+      if (ust25 && ust25 >= 1.35 && ust25 <= 2.10) return { choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', reason: 'Tempolu oyun' };
+      if (ms2 && ms2 >= 1.25 && ms2 <= 2.20) return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', reason: `${m.awayTeam} galibiyeti` };
       return null;
     };
 

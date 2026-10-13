@@ -383,6 +383,7 @@ export async function GET() {
         }
         if (ms1) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.homeTeam} galibiyeti` };
         if (ms2) return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.awayTeam} galibiyeti` };
+        return null;
       }
 
       if (type === 'goals') {
@@ -397,6 +398,7 @@ export async function GET() {
         }
         if (ust25) return { choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', marketType: 'goals', reason: 'Tempolu goller' };
         if (kgVar) return { choice: 'KG VAR', odd: kgVar, marketName: 'Karşılıklı Gol', marketType: 'goals', reason: 'Karşılıklı goller' };
+        return null;
       }
 
       if (type === 'iyms') { // İY/MS (1/1, 2/2, X/1, X/2) ve İlk Yarı Sürpriz Değer Seçenekleri
@@ -446,6 +448,7 @@ export async function GET() {
         if (cs1X && cs1X >= 1.15 && cs1X <= 1.50) {
           return { choice: 'ÇŞ 1-X', odd: cs1X, marketName: 'Çifte Şans', marketType: 'ms', reason: `${m.homeTeam} iç saha yenilgisizliği` };
         }
+        return null;
       }
 
       // Default any
