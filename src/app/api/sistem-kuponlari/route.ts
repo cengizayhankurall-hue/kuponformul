@@ -264,31 +264,40 @@ export async function GET() {
     const getChoice = (m: any, type: 'ms' | 'goals' | 'iyms' | 'banko' | 'mega_vurgun' | 'any') => {
       const o = m.odds || m;
       const ms1 = parseOdd(o.ms1);
+      const msX = parseOdd(o.msX || o.ms0);
       const ms2 = parseOdd(o.ms2);
       const ust25 = parseOdd(o.ust25);
       const alt25 = parseOdd(o.alt25);
       const kgVar = parseOdd(o.kgVar);
       const cs1X = parseOdd(o.cs1X);
+      const iy1 = parseOdd(o.iy1);
+      const iyX = parseOdd(o.iyX);
+      const iy2 = parseOdd(o.iy2);
+      const ust35 = parseOdd(o.ust35);
 
       if (type === 'mega_vurgun') {
-        // En yüksek çarpanlı İY/MS ve sürpriz değerler (X/1, X/2, 1/1, 2/2)
-        if (ms1 && ms1 >= 1.80) {
-          const calcOdd = Number((Math.min(ms1 * 2.10, 4.80)).toFixed(2));
-          return { choice: 'X/1 (İY/MS)', odd: Math.max(calcOdd, 3.60), marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.homeTeam} ikinci yarıdaki baskısıyla kilit açar ve kazanır` };
+        // Bültenin en yüksek RESMİ oranları: Beraberlik (MS X), İlk Yarı sürprizleri (İY 1, İY 2), 3.5 Üst, Sürpriz Maç Sonuçları
+        if (iy2 && iy2 >= 2.80 && iy2 <= 5.50) {
+          return { choice: 'İY 2', odd: iy2, marketName: 'İlk Yarı Sonucu', marketType: 'iy', reason: `${m.awayTeam} ilk yarıdan sürpriz öne geçer` };
         }
-        if (ms2 && ms2 >= 1.85) {
-          const calcOdd = Number((Math.min(ms2 * 2.15, 5.20)).toFixed(2));
-          return { choice: 'X/2 (İY/MS)', odd: Math.max(calcOdd, 3.75), marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.awayTeam} ikinci devre kalitesiyle dev deplasman galibiyeti` };
+        if (iy1 && iy1 >= 2.80 && iy1 <= 5.50) {
+          return { choice: 'İY 1', odd: iy1, marketName: 'İlk Yarı Sonucu', marketType: 'iy', reason: `${m.homeTeam} ilk yarıdan sürpriz öne geçer` };
         }
-        if (ms1) {
-          const calcOdd = Number((Math.max(ms1, 1.60) * 1.95).toFixed(2));
-          return { choice: '1/1 (İY/MS)', odd: Math.max(calcOdd, 3.20), marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.homeTeam} ilk yarıdan fişi çeker, yüksek çarpan` };
+        if (msX && msX >= 2.90 && msX <= 3.80) {
+          return { choice: 'MS X', odd: msX, marketName: 'Maç Sonucu', marketType: 'ms', reason: 'Dengeli güçler ve yüksek çarpanlı beraberlik' };
         }
-        if (ms2) {
-          const calcOdd = Number((Math.max(ms2, 1.60) * 2.05).toFixed(2));
-          return { choice: '2/2 (İY/MS)', odd: Math.max(calcOdd, 3.40), marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.awayTeam} ilk yarıdan öne geçer ve maçı kazanır` };
+        if (ust35 && ust35 >= 2.30 && ust35 <= 3.80) {
+          return { choice: '3.5 ÜST', odd: ust35, marketName: 'Toplam Gol', marketType: 'goals', reason: 'Bol gollü karşılaşma ve yüksek çarpan' };
         }
-        return { choice: 'X/1 (İY/MS)', odd: 4.50, marketName: 'İY / MS', marketType: 'iy_ms', reason: 'Yüksek çarpanlı sürpriz İY/MS tercihi' };
+        if (ms2 && ms2 >= 2.50 && ms2 <= 4.50) {
+          return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.awayTeam} cazip deplasman sürprizi` };
+        }
+        if (ms1 && ms1 >= 2.50 && ms1 <= 4.50) {
+          return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.homeTeam} cazip ev sahibi sürprizi` };
+        }
+        if (msX) return { choice: 'MS X', odd: msX, marketName: 'Maç Sonucu', marketType: 'ms', reason: 'Beraberlik tercihi' };
+        if (ms2 && ms2 >= 2.00) return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.awayTeam} deplasman galibiyeti` };
+        if (ms1 && ms1 >= 2.00) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.homeTeam} galibiyeti` };
       }
 
       if (type === 'ms') {
@@ -299,6 +308,7 @@ export async function GET() {
           return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.awayTeam} deplasman kadro üstünlüğü` };
         }
         if (ms1) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.homeTeam} galibiyeti` };
+        if (ms2) return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.awayTeam} galibiyeti` };
       }
 
       if (type === 'goals') {
@@ -312,28 +322,34 @@ export async function GET() {
           return { choice: '2.5 ALT', odd: alt25, marketName: 'Toplam Gol', marketType: 'goals', reason: 'Savunma güvenliği ve kontrollü oyun' };
         }
         if (ust25) return { choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', marketType: 'goals', reason: 'Tempolu goller' };
+        if (kgVar) return { choice: 'KG VAR', odd: kgVar, marketName: 'Karşılıklı Gol', marketType: 'goals', reason: 'Karşılıklı goller' };
       }
 
-      if (type === 'iyms') {
-        if (ms1 && ms1 <= 1.95) {
-          const calcOdd = Number((ms1 * 1.55).toFixed(2));
-          return { choice: '1/1 (İY/MS)', odd: calcOdd, marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.homeTeam} ilk yarıdan skor üstünlüğünü kurar` };
+      if (type === 'iyms') { // Gerçek İlk Yarı ve Sürpriz Değer seçenekleri (İY 1, İY 2, MS X, İY X)
+        if (iy1 && iy1 >= 2.00 && iy1 <= 3.80) {
+          return { choice: 'İY 1', odd: iy1, marketName: 'İlk Yarı Sonucu', marketType: 'iy', reason: `${m.homeTeam} ilk yarıyı önde kapatır` };
         }
-        if (ms2 && ms2 <= 2.10) {
-          const calcOdd = Number((ms2 * 1.58).toFixed(2));
-          return { choice: '2/2 (İY/MS)', odd: calcOdd, marketName: 'İY / MS', marketType: 'iy_ms', reason: `${m.awayTeam} devreye önde girer ve maçı kazanır` };
+        if (iy2 && iy2 >= 2.10 && iy2 <= 3.80) {
+          return { choice: 'İY 2', odd: iy2, marketName: 'İlk Yarı Sonucu', marketType: 'iy', reason: `${m.awayTeam} ilk yarıyı üstün tamamlar` };
         }
-        return { choice: '1/1 (İY/MS)', odd: 2.45, marketName: 'İY / MS', marketType: 'iy_ms', reason: 'Erken gol baskısı ve ilk yarı galibiyeti' };
+        if (msX && msX >= 2.80 && msX <= 3.50) {
+          return { choice: 'MS X', odd: msX, marketName: 'Maç Sonucu', marketType: 'ms', reason: 'Yüksek çarpanlı beraberlik değeri' };
+        }
+        if (iyX && iyX >= 1.80 && iyX <= 2.30) {
+          return { choice: 'İY X', odd: iyX, marketName: 'İlk Yarı Sonucu', marketType: 'iy', reason: 'Dengeli ilk yarı beraberliği' };
+        }
+        if (ms1 && ms1 >= 1.80) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.homeTeam} galibiyeti` };
+        if (ms2 && ms2 >= 1.80) return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.awayTeam} galibiyeti` };
       }
 
       if (type === 'banko') {
-        if (ms1 && ms1 >= 1.15 && ms1 <= 1.50) {
+        if (ms1 && ms1 >= 1.15 && ms1 <= 1.55) {
           return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.homeTeam} net kalite üstünlüğü` };
         }
         if (ms2 && ms2 >= 1.20 && ms2 <= 1.55) {
           return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.awayTeam} sınıf farkı ve istikrar` };
         }
-        if (cs1X) {
+        if (cs1X && cs1X >= 1.15 && cs1X <= 1.50) {
           return { choice: 'ÇŞ 1-X', odd: cs1X, marketName: 'Çifte Şans', marketType: 'ms', reason: `${m.homeTeam} iç saha yenilgisizliği` };
         }
       }
@@ -341,7 +357,10 @@ export async function GET() {
       // Default any
       if (ms1 && ms1 <= 2.10) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.homeTeam} galibiyeti` };
       if (ust25) return { choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', marketType: 'goals', reason: 'Bol pozisyon' };
-      return { choice: 'MS 1', odd: 1.45, marketName: 'Maç Sonucu', marketType: 'ms', reason: 'Ev sahibi tercihi' };
+      if (ms2) return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.awayTeam} galibiyeti` };
+      if (ms1) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.homeTeam} galibiyeti` };
+      if (msX) return { choice: 'MS X', odd: msX, marketName: 'Maç Sonucu', marketType: 'ms', reason: 'Beraberlik' };
+      return null;
     };
 
     const usedMatchCodes = new Set<string>();
@@ -353,6 +372,7 @@ export async function GET() {
       for (const m of eligible) {
         if (selected.length >= count) break;
         const c = getChoice(m, type);
+        if (!c) continue;
         usedMatchCodes.add(m.code || m.id);
         selected.push({
           id: `sys_${m.code || m.id}_${selected.length}`,
@@ -376,6 +396,7 @@ export async function GET() {
           if (selected.length >= count) break;
           if (selected.some(s => s.code === String(m.code) && s.homeTeam === m.homeTeam)) continue;
           const c = getChoice(m, type);
+          if (!c) continue;
           selected.push({
             id: `sys_fb_${m.code || m.id}_${selected.length}`,
             code: String(m.code || '70000'),
@@ -458,13 +479,13 @@ export async function GET() {
       c1Matches
     );
 
-    // Kupon 2: İY/MS & Sürpriz Değer (9 Maç - Sistem 4, 5, 6, 7)
+    // Kupon 2: İlk Yarı & Sürpriz Değer (9 Maç - Sistem 4, 5, 6, 7)
     const c2Matches = pickSystemMatches(9, 'iyms');
     const coupon2 = assembleSystemCoupon(
       'kupon-2',
-      'İY/MS & Sürpriz Değer Kuponu',
-      '372 TL / DENGELİ İY/MS',
-      'Yüksek oranlı İY/MS tercihlerinden oluşan Sistem 4, 5, 6, 7 modeli.',
+      'İlk Yarı & Sürpriz Değer Kuponu',
+      '372 TL / İLK YARI & SÜRPRİZ',
+      'Bültenin resmi İlk Yarı Sonucu ve sürpriz beraberlik/taraf tercihlerinden oluşan Sistem 4, 5, 6, 7 modeli.',
       'purple',
       [4, 5, 6, 7],
       'Sistem 4, 5, 6, 7',
@@ -493,7 +514,7 @@ export async function GET() {
       'kupon-4',
       'Büyük Vurgun / Çılgın Sistem',
       '502 TL / BÜYÜK VURGUN',
-      'Bültenin en yüksek çarpanlı İY/MS ve sürpriz değer tercihlerinden oluşan dev kazanç hedefli Sistem 4, 5, 6, 7, 8 modeli.',
+      'Bültenin en yüksek resmi oranlı beraberlik (MS X), ilk yarı ve sürpriz tercihlerinden oluşan Sistem 4, 5, 6, 7, 8 modeli.',
       'emerald',
       [4, 5, 6, 7, 8],
       'Sistem 4, 5, 6, 7, 8',

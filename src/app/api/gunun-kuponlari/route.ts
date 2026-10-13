@@ -239,7 +239,8 @@ export async function GET() {
       if (ms1 && ms1 <= 2.10) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', reason: `${m.homeTeam} ev sahibi avantajı` };
       if (ust25) return { choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', reason: 'Tempolu oyun' };
       if (ms2) return { choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', reason: `${m.awayTeam} galibiyeti` };
-      return { choice: 'MS 1', odd: 1.45, marketName: 'Maç Sonucu', reason: 'Favori takım tercihi' };
+      if (ms1) return { choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', reason: `${m.homeTeam} galibiyeti` };
+      return null;
     };
 
     // Helper to build a unique set of matches for a coupon
@@ -252,6 +253,7 @@ export async function GET() {
       for (const m of eligible) {
         if (selected.length >= count) break;
         const best = getBestChoiceForMatch(m, preferredMarket);
+        if (!best) continue;
         usedMatchIds.add(m.id || m.code);
         selected.push({
           id: `match_${m.id || m.code}_${selected.length}`,
@@ -274,6 +276,7 @@ export async function GET() {
           if (selected.length >= count) break;
           if (selected.some(s => s.code === String(m.code) && s.homeTeam === m.homeTeam)) continue;
           const best = getBestChoiceForMatch(m, preferredMarket);
+          if (!best) continue;
           selected.push({
             id: `match_fb_${m.id || m.code}_${selected.length}`,
             code: String(m.code || '70000'),
