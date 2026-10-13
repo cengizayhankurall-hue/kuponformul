@@ -56,7 +56,7 @@ let cachedDailyResponse: {
   timestamp: number;
   payload: any;
 } | null = null;
-const CACHE_TTL_MS = 3 * 60 * 1000;
+const CACHE_TTL_MS = 10 * 60 * 1000;
 
 function parseOdd(val: any): number | null {
   if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
@@ -137,11 +137,68 @@ function isMatchPast(dateStr?: string, timeStr?: string): boolean {
   }
 }
 
+function getMatchPriority(m: any): number {
+  const league = String(m.league || '').toUpperCase().trim();
+  const home = (m.homeTeam || '').toLowerCase().trim();
+  const away = (m.awayTeam || '').toLowerCase().trim();
+  const teams = `${home} ${away}`;
+
+  const isYouthOrRes = 
+    teams.includes('u19') || 
+    teams.includes('u21') || 
+    teams.includes('u23') || 
+    teams.includes('(b)') || 
+    teams.includes('(k)') ||
+    teams.includes('kadın') ||
+    teams.includes(' ii') ||
+    teams.includes('(amt') ||
+    teams.includes('rezerv') ||
+    teams.includes('reserve') ||
+    league.includes('U19') || 
+    league.includes('U21') || 
+    league.includes('U23') ||
+    league.includes('PORU23') ||
+    league.includes('UEGL') ||
+    league.includes('BÖL') ||
+    league.includes('KDK');
+
+  if (isYouthOrRes) {
+    return 10;
+  }
+
+  // 1. UEFA ŞAMPİYONLAR LİGİ (Günün en büyük vitrini - En tepeye al!)
+  if (league === 'ŞMP' || league.includes('ŞAMP') || league.includes('UCL') || league.includes('UEFA')) {
+    return 5000;
+  }
+
+  // 2. Büyük Kulüpler (Galatasaray, Barcelona, Real Madrid, Bayern, Man United, Arsenal, Inter, Atletico, Napoli vb.)
+  const isMajorTeam = 
+    /\b(galatasaray|fenerbahçe|beşiktaş|trabzonspor|barcelona|real madrid|bayern|manchester|man\. utd|arsenal|atletico|dortmund|napoli|leipzig|sporting cp|psv|lille|chelsea|liverpool)\b/i.test(teams) ||
+    home === 'inter' || away === 'inter';
+
+  if (isMajorTeam) {
+    return 4000;
+  }
+
+  // 3. İngiltere Championship, Türkiye Süper Lig / 1. Lig, Majör Ligler
+  if (['TSL', 'T1L', 'İNG', 'İNCL', 'İSP', 'İTA', 'ALM', 'FRA'].includes(league)) {
+    return 3000;
+  }
+
+  // 4. Kupa ve Prestijli Ligler (Almanya 3, İngiltere Kupa, Belçika, Hollanda, Portekiz)
+  if (['AL3', 'İNTK', 'HOL', 'POR', 'BEL', 'AŞMP', 'AFCŞL2'].includes(league)) {
+    return 1500;
+  }
+
+  // 5. Diğer alt / bölgesel ligler
+  return 100;
+}
+
 export async function GET() {
   const dates = getIstanbulDates();
   const now = Date.now();
 
-  // Instant Cache Check
+  // Instant Cache Check (< 2ms)
   if (cachedDailyResponse && cachedDailyResponse.dateKey === dates.todayDot) {
     if (now - cachedDailyResponse.timestamp < CACHE_TTL_MS) {
       return NextResponse.json(cachedDailyResponse.payload);
@@ -165,20 +222,33 @@ export async function GET() {
       const isToday = matchDate === dates.todayDot;
       const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
       const isPast = isMatchPast(m.date, m.time);
-      return isToday && !isFinished && !isPast && m.homeTeam && m.awayTeam;
+      const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
+      return isToday && !isFinished && !isPast && m.homeTeam && m.awayTeam && hasAnyRealOdd;
     });
 
     const todayAllUnfinished = (liveMatches || []).filter(m => {
       const matchDate = normalizeDate(m.date);
       const isToday = matchDate === dates.todayDot;
       const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
-      return isToday && !isFinished && m.homeTeam && m.awayTeam;
+      const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
+      return isToday && !isFinished && m.homeTeam && m.awayTeam && hasAnyRealOdd;
     });
 
-    // Günün kuponları SADECE VE SADECE BUGÜN oynanacak maçlardan oluşmalı
-    const matchPool = todayUnplayedMatches.length >= 10 
+    // Günün kuponları SADECE VE SADECE BUGÜN oynanacak ve geçerli oranı olan maçlardan oluşmalı
+    const matchPoolRaw = todayUnplayedMatches.length >= 10 
       ? todayUnplayedMatches 
-      : (todayAllUnfinished.length > 0 ? todayAllUnfinished : (liveMatches || []).filter(m => normalizeDate(m.date) === dates.todayDot));
+      : (todayAllUnfinished.length > 0 ? todayAllUnfinished : (liveMatches || []).filter(m => {
+          const isToday = normalizeDate(m.date) === dates.todayDot;
+          const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25));
+          return isToday && hasAnyRealOdd;
+        }));
+
+    // POPÜLARİTE VE LİG ÖNCELİĞİ SIRALAMASI: Şampiyonlar Ligi ve elit maçlar ilk sırada!
+    const matchPool = [...matchPoolRaw].sort((a, b) => {
+      const pDiff = getMatchPriority(b) - getMatchPriority(a);
+      if (pDiff !== 0) return pDiff;
+      return (a.time || '').localeCompare(b.time || '');
+    });
 
     // Helper to find odds and format choice
     const getBestChoiceForMatch = (m: any, preferredMarket: 'ms' | 'ou' | 'banko' | 'surprise' | 'any') => {
@@ -453,24 +523,33 @@ export async function GET() {
       let pastDbMatches: any[] = [];
 
       if (db) {
-        // Query Supabase past_matches for yesterday
-        const res = await db
-          .from('past_matches')
-          .select('id, home_team, away_team, ms_score, iy_score, ms_1_odd, ms_0_odd, ms_2_odd, alt_25_odd, ust_25_odd, kg_var_odd, kg_yok_odd, match_time, league')
-          .eq('match_date', dates.yesterdayYmd)
-          .not('ms_score', 'is', null)
-          .limit(60);
-        pastDbMatches = res.data || [];
+        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('db_timeout')), 1200));
+        // Query Supabase past_matches for yesterday with fast timeout
+        const res: any = await Promise.race([
+          db
+            .from('past_matches')
+            .select('id, home_team, away_team, ms_score, iy_score, ms_1_odd, ms_0_odd, ms_2_odd, alt_25_odd, ust_25_odd, kg_var_odd, kg_yok_odd, match_time, league')
+            .eq('match_date', dates.yesterdayYmd)
+            .not('ms_score', 'is', null)
+            .limit(60),
+          timeoutPromise
+        ]).catch(() => ({ data: null }));
+
+        pastDbMatches = res?.data || [];
 
         // Fallback if yesterday has fewer matches: query the most recent completed matches
         if (!pastDbMatches || pastDbMatches.length < 10) {
-          const resFallback = await db
-            .from('past_matches')
-            .select('id, home_team, away_team, ms_score, iy_score, ms_1_odd, ms_0_odd, ms_2_odd, alt_25_odd, ust_25_odd, kg_var_odd, kg_yok_odd, match_time, league')
-            .not('ms_score', 'is', null)
-            .order('match_date', { ascending: false })
-            .limit(60);
-          pastDbMatches = resFallback.data || [];
+          const resFallback: any = await Promise.race([
+            db
+              .from('past_matches')
+              .select('id, home_team, away_team, ms_score, iy_score, ms_1_odd, ms_0_odd, ms_2_odd, alt_25_odd, ust_25_odd, kg_var_odd, kg_yok_odd, match_time, league')
+              .not('ms_score', 'is', null)
+              .order('match_date', { ascending: false })
+              .limit(60),
+            timeoutPromise
+          ]).catch(() => ({ data: null }));
+
+          pastDbMatches = resFallback?.data || [];
         }
       }
 
