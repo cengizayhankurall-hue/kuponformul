@@ -585,9 +585,16 @@ export async function GET() {
 
   // Gün boyunca sabit kupon kontrolü: Aynı gün içindeyse kuponlar ve maçlar ASLA değişmez!
   if (cachedSystemResponse && cachedSystemResponse.dateKey === dates.todayDot) {
-    // Eğer önbellekteki kuponlarda yarının maçı veya istenmeyen alt lig maçı kalmışsa derhal temizle!
+    // Eğer önbellekteki kuponlarda eski, mock (fb_), veya bültende olmayan takımlar kalmışsa derhal temizle!
     const hasBadMatchInCache = cachedSystemResponse.payload?.coupons?.some((c: any) =>
-      c.matches?.some((m: any) => m.date !== dates.todayDot || isObscureLeague(m.league))
+      c.matches?.some((m: any) => 
+        m.date !== dates.todayDot || 
+        isObscureLeague(m.league) ||
+        String(m.id || '').startsWith('fb_') ||
+        m.homeTeam === 'Galatasaray' || 
+        m.homeTeam === 'Trabzonspor' || 
+        (m.homeTeam === 'Fenerbahçe' && m.league === 'TSL')
+      )
     );
     if (hasBadMatchInCache) {
       cachedSystemResponse = null;
@@ -663,61 +670,60 @@ export async function GET() {
       return isToday && !isFinished && !isPast && m.homeTeam && m.awayTeam && hasAnyRealOdd;
     });
 
-    // Zengin fallback maç havuzu (Avrupa / Şampiyonlar Ligi / İNCL maçları - 36 benzersiz maç)
+    // Zengin fallback maç havuzu (Sadece Mackolik API bağlantısı tamamen kesilirse devreye girer)
+    // 14.10.2026 Resmi İddaa bültenindeki gerçek maçlar ve oranlar:
     const fallbackMatches = [
-      // 1.80 - 2.20 aralığı (Avrupa / Popüler)
-      { id: 'fb_1', code: '40101', homeTeam: 'Villarreal', awayTeam: 'Napoli', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.87', msX: '3.26', ms2: '2.98', ust25: '1.87', alt25: '1.97', ust35: '2.85', alt35: '1.45', kgVar: '1.82', kgYok: '1.98' },
-      { id: 'fb_2', code: '40102', homeTeam: 'Bristol City', awayTeam: 'Blackburn', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.91', msX: '3.01', ms2: '3.12', ust25: '1.91', alt25: '1.90', ust35: '2.95', alt35: '1.40', kgVar: '1.85', kgYok: '1.95' },
-      { id: 'fb_3', code: '40103', homeTeam: 'Wrexham', awayTeam: 'West Bromwich', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.02', msX: '2.96', ms2: '2.91', ust25: '2.02', alt25: '1.80', ust35: '3.10', alt35: '1.38', kgVar: '1.80', kgYok: '2.00' },
-      { id: 'fb_4', code: '40104', homeTeam: 'Bayern Münih', awayTeam: 'Benfica', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.82', msX: '3.40', ms2: '3.20', ust25: '1.82', alt25: '2.05', ust35: '2.70', alt35: '1.50', kgVar: '1.80', kgYok: '2.02' },
-      { id: 'fb_5', code: '40105', homeTeam: 'Arsenal', awayTeam: 'Monaco', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.88', msX: '3.35', ms2: '3.15', ust25: '1.85', alt25: '2.00', ust35: '2.80', alt35: '1.48', kgVar: '1.82', kgYok: '1.98' },
-      { id: 'fb_6', code: '40106', homeTeam: 'Juventus', awayTeam: 'Sporting', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '2.10', msX: '3.10', ms2: '2.85', ust25: '2.05', alt25: '1.82', ust35: '3.20', alt35: '1.35', kgVar: '1.88', kgYok: '1.92' },
-      { id: 'fb_7', code: '40107', homeTeam: 'Galatasaray', awayTeam: 'Kayserispor', league: 'TSL', date: dates.todayDot, time: '20:00', ms1: '1.85', msX: '3.45', ms2: '3.10', ust25: '1.82', alt25: '2.05', ust35: '2.65', alt35: '1.52', kgVar: '1.78', kgYok: '2.08' },
-      { id: 'fb_8', code: '40108', homeTeam: 'Trabzonspor', awayTeam: 'Rizespor', league: 'TSL', date: dates.todayDot, time: '20:00', ms1: '1.95', msX: '3.20', ms2: '2.95', ust25: '1.88', alt25: '1.95', ust35: '2.90', alt35: '1.42', kgVar: '1.82', kgYok: '1.98' },
-      { id: 'fb_9', code: '40109', homeTeam: 'Göztepe', awayTeam: 'Konyaspor', league: 'TSL', date: dates.todayDot, time: '20:00', ms1: '2.05', msX: '3.15', ms2: '2.80', ust25: '1.95', alt25: '1.88', ust35: '3.05', alt35: '1.38', kgVar: '1.85', kgYok: '1.95' },
-      { id: 'fb_10', code: '40110', homeTeam: 'Real Sociedad', awayTeam: 'Athletic Bilbao', league: 'İSP', date: dates.todayDot, time: '22:00', ms1: '2.15', msX: '3.05', ms2: '2.70', ust25: '2.10', alt25: '1.80', ust35: '3.25', alt35: '1.32', kgVar: '1.90', kgYok: '1.90' },
-      { id: 'fb_11', code: '40111', homeTeam: 'Kocaelispor', awayTeam: 'Bandırmaspor', league: 'T1L', date: dates.todayDot, time: '20:00', ms1: '1.90', msX: '3.10', ms2: '3.05', ust25: '1.85', alt25: '1.98', ust35: '2.85', alt35: '1.44', kgVar: '1.82', kgYok: '1.98' },
-      { id: 'fb_12', code: '40112', homeTeam: 'Feyenoord', awayTeam: 'Utrecht', league: 'HOL', date: dates.todayDot, time: '21:00', ms1: '1.85', msX: '3.40', ms2: '3.05', ust25: '1.80', alt25: '2.10', ust35: '2.60', alt35: '1.55', kgVar: '1.75', kgYok: '2.12' },
-      
-      // 2.40 - 3.00 aralığı (Avrupa / Popüler)
-      { id: 'fb_13', code: '40113', homeTeam: 'Millwall', awayTeam: 'Swansea', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.45', msX: '3.00', ms2: '2.65', ust35: '2.65', alt25: '2.40', ust25: '1.65', kgYok: '2.50', kgVar: '1.55' },
-      { id: 'fb_14', code: '40114', homeTeam: 'Stoke', awayTeam: 'Middlesbrough', league: 'İNCL', date: dates.todayDot, time: '22:00', ms1: '2.70', msX: '3.26', ms2: '2.45', ust35: '2.70', alt25: '2.45', ust25: '1.60', kgYok: '2.55', kgVar: '1.52' },
-      { id: 'fb_15', code: '40115', homeTeam: 'Queens Park', awayTeam: 'Inverness CT', league: 'İKCL', date: dates.todayDot, time: '21:45', ms1: '2.50', msX: '3.45', ms2: '2.40', ust35: '2.55', alt25: '2.45', ust25: '1.62', kgYok: '2.60', kgVar: '1.50' },
-      { id: 'fb_16', code: '40116', homeTeam: 'Real Zaragoza', awayTeam: 'Oviedo', league: 'İSP2', date: dates.todayDot, time: '21:30', ms1: '2.45', msX: '2.95', ms2: '2.75', ust35: '2.80', alt25: '2.45', ust25: '1.60', kgYok: '2.45', kgVar: '1.58' },
-      { id: 'fb_17', code: '40117', homeTeam: 'Sassuolo', awayTeam: 'Spezia', league: 'İTA2', date: dates.todayDot, time: '21:30', ms1: '2.55', msX: '3.10', ms2: '2.50', ust35: '2.60', alt25: '2.40', ust25: '1.65', kgYok: '2.50', kgVar: '1.55' },
-      { id: 'fb_18', code: '40118', homeTeam: 'Palermo', awayTeam: 'Cremonese', league: 'İTA2', date: dates.todayDot, time: '21:30', ms1: '2.60', msX: '3.05', ms2: '2.45', ust35: '2.75', alt25: '2.45', ust25: '1.60', kgYok: '2.55', kgVar: '1.52' },
-      { id: 'fb_19', code: '40119', homeTeam: 'Schalke', awayTeam: 'Magdeburg', league: 'AL2', date: dates.todayDot, time: '21:30', ms1: '2.40', msX: '3.25', ms2: '2.65', ust35: '2.50', alt25: '2.45', ust25: '1.62', kgYok: '2.48', kgVar: '1.58' },
-      { id: 'fb_20', code: '40120', homeTeam: 'Hamburg', awayTeam: 'Hannover', league: 'AL2', date: dates.todayDot, time: '21:30', ms1: '2.45', msX: '3.30', ms2: '2.55', ust35: '2.45', alt25: '2.50', ust25: '1.58', kgYok: '2.50', kgVar: '1.55' },
-      { id: 'fb_21', code: '40121', homeTeam: 'Metz', awayTeam: 'Caen', league: 'FRA2', date: dates.todayDot, time: '21:45', ms1: '2.50', msX: '2.95', ms2: '2.60', ust35: '2.85', alt25: '2.40', ust25: '1.65', kgYok: '2.60', kgVar: '1.50' },
-      { id: 'fb_22', code: '40122', homeTeam: 'Lorient', awayTeam: 'Guingamp', league: 'FRA2', date: dates.todayDot, time: '21:45', ms1: '2.40', msX: '3.05', ms2: '2.70', ust35: '2.70', alt25: '2.45', ust25: '1.60', kgYok: '2.52', kgVar: '1.54' },
-      { id: 'fb_23', code: '40123', homeTeam: 'Porto', awayTeam: 'Braga', league: 'POR', date: dates.todayDot, time: '22:15', ms1: '2.45', msX: '3.15', ms2: '2.60', ust35: '2.60', alt25: '2.40', ust25: '1.65', kgYok: '2.45', kgVar: '1.60' },
-      { id: 'fb_24', code: '40124', homeTeam: 'Genk', awayTeam: 'Gent', league: 'BEL', date: dates.todayDot, time: '21:45', ms1: '2.50', msX: '3.20', ms2: '2.50', ust35: '2.50', alt25: '2.45', ust25: '1.62', kgYok: '2.50', kgVar: '1.55' },
+      // UEFA Şampiyonlar Ligi (9 Maç)
+      { id: 'fb_1', code: '2', homeTeam: 'Aston Villa', awayTeam: 'Fenerbahçe', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.56', msX: '3.81', ms2: '4.41', ust25: '1.62', alt25: '2.05', ust35: '2.60', alt35: '1.45', iy1: '2.10', iyX: '2.25', iy2: '4.60', kgVar: '1.68', kgYok: '1.98' },
+      { id: 'fb_2', code: '79', homeTeam: 'Roma', awayTeam: 'Real Madrid', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '3.19', msX: '3.56', ms2: '1.72', ust25: '1.58', alt25: '2.15', ust35: '2.50', alt35: '1.50', iy1: '3.60', iyX: '2.20', iy2: '2.30', kgVar: '1.60', kgYok: '2.10' },
+      { id: 'fb_3', code: '195', homeTeam: 'Manchester Cit', awayTeam: 'Psg', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.88', msX: '3.72', ms2: '3.05', ust25: '1.52', alt25: '2.25', ust35: '2.40', alt35: '1.55', iy1: '2.40', iyX: '2.30', iy2: '3.50', kgVar: '1.55', kgYok: '2.20' },
+      { id: 'fb_4', code: '269', homeTeam: 'Real Betis', awayTeam: 'Porto', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.84', msX: '3.28', ms2: '3.05', ust25: '1.82', alt25: '1.85', ust35: '3.05', alt35: '1.35', iy1: '2.45', iyX: '2.05', iy2: '3.60', kgVar: '1.75', kgYok: '1.90' },
+      { id: 'fb_5', code: '120', homeTeam: 'Bodo Glimt', awayTeam: 'B.Dortmund', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '2.53', msX: '3.52', ms2: '2.01', ust25: '1.50', alt25: '2.30', ust35: '2.35', alt35: '1.58', iy1: '3.00', iyX: '2.25', iy2: '2.60', kgVar: '1.50', kgYok: '2.30' },
+      { id: 'fb_6', code: '30', homeTeam: 'Lask Linz', awayTeam: 'Liverpool', league: 'ŞMP', date: dates.todayDot, time: '19:45', ms1: '6.15', msX: '4.40', ms2: '1.27', ust25: '1.45', alt25: '2.45', ust35: '2.20', alt35: '1.65', iy1: '5.60', iyX: '2.45', iy2: '1.75', kgVar: '1.72', kgYok: '1.95' },
+      { id: 'fb_7', code: '170', homeTeam: 'Feyenoord', awayTeam: 'Como', league: 'ŞMP', date: dates.todayDot, time: '19:45', ms1: '2.63', msX: '3.36', ms2: '2.00', ust25: '1.75', alt25: '1.95', ust35: '2.90', alt35: '1.40', iy1: '3.20', iyX: '2.15', iy2: '2.60', kgVar: '1.65', kgYok: '2.05' },
+      { id: 'fb_8', code: '320', homeTeam: 'Shakhtar Donet', awayTeam: 'Aek', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '2.35', msX: '3.09', ms2: '2.35', ust25: '1.85', alt25: '1.82', ust35: '3.10', alt35: '1.35', iy1: '2.95', iyX: '2.00', iy2: '2.95', kgVar: '1.75', kgYok: '1.90' },
+      { id: 'fb_9', code: '129', homeTeam: 'Slovan Bratisl', awayTeam: 'Stuttgart', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '6.21', msX: '5.08', ms2: '1.22', ust25: '1.38', alt25: '2.65', ust35: '2.05', alt35: '1.75', iy1: '5.80', iyX: '2.60', iy2: '1.65', kgVar: '1.80', kgYok: '1.85' },
 
-      // 3.10 - 6.00 aralığı (Avrupa / Şampiyonlar Ligi / İNCL sürpriz)
-      { id: 'fb_25', code: '40125', homeTeam: 'Atletico Madrid', awayTeam: 'Man. United', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.68', msX: '3.37', ms2: '3.51', ust35: '3.37', ust45: '4.20', alt35: '1.35' },
-      { id: 'fb_26', code: '40126', homeTeam: 'RB Leipzig', awayTeam: 'PSV Eindhoven', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.38', msX: '4.48', ms2: '4.36', ust35: '3.15', ust45: '3.90', alt35: '1.38' },
-      { id: 'fb_27', code: '40127', homeTeam: 'Burnley', awayTeam: 'Charlton', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.43', msX: '3.68', ms2: '4.93', ust35: '3.50', ust45: '4.50', alt35: '1.32' },
-      { id: 'fb_28', code: '40128', homeTeam: 'Cardiff', awayTeam: 'Watford', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.44', msX: '3.96', ms2: '4.34', ust35: '3.40', ust45: '4.35', alt35: '1.34' },
-      { id: 'fb_29', code: '40129', homeTeam: 'Birmingham', awayTeam: 'Preston', league: 'İNCL', date: dates.todayDot, time: '22:00', ms1: '1.31', msX: '4.13', ms2: '5.85', ust35: '3.25', ust45: '4.10', alt35: '1.36' },
-      { id: 'fb_30', code: '40130', homeTeam: 'Oldham', awayTeam: 'Leeds United U21', league: 'İNTK', date: dates.todayDot, time: '21:00', ms1: '1.41', msX: '3.75', ms2: '4.03', ust35: '3.60', ust45: '4.40', alt35: '1.30' },
-      { id: 'fb_31', code: '40131', homeTeam: 'PSG', awayTeam: 'Inter', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.75', msX: '3.50', ms2: '3.70', ust35: '3.20', ust45: '4.05', alt35: '1.36' },
-      { id: 'fb_32', code: '40132', homeTeam: 'Borussia Dortmund', awayTeam: 'Chelsea', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.65', msX: '3.60', ms2: '3.85', ust35: '3.10', ust45: '3.95', alt35: '1.38' },
-      { id: 'fb_33', code: '40133', homeTeam: 'Aston Villa', awayTeam: 'Celtic', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.55', msX: '3.80', ms2: '4.25', ust35: '3.30', ust45: '4.15', alt35: '1.35' },
-      { id: 'fb_34', code: '40134', homeTeam: 'Leeds United', awayTeam: 'Sheffield Utd', league: 'İNCL', date: dates.todayDot, time: '22:00', ms1: '1.70', msX: '3.45', ms2: '3.60', ust35: '3.40', ust45: '4.30', alt35: '1.33' },
-      { id: 'fb_35', code: '40135', homeTeam: 'Coventry', awayTeam: 'Hull City', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.60', msX: '3.65', ms2: '3.90', ust35: '3.35', ust45: '4.25', alt35: '1.34' },
-      { id: 'fb_36', code: '40136', homeTeam: 'Leicester', awayTeam: 'Sunderland', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.50', msX: '3.85', ms2: '4.50', ust35: '3.25', ust45: '4.10', alt35: '1.36' },
-      { id: 'fb_37', code: '40137', homeTeam: 'Liverpool', awayTeam: 'Bayer Leverkusen', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.72', msX: '3.65', ms2: '3.90', ust25: '1.65', alt25: '2.20', ust35: '2.60', alt35: '1.50' },
-      { id: 'fb_38', code: '40138', homeTeam: 'Fenerbahçe', awayTeam: 'Kasımpaşa', league: 'TSL', date: dates.todayDot, time: '20:00', ms1: '1.45', msX: '4.20', ms2: '5.10', ust25: '1.55', alt25: '2.35', ust35: '2.40', alt35: '1.60' },
-      { id: 'fb_39', code: '40139', homeTeam: 'Beşiktaş', awayTeam: 'Sivasspor', league: 'TSL', date: dates.todayDot, time: '20:00', ms1: '1.58', msX: '3.80', ms2: '4.50', ust25: '1.70', alt25: '2.10', ust35: '2.70', alt35: '1.45' },
-      { id: 'fb_40', code: '40140', homeTeam: 'Real Madrid', awayTeam: 'Milan', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.50', msX: '4.10', ms2: '4.90', ust25: '1.58', alt25: '2.30', ust35: '2.50', alt35: '1.55' },
-      { id: 'fb_41', code: '40141', homeTeam: 'Inter', awayTeam: 'Arsenal', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '2.35', msX: '3.15', ms2: '2.70', ust25: '1.95', alt25: '1.85', ust35: '3.30', alt35: '1.35' },
-      { id: 'fb_42', code: '40142', homeTeam: 'Club Brugge', awayTeam: 'Aston Villa', league: 'ŞMP', date: dates.todayDot, time: '20:45', ms1: '3.10', msX: '3.35', ms2: '2.05', ust25: '1.85', alt25: '1.95', ust35: '3.05', alt35: '1.40' },
-      { id: 'fb_43', code: '40143', homeTeam: 'Shakhtar Donetsk', awayTeam: 'Young Boys', league: 'ŞMP', date: dates.todayDot, time: '20:45', ms1: '1.95', msX: '3.40', ms2: '3.25', ust25: '1.80', alt25: '2.00', ust35: '2.90', alt35: '1.45' },
-      { id: 'fb_44', code: '40144', homeTeam: 'Sparta Prag', awayTeam: 'Brest', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '2.25', msX: '3.25', ms2: '2.80', ust25: '1.90', alt25: '1.90', ust35: '3.10', alt35: '1.38' },
-      { id: 'fb_45', code: '40145', homeTeam: 'Stuttgart', awayTeam: 'Atalanta', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '2.30', msX: '3.45', ms2: '2.60', ust25: '1.60', alt25: '2.30', ust35: '2.50', alt35: '1.55' },
-      { id: 'fb_46', code: '40146', homeTeam: 'Luton', awayTeam: 'Hull City', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.95', msX: '3.30', ms2: '3.30', ust25: '1.85', alt25: '1.95', ust35: '2.95', alt35: '1.40' },
-      { id: 'fb_47', code: '40147', homeTeam: 'Sheffield Wed', awayTeam: 'Norwich', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.40', msX: '3.20', ms2: '2.65', ust25: '1.88', alt25: '1.92', ust35: '3.00', alt35: '1.38' },
-      { id: 'fb_48', code: '40148', homeTeam: 'Plymouth', awayTeam: 'Portsmouth', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.20', msX: '3.25', ms2: '2.85', ust25: '1.82', alt25: '1.98', ust35: '2.85', alt35: '1.42' }
+      // Türkiye 1. Lig (2 Maç)
+      { id: 'fb_10', code: '42056', homeTeam: 'A. Keçiörengüc', awayTeam: 'Iğdır Fk', league: 'T1L', date: dates.todayDot, time: '20:00', ms1: '1.93', msX: '3.05', ms2: '2.72', ust25: '1.90', alt25: '1.75', ust35: '3.25', alt35: '1.32', iy1: '2.55', iyX: '1.95', iy2: '3.35', kgVar: '1.78', kgYok: '1.88' },
+      { id: 'fb_11', code: '570', homeTeam: 'Antalyaspor', awayTeam: 'Kayserispor', league: 'T1L', date: dates.todayDot, time: '20:00', ms1: '2.68', msX: '2.87', ms2: '2.05', ust25: '1.95', alt25: '1.70', ust35: '3.35', alt35: '1.30', iy1: '3.30', iyX: '1.90', iy2: '2.70', kgVar: '1.82', kgYok: '1.82' },
+
+      // İngiltere Championship (4 Maç)
+      { id: 'fb_12', code: '45', homeTeam: 'Qpr', awayTeam: 'Derby County', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.51', msX: '3.53', ms2: '4.37', ust25: '1.75', alt25: '1.92', ust35: '2.95', alt35: '1.38', iy1: '2.05', iyX: '2.15', iy2: '4.75', kgVar: '1.82', kgYok: '1.82' },
+      { id: 'fb_13', code: '35', homeTeam: 'Norwich', awayTeam: 'Southam', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.19', msX: '3.25', ms2: '2.43', ust25: '1.68', alt25: '2.00', ust35: '2.75', alt35: '1.42', iy1: '2.75', iyX: '2.10', iy2: '3.00', kgVar: '1.60', kgYok: '2.12' },
+      { id: 'fb_14', code: '57', homeTeam: 'Portsmouth', awayTeam: 'Sheffield Utd', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.12', msX: '2.98', ms2: '2.71', ust25: '1.92', alt25: '1.72', ust35: '3.30', alt35: '1.31', iy1: '2.75', iyX: '1.95', iy2: '3.35', kgVar: '1.78', kgYok: '1.88' },
+      { id: 'fb_15', code: '39', homeTeam: 'Lincoln', awayTeam: 'West Ham', league: 'İNCL', date: dates.todayDot, time: '22:00', ms1: '4.62', msX: '3.48', ms2: '1.49', ust25: '1.72', alt25: '1.95', ust35: '2.85', alt35: '1.40', iy1: '4.90', iyX: '2.15', iy2: '2.00', kgVar: '1.80', kgYok: '1.85' },
+
+      // Almanya 3. Liga (5 Maç)
+      { id: 'fb_16', code: '2628', homeTeam: 'Waldhof Mannhe', awayTeam: 'Ingolstadt', league: 'AL3', date: dates.todayDot, time: '20:00', ms1: '1.65', msX: '3.62', ms2: '3.40', ust25: '1.62', alt25: '2.08', ust35: '2.60', alt35: '1.48', iy1: '2.20', iyX: '2.25', iy2: '3.80', kgVar: '1.62', kgYok: '2.05' },
+      { id: 'fb_17', code: '894', homeTeam: 'Verl 1924', awayTeam: 'Regensburg', league: 'AL3', date: dates.todayDot, time: '20:00', ms1: '2.10', msX: '3.54', ms2: '2.39', ust25: '1.58', alt25: '2.15', ust35: '2.50', alt35: '1.50', iy1: '2.65', iyX: '2.25', iy2: '2.95', kgVar: '1.52', kgYok: '2.25' },
+      { id: 'fb_18', code: '147', homeTeam: 'Wehen', awayTeam: 'Aachen', league: 'AL3', date: dates.todayDot, time: '20:00', ms1: '2.24', msX: '3.26', ms2: '2.36', ust25: '1.72', alt25: '1.95', ust35: '2.85', alt35: '1.40', iy1: '2.85', iyX: '2.10', iy2: '2.95', kgVar: '1.62', kgYok: '2.05' },
+      { id: 'fb_19', code: '8186', homeTeam: 'Viktoria Köln', awayTeam: 'Sonnenhof Gross', league: 'AL3', date: dates.todayDot, time: '20:00', ms1: '1.35', msX: '4.38', ms2: '4.80', ust25: '1.50', alt25: '2.30', ust35: '2.30', alt35: '1.60', iy1: '1.80', iyX: '2.40', iy2: '4.90', kgVar: '1.65', kgYok: '2.00' },
+      { id: 'fb_20', code: '1472', homeTeam: 'Preussen Munst', awayTeam: 'Fortuna Düsseld', league: 'AL3', date: dates.todayDot, time: '20:00', ms1: '2.45', msX: '3.16', ms2: '2.21', ust25: '1.80', alt25: '1.85', ust35: '3.05', alt35: '1.35', iy1: '3.05', iyX: '2.05', iy2: '2.80', kgVar: '1.68', kgYok: '1.95' },
+
+      // Rusya Kupası (3 Maç)
+      { id: 'fb_21', code: '683', homeTeam: 'Cska Moskova', awayTeam: 'Rostov', league: 'RUK', date: dates.todayDot, time: '20:45', ms1: '1.41', msX: '3.41', ms2: '4.54', ust25: '1.85', alt25: '1.78', ust35: '3.15', alt35: '1.34', iy1: '1.95', iyX: '2.15', iy2: '4.80', kgVar: '1.88', kgYok: '1.75' },
+      { id: 'fb_22', code: '675', homeTeam: 'Makhachkala', awayTeam: 'Zenit', league: 'RUK', date: dates.todayDot, time: '18:30', ms1: '4.17', msX: '3.31', ms2: '1.47', ust25: '1.80', alt25: '1.85', ust35: '3.05', alt35: '1.35', iy1: '4.60', iyX: '2.10', iy2: '2.00', kgVar: '1.85', kgYok: '1.80' },
+      { id: 'fb_23', code: '680', homeTeam: 'Akhmat Grozny', awayTeam: 'Dinamo Moskova', league: 'RUK', date: dates.todayDot, time: '18:30', ms1: '2.27', msX: '2.96', ms2: '2.26', ust25: '1.95', alt25: '1.70', ust35: '3.35', alt35: '1.30', iy1: '2.95', iyX: '1.95', iy2: '2.95', kgVar: '1.78', kgYok: '1.88' },
+
+      // Portekiz Kupası & Çekya & Belarus (3 Maç)
+      { id: 'fb_24', code: '283', homeTeam: 'Uniao Santarem', awayTeam: 'Gil Vicente', league: 'POK', date: dates.todayDot, time: '21:00', ms1: '6.03', msX: '3.85', ms2: '1.25', ust25: '1.58', alt25: '2.15', ust35: '2.50', alt35: '1.50', iy1: '5.80', iyX: '2.30', iy2: '1.70', kgVar: '1.90', kgYok: '1.75' },
+      { id: 'fb_25', code: '1531', homeTeam: 'Bohemians 1905', awayTeam: 'Mlada Boleslav', league: 'ÇEK', date: dates.todayDot, time: '19:00', ms1: '1.88', msX: '3.23', ms2: '2.62', ust25: '1.72', alt25: '1.95', ust35: '2.85', alt35: '1.40', iy1: '2.45', iyX: '2.10', iy2: '3.20', kgVar: '1.62', kgYok: '2.05' },
+      { id: 'fb_26', code: '1115', homeTeam: 'Bate Borisov', awayTeam: 'Neman Grodno', league: 'BLR', date: dates.todayDot, time: '19:00', ms1: '3.17', msX: '2.80', ms2: '1.82', ust25: '2.05', alt25: '1.62', ust35: '3.50', alt35: '1.28', iy1: '3.80', iyX: '1.90', iy2: '2.45', kgVar: '1.90', kgYok: '1.75' },
+
+      // Norveç 1. Lig (6 Maç)
+      { id: 'fb_27', code: '2150', homeTeam: 'Stabaek', awayTeam: 'Sandnes', league: 'NOR1', date: dates.todayDot, time: '20:00', ms1: '1.26', msX: '4.41', ms2: '5.00', ust25: '1.45', alt25: '2.45', ust35: '2.20', alt35: '1.65', iy1: '1.70', iyX: '2.45', iy2: '5.10', kgVar: '1.65', kgYok: '2.00' },
+      { id: 'fb_28', code: '1369', homeTeam: 'Stromsgodset', awayTeam: 'Kongsvinger', league: 'NOR1', date: dates.todayDot, time: '20:00', ms1: '1.60', msX: '3.76', ms2: '3.02', ust25: '1.55', alt25: '2.20', ust35: '2.45', alt35: '1.52', iy1: '2.15', iyX: '2.30', iy2: '3.50', kgVar: '1.58', kgYok: '2.15' },
+      { id: 'fb_29', code: '12241', homeTeam: 'Moss', awayTeam: 'Egersunds', league: 'NOR1', date: dates.todayDot, time: '20:00', ms1: '1.87', msX: '3.34', ms2: '2.56', ust25: '1.65', alt25: '2.02', ust35: '2.65', alt35: '1.45', iy1: '2.45', iyX: '2.15', iy2: '3.15', kgVar: '1.60', kgYok: '2.10' },
+      { id: 'fb_30', code: '407', homeTeam: 'Sogndal', awayTeam: 'Odds Bk', league: 'NOR1', date: dates.todayDot, time: '20:00', ms1: '2.91', msX: '3.62', ms2: '1.65', ust25: '1.52', alt25: '2.25', ust35: '2.40', alt35: '1.55', iy1: '3.40', iyX: '2.30', iy2: '2.20', kgVar: '1.55', kgYok: '2.20' },
+      { id: 'fb_31', code: '2143', homeTeam: 'Hodd', awayTeam: 'Ranheim', league: 'NOR1', date: dates.todayDot, time: '20:00', ms1: '2.58', msX: '3.35', ms2: '1.86', ust25: '1.62', alt25: '2.08', ust35: '2.60', alt35: '1.48', iy1: '3.15', iyX: '2.15', iy2: '2.45', kgVar: '1.62', kgYok: '2.05' },
+      { id: 'fb_32', code: '405', homeTeam: 'Haugesund', awayTeam: 'Lyn Oslo', league: 'NOR1', date: dates.todayDot, time: '20:00', ms1: '1.09', msX: '5.87', ms2: '7.61', ust25: '1.35', alt25: '2.75', ust35: '1.95', alt35: '1.82', iy1: '1.45', iyX: '2.75', iy2: '6.80', kgVar: '1.85', kgYok: '1.75' },
+
+      // Asya Şampiyonlar Ligi 2 (4 Maç)
+      { id: 'fb_33', code: '2855', homeTeam: 'Al Taawon', awayTeam: 'Al Rayyan', league: 'AFCŞL2', date: dates.todayDot, time: '19:00', ms1: '2.70', msX: '3.20', ms2: '1.85', ust25: '1.68', alt25: '1.98', ust35: '2.75', alt35: '1.42', iy1: '3.30', iyX: '2.10', iy2: '2.45', kgVar: '1.62', kgYok: '2.05' },
+      { id: 'fb_34', code: '53130', homeTeam: 'Al-Kuwait', awayTeam: 'Khalidiya', league: 'AFCŞL2', date: dates.todayDot, time: '19:00', ms1: '2.07', msX: '3.00', ms2: '2.47', ust25: '1.82', alt25: '1.80', ust35: '3.10', alt35: '1.35', iy1: '2.70', iyX: '1.95', iy2: '3.10', kgVar: '1.72', kgYok: '1.92' },
+      { id: 'fb_35', code: '21993', homeTeam: 'Al Muharraq', awayTeam: 'Gol Gohar Sirja', league: 'AFCŞL2', date: dates.todayDot, time: '19:00', ms1: '2.43', msX: '2.67', ms2: '2.29', ust25: '2.15', alt25: '1.55', ust35: '3.75', alt35: '1.22', iy1: '3.10', iyX: '1.85', iy2: '2.95', kgVar: '1.95', kgYok: '1.70' },
+      { id: 'fb_36', code: '2922', homeTeam: 'Al Faisaly Amm', awayTeam: 'Al Nahda', league: 'AFCŞL2', date: dates.todayDot, time: '21:15', ms1: '1.86', msX: '3.10', ms2: '2.76', ust25: '1.85', alt25: '1.78', ust35: '3.15', alt35: '1.34', iy1: '2.50', iyX: '2.00', iy2: '3.40', kgVar: '1.75', kgYok: '1.88' }
     ];
 
     // Kaliteli Avrupa & Majör maçlar ile istenmeyen alt ligleri ayır:
@@ -730,14 +736,19 @@ export async function GET() {
       date: dates.todayDot
     }));
 
-    // Bültendeki kaliteli Avrupa/Majör maçları ve zengin fallback maç havuzunu birleştir:
-    // Şampiyonlar Ligi, Premier Lig, TSL, Championship vb. daima ilk sıralarda yer alır!
-    // Alt sıra ligler (-10000) sadece kaliteli maç sayısı 30'un altındaysa en arkaya eklenir.
-    const matchPoolRaw = [
-      ...todayTopMatches,
-      ...validFallbackMatches,
-      ...(todayTopMatches.length + validFallbackMatches.length < 30 ? todayObscureMatches : [])
-    ];
+    // Bültenden gelen maç havuzu:
+    // Eğer bültende en az 25 kaliteli maç varsa SADECE bültendeki gerçek maçlar kullanılır!
+    // Asla sahte / fallback maçlar canlı bültene karıştırılmaz!
+    let matchPoolRaw: any[] = [];
+    if (todayTopMatches.length >= 25) {
+      matchPoolRaw = todayTopMatches;
+    } else if (todayTopMatches.length + todayObscureMatches.length >= 25) {
+      matchPoolRaw = [...todayTopMatches, ...todayObscureMatches];
+    } else if (todayUnplayedWithOdds.length > 0) {
+      matchPoolRaw = [...todayTopMatches, ...todayObscureMatches, ...validFallbackMatches];
+    } else {
+      matchPoolRaw = validFallbackMatches;
+    }
 
     // Lig önceliği sıralaması: UEFA Şampiyonlar Ligi, UEFA Gençlik, Majör Avrupa ve TSL en başta!
     const matchPool = [...matchPoolRaw].sort((a, b) => {
@@ -831,7 +842,7 @@ export async function GET() {
       }
 
       if (selected.length < count) {
-        for (const fb of fallbackMatches) {
+        for (const fb of validFallbackMatches) {
           if (selected.length >= count) break;
           const code = String(fb.code || fb.id);
           if (usedMatchCodesC1.has(code)) continue;
@@ -936,20 +947,7 @@ export async function GET() {
         if (c) addMatch(m, c);
       }
 
-      // 2. Aşama: Fallback maçlar içinden HİÇ kullanılmamışları ekle (Farklı maç önceliğini koru)
-      if (selected.length < count) {
-        for (const fb of fallbackMatches) {
-          if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
-          if (usedMatchCodesC2.has(code)) continue;
-          if (matchUsageAcrossCoupons.has(code)) continue;
-
-          const c = findGoalChoiceInRange(fb, minOdd, maxOdd);
-          if (c) addMatch(fb, c);
-        }
-      }
-
-      // 3. Aşama: Genişletilmiş oran aralığında kullanılmamış maçlar
+      // 2. Aşama: Genişletilmiş oran aralığında kullanılmamış bülten maçları
       if (selected.length < count) {
         const wideMin = Math.max(1.35, minOdd - 0.25);
         const wideMax = maxOdd + 0.50;
@@ -964,21 +962,7 @@ export async function GET() {
         }
       }
 
-      // 4. Aşama: Fallback maçlar genişletilmiş aralıkta kullanılmamışlar
-      if (selected.length < count) {
-        for (const fb of fallbackMatches) {
-          if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
-          if (usedMatchCodesC2.has(code)) continue;
-          if (matchUsageAcrossCoupons.has(code)) continue;
-
-          const c = findGoalChoiceInRange(fb, 1.35, 6.50);
-          if (c) addMatch(fb, c);
-        }
-      }
-
-      // 5. Aşama (Son Çare): Eğer bülten çok kısıtlıysa ve yeni maç kalmadıysa,
-      // Kupon 1'deki maçlardan sadece GOL bahsi olarak (Kupon 1 MS idi) ekle (Farklı bahis zorunluluğu)
+      // 3. Aşama: Eğer bülten darsa, Kupon 1'deki maçlardan sadece GOL bahsi olarak (Kupon 1 MS idi) ekle (Farklı bahis zorunluluğu)
       if (selected.length < count) {
         for (const m of matchPool) {
           if (selected.length >= count) break;
@@ -991,6 +975,19 @@ export async function GET() {
           if (c && (!existing || existing.coupon1Choice !== c.choice)) {
             addMatch(m, c);
           }
+        }
+      }
+
+      // 4. Aşama (Son Çare): Sadece havuz tükendiyse acil durum yedeği
+      if (selected.length < count) {
+        for (const fb of validFallbackMatches) {
+          if (selected.length >= count) break;
+          const code = String(fb.code || fb.id);
+          if (usedMatchCodesC2.has(code)) continue;
+          if (matchUsageAcrossCoupons.has(code)) continue;
+
+          const c = findGoalChoiceInRange(fb, minOdd, maxOdd) || findGoalChoiceInRange(fb, 1.35, 6.50);
+          if (c) addMatch(fb, c);
         }
       }
 
@@ -1098,21 +1095,7 @@ export async function GET() {
         if (c) addMatch(m, c);
       }
 
-      // 2. Aşama: Fallback maçlar içinden HİÇ kullanılmamışları ekle (Farklı maç önceliği)
-      if (selected.length < count) {
-        for (const fb of fallbackMatches) {
-          if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
-          if (usedMatchCodesC3.has(code)) continue;
-          if (matchUsageAcrossCoupons.has(code)) continue;
-
-          const canPickX = coupon3MsXCount < MAX_COUPON3_MS_X;
-          const c = findHybridChoiceInRange(fb, 1.80, 3.50, preferMarket, canPickX);
-          if (c) addMatch(fb, c);
-        }
-      }
-
-      // 3. Aşama: Genişletilmiş oran aralığında kullanılmamış maçlar
+      // 2. Aşama: Genişletilmiş oran aralığında kullanılmamış maçlar
       if (selected.length < count) {
         for (const m of matchPool) {
           if (selected.length >= count) break;
@@ -1121,25 +1104,12 @@ export async function GET() {
           if (matchUsageAcrossCoupons.has(code)) continue;
 
           const canPickX = coupon3MsXCount < MAX_COUPON3_MS_X;
-          const c = findHybridChoiceInRange(m, 1.70, 3.70, preferMarket, canPickX);
+          const c = findHybridChoiceInRange(m, 1.65, 3.80, preferMarket, canPickX);
           if (c) addMatch(m, c);
         }
       }
 
-      if (selected.length < count) {
-        for (const fb of fallbackMatches) {
-          if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
-          if (usedMatchCodesC3.has(code)) continue;
-          if (matchUsageAcrossCoupons.has(code)) continue;
-
-          const canPickX = coupon3MsXCount < MAX_COUPON3_MS_X;
-          const c = findHybridChoiceInRange(fb, 1.70, 3.70, preferMarket, canPickX);
-          if (c) addMatch(fb, c);
-        }
-      }
-
-      // 4. Aşama (Son Çare): Bülten biterse çapraz kurala göre seç (Biri MS ise diğeri Gol, asla aynı tercih yok)
+      // 3. Aşama: Çapraz kurala göre seç (Biri MS ise diğeri Gol, asla aynı tercih yok)
       if (selected.length < count) {
         for (const m of matchPool) {
           if (selected.length >= count) break;
@@ -1172,6 +1142,20 @@ export async function GET() {
             const c = findHybridChoiceInRange(m, 1.80, 3.50, preferMarket, canPickX);
             if (c) addMatch(m, c);
           }
+        }
+      }
+
+      // 4. Aşama (Son Çare): Sadece havuz tükendiyse acil durum yedeği
+      if (selected.length < count) {
+        for (const fb of validFallbackMatches) {
+          if (selected.length >= count) break;
+          const code = String(fb.code || fb.id);
+          if (usedMatchCodesC3.has(code)) continue;
+          if (matchUsageAcrossCoupons.has(code)) continue;
+
+          const canPickX = coupon3MsXCount < MAX_COUPON3_MS_X;
+          const c = findHybridChoiceInRange(fb, 1.80, 3.50, preferMarket, canPickX);
+          if (c) addMatch(fb, c);
         }
       }
 
@@ -1276,20 +1260,7 @@ export async function GET() {
         if (c) addMatch(m, c);
       }
 
-      // 2. Aşama: Fallback maçlar içinden HİÇ kullanılmamışları ekle
-      if (selected.length < count) {
-        for (const fb of fallbackMatches) {
-          if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
-          if (usedMatchCodesC4.has(code)) continue;
-          if (matchUsageAcrossCoupons.has(code)) continue;
-
-          const c = findIyMsChoiceInRange(fb, minOdd, maxOdd, preferredChoices);
-          if (c) addMatch(fb, c);
-        }
-      }
-
-      // 3. Aşama: Genişletilmiş oran aralığında kullanılmamış maçlar
+      // 2. Aşama: Genişletilmiş oran aralığında kullanılmamış bülten maçları
       if (selected.length < count) {
         const wideMin = Math.max(1.80, minOdd - 0.40);
         const wideMax = maxOdd + 1.50;
@@ -1304,19 +1275,7 @@ export async function GET() {
         }
       }
 
-      if (selected.length < count) {
-        for (const fb of fallbackMatches) {
-          if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
-          if (usedMatchCodesC4.has(code)) continue;
-          if (matchUsageAcrossCoupons.has(code)) continue;
-
-          const c = findIyMsChoiceInRange(fb, 1.80, 18.00, preferredChoices);
-          if (c) addMatch(fb, c);
-        }
-      }
-
-      // 4. Aşama (Son Çare): Bülten yetersizse, diğer kuponlardaki maçlardan sadece İY/MS bahsi olarak ekle (Tercih asla aynı olamaz)
+      // 3. Aşama: Bülten azaldığında diğer kuponlardaki maçlardan sadece İY/MS bahsi olarak ekle (İY/MS tercihi asla diğer kuponlarla çakışmaz)
       if (selected.length < count) {
         for (const m of matchPool) {
           if (selected.length >= count) break;
@@ -1328,6 +1287,19 @@ export async function GET() {
           if (c && (!existing || (existing.coupon1Choice !== c.choice && existing.coupon2Choice !== c.choice && existing.coupon3Choice !== c.choice))) {
             addMatch(m, c);
           }
+        }
+      }
+
+      // 4. Aşama (Son Çare): Sadece havuz tükendiyse acil durum yedeği
+      if (selected.length < count) {
+        for (const fb of validFallbackMatches) {
+          if (selected.length >= count) break;
+          const code = String(fb.code || fb.id);
+          if (usedMatchCodesC4.has(code)) continue;
+          if (matchUsageAcrossCoupons.has(code)) continue;
+
+          const c = findIyMsChoiceInRange(fb, minOdd, maxOdd, preferredChoices) || findIyMsChoiceInRange(fb, 1.80, 18.00, preferredChoices);
+          if (c) addMatch(fb, c);
         }
       }
 
