@@ -98,7 +98,7 @@ interface ApiResponse {
 
 export default function SistemKuponlariPage() {
   const [activeTab, setActiveTab] = useState<'today' | 'yesterday'>('today');
-  const [selectedFilter, setSelectedFilter] = useState<'all' | 'kupon-1' | 'kupon-2'>('all');
+  const [activeCouponIndex, setActiveCouponIndex] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -216,12 +216,8 @@ export default function SistemKuponlariPage() {
     }
   };
 
-  const allCoupons = activeTab === 'today' ? (data?.coupons || []) : (data?.yesterday?.coupons || []);
-  
-  const currentCoupons = allCoupons.filter(c => {
-    if (selectedFilter === 'all') return true;
-    return c.id.includes(selectedFilter);
-  });
+  const currentCoupons = activeTab === 'today' ? (data?.coupons || []) : (data?.yesterday?.coupons || []);
+  const activeCoupon = currentCoupons[activeCouponIndex] || currentCoupons[0];
 
   const getTierBadge = (odd: number) => {
     if (odd >= 1.80 && odd <= 2.20) {
@@ -309,80 +305,47 @@ export default function SistemKuponlariPage() {
           </div>
         </div>
 
-        {/* SEKME GEÇİŞİ VE FİLTRELEME */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-          {/* BUGÜN / DÜNÜN SONUÇLARI */}
-          <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900/80 border border-slate-800 w-full sm:w-fit">
-            <button
-              onClick={() => setActiveTab('today')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-                activeTab === 'today'
-                  ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/20'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-              }`}
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Bugünün Kuponları</span>
-              {data?.date && (
-                <span className={`text-xs px-2 py-0.5 rounded-full ${activeTab === 'today' ? 'bg-black/20 text-black' : 'bg-slate-800 text-slate-300'}`}>
-                  {data.date}
-                </span>
-              )}
-            </button>
+        {/* ANA SEKMELER: BUGÜNÜN KUPONLARI vs DÜNÜN SONUÇLARI */}
+        <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900/80 border border-slate-800 w-full sm:w-fit">
+          <button
+            onClick={() => {
+              setActiveTab('today');
+              setActiveCouponIndex(0);
+            }}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+              activeTab === 'today'
+                ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+            }`}
+          >
+            <Calendar className="w-4 h-4" />
+            <span>Bugünün Kuponları</span>
+            {data?.date && (
+              <span className={`text-xs px-2 py-0.5 rounded-full ${activeTab === 'today' ? 'bg-black/20 text-black' : 'bg-slate-800 text-slate-300'}`}>
+                {data.date}
+              </span>
+            )}
+          </button>
 
-            <button
-              onClick={() => setActiveTab('yesterday')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-                activeTab === 'yesterday'
-                  ? 'bg-sky-500 text-black shadow-lg shadow-sky-500/20'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-              }`}
-            >
-              <History className="w-4 h-4" />
-              <span>Dünün Sonuçları</span>
-              {data?.yesterday?.formattedDate && (
-                <span className={`text-xs px-2 py-0.5 rounded-full ${activeTab === 'yesterday' ? 'bg-black/20 text-black' : 'bg-slate-800 text-slate-300'}`}>
-                  {data.yesterday.formattedDate}
-                </span>
-              )}
-            </button>
-          </div>
-
-          {/* KUPON SEÇİCİ (TÜMÜ / 1. KUPON / 2. KUPON) */}
-          <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/60 border border-slate-800/80 w-full sm:w-fit overflow-x-auto">
-            <button
-              onClick={() => setSelectedFilter('all')}
-              className={`px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                selectedFilter === 'all'
-                  ? 'bg-slate-700 text-white shadow'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
-              }`}
-            >
-              Tüm Kuponlar ({allCoupons.length})
-            </button>
-
-            <button
-              onClick={() => setSelectedFilter('kupon-1')}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                selectedFilter === 'kupon-1'
-                  ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/20'
-                  : 'text-amber-400/90 hover:text-amber-300 hover:bg-amber-500/10'
-              }`}
-            >
-              <span>1. Kupon (Maç Sonucu)</span>
-            </button>
-
-            <button
-              onClick={() => setSelectedFilter('kupon-2')}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                selectedFilter === 'kupon-2'
-                  ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
-                  : 'text-emerald-400/90 hover:text-emerald-300 hover:bg-emerald-500/10'
-              }`}
-            >
-              <span>2. Kupon (Gol & KG)</span>
-            </button>
-          </div>
+          <button
+            onClick={() => {
+              setActiveTab('yesterday');
+              setActiveCouponIndex(0);
+            }}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+              activeTab === 'yesterday'
+                ? 'bg-sky-500 text-black shadow-lg shadow-sky-500/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+            }`}
+          >
+            <History className="w-4 h-4" />
+            <span>Dünün Sonuçları</span>
+            {data?.yesterday?.formattedDate && (
+              <span className={`text-xs px-2 py-0.5 rounded-full ${activeTab === 'yesterday' ? 'bg-black/20 text-black' : 'bg-slate-800 text-slate-300'}`}>
+                {data.yesterday.formattedDate}
+              </span>
+            )}
+          </button>
         </div>
 
         {/* HATA VEYA YÜKLENİYOR DURUMU */}
@@ -410,8 +373,134 @@ export default function SistemKuponlariPage() {
           </div>
         )}
 
-        {/* KUPONLARIN GÖSTERİMİ */}
-        {!loading && !error && currentCoupons.map((coupon) => {
+        {/* KUPON SEÇİM KARTLARI (TIKLAYINCA SEÇİLİ KUPON DETAYI AŞAĞIDA AÇILIR) */}
+        {!loading && !error && currentCoupons.length > 0 && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                <Layers className="w-3.5 h-3.5 text-amber-400" />
+                <span>Mevcut Sistem Kuponları ({currentCoupons.length} Adet)</span>
+              </span>
+              <span className="text-xs text-slate-400 font-medium">
+                Detayları görmek için kuponun üzerine tıklayın 👇
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {currentCoupons.map((coupon, idx) => {
+                const isActive = activeCoupon?.id === coupon.id;
+                const isEmerald = coupon.theme === 'emerald';
+
+                return (
+                  <button
+                    key={coupon.id}
+                    onClick={() => setActiveCouponIndex(idx)}
+                    className={`p-5 sm:p-6 rounded-3xl border text-left transition-all duration-300 relative overflow-hidden group cursor-pointer ${
+                      isActive
+                        ? isEmerald
+                          ? 'bg-gradient-to-br from-emerald-950/60 via-[#091b1a] to-slate-950 border-emerald-500 shadow-xl shadow-emerald-500/10 ring-2 ring-emerald-500/50'
+                          : 'bg-gradient-to-br from-amber-950/60 via-[#19150b] to-slate-950 border-amber-500 shadow-xl shadow-amber-500/10 ring-2 ring-amber-500/50'
+                        : 'bg-slate-900/60 border-slate-800 hover:bg-slate-800/80 hover:border-slate-700 text-slate-300'
+                    }`}
+                  >
+                    {/* AKTİF KUPON PARILTISI */}
+                    {isActive && (
+                      <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl pointer-events-none ${
+                        isEmerald ? 'bg-emerald-500/20' : 'bg-amber-500/20'
+                      }`} />
+                    )}
+
+                    <div className="relative z-10 space-y-3">
+                      {/* ÜST ROZETLER */}
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2.5 py-1 rounded-xl text-xs font-black tracking-wider border ${
+                            isActive
+                              ? isEmerald
+                                ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
+                                : 'bg-amber-500/20 border-amber-500/50 text-amber-300'
+                              : 'bg-slate-800 border-slate-700 text-slate-400'
+                          }`}>
+                            {idx + 1}. SİSTEM KUPONU
+                          </span>
+
+                          <span className="px-2.5 py-1 rounded-xl text-xs font-bold bg-slate-800/90 text-slate-300 border border-slate-700/60">
+                            {coupon.badge}
+                          </span>
+                        </div>
+
+                        <span className="text-xs font-black px-3 py-1 rounded-xl bg-black/60 border border-slate-700 text-slate-200 font-mono">
+                          {coupon.cost} TL
+                        </span>
+                      </div>
+
+                      {/* BAŞLIK & AÇIKLAMA */}
+                      <div>
+                        <h3 className={`text-lg sm:text-xl font-black tracking-tight transition ${
+                          isActive 
+                            ? (isEmerald ? 'text-emerald-300' : 'text-amber-300')
+                            : 'text-white group-hover:text-amber-200'
+                        }`}>
+                          {coupon.title}
+                        </h3>
+                        <p className="text-xs text-slate-400 mt-1 line-clamp-1">
+                          {coupon.description}
+                        </p>
+                      </div>
+
+                      {/* ALT DETAY BİLGİSİ */}
+                      <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-2 text-slate-400">
+                          <span className="font-semibold text-slate-300">{coupon.totalMatches} Maç</span>
+                          <span>•</span>
+                          <span>{coupon.systemLabel}</span>
+                          <span>•</span>
+                          <span>{coupon.totalColumns} Kolon</span>
+                        </div>
+
+                        {activeTab === 'yesterday' ? (
+                          <div className={`font-black flex items-center gap-1 ${
+                            coupon.isWinner ? 'text-emerald-400' : 'text-slate-400'
+                          }`}>
+                            {coupon.isWinner ? '✅ KAZANDI' : '❌ TUTMADI'} ({coupon.hitCount}/9)
+                          </div>
+                        ) : (
+                          <div className={`font-black flex items-center gap-1 ${
+                            isEmerald ? 'text-emerald-400' : 'text-amber-400'
+                          }`}>
+                            <span>Maks:</span>
+                            <span className="font-mono">{coupon.targetProfitBadge.split(' ')[0]} TL</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* SEÇİLİ KUPON GÖSTERGESİ */}
+                      <div className="flex items-center justify-end pt-1">
+                        {isActive ? (
+                          <span className={`inline-flex items-center gap-1 text-[11px] font-black ${
+                            isEmerald ? 'text-emerald-400' : 'text-amber-400'
+                          }`}>
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            <span>Kupon Seçili (Aşağıda Açıldı)</span>
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 group-hover:text-slate-300 transition">
+                            <span>Kuponu Göster</span>
+                            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* SEÇİLİ KUPONUN DETAY PANELİ (MAÇ LİSTESİ + İKRAMİYE TABLOSU) */}
+        {!loading && !error && activeCoupon && (() => {
+          const coupon = activeCoupon;
           const isEmerald = coupon.theme === 'emerald';
 
           return (
@@ -419,8 +508,8 @@ export default function SistemKuponlariPage() {
               key={coupon.id}
               className={`rounded-3xl bg-[#0c121e]/90 border shadow-2xl overflow-hidden transition-all duration-300 ${
                 isEmerald 
-                  ? 'border-emerald-500/30 hover:border-emerald-500/50 shadow-emerald-500/5' 
-                  : 'border-slate-800/90 hover:border-amber-500/30 shadow-amber-500/5'
+                  ? 'border-emerald-500/40 shadow-emerald-500/5' 
+                  : 'border-amber-500/40 shadow-amber-500/5'
               }`}
             >
               {/* KART BAŞLIĞI */}
@@ -782,7 +871,7 @@ export default function SistemKuponlariPage() {
               </div>
             </div>
           );
-        })}
+        })()}
 
         {/* DÜNÜN ÖZET KARTI (EĞER ARŞİVDEYSEK) */}
         {activeTab === 'yesterday' && data?.yesterday && (
