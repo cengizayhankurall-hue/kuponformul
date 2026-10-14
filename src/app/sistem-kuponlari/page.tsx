@@ -35,9 +35,9 @@ interface SystemMatch {
   league: string;
   date: string;
   time: string;
-  marketType: 'ms';
-  marketName: 'Maç Sonucu';
-  choice: 'MS 1' | 'MS X' | 'MS 2';
+  marketType?: 'ms' | 'goals';
+  marketName?: string;
+  choice: string;
   odd: number;
   reason?: string;
   score?: string;
@@ -98,6 +98,7 @@ interface ApiResponse {
 
 export default function SistemKuponlariPage() {
   const [activeTab, setActiveTab] = useState<'today' | 'yesterday'>('today');
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'kupon-1' | 'kupon-2'>('all');
   const [loading, setLoading] = useState<boolean>(true);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -215,7 +216,12 @@ export default function SistemKuponlariPage() {
     }
   };
 
-  const currentCoupons = activeTab === 'today' ? (data?.coupons || []) : (data?.yesterday?.coupons || []);
+  const allCoupons = activeTab === 'today' ? (data?.coupons || []) : (data?.yesterday?.coupons || []);
+  
+  const currentCoupons = allCoupons.filter(c => {
+    if (selectedFilter === 'all') return true;
+    return c.id.includes(selectedFilter);
+  });
 
   const getTierBadge = (odd: number) => {
     if (odd >= 1.80 && odd <= 2.20) {
@@ -243,7 +249,7 @@ export default function SistemKuponlariPage() {
         {/* ÜST BAŞLIK VE AÇIKLAMA */}
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0c1322] to-slate-950 p-6 sm:p-10 border border-slate-800/80 shadow-2xl shadow-amber-500/5">
           <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-3">
@@ -255,9 +261,9 @@ export default function SistemKuponlariPage() {
                 Günün <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500">Sistem Kuponları</span>
               </h1>
               <p className="text-slate-400 text-sm sm:text-base max-w-2xl leading-relaxed">
-                Yalnızca resmi <strong className="text-slate-200">Maç Sonucu (MS 1, MS X, MS 2)</strong> oranlarından oluşan, 
-                her gün <strong className="text-amber-400">00:00 ile 23:59</strong> arasında %100 sabit kalan, 
-                başlayan maçlarda bozulmayan 9 maçlık Sistem 4, 5, 6 kuponu.
+                Resmi <strong className="text-amber-400">Maç Sonucu (MS 1, X, 2)</strong> ve <strong className="text-emerald-400">Gol & KG (2.5, 3.5, 4.5 Alt/Üst & KG Var/Yok)</strong> oranlarından oluşan, 
+                her gün <strong className="text-slate-200">00:00 ile 23:59</strong> arasında %100 sabit kalan, 
+                başlayan maçlarda bozulmayan 9&apos;ar maçlık Sistem 4, 5, 6 kuponları.
               </p>
             </div>
 
@@ -275,9 +281,9 @@ export default function SistemKuponlariPage() {
           <div className="mt-8 pt-6 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left">
             <div className="bg-slate-900/60 rounded-2xl p-3.5 border border-slate-800/60">
               <div className="text-xs text-slate-400 flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-amber-400" /> Toplam Maç
+                <Layers className="w-3.5 h-3.5 text-amber-400" /> Kupon Çeşitleri
               </div>
-              <div className="text-lg font-bold text-white mt-0.5">9 Maç (MS)</div>
+              <div className="text-lg font-bold text-white mt-0.5">2 Kupon (MS & Gol)</div>
             </div>
 
             <div className="bg-slate-900/60 rounded-2xl p-3.5 border border-slate-800/60">
@@ -303,50 +309,89 @@ export default function SistemKuponlariPage() {
           </div>
         </div>
 
-        {/* SEKME GEÇİŞİ (BUGÜN / DÜNÜN SONUÇLARI) */}
-        <div className="flex items-center justify-center sm:justify-start gap-2 p-1.5 rounded-2xl bg-slate-900/80 border border-slate-800 w-full sm:w-fit">
-          <button
-            onClick={() => setActiveTab('today')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-              activeTab === 'today'
-                ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/20'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-            }`}
-          >
-            <Calendar className="w-4 h-4" />
-            <span>Bugünün Kuponu</span>
-            {data?.date && (
-              <span className={`text-xs px-2 py-0.5 rounded-full ${activeTab === 'today' ? 'bg-black/20 text-black' : 'bg-slate-800 text-slate-300'}`}>
-                {data.date}
-              </span>
-            )}
-          </button>
+        {/* SEKME GEÇİŞİ VE FİLTRELEME */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          {/* BUGÜN / DÜNÜN SONUÇLARI */}
+          <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900/80 border border-slate-800 w-full sm:w-fit">
+            <button
+              onClick={() => setActiveTab('today')}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                activeTab === 'today'
+                  ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/20'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+              }`}
+            >
+              <Calendar className="w-4 h-4" />
+              <span>Bugünün Kuponları</span>
+              {data?.date && (
+                <span className={`text-xs px-2 py-0.5 rounded-full ${activeTab === 'today' ? 'bg-black/20 text-black' : 'bg-slate-800 text-slate-300'}`}>
+                  {data.date}
+                </span>
+              )}
+            </button>
 
-          <button
-            onClick={() => setActiveTab('yesterday')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-              activeTab === 'yesterday'
-                ? 'bg-sky-500 text-black shadow-lg shadow-sky-500/20'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-            }`}
-          >
-            <History className="w-4 h-4" />
-            <span>Dünün Sonuçları</span>
-            {data?.yesterday?.formattedDate && (
-              <span className={`text-xs px-2 py-0.5 rounded-full ${activeTab === 'yesterday' ? 'bg-black/20 text-black' : 'bg-slate-800 text-slate-300'}`}>
-                {data.yesterday.formattedDate}
-              </span>
-            )}
-          </button>
+            <button
+              onClick={() => setActiveTab('yesterday')}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                activeTab === 'yesterday'
+                  ? 'bg-sky-500 text-black shadow-lg shadow-sky-500/20'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+              }`}
+            >
+              <History className="w-4 h-4" />
+              <span>Dünün Sonuçları</span>
+              {data?.yesterday?.formattedDate && (
+                <span className={`text-xs px-2 py-0.5 rounded-full ${activeTab === 'yesterday' ? 'bg-black/20 text-black' : 'bg-slate-800 text-slate-300'}`}>
+                  {data.yesterday.formattedDate}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* KUPON SEÇİCİ (TÜMÜ / 1. KUPON / 2. KUPON) */}
+          <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/60 border border-slate-800/80 w-full sm:w-fit overflow-x-auto">
+            <button
+              onClick={() => setSelectedFilter('all')}
+              className={`px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                selectedFilter === 'all'
+                  ? 'bg-slate-700 text-white shadow'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
+              }`}
+            >
+              Tüm Kuponlar ({allCoupons.length})
+            </button>
+
+            <button
+              onClick={() => setSelectedFilter('kupon-1')}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                selectedFilter === 'kupon-1'
+                  ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/20'
+                  : 'text-amber-400/90 hover:text-amber-300 hover:bg-amber-500/10'
+              }`}
+            >
+              <span>1. Kupon (Maç Sonucu)</span>
+            </button>
+
+            <button
+              onClick={() => setSelectedFilter('kupon-2')}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                selectedFilter === 'kupon-2'
+                  ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
+                  : 'text-emerald-400/90 hover:text-emerald-300 hover:bg-emerald-500/10'
+              }`}
+            >
+              <span>2. Kupon (Gol & KG)</span>
+            </button>
+          </div>
         </div>
 
         {/* HATA VEYA YÜKLENİYOR DURUMU */}
         {loading && (
           <div className="rounded-3xl bg-slate-900/60 border border-slate-800 p-16 text-center space-y-4">
             <Loader2 className="w-10 h-10 text-amber-400 animate-spin mx-auto" />
-            <h3 className="text-lg font-bold text-white">Sistem Kuponu Hazırlanıyor...</h3>
+            <h3 className="text-lg font-bold text-white">Sistem Kuponları Hazırlanıyor...</h3>
             <p className="text-slate-400 text-sm max-w-md mx-auto">
-              Günün resmi bülten maçları taranıyor, 1.80-2.20, 2.40-3.00 ve 3.10-6.00 oran aralıkları hesaplanıyor.
+              Resmi bülten maçları taranıyor, Maç Sonucu ve 2.5, 3.5, 4.5 Alt/Üst & KG Var/Yok oranları hesaplanıyor.
             </p>
           </div>
         )}
@@ -365,18 +410,32 @@ export default function SistemKuponlariPage() {
           </div>
         )}
 
-        {/* KUPON GÖSTERİMİ */}
+        {/* KUPONLARIN GÖSTERİMİ */}
         {!loading && !error && currentCoupons.map((coupon) => {
+          const isEmerald = coupon.theme === 'emerald';
+
           return (
             <div 
               key={coupon.id}
-              className="rounded-3xl bg-[#0c121e]/90 border border-slate-800/90 shadow-2xl overflow-hidden transition-all duration-300 hover:border-slate-700/80"
+              className={`rounded-3xl bg-[#0c121e]/90 border shadow-2xl overflow-hidden transition-all duration-300 ${
+                isEmerald 
+                  ? 'border-emerald-500/30 hover:border-emerald-500/50 shadow-emerald-500/5' 
+                  : 'border-slate-800/90 hover:border-amber-500/30 shadow-amber-500/5'
+              }`}
             >
               {/* KART BAŞLIĞI */}
-              <div className="p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-[#10192b] to-slate-900 border-b border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className={`p-6 sm:p-8 bg-gradient-to-r border-b border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6 ${
+                isEmerald 
+                  ? 'from-slate-900 via-[#0a1818] to-slate-900' 
+                  : 'from-slate-900 via-[#10192b] to-slate-900'
+              }`}>
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 border border-amber-500/30 text-amber-400 tracking-wider">
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold tracking-wider ${
+                      isEmerald 
+                        ? 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-400' 
+                        : 'bg-amber-500/15 border border-amber-500/40 text-amber-400'
+                    }`}>
                       {coupon.badge}
                     </span>
                     <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
@@ -387,8 +446,8 @@ export default function SistemKuponlariPage() {
                     </span>
                   </div>
 
-                  <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                    {coupon.title}
+                  <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
+                    <span>{coupon.title}</span>
                   </h2>
                   <p className="text-slate-400 text-sm max-w-2xl">
                     {coupon.description}
@@ -411,9 +470,19 @@ export default function SistemKuponlariPage() {
                   )}
 
                   {activeTab === 'today' && (
-                    <div className="px-4 py-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center">
-                      <div className="text-xs font-medium text-amber-400/80 uppercase tracking-wider">Maksimum Kazanç Hedefi</div>
-                      <div className="text-lg font-black text-amber-300">
+                    <div className={`px-4 py-3 rounded-2xl border text-center ${
+                      isEmerald 
+                        ? 'bg-emerald-500/10 border-emerald-500/30' 
+                        : 'bg-amber-500/10 border-amber-500/30'
+                    }`}>
+                      <div className={`text-xs font-medium uppercase tracking-wider ${
+                        isEmerald ? 'text-emerald-400/80' : 'text-amber-400/80'
+                      }`}>
+                        Maksimum Kazanç Hedefi
+                      </div>
+                      <div className={`text-lg font-black ${
+                        isEmerald ? 'text-emerald-300' : 'text-amber-300'
+                      }`}>
                         {coupon.targetProfitBadge}
                       </div>
                     </div>
@@ -441,7 +510,11 @@ export default function SistemKuponlariPage() {
                     <button
                       onClick={() => handleSaveCoupon(coupon)}
                       disabled={savingId === coupon.id}
-                      className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-black text-sm font-bold shadow-lg shadow-amber-500/20 transition-all active:scale-95 disabled:opacity-50"
+                      className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-black text-sm font-bold shadow-lg transition-all active:scale-95 disabled:opacity-50 ${
+                        isEmerald 
+                          ? 'bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 shadow-emerald-500/20' 
+                          : 'bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 shadow-amber-500/20'
+                      }`}
                     >
                       {savingId === coupon.id ? (
                         <>
@@ -482,10 +555,12 @@ export default function SistemKuponlariPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-amber-500/5 border border-amber-500/20">
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                <div className={`flex items-center gap-3 px-3 py-2 rounded-xl ${
+                  isEmerald ? 'bg-teal-500/5 border border-teal-500/20' : 'bg-amber-500/5 border border-amber-500/20'
+                }`}>
+                  <div className={`w-2.5 h-2.5 rounded-full ${isEmerald ? 'bg-teal-400' : 'bg-amber-400'}`} />
                   <div className="text-xs">
-                    <span className="font-bold text-amber-400">5 Maç:</span>{' '}
+                    <span className={`font-bold ${isEmerald ? 'text-teal-400' : 'text-amber-400'}`}>5 Maç:</span>{' '}
                     <span className="text-slate-300 font-medium">3.10 - 6.00 Arası Sürpriz Oran</span>
                   </div>
                 </div>
@@ -516,9 +591,20 @@ export default function SistemKuponlariPage() {
 
                           <div className="space-y-1">
                             <div className="flex items-center gap-2 flex-wrap">
-                              <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-amber-400 border border-slate-700">
+                              <span className={`px-2 py-0.5 rounded text-[11px] font-bold border ${
+                                isEmerald 
+                                  ? 'bg-slate-800 text-emerald-400 border-slate-700' 
+                                  : 'bg-slate-800 text-amber-400 border-slate-700'
+                              }`}>
                                 {m.code || 'BÜLTEN'}
                               </span>
+
+                              {m.marketName && (
+                                <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800/80 text-slate-300 border border-slate-700/50">
+                                  {m.marketName}
+                                </span>
+                              )}
+
                               <span className="text-xs text-slate-400 font-medium flex items-center gap-1">
                                 <Clock className="w-3 h-3 text-slate-500" /> {m.time}
                               </span>
@@ -546,7 +632,11 @@ export default function SistemKuponlariPage() {
                         {/* SEÇİLEN TERCİH VE ORAN */}
                         <div className="flex items-center justify-between sm:justify-end gap-4 pl-9 sm:pl-0">
                           <div className="flex items-center gap-2">
-                            <span className="px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 font-black text-sm tracking-wider shadow-sm">
+                            <span className={`px-3 py-1.5 rounded-xl border font-black text-sm tracking-wider shadow-sm ${
+                              isEmerald 
+                                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300' 
+                                : 'bg-amber-500/20 border-amber-500/40 text-amber-300'
+                            }`}>
                               {m.choice}
                             </span>
                             <span className="text-base font-black text-white font-mono bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">
@@ -594,7 +684,9 @@ export default function SistemKuponlariPage() {
               {/* KAÇ MAÇ TUTARSA NE KADAR PARA VERİR (KAZANÇ & İKRAMİYE TABLOSU) */}
               <div className="p-6 sm:p-8 bg-slate-950/80 border-t border-slate-800">
                 <div className="space-y-2 mb-6">
-                  <div className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 uppercase tracking-wider">
+                  <div className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider ${
+                    isEmerald ? 'text-emerald-400' : 'text-amber-400'
+                  }`}>
                     <Calculator className="w-4 h-4" />
                     <span>SİSTEM KAZANÇ VE İKRAMİYE TABLOSU</span>
                   </div>
@@ -615,7 +707,9 @@ export default function SistemKuponlariPage() {
                         <th className="py-3.5 px-4 font-bold">Kombinasyon Detayı (Kolon Sayısı)</th>
                         <th className="py-3.5 px-4 font-bold text-right">Minimum Kazanç</th>
                         <th className="py-3.5 px-4 font-bold text-right">Ortalama Kazanç</th>
-                        <th className="py-3.5 px-4 font-bold text-right text-amber-400">Maksimum Kazanç</th>
+                        <th className={`py-3.5 px-4 font-bold text-right ${isEmerald ? 'text-emerald-400' : 'text-amber-400'}`}>
+                          Maksimum Kazanç
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800/80">
@@ -630,7 +724,7 @@ export default function SistemKuponlariPage() {
                               isYesterdayHitTier 
                                 ? 'bg-emerald-500/15 border-l-4 border-l-emerald-500 font-bold' 
                                 : isFullHit 
-                                  ? 'bg-amber-500/5 hover:bg-amber-500/10' 
+                                  ? (isEmerald ? 'bg-emerald-500/5 hover:bg-emerald-500/10' : 'bg-amber-500/5 hover:bg-amber-500/10') 
                                   : 'hover:bg-slate-900/50'
                             }`}
                           >
@@ -638,7 +732,7 @@ export default function SistemKuponlariPage() {
                               <div className="flex items-center gap-2">
                                 <span className={`inline-flex items-center justify-center w-7 h-7 rounded-lg text-xs font-black ${
                                   isFullHit 
-                                    ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30' 
+                                    ? (isEmerald ? 'bg-emerald-500 text-black shadow-md shadow-emerald-500/30' : 'bg-amber-500 text-black shadow-md shadow-amber-500/30') 
                                     : 'bg-slate-800 text-slate-200'
                                 }`}>
                                   {tier.hitCount}
@@ -666,7 +760,9 @@ export default function SistemKuponlariPage() {
                               {tier.avgPayout.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} TL
                             </td>
 
-                            <td className="py-3.5 px-4 text-right font-mono font-bold text-amber-400 whitespace-nowrap">
+                            <td className={`py-3.5 px-4 text-right font-mono font-bold whitespace-nowrap ${
+                              isEmerald ? 'text-emerald-400' : 'text-amber-400'
+                            }`}>
                               {tier.maxPayout.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} TL
                             </td>
                           </tr>
@@ -678,7 +774,7 @@ export default function SistemKuponlariPage() {
 
                 {/* SİSTEM BİLGİLENDİRME KUTUSU */}
                 <div className="mt-4 p-4 rounded-2xl bg-slate-900/40 border border-slate-800/60 flex items-start gap-3 text-xs text-slate-400 leading-relaxed">
-                  <Info className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                  <Info className={`w-4 h-4 shrink-0 mt-0.5 ${isEmerald ? 'text-emerald-400' : 'text-amber-400'}`} />
                   <div>
                     <strong className="text-slate-200">Sistem 4, 5, 6 Mantığı:</strong> 9 maç arasından seçilen 4&apos;lü (126 adet), 5&apos;li (126 adet) ve 6&apos;lı (84 adet) olmak üzere toplam 336 kolon oynanır. 4 maç tuttuğunda 1 kolon; 5 maç tuttuğunda 5 adet 4&apos;lü ve 1 adet 5&apos;li kolon birden kazandırır. 9 maçın tamamı geldiğinde ise 336 kolonun tamamı toplanarak maksimum ikramiye ödenir.
                   </div>
