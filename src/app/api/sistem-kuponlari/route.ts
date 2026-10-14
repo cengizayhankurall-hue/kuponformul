@@ -66,13 +66,13 @@ export interface YesterdaySummary {
   coupons: SystemCoupon[];
 }
 
-// In-memory cache for instant response (< 5ms)
+// In-memory cache for instant response (< 5ms) - Gün boyunca sabit kuponlar
 let cachedSystemResponse: {
   dateKey: string;
   timestamp: number;
   payload: any;
 } | null = null;
-const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes cache
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 saat - Gün boyunca sabit!
 
 function parseOdd(val: any): number | null {
   if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
@@ -202,25 +202,6 @@ function evaluateScoreWon(choice: string, msScore: string): boolean {
   return false;
 }
 
-function isMatchPast(dateStr?: string, timeStr?: string): boolean {
-  if (!dateStr || !timeStr) return false;
-  try {
-    const dParts = dateStr.replace(/\//g, '.').split('.').map(Number);
-    if (dParts.length !== 3) return false;
-    const [day, month, year] = dParts;
-    const tParts = timeStr.split(':').map(Number);
-    if (tParts.length < 2) return false;
-    const [hour, minute] = tParts;
-
-    const nowIstanbul = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Istanbul' }));
-    const matchIstanbul = new Date(year, month - 1, day, hour, minute);
-
-    // If kick-off was more than 10 minutes ago, treat as started/past
-    return nowIstanbul.getTime() > (matchIstanbul.getTime() + 10 * 60 * 1000);
-  } catch {
-    return false;
-  }
-}
 
 function getMatchPriority(m: any): number {
   const league = String(m.league || '').toUpperCase().trim();
@@ -283,12 +264,30 @@ export async function GET() {
   const dates = getIstanbulDates();
   const now = Date.now();
 
-  // Instant Cache Check (< 2ms) - Sadece tüm sistem kuponları tam ve geçerliyse önbellekten dön
+  // Gün boyunca sabit kupon kontrolü: Aynı gün içindeyse kuponlar ve maçlar ASLA değişmez!
   if (cachedSystemResponse && cachedSystemResponse.dateKey === dates.todayDot) {
     const isCacheHealthy = Array.isArray(cachedSystemResponse.payload?.coupons) &&
       cachedSystemResponse.payload.coupons.length >= 7 &&
       cachedSystemResponse.payload.coupons.every((c: any) => Array.isArray(c.matches) && c.matches.length >= 5);
     if (isCacheHealthy && now - cachedSystemResponse.timestamp < CACHE_TTL_MS) {
+      // Kupondaki maçlar gün boyunca kesinlikle sabittir. Başlayan maçlar asla çıkarılmaz/yenilenmez.
+      // Sadece varsa canlı skorları güncelleyelim:
+      try {
+        const liveMatches = await fetchMackolikMatches();
+        if (liveMatches && liveMatches.length > 0) {
+          const matchMap = new Map(liveMatches.map((m: any) => [String(m.code || m.id), m]));
+          for (const coupon of cachedSystemResponse.payload.coupons) {
+            for (const match of coupon.matches) {
+              const live = matchMap.get(match.code) || matchMap.get(match.id);
+              if (live && live.score && live.score !== '-') {
+                match.score = live.score;
+                match.won = evaluateScoreWon(match.choice, live.score);
+              }
+            }
+          }
+        }
+      } catch (e) {}
+
       return NextResponse.json(cachedSystemResponse.payload);
     } else if (!isCacheHealthy) {
       cachedSystemResponse = null; // Bozuk veya eksik önbelleği derhal sıfırla!
@@ -306,37 +305,17 @@ export async function GET() {
 
     const normalizeDate = (d?: string) => (d || '').replace(/\//g, '.').trim();
 
-    // 1. Aşama: Bugünün oynanmamış / yaklaşan geçerli oranlı maçları
-    const todayUnplayedMatches = (liveMatches || []).filter(m => {
-      const matchDate = normalizeDate(m.date);
-      const isToday = matchDate === dates.todayDot;
-      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
-      const isPast = isMatchPast(m.date, m.time);
-      const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
-      return isToday && !isFinished && !isPast && m.homeTeam && m.awayTeam && hasAnyRealOdd;
-    });
-
-    // 2. Aşama: Bugünün henüz bitmemiş tüm maçları
-    const todayAllUnfinished = (liveMatches || []).filter(m => {
-      const matchDate = normalizeDate(m.date);
-      const isToday = matchDate === dates.todayDot;
-      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
-      const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
-      return isToday && !isFinished && m.homeTeam && m.awayTeam && hasAnyRealOdd;
-    });
-
-    // 3. Aşama: Bugünün tüm oranlı maçları
+    // Günün sabit maç havuzu: Bugünün tüm resmi oranlı maçları (Saat veya maçın başlamış olması kuponu bozmaz/değiştirmez!)
     const todayAllWithOdds = (liveMatches || []).filter(m => {
       const isToday = normalizeDate(m.date) === dates.todayDot;
       const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
       return isToday && m.homeTeam && m.awayTeam && hasAnyRealOdd;
     });
 
-    // 4. Aşama: Gelecek bülten maçları
+    // Gelecek bülten maçları (Eğer bugünün maçı azsa havuzu zenginleştirmek için)
     const upcomingWithOdds = (liveMatches || []).filter(m => {
-      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
       const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
-      return !isFinished && m.homeTeam && m.awayTeam && hasAnyRealOdd;
+      return m.homeTeam && m.awayTeam && hasAnyRealOdd;
     });
 
     // Zengin fallback maç havuzu (Mackolik bağlantı hatası veya bülten boşluğu durumunda güvence)
@@ -362,23 +341,21 @@ export async function GET() {
     ];
 
     let matchPoolRaw: any[] = [];
-    if (todayUnplayedMatches.length >= 20) {
-      matchPoolRaw = todayUnplayedMatches;
-    } else if (todayAllUnfinished.length >= 20) {
-      matchPoolRaw = todayAllUnfinished;
-    } else if (todayAllWithOdds.length >= 20) {
+    if (todayAllWithOdds.length >= 20) {
       matchPoolRaw = todayAllWithOdds;
     } else if (upcomingWithOdds.length >= 20) {
       matchPoolRaw = upcomingWithOdds;
     } else {
-      matchPoolRaw = [...(todayUnplayedMatches.length > 0 ? todayUnplayedMatches : upcomingWithOdds), ...fallbackMatches];
+      matchPoolRaw = [...(todayAllWithOdds.length > 0 ? todayAllWithOdds : upcomingWithOdds), ...fallbackMatches];
     }
 
     // POPÜLARİTE VE LİG ÖNCELİĞİ SIRALAMASI: Şampiyonlar Ligi ve elit maçlar ilk sırada!
     const matchPool = [...matchPoolRaw].sort((a, b) => {
       const pDiff = getMatchPriority(b) - getMatchPriority(a);
       if (pDiff !== 0) return pDiff;
-      return (a.time || '').localeCompare(b.time || '');
+      const timeDiff = (a.time || '').localeCompare(b.time || '');
+      if (timeDiff !== 0) return timeDiff;
+      return String(a.code || a.id || '').localeCompare(String(b.code || b.id || ''));
     });
 
     const getChoice = (m: any, type: 'ms' | 'goals' | 'iyms' | 'banko' | 'mega_vurgun' | 'any') => {
@@ -527,7 +504,9 @@ export async function GET() {
           marketName: c.marketName,
           choice: c.choice,
           odd: c.odd,
-          reason: c.reason
+          reason: c.reason,
+          score: m.score && m.score !== '-' ? m.score : undefined,
+          won: m.score && m.score !== '-' ? evaluateScoreWon(c.choice, m.score) : undefined
         });
       };
 

@@ -50,13 +50,13 @@ export interface YesterdayDailySummary {
   coupons: DailyCoupon[];
 }
 
-// In-memory cache for instant response (< 5ms)
+// In-memory cache for instant response (< 5ms) - Gün boyunca sabit kuponlar
 let cachedDailyResponse: {
   dateKey: string;
   timestamp: number;
   payload: any;
 } | null = null;
-const CACHE_TTL_MS = 10 * 60 * 1000;
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 saat - Gün boyunca sabit!
 
 function parseOdd(val: any): number | null {
   if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
@@ -198,12 +198,30 @@ export async function GET() {
   const dates = getIstanbulDates();
   const now = Date.now();
 
-  // Instant Cache Check (< 2ms) - Sadece tüm kuponlar tam ve geçerliyse önbellekten dön
+  // Gün boyunca sabit kupon kontrolü: Aynı gün içindeyse kuponlar ve maçlar ASLA değişmez!
   if (cachedDailyResponse && cachedDailyResponse.dateKey === dates.todayDot) {
     const isCacheHealthy = Array.isArray(cachedDailyResponse.payload?.coupons) &&
       cachedDailyResponse.payload.coupons.length >= 7 &&
       cachedDailyResponse.payload.coupons.every((c: any) => Array.isArray(c.matches) && c.matches.length >= 3);
     if (isCacheHealthy && now - cachedDailyResponse.timestamp < CACHE_TTL_MS) {
+      // Kupondaki maçlar gün boyunca kesinlikle sabittir. Başlayan maçlar asla çıkarılmaz/yenilenmez.
+      // Sadece varsa canlı skorları güncelleyelim:
+      try {
+        const liveMatches = await fetchMackolikMatches();
+        if (liveMatches && liveMatches.length > 0) {
+          const matchMap = new Map(liveMatches.map((m: any) => [String(m.code || m.id), m]));
+          for (const coupon of cachedDailyResponse.payload.coupons) {
+            for (const match of coupon.matches) {
+              const live = matchMap.get(match.code) || matchMap.get(match.id);
+              if (live && live.score && live.score !== '-') {
+                match.score = live.score;
+                match.won = evaluateScoreWon(match.choice, live.score);
+              }
+            }
+          }
+        }
+      } catch (e) {}
+
       return NextResponse.json(cachedDailyResponse.payload);
     } else if (!isCacheHealthy) {
       cachedDailyResponse = null; // Bozuk veya eksik önbelleği derhal sıfırla!
@@ -221,37 +239,17 @@ export async function GET() {
 
     const normalizeDate = (d?: string) => (d || '').replace(/\//g, '.').trim();
 
-    // 1. Aşama: Bugünün oynanmamış / yaklaşan geçerli oranlı maçları
-    const todayUnplayedMatches = (liveMatches || []).filter(m => {
-      const matchDate = normalizeDate(m.date);
-      const isToday = matchDate === dates.todayDot;
-      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
-      const isPast = isMatchPast(m.date, m.time);
-      const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
-      return isToday && !isFinished && !isPast && m.homeTeam && m.awayTeam && hasAnyRealOdd;
-    });
-
-    // 2. Aşama: Bugünün henüz bitmemiş tüm maçları
-    const todayAllUnfinished = (liveMatches || []).filter(m => {
-      const matchDate = normalizeDate(m.date);
-      const isToday = matchDate === dates.todayDot;
-      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
-      const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
-      return isToday && !isFinished && m.homeTeam && m.awayTeam && hasAnyRealOdd;
-    });
-
-    // 3. Aşama: Bugünün tüm oranlı maçları
+    // Günün sabit maç havuzu: Bugünün tüm resmi oranlı maçları (Saat veya maçın başlamış olması kuponu bozmaz/değiştirmez!)
     const todayAllWithOdds = (liveMatches || []).filter(m => {
       const isToday = normalizeDate(m.date) === dates.todayDot;
       const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
       return isToday && m.homeTeam && m.awayTeam && hasAnyRealOdd;
     });
 
-    // 4. Aşama: Gelecek bülten maçları (Eğer bugünün maçı azsa havuzu zenginleştirmek için)
+    // Gelecek bülten maçları (Eğer bugünün maçı azsa havuzu zenginleştirmek için)
     const upcomingWithOdds = (liveMatches || []).filter(m => {
-      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
       const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.msX) || parseOdd(m.kgVar));
-      return !isFinished && m.homeTeam && m.awayTeam && hasAnyRealOdd;
+      return m.homeTeam && m.awayTeam && hasAnyRealOdd;
     });
 
     // Zengin fallback maç havuzu (Mackolik bağlantı hatası veya bülten boşluğu durumunda güvence)
@@ -277,23 +275,21 @@ export async function GET() {
     ];
 
     let matchPoolRaw: any[] = [];
-    if (todayUnplayedMatches.length >= 15) {
-      matchPoolRaw = todayUnplayedMatches;
-    } else if (todayAllUnfinished.length >= 15) {
-      matchPoolRaw = todayAllUnfinished;
-    } else if (todayAllWithOdds.length >= 15) {
+    if (todayAllWithOdds.length >= 15) {
       matchPoolRaw = todayAllWithOdds;
     } else if (upcomingWithOdds.length >= 15) {
       matchPoolRaw = upcomingWithOdds;
     } else {
-      matchPoolRaw = [...(todayUnplayedMatches.length > 0 ? todayUnplayedMatches : upcomingWithOdds), ...fallbackMatches];
+      matchPoolRaw = [...todayAllWithOdds, ...fallbackMatches];
     }
 
-    // POPÜLARİTE VE LİG ÖNCELİĞİ SIRALAMASI: Şampiyonlar Ligi ve elit maçlar ilk sırada!
+    // POPÜLARİTE VE LİG ÖNCELİĞİ SIRALAMASI: Şampiyonlar Ligi ve elit maçlar ilk sırada, deterministik sıra!
     const matchPool = [...matchPoolRaw].sort((a, b) => {
       const pDiff = getMatchPriority(b) - getMatchPriority(a);
       if (pDiff !== 0) return pDiff;
-      return (a.time || '').localeCompare(b.time || '');
+      const timeDiff = (a.time || '').localeCompare(b.time || '');
+      if (timeDiff !== 0) return timeDiff;
+      return String(a.code || a.id || '').localeCompare(String(b.code || b.id || ''));
     });
 
     // Helper to find odds and format choice with wide realistic boundaries
