@@ -174,6 +174,26 @@ function getIstanbulDates() {
   };
 }
 
+function isMatchPast(dateStr?: string, timeStr?: string): boolean {
+  if (!dateStr || !timeStr) return false;
+  try {
+    const dParts = dateStr.replace(/\//g, '.').split('.').map(Number);
+    if (dParts.length !== 3) return false;
+    const [day, month, year] = dParts;
+    const tParts = timeStr.split(':').map(Number);
+    if (tParts.length < 2) return false;
+    const [hour, minute] = tParts;
+
+    const nowIstanbul = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Istanbul' }));
+    const matchIstanbul = new Date(year, month - 1, day, hour, minute);
+
+    // Maç başlama saati geçmişse true
+    return nowIstanbul.getTime() >= matchIstanbul.getTime();
+  } catch {
+    return false;
+  }
+}
+
 function evaluateScoreWon(choice: string, msScore: string): boolean {
   if (!msScore || !msScore.includes('-')) return false;
   const parts = msScore.split('-').map(s => parseInt(s.trim(), 10));
@@ -193,50 +213,45 @@ function getMatchPriority(m: any): number {
   const away = (m.awayTeam || '').toLowerCase().trim();
   const teams = `${home} ${away}`;
 
-  const isYouthOrRes = 
-    teams.includes('u19') || 
-    teams.includes('u21') || 
-    teams.includes('u23') || 
-    teams.includes('(b)') || 
-    teams.includes('(k)') ||
-    teams.includes('kadın') ||
-    teams.includes(' ii') ||
-    teams.includes('(amt') ||
-    teams.includes('rezerv') ||
-    teams.includes('reserve') ||
-    league.includes('U19') || 
-    league.includes('U21') || 
-    league.includes('U23') ||
-    league.includes('PORU23') ||
-    league.includes('UEGL') ||
-    league.includes('BÖL') ||
-    league.includes('KDK');
+  // 1. Kademe: UEFA ŞAMPİYONLAR LİGİ, AVRUPA LİGİ, KONFERANS LİGİ, UEFA GENÇLİK LİGİ (UYL/UEGL)
+  if (
+    league === 'ŞMP' || 
+    league.includes('ŞAMP') || 
+    league.includes('UCL') || 
+    league.includes('UEFA') || 
+    league.includes('UEGL') || 
+    league.includes('UYL') ||
+    league === 'AVR' ||
+    league === 'KONF'
+  ) {
+    return 10000;
+  }
 
-  if (isYouthOrRes) return 10;
+  // 2. Kademe: Türkiye Süper Lig (TSL), 1. Lig (T1L), İngiltere Premier Lig (İNG), Championship (İNCL), Majör Avrupa Ligleri
+  if (['TSL', 'T1L', 'İNG', 'İNCL', 'İSP', 'İTA', 'ALM', 'FRA'].includes(league)) {
+    return 8000;
+  }
 
-  // 1. UEFA ŞAMPİYONLAR LİGİ
-  if (league === 'ŞMP' || league.includes('ŞAMP') || league.includes('UCL') || league.includes('UEFA')) {
+  // 3. Kademe: Büyük Kulüpler
+  const isMajorTeam = 
+    /\b(galatasaray|fenerbahçe|beşiktaş|trabzonspor|barcelona|real madrid|bayern|manchester|man\. utd|arsenal|atletico|dortmund|napoli|leipzig|sporting cp|psv|lille|chelsea|liverpool|como|feyenoord|aston villa|juventus|milan|roma|paris|psg)\b/i.test(teams) ||
+    home === 'inter' || away === 'inter';
+
+  if (isMajorTeam) return 7500;
+
+  // 4. Kademe: Prestijli Avrupa Ligleri ve Kupaları (Hollanda, Belçika, Portekiz, Almanya 2-3, İngiltere Kupaları vb.)
+  if (['HOL', 'POR', 'BEL', 'İSK', 'İKCL', 'AL2', 'AL3', 'İNG1', 'İNG2', 'İNTK', 'İSP2', 'İTA2', 'FRA2'].includes(league)) {
     return 5000;
   }
 
-  // 2. Büyük Kulüpler
-  const isMajorTeam = 
-    /\b(galatasaray|fenerbahçe|beşiktaş|trabzonspor|barcelona|real madrid|bayern|manchester|man\. utd|arsenal|atletico|dortmund|napoli|leipzig|sporting cp|psv|lille|chelsea|liverpool)\b/i.test(teams) ||
-    home === 'inter' || away === 'inter';
-
-  if (isMajorTeam) return 4000;
-
-  // 3. Majör Ligler
-  if (['TSL', 'T1L', 'İNG', 'İNCL', 'İSP', 'İTA', 'ALM', 'FRA'].includes(league)) {
+  // 5. Kademe: İskandinav ve Orta Avrupa Ligleri (Avusturya, İsviçre, Danimarka, Norveç, İsveç, İrlanda, Finlandiya vb.)
+  if (['AVS', 'İSV', 'DAN', 'NOR', 'İSV2', 'FİN', 'İRL'].includes(league)) {
     return 3000;
   }
 
-  // 4. Kupa ve Prestijli Ligler
-  if (['AL3', 'İNTK', 'HOL', 'POR', 'BEL', 'AŞMP', 'AFCŞL2'].includes(league)) {
-    return 1500;
-  }
-
-  return 100;
+  // 6. Kademe: Diğer / Avrupa dışı ligler (Venezuela, Asya, Mısır, Cezayir vb.)
+  // Bunlar yalnızca yukarıdaki liglerde o oran aralığına uygun maç bulunamazsa yedek olarak kuponu tamamlar!
+  return 500;
 }
 
 interface MsCandidate {
@@ -253,15 +268,39 @@ function getMsCandidates(m: any): MsCandidate[] {
   const list: MsCandidate[] = [];
 
   if (ms1) list.push({ choice: 'MS 1', odd: ms1, reason: `${m.homeTeam} ev sahibi galibiyeti (${ms1.toFixed(2)})` });
-  if (msX) list.push({ choice: 'MS X', odd: msX, reason: `Dengeli mücadele, beraberlik tercihi (${msX.toFixed(2)})` });
   if (ms2) list.push({ choice: 'MS 2', odd: ms2, reason: `${m.awayTeam} deplasman galibiyeti (${ms2.toFixed(2)})` });
+  if (msX) list.push({ choice: 'MS X', odd: msX, reason: `Dengeli mücadele, beraberlik tercihi (${msX.toFixed(2)})` });
 
   return list;
 }
 
-function findMsChoiceInRange(m: any, minOdd: number, maxOdd: number): MsCandidate | null {
-  const candidates = getMsCandidates(m).filter(c => c.odd >= minOdd && c.odd <= maxOdd);
+function findMsChoiceInRange(
+  m: any, 
+  minOdd: number, 
+  maxOdd: number, 
+  allowMsX: boolean
+): MsCandidate | null {
+  const allCandidates = getMsCandidates(m);
+  
+  // Oran aralığına göre filtrele
+  let candidates = allCandidates.filter(c => c.odd >= minOdd && c.odd <= maxOdd);
+  
+  // Eğer MS X izni yoksa MS X'i tamamen ele
+  if (!allowMsX) {
+    candidates = candidates.filter(c => c.choice !== 'MS X');
+  }
+  
   if (candidates.length === 0) return null;
+
+  // Sıralama tercihi:
+  // MS 1 ve MS 2 her zaman MS X'e (beraberlik) tercih edilir!
+  candidates.sort((a, b) => {
+    const isSideBet = (c: string) => (c === 'MS X' ? 0 : 1);
+    const scoreDiff = isSideBet(b.choice) - isSideBet(a.choice);
+    if (scoreDiff !== 0) return scoreDiff;
+    return a.odd - b.odd;
+  });
+
   return candidates[0];
 }
 
@@ -277,7 +316,7 @@ export async function GET() {
 
     if (isCacheHealthy && now - cachedSystemResponse.timestamp < CACHE_TTL_MS) {
       // Kupondaki maçlar gün boyunca kesinlikle sabittir. Başlayan maçlar asla çıkarılmaz/yenilenmez.
-      // Canlı maç skorlarını mevcut kupondaki maçlara işle:
+      // Sadece varsa canlı maç skorlarını mevcut kupondaki maçlara işle:
       try {
         const liveMatches = await fetchMackolikMatches();
         if (liveMatches && liveMatches.length > 0) {
@@ -321,31 +360,42 @@ export async function GET() {
 
     const normalizeDate = (d?: string) => (d || '').replace(/\//g, '.').trim();
 
-    // Günün maç havuzu: Bugünün resmi MS oranlı maçları
-    const todayAllWithOdds = (liveMatches || []).filter(m => {
+    // Kupon ilk oluşturulurken KESİNLİKLE başlamamış / bitmemiş maçlar seçilir!
+    const todayUnplayedWithOdds = (liveMatches || []).filter(m => {
       const isToday = normalizeDate(m.date) === dates.todayDot;
+      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
+      const isPast = isMatchPast(m.date, m.time);
       const hasAnyMsOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.msX) || parseOdd(m.ms0));
-      return isToday && m.homeTeam && m.awayTeam && hasAnyMsOdd;
+      return isToday && !isFinished && !isPast && m.homeTeam && m.awayTeam && hasAnyMsOdd;
+    });
+
+    const todayUnfinishedWithOdds = (liveMatches || []).filter(m => {
+      const isToday = normalizeDate(m.date) === dates.todayDot;
+      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
+      const hasAnyMsOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.msX) || parseOdd(m.ms0));
+      return isToday && !isFinished && m.homeTeam && m.awayTeam && hasAnyMsOdd;
     });
 
     const upcomingWithOdds = (liveMatches || []).filter(m => {
+      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
+      const isPast = isMatchPast(m.date, m.time);
       const hasAnyMsOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.msX) || parseOdd(m.ms0));
-      return m.homeTeam && m.awayTeam && hasAnyMsOdd;
+      return !isFinished && !isPast && m.homeTeam && m.awayTeam && hasAnyMsOdd;
     });
 
-    // Zengin fallback maç havuzu (Tüm oranlar kullanıcı şartlarına tam uyumludur)
+    // Zengin fallback maç havuzu (Avrupa / Şampiyonlar Ligi / İNCL maçları)
     const fallbackMatches = [
-      // 1.80 - 2.20 aralığı
+      // 1.80 - 2.20 aralığı (Avrupa / Popüler)
       { id: 'fb_1', code: '40101', homeTeam: 'Villarreal', awayTeam: 'Napoli', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.87', msX: '3.26', ms2: '2.98' },
       { id: 'fb_2', code: '40102', homeTeam: 'Bristol City', awayTeam: 'Blackburn', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.91', msX: '3.01', ms2: '3.12' },
       { id: 'fb_3', code: '40103', homeTeam: 'Wrexham', awayTeam: 'West Bromwich', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.02', msX: '2.96', ms2: '2.91' },
       
-      // 2.40 - 3.00 aralığı
+      // 2.40 - 3.00 aralığı (Avrupa / Popüler)
       { id: 'fb_4', code: '40104', homeTeam: 'Millwall', awayTeam: 'Swansea', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.45', msX: '3.00', ms2: '2.65' },
-      { id: 'fb_5', code: '40105', homeTeam: 'Peterborough S.', awayTeam: 'Banbury United', league: 'İNGNLP', date: dates.todayDot, time: '21:45', ms1: '2.55', msX: '3.13', ms2: '2.85' },
-      { id: 'fb_6', code: '40106', homeTeam: 'Stoke', awayTeam: 'Middlesbrough', league: 'İNCL', date: dates.todayDot, time: '22:00', ms1: '2.70', msX: '3.26', ms2: '2.45' },
+      { id: 'fb_5', code: '40105', homeTeam: 'Stoke', awayTeam: 'Middlesbrough', league: 'İNCL', date: dates.todayDot, time: '22:00', ms1: '2.70', msX: '3.26', ms2: '2.45' },
+      { id: 'fb_6', code: '40106', homeTeam: 'Queens Park', awayTeam: 'Inverness CT', league: 'İKCL', date: dates.todayDot, time: '21:45', ms1: '2.50', msX: '3.45', ms2: '2.40' },
 
-      // 3.10 - 6.00 aralığı
+      // 3.10 - 6.00 aralığı (Avrupa / Şampiyonlar Ligi / İNCL sürpriz MS 2 veya MS 1)
       { id: 'fb_7', code: '40107', homeTeam: 'Atletico Madrid', awayTeam: 'Man. United', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.68', msX: '3.37', ms2: '3.51' },
       { id: 'fb_8', code: '40108', homeTeam: 'RB Leipzig', awayTeam: 'PSV Eindhoven', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.38', msX: '4.48', ms2: '4.36' },
       { id: 'fb_9', code: '40109', homeTeam: 'Burnley', awayTeam: 'Charlton', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.43', msX: '3.68', ms2: '4.93' },
@@ -355,15 +405,17 @@ export async function GET() {
     ];
 
     let matchPoolRaw: any[] = [];
-    if (todayAllWithOdds.length >= 15) {
-      matchPoolRaw = todayAllWithOdds;
+    if (todayUnplayedWithOdds.length >= 15) {
+      matchPoolRaw = todayUnplayedWithOdds;
+    } else if (todayUnfinishedWithOdds.length >= 15) {
+      matchPoolRaw = todayUnfinishedWithOdds;
     } else if (upcomingWithOdds.length >= 15) {
       matchPoolRaw = upcomingWithOdds;
     } else {
-      matchPoolRaw = [...(todayAllWithOdds.length > 0 ? todayAllWithOdds : upcomingWithOdds), ...fallbackMatches];
+      matchPoolRaw = [...(todayUnplayedWithOdds.length > 0 ? todayUnplayedWithOdds : upcomingWithOdds), ...fallbackMatches];
     }
 
-    // Sıralama: Şampiyonlar Ligi / popüler ligler önce, ardından başlama saati ve maç kodu
+    // Lig önceliği sıralaması: UEFA Şampiyonlar Ligi, UEFA Gençlik, Majör Avrupa ve TSL en başta!
     const matchPool = [...matchPoolRaw].sort((a, b) => {
       const pDiff = getMatchPriority(b) - getMatchPriority(a);
       if (pDiff !== 0) return pDiff;
@@ -373,13 +425,18 @@ export async function GET() {
     });
 
     const usedMatchCodes = new Set<string>();
+    let couponMsXCount = 0;
+    const MAX_COUPON_MS_X = 1; // Kupon genelinde EN FAZLA 1 adet MS X olabilir!
 
-    const pickMsMatches = (count: number, minOdd: number, maxOdd: number): SystemMatch[] => {
+    const pickMsMatches = (count: number, minOdd: number, maxOdd: number, allowMsXInTier: boolean = false): SystemMatch[] => {
       const selected: SystemMatch[] = [];
 
       const addMatch = (m: any, c: MsCandidate) => {
         const code = String(m.code || m.id || '70000');
         usedMatchCodes.add(code);
+        if (c.choice === 'MS X') {
+          couponMsXCount++;
+        }
         selected.push({
           id: `sys1_${code}_${selected.length}`,
           code,
@@ -398,16 +455,18 @@ export async function GET() {
         });
       };
 
-      // 1. Aşama: Tam aralıkta ve henüz seçilmemiş maçlar
+      // 1. Aşama: Tam aralıkta ve lig önceliğine göre sıralı maçlar
       for (const m of matchPool) {
         if (selected.length >= count) break;
         const code = String(m.code || m.id);
         if (usedMatchCodes.has(code)) continue;
-        const c = findMsChoiceInRange(m, minOdd, maxOdd);
+        
+        const canPickX = allowMsXInTier && couponMsXCount < MAX_COUPON_MS_X;
+        const c = findMsChoiceInRange(m, minOdd, maxOdd, canPickX);
         if (c) addMatch(m, c);
       }
 
-      // 2. Aşama: Eksik kalırsa aralığı hafif esnet
+      // 2. Aşama: Eksik kalırsa aralığı hafif esneterek ara (Avrupa maçları öncelikli)
       if (selected.length < count) {
         const wideMin = Math.max(1.30, minOdd - 0.25);
         const wideMax = maxOdd + 0.50;
@@ -415,18 +474,22 @@ export async function GET() {
           if (selected.length >= count) break;
           const code = String(m.code || m.id);
           if (usedMatchCodes.has(code)) continue;
-          const c = findMsChoiceInRange(m, wideMin, wideMax);
+
+          const canPickX = allowMsXInTier && couponMsXCount < MAX_COUPON_MS_X;
+          const c = findMsChoiceInRange(m, wideMin, wideMax, canPickX);
           if (c) addMatch(m, c);
         }
       }
 
-      // 3. Aşama: Hala eksikse fallback havuzundan tamamla
+      // 3. Aşama: Hala eksikse fallback havuzundan tamamla (Avrupa / Şampiyonlar Ligi / İNCL maçları)
       if (selected.length < count) {
         for (const fb of fallbackMatches) {
           if (selected.length >= count) break;
           const code = String(fb.code || fb.id);
           if (usedMatchCodes.has(code)) continue;
-          const c = findMsChoiceInRange(fb, minOdd, maxOdd) || findMsChoiceInRange(fb, 1.30, 6.50);
+
+          const canPickX = allowMsXInTier && couponMsXCount < MAX_COUPON_MS_X;
+          const c = findMsChoiceInRange(fb, minOdd, maxOdd, canPickX) || findMsChoiceInRange(fb, 1.30, 6.50, canPickX);
           if (c) addMatch(fb, c);
         }
       }
@@ -438,21 +501,21 @@ export async function GET() {
     // 1. SİSTEM KUPONU (SİSTEM 4, 5, 6 - 9 MAÇ - MAÇ SONUCU ODAKLI)
     // -------------------------------------------------------------
     // Kural: 
-    // - 2 adet 1.80 - 2.20 arası
-    // - 2 adet 2.40 - 3.00 arası
-    // - 5 adet 3.10 - 6.00 arası
+    // - 2 adet 1.80 - 2.20 arası (MS 1 veya MS 2)
+    // - 2 adet 2.40 - 3.00 arası (MS 1 veya MS 2)
+    // - 5 adet 3.10 - 6.00 arası (Ağırlıklı MS 2 ve MS 1, en fazla 1 adet MS X)
     // - Sistem: 4, 5, 6 (Toplam: C(9,4) + C(9,5) + C(9,6) = 126 + 126 + 84 = 336 Kolon)
     // -------------------------------------------------------------
-    const tier1Matches = pickMsMatches(2, 1.80, 2.20);
-    const tier2Matches = pickMsMatches(2, 2.40, 3.00);
-    const tier3Matches = pickMsMatches(5, 3.10, 6.00);
+    const tier1Matches = pickMsMatches(2, 1.80, 2.20, false);
+    const tier2Matches = pickMsMatches(2, 2.40, 3.00, false);
+    const tier3Matches = pickMsMatches(5, 3.10, 6.00, true);
 
     let c1Matches = [...tier1Matches, ...tier2Matches, ...tier3Matches];
 
     // Mutlak 9 maç garantisi
     if (c1Matches.length < 9) {
       const needed = 9 - c1Matches.length;
-      const extra = pickMsMatches(needed, 1.80, 6.00);
+      const extra = pickMsMatches(needed, 1.80, 6.00, couponMsXCount < MAX_COUPON_MS_X);
       c1Matches = [...c1Matches, ...extra];
     }
 
@@ -576,13 +639,13 @@ export async function GET() {
         buildPastMsMatch(pastDbMatches[1], 'MS 1', 2.10),
         // 2 adet 2.40 - 3.00
         buildPastMsMatch(pastDbMatches[2], 'MS 1', 2.55),
-        buildPastMsMatch(pastDbMatches[3], 'MS X', 2.90),
-        // 5 adet 3.10 - 6.00
+        buildPastMsMatch(pastDbMatches[3], 'MS 2', 2.90),
+        // 5 adet 3.10 - 6.00 (Yalnızca 1 adet MS X, kalanlar MS 2 ve MS 1)
         buildPastMsMatch(pastDbMatches[4], 'MS X', 3.35),
         buildPastMsMatch(pastDbMatches[5], 'MS 2', 3.50),
         buildPastMsMatch(pastDbMatches[6], 'MS 2', 3.65),
         buildPastMsMatch(pastDbMatches[7], 'MS 1', 4.10),
-        buildPastMsMatch(pastDbMatches[8] || pastDbMatches[0], 'MS X', 3.30)
+        buildPastMsMatch(pastDbMatches[8] || pastDbMatches[0], 'MS 2', 3.30)
       ];
 
       const pastOdds = pastMatches9.map(m => m.odd);
