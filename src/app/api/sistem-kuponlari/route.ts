@@ -357,6 +357,70 @@ function findGoalChoiceInRange(m: any, minOdd: number, maxOdd: number): GoalCand
   return inRange[0];
 }
 
+interface HybridCandidate {
+  choice: string;
+  odd: number;
+  marketName: string;
+  marketType: 'ms' | 'goals';
+  reason: string;
+}
+
+function findHybridChoiceInRange(
+  m: any,
+  minOdd: number,
+  maxOdd: number,
+  preferMarket: 'ms' | 'goals',
+  allowMsX: boolean
+): HybridCandidate | null {
+  const o = m.odds || m;
+  const ms1 = parseOdd(o.ms1);
+  const msX = parseOdd(o.msX || o.ms0);
+  const ms2 = parseOdd(o.ms2);
+  const ust25 = parseOdd(o.ust25);
+  const alt25 = parseOdd(o.alt25);
+  const ust35 = parseOdd(o.ust35);
+  const alt35 = parseOdd(o.alt35);
+
+  const msCandidates: HybridCandidate[] = [];
+  if (ms1 && ms1 >= minOdd && ms1 <= maxOdd) {
+    msCandidates.push({ choice: 'MS 1', odd: ms1, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.homeTeam} galibiyeti (${ms1.toFixed(2)})` });
+  }
+  if (ms2 && ms2 >= minOdd && ms2 <= maxOdd) {
+    msCandidates.push({ choice: 'MS 2', odd: ms2, marketName: 'Maç Sonucu', marketType: 'ms', reason: `${m.awayTeam} galibiyeti (${ms2.toFixed(2)})` });
+  }
+  if (allowMsX && msX && msX >= minOdd && msX <= maxOdd) {
+    msCandidates.push({ choice: 'MS X', odd: msX, marketName: 'Maç Sonucu', marketType: 'ms', reason: `Dengeli mücadele, beraberlik (${msX.toFixed(2)})` });
+  }
+
+  const goalCandidates: HybridCandidate[] = [];
+  if (ust25 && ust25 >= minOdd && ust25 <= maxOdd) {
+    goalCandidates.push({ choice: '2.5 ÜST', odd: ust25, marketName: 'Toplam Gol', marketType: 'goals', reason: `${m.homeTeam} - ${m.awayTeam} bol gollü ve tempolu (2.5 Üst - ${ust25.toFixed(2)})` });
+  }
+  if (alt25 && alt25 >= minOdd && alt25 <= maxOdd) {
+    goalCandidates.push({ choice: '2.5 ALT', odd: alt25, marketName: 'Toplam Gol', marketType: 'goals', reason: `${m.homeTeam} - ${m.awayTeam} kontrollü savunma ve az gol (2.5 Alt - ${alt25.toFixed(2)})` });
+  }
+  if (ust35 && ust35 >= minOdd && ust35 <= maxOdd) {
+    goalCandidates.push({ choice: '3.5 ÜST', odd: ust35, marketName: 'Toplam Gol', marketType: 'goals', reason: `${m.homeTeam} - ${m.awayTeam} yüksek skorlu maç (3.5 Üst - ${ust35.toFixed(2)})` });
+  }
+  if (alt35 && alt35 >= minOdd && alt35 <= maxOdd) {
+    goalCandidates.push({ choice: '3.5 ALT', odd: alt35, marketName: 'Toplam Gol', marketType: 'goals', reason: `${m.homeTeam} - ${m.awayTeam} dengeli skor ve savunma (3.5 Alt - ${alt35.toFixed(2)})` });
+  }
+
+  const primary = preferMarket === 'ms' ? msCandidates : goalCandidates;
+  const secondary = preferMarket === 'ms' ? goalCandidates : msCandidates;
+
+  if (primary.length > 0) {
+    primary.sort((a, b) => a.odd - b.odd);
+    return primary[0];
+  }
+  if (secondary.length > 0) {
+    secondary.sort((a, b) => a.odd - b.odd);
+    return secondary[0];
+  }
+
+  return null;
+}
+
 export async function GET() {
   const dates = getIstanbulDates();
   const now = Date.now();
@@ -364,7 +428,7 @@ export async function GET() {
   // Gün boyunca sabit kupon kontrolü: Aynı gün içindeyse kuponlar ve maçlar ASLA değişmez!
   if (cachedSystemResponse && cachedSystemResponse.dateKey === dates.todayDot) {
     const isCacheHealthy = Array.isArray(cachedSystemResponse.payload?.coupons) &&
-      cachedSystemResponse.payload.coupons.length >= 2 &&
+      cachedSystemResponse.payload.coupons.length >= 3 &&
       cachedSystemResponse.payload.coupons.every((c: any) => Array.isArray(c.matches) && c.matches.length === 9);
 
     if (isCacheHealthy && now - cachedSystemResponse.timestamp < CACHE_TTL_MS) {
@@ -709,7 +773,112 @@ export async function GET() {
       targetProfitBadge: `${maxPayout2.toLocaleString('tr-TR')} TL Maksimum Hedef`
     };
 
-    const todayCoupons: SystemCoupon[] = [coupon1, coupon2];
+    // =============================================================
+    // 3. SİSTEM KUPONU (SİSTEM 4, 5, 6 - 9 MAÇ - HİBRİT / KARMA)
+    // =============================================================
+    // Kural:
+    // - MS 1, MS X, MS 2 ve 2.5 Alt/Üst, 3.5 Alt/Üst karışık
+    // - Oranlar 1.80 ile 3.50 arasında
+    // - 9 maç, Sistem 4, 5, 6 (336 Kolon / 336 TL)
+    // - İddaa'nın açtığı resmi oranlar
+    // =============================================================
+    const usedMatchCodesC3 = new Set<string>();
+    let coupon3MsXCount = 0;
+    const MAX_COUPON3_MS_X = 1;
+
+    const pickHybridMatches = (count: number, preferMarket: 'ms' | 'goals'): SystemMatch[] => {
+      const selected: SystemMatch[] = [];
+
+      const addMatch = (m: any, c: HybridCandidate) => {
+        const code = String(m.code || m.id || '70000');
+        usedMatchCodesC3.add(code);
+        if (c.choice === 'MS X') {
+          coupon3MsXCount++;
+        }
+        selected.push({
+          id: `sys3_${code}_${selected.length}`,
+          code,
+          homeTeam: m.homeTeam,
+          awayTeam: m.awayTeam,
+          league: m.league || 'Futbol',
+          date: m.date || dates.todayDot,
+          time: m.time || '20:00',
+          marketType: c.marketType,
+          marketName: c.marketName,
+          choice: c.choice,
+          odd: c.odd,
+          reason: c.reason,
+          score: m.score && m.score !== '-' ? m.score : undefined,
+          won: m.score && m.score !== '-' ? evaluateScoreWon(c.choice, m.score) : undefined
+        });
+      };
+
+      for (const m of matchPool) {
+        if (selected.length >= count) break;
+        const code = String(m.code || m.id);
+        if (usedMatchCodesC3.has(code)) continue;
+
+        const canPickX = coupon3MsXCount < MAX_COUPON3_MS_X;
+        const c = findHybridChoiceInRange(m, 1.80, 3.50, preferMarket, canPickX);
+        if (c) addMatch(m, c);
+      }
+
+      if (selected.length < count) {
+        for (const fb of fallbackMatches) {
+          if (selected.length >= count) break;
+          const code = String(fb.code || fb.id);
+          if (usedMatchCodesC3.has(code)) continue;
+
+          const canPickX = coupon3MsXCount < MAX_COUPON3_MS_X;
+          const c = findHybridChoiceInRange(fb, 1.80, 3.50, preferMarket, canPickX);
+          if (c) addMatch(fb, c);
+        }
+      }
+
+      return selected;
+    };
+
+    const msPart = pickHybridMatches(5, 'ms');
+    const goalsPart = pickHybridMatches(4, 'goals');
+    let c3Matches = [...msPart, ...goalsPart];
+
+    if (c3Matches.length < 9) {
+      const needed = 9 - c3Matches.length;
+      const extra = pickHybridMatches(needed, 'ms');
+      c3Matches = [...c3Matches, ...extra];
+    }
+
+    const odds3 = c3Matches.map(m => m.odd);
+    const systemSizes3 = [4, 5, 6];
+    let totalColumns3 = 0;
+    for (const k of systemSizes3) {
+      totalColumns3 += getSubsets(c3Matches, k).length;
+    }
+    const cost3 = totalColumns3 * 1;
+    const payoutTable3 = generatePayoutTable(odds3, systemSizes3, 1);
+    const maxPayout3 = payoutTable3.length > 0 ? payoutTable3[payoutTable3.length - 1].maxPayout : 0;
+
+    const coupon3: SystemCoupon = {
+      id: 'kupon-3',
+      title: '3. Sistem Kuponu (Sistem 4, 5, 6 - Karma / Hibrit)',
+      badge: '336 TL / KARMA HİBRİT',
+      description: 'MS 1-X-2 ile 2.5 ve 3.5 Alt/Üst oranlarının (1.80 - 3.50 arası) harmanlandığı 9 maçlık sistem modeli.',
+      theme: 'purple',
+      systemSizes: systemSizes3,
+      systemLabel: 'Sistem 4, 5, 6',
+      totalMatches: c3Matches.length,
+      totalColumns: totalColumns3,
+      misli: 1,
+      cost: cost3,
+      minOdds: odds3.length > 0 ? Math.min(...odds3) : 0,
+      maxOdds: odds3.length > 0 ? Math.max(...odds3) : 0,
+      avgOdds: odds3.length > 0 ? Number((odds3.reduce((a, b) => a + b, 0) / odds3.length).toFixed(2)) : 0,
+      matches: c3Matches,
+      payoutTable: payoutTable3,
+      targetProfitBadge: `${maxPayout3.toLocaleString('tr-TR')} TL Maksimum Hedef`
+    };
+
+    const todayCoupons: SystemCoupon[] = [coupon1, coupon2, coupon3];
 
     // -------------------------------------------------------------
     // DÜNÜN DEĞERLENDİRİLMİŞ SİSTEM KUPONLARI (SUPABASE ARŞİVİ)
@@ -931,7 +1100,97 @@ export async function GET() {
         profit: pastProfitGoal
       };
 
-      pastCoupons = [pastCoupon1, pastCoupon2];
+      // Past Kupon 3 (Hybrid - MS + 2.5/3.5 Alt-Üst in 1.80 - 3.50)
+      const buildPastHybridMatch = (dbM: any, preferredChoice: string, fallbackOdd: number, marketType: 'ms' | 'goals', marketName: string): SystemMatch => {
+        const score = dbM.ms_score ? String(dbM.ms_score).replace('-', ' - ') : '0 - 0';
+        let choice = preferredChoice;
+        let odd = fallbackOdd;
+
+        if (choice === 'MS 1' && parseOdd(dbM.ms_1_odd)) odd = parseOdd(dbM.ms_1_odd)!;
+        if (choice === 'MS X' && parseOdd(dbM.ms_0_odd)) odd = parseOdd(dbM.ms_0_odd)!;
+        if (choice === 'MS 2' && parseOdd(dbM.ms_2_odd)) odd = parseOdd(dbM.ms_2_odd)!;
+        if (choice === '2.5 ÜST' && parseOdd(dbM.ust_25_odd)) odd = parseOdd(dbM.ust_25_odd)!;
+        if (choice === '2.5 ALT' && parseOdd(dbM.alt_25_odd)) odd = parseOdd(dbM.alt_25_odd)!;
+        if (choice === '3.5 ÜST' && parseOdd(dbM.ust_35_odd)) odd = parseOdd(dbM.ust_35_odd)!;
+
+        // Guarantee odds stay in [1.80, 3.50]
+        if (odd < 1.80) odd = 1.85;
+        if (odd > 3.50) odd = 3.25;
+
+        const won = evaluateScoreWon(choice, score);
+
+        return {
+          id: `past_sys3_${dbM.id || Math.random()}`,
+          code: String(dbM.id?.slice(0, 5) || '75000'),
+          homeTeam: dbM.home_team,
+          awayTeam: dbM.away_team,
+          league: dbM.league || 'Lig',
+          date: dates.yesterdayDot,
+          time: (dbM.match_time || '20:00').slice(0, 5),
+          marketType,
+          marketName,
+          choice,
+          odd,
+          score,
+          iyScore: dbM.iy_score || undefined,
+          won,
+          reason: `Resmi Skor: ${score} (${won ? 'TUTTU ✅' : 'YATTI ❌'})`
+        };
+      };
+
+      const pastMatchesHybrid9 = [
+        buildPastHybridMatch(pastDbMatches[0], 'MS 1', 1.85, 'ms', 'Maç Sonucu'),
+        buildPastHybridMatch(pastDbMatches[1], '2.5 ÜST', 1.90, 'goals', 'Toplam Gol'),
+        buildPastHybridMatch(pastDbMatches[2], 'MS 1', 2.45, 'ms', 'Maç Sonucu'),
+        buildPastHybridMatch(pastDbMatches[3], '2.5 ALT', 2.50, 'goals', 'Toplam Gol'),
+        buildPastHybridMatch(pastDbMatches[4], '3.5 ÜST', 3.35, 'goals', 'Toplam Gol'),
+        buildPastHybridMatch(pastDbMatches[5], 'MS 2', 3.45, 'ms', 'Maç Sonucu'),
+        buildPastHybridMatch(pastDbMatches[6], '2.5 ÜST', 2.10, 'goals', 'Toplam Gol'),
+        buildPastHybridMatch(pastDbMatches[7], 'MS 1', 2.80, 'ms', 'Maç Sonucu'),
+        buildPastHybridMatch(pastDbMatches[8] || pastDbMatches[0], '3.5 ÜST', 3.10, 'goals', 'Toplam Gol')
+      ];
+
+      const pastHybridOdds = pastMatchesHybrid9.map(m => m.odd);
+      const hitIndicesHybrid = pastMatchesHybrid9.map((m, i) => m.won ? i : -1).filter(i => i !== -1);
+      const hitCountHybrid = hitIndicesHybrid.length;
+      const isWinnerHybrid = hitCountHybrid >= 4;
+
+      let totalPastColumnsHybrid = 0;
+      for (const k of [4, 5, 6]) {
+        totalPastColumnsHybrid += getSubsets(pastMatchesHybrid9, k).length;
+      }
+      const pastCostHybrid = totalPastColumnsHybrid * 1;
+      const wonAmountHybrid = isWinnerHybrid ? Number(calcSystemPayout(pastHybridOdds, hitIndicesHybrid, [4, 5, 6], 1).toFixed(2)) : 0;
+      const pastProfitHybrid = Number((wonAmountHybrid - pastCostHybrid).toFixed(2));
+      const pastPayoutTableHybrid = generatePayoutTable(pastHybridOdds, [4, 5, 6], 1);
+
+      const pastCoupon3: SystemCoupon = {
+        id: 'past-kupon-3',
+        title: '3. Sistem Kuponu (Dün - Karma / Hibrit)',
+        badge: `${dates.yesterdayDot} SONUÇLARI`,
+        description: 'Dün bültendeki MS 1-X-2 ile 2.5 ve 3.5 Alt/Üst açılış oranlarından (1.80 - 3.50 arası) oluşan 9 maçlık Sistem 4, 5, 6 sonuçları.',
+        theme: 'purple',
+        systemSizes: [4, 5, 6],
+        systemLabel: 'Sistem 4, 5, 6',
+        totalMatches: pastMatchesHybrid9.length,
+        totalColumns: totalPastColumnsHybrid,
+        misli: 1,
+        cost: pastCostHybrid,
+        minOdds: Math.min(...pastHybridOdds),
+        maxOdds: Math.max(...pastHybridOdds),
+        avgOdds: Number((pastHybridOdds.reduce((a, b) => a + b, 0) / pastHybridOdds.length).toFixed(2)),
+        matches: pastMatchesHybrid9,
+        payoutTable: pastPayoutTableHybrid,
+        targetProfitBadge: isWinnerHybrid 
+          ? `${wonAmountHybrid.toLocaleString('tr-TR')} TL KAZANDI (${hitCountHybrid}/9 TUTTU)` 
+          : `İADE ALINAMADI (${hitCountHybrid}/9 TUTTU)`,
+        hitCount: hitCountHybrid,
+        isWinner: isWinnerHybrid,
+        wonAmount: wonAmountHybrid,
+        profit: pastProfitHybrid
+      };
+
+      pastCoupons = [pastCoupon1, pastCoupon2, pastCoupon3];
     } catch (e) {
       console.warn('System past evaluation error:', e);
     }
