@@ -70,9 +70,11 @@ export interface YesterdaySummary {
 let cachedSystemResponse: {
   dateKey: string;
   timestamp: number;
+  lastLiveScoreUpdate: number;
   payload: any;
 } | null = null;
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 saat boyunca sabit!
+const LIVE_SCORE_REFRESH_INTERVAL = 60 * 1000; // Canlı skor kontrolü en fazla 60 saniyede bir
 
 function parseOdd(val: any): number | null {
   if (!val || val === '-' || val === '0,00' || val === '0.00' || val === 0) return null;
@@ -315,35 +317,44 @@ export async function GET() {
       cachedSystemResponse.payload.coupons.every((c: any) => Array.isArray(c.matches) && c.matches.length === 9);
 
     if (isCacheHealthy && now - cachedSystemResponse.timestamp < CACHE_TTL_MS) {
-      // Kupondaki maçlar gün boyunca kesinlikle sabittir. Başlayan maçlar asla çıkarılmaz/yenilenmez.
-      // Sadece varsa canlı maç skorlarını mevcut kupondaki maçlara işle:
-      try {
-        const liveMatches = await fetchMackolikMatches();
-        if (liveMatches && liveMatches.length > 0) {
-          const matchMap = new Map(liveMatches.map((m: any) => [String(m.code || m.id), m]));
-          for (const coupon of cachedSystemResponse.payload.coupons) {
-            let hitCount = 0;
-            for (const match of coupon.matches) {
-              const live = matchMap.get(match.code) || matchMap.get(match.id);
-              if (live && live.score && live.score !== '-') {
-                match.score = live.score;
-                match.won = evaluateScoreWon(match.choice, live.score);
+      // Kupondaki maçlar gün boyunca kesinlikle sabittir.
+      // Sadece başlayan maç varsa ve son canlı skordan en az 60 sn geçmişse hızlıca güncelle:
+      const anyMatchStarted = cachedSystemResponse.payload.coupons.some((c: any) =>
+        c.matches.some((m: any) => isMatchPast(m.date, m.time))
+      );
+
+      if (anyMatchStarted && now - cachedSystemResponse.lastLiveScoreUpdate > LIVE_SCORE_REFRESH_INTERVAL) {
+        cachedSystemResponse.lastLiveScoreUpdate = now;
+        try {
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 600));
+          const liveMatches: any = await Promise.race([fetchMackolikMatches(), timeoutPromise]).catch(() => []);
+          if (liveMatches && liveMatches.length > 0) {
+            const matchMap = new Map<string, any>(liveMatches.map((m: any) => [String(m.code || m.id), m]));
+            for (const coupon of cachedSystemResponse.payload.coupons) {
+              let hitCount = 0;
+              for (const match of coupon.matches) {
+                const live: any = matchMap.get(match.code) || matchMap.get(match.id);
+                if (live && live.score && live.score !== '-') {
+                  match.score = live.score;
+                  match.won = evaluateScoreWon(match.choice, live.score);
+                }
+                if (match.won) hitCount++;
               }
-              if (match.won) hitCount++;
-            }
-            coupon.hitCount = hitCount;
-            const minK = Math.min(...(coupon.systemSizes || [4]));
-            coupon.isWinner = hitCount >= minK;
-            if (coupon.isWinner) {
-              const hitIndices = coupon.matches.map((m: any, idx: number) => m.won ? idx : -1).filter((i: number) => i !== -1);
-              const odds = coupon.matches.map((m: any) => m.odd);
-              coupon.wonAmount = Number(calcSystemPayout(odds, hitIndices, coupon.systemSizes, coupon.misli || 1).toFixed(2));
-              coupon.profit = Number((coupon.wonAmount - coupon.cost).toFixed(2));
+              coupon.hitCount = hitCount;
+              const minK = Math.min(...(coupon.systemSizes || [4]));
+              coupon.isWinner = hitCount >= minK;
+              if (coupon.isWinner) {
+                const hitIndices = coupon.matches.map((m: any, idx: number) => m.won ? idx : -1).filter((i: number) => i !== -1);
+                const odds = coupon.matches.map((m: any) => m.odd);
+                coupon.wonAmount = Number(calcSystemPayout(odds, hitIndices, coupon.systemSizes, coupon.misli || 1).toFixed(2));
+                coupon.profit = Number((coupon.wonAmount - coupon.cost).toFixed(2));
+              }
             }
           }
-        }
-      } catch (e) {}
+        } catch (e) {}
+      }
 
+      // Anında yanıt (< 1ms)!
       return NextResponse.json(cachedSystemResponse.payload);
     } else if (!isCacheHealthy) {
       cachedSystemResponse = null;
@@ -561,28 +572,29 @@ export async function GET() {
 
       let pastDbMatches: any[] = [];
       if (db) {
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('db_timeout')), 1500));
+        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('db_timeout')), 400));
         const res: any = await Promise.race([
           db
             .from('past_matches')
             .select('id, home_team, away_team, ms_score, iy_score, ms_1_odd, ms_0_odd, ms_2_odd, match_time, league')
             .eq('match_date', dates.yesterdayYmd)
             .not('ms_score', 'is', null)
-            .limit(60),
+            .limit(30),
           timeoutPromise
         ]).catch(() => ({ data: null }));
 
         pastDbMatches = res?.data || [];
 
         if (pastDbMatches.length < 9) {
+          const timeoutFallback = new Promise((_, reject) => setTimeout(() => reject(new Error('db_timeout')), 400));
           const resFallback: any = await Promise.race([
             db
               .from('past_matches')
               .select('id, home_team, away_team, ms_score, iy_score, ms_1_odd, ms_0_odd, ms_2_odd, match_time, league')
               .not('ms_score', 'is', null)
               .order('match_date', { ascending: false })
-              .limit(60),
-            timeoutPromise
+              .limit(30),
+            timeoutFallback
           ]).catch(() => ({ data: null }));
 
           pastDbMatches = resFallback?.data || [];
@@ -722,6 +734,7 @@ export async function GET() {
       cachedSystemResponse = {
         dateKey: dates.todayDot,
         timestamp: Date.now(),
+        lastLiveScoreUpdate: Date.now(),
         payload
       };
     }

@@ -99,30 +99,53 @@ interface ApiResponse {
 export default function SistemKuponlariPage() {
   const [activeTab, setActiveTab] = useState<'today' | 'yesterday'>('today');
   const [loading, setLoading] = useState<boolean>(true);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ApiResponse | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [savingId, setSavingId] = useState<string | null>(null);
   const [savedId, setSavedId] = useState<string | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = async (isBackground = false) => {
     try {
-      setLoading(true);
+      if (!isBackground && !data) setLoading(true);
+      if (isBackground) setIsRefreshing(true);
       setError(null);
+
       const res = await fetch('/api/sistem-kuponlari', { cache: 'no-store' });
       if (!res.ok) throw new Error('Sistem kuponu verisi alınamadı');
       const json: ApiResponse = await res.json();
       if (!json.success) throw new Error('API geçerli kupon döndürmedi');
+      
       setData(json);
+      try {
+        localStorage.setItem('sistem_kuponlari_cache', JSON.stringify(json));
+      } catch (e) {}
     } catch (err: any) {
-      setError(err.message || 'Veri yüklenirken bir hata oluştu');
+      if (!data) {
+        setError(err.message || 'Veri yüklenirken bir hata oluştu');
+      }
     } finally {
       setLoading(false);
+      setIsRefreshing(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    // 1. Önce localStorage'da hazır önbellek var mı kontrol et (< 1ms anında yükleme)
+    try {
+      const saved = localStorage.getItem('sistem_kuponlari_cache');
+      if (saved) {
+        const parsed: ApiResponse = JSON.parse(saved);
+        if (parsed && parsed.coupons && parsed.coupons.length > 0) {
+          setData(parsed);
+          setLoading(false);
+        }
+      }
+    } catch (e) {}
+
+    // 2. Ardından API'den en güncel veriyi sessizce ve hızla çek
+    fetchData(true);
   }, []);
 
   const handleCopyCodes = (coupon: SystemCoupon) => {
@@ -239,12 +262,12 @@ export default function SistemKuponlariPage() {
             </div>
 
             <button
-              onClick={fetchData}
-              disabled={loading}
+              onClick={() => fetchData(false)}
+              disabled={loading || isRefreshing}
               className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/60 text-slate-200 text-sm font-medium transition-all shadow-sm active:scale-95 disabled:opacity-50 self-start md:self-center"
             >
-              <RefreshCw className={`w-4 h-4 text-amber-400 ${loading ? 'animate-spin' : ''}`} />
-              <span>{loading ? 'Yenileniyor...' : 'Verileri Yenile'}</span>
+              <RefreshCw className={`w-4 h-4 text-amber-400 ${loading || isRefreshing ? 'animate-spin' : ''}`} />
+              <span>{loading || isRefreshing ? 'Yenileniyor...' : 'Verileri Yenile'}</span>
             </button>
           </div>
 
@@ -334,7 +357,7 @@ export default function SistemKuponlariPage() {
             <h3 className="text-lg font-bold text-rose-300">Bir Hata Oluştu</h3>
             <p className="text-slate-400 text-sm max-w-md mx-auto">{error}</p>
             <button
-              onClick={fetchData}
+              onClick={() => fetchData(false)}
               className="mt-2 px-4 py-2 bg-rose-500 text-black font-semibold rounded-xl text-sm"
             >
               Tekrar Dene
