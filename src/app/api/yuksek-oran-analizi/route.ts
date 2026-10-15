@@ -231,7 +231,7 @@ export async function GET(request: Request) {
       const scoreHits = validPast.filter((p: any) => p.isExactScoreHit).length;
 
       const pastStats = {
-        date: validPast[0]?.date || '07.10.2026',
+        date: cachedData.pastStats?.date || validPast[0]?.date || '14.10.2026',
         totalFinished: validPast.length,
         comboHitCount: comboHits,
         comboHitRate: validPast.length > 0 ? Math.round((comboHits / validPast.length) * 100) : 0,

@@ -4,12 +4,28 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
+// Memory cache for ultra-fast responses (<5ms)
+let cachedData: any = null;
+let lastCacheTime = 0;
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 dakika
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const dateParam = searchParams.get('dates');
+    const isDefaultQuery = !dateParam || dateParam === 'latest_3_days' || dateParam === 'all';
+    const now = Date.now();
+
+    if (isDefaultQuery && cachedData && now - lastCacheTime < CACHE_TTL_MS) {
+      return NextResponse.json(cachedData, {
+        headers: {
+          'Cache-Control': 'public, max-age=120, stale-while-revalidate=300'
+        }
+      });
+    }
 
     if (!supabaseUrl || !supabaseKey) {
+      if (cachedData) return NextResponse.json(cachedData);
       return NextResponse.json({ error: 'Supabase credentials missing' }, { status: 500 });
     }
 
@@ -20,12 +36,12 @@ export async function GET(request: Request) {
     if (dateParam && dateParam !== 'latest_3_days' && dateParam !== 'all') {
       targetDates = dateParam.split(',').map(d => d.trim()).filter(Boolean);
     } else {
-      // Dinamik olarak veritabanındaki son 3 günü tespit et
+      // Dinamik olarak veritabanındaki son 3 günü hızlıca çek
       const { data: latestDateRows, error: dateErr } = await supabase
         .from('past_matches')
         .select('match_date')
         .order('match_date', { ascending: false })
-        .limit(2000);
+        .limit(300);
 
       if (dateErr) {
         console.error('Tarih çekme hatası:', dateErr);
@@ -35,31 +51,27 @@ export async function GET(request: Request) {
       targetDates = distinct.slice(0, 3);
     }
 
-    let allMatches: any[] = [];
-    let from = 0;
-    const pageSize = 1000;
+    // Yalnızca gerekli sütunları seç (SELECT * yerine) ve tek sorguda en fazla 1500 maç çek
+    let query = supabase
+      .from('past_matches')
+      .select('id, match_date, match_time, league, home_team, away_team, ms_score, iy_score, ms_1_odd, ms_0_odd, ms_2_odd, iy_1_odd, iy_0_odd, iy_2_odd, alt_25_odd, ust_25_odd, kg_var_odd, kg_yok_odd')
+      .not('ms_score', 'is', null);
 
-    while (true) {
-      let query = supabase
-        .from('past_matches')
-        .select('*');
-
-      if (targetDates.length > 0) {
-        query = query.in('match_date', targetDates);
-      }
-
-      const { data, error } = await query.range(from, from + pageSize - 1);
-
-      if (error) {
-        console.error('Supabase query error:', error);
-        break;
-      }
-
-      if (!data || data.length === 0) break;
-      allMatches = allMatches.concat(data);
-      if (data.length < pageSize) break;
-      from += pageSize;
+    if (targetDates.length > 0) {
+      query = query.in('match_date', targetDates);
     }
+
+    const { data: allMatches, error } = await query
+      .order('match_date', { ascending: false })
+      .limit(1500);
+
+    if (error) {
+      console.error('Supabase query error:', error);
+      if (cachedData) return NextResponse.json(cachedData);
+      return NextResponse.json({ error: 'Veri çekilemedi' }, { status: 500 });
+    }
+
+    const matchesList = allMatches || [];
 
     // Pool counts per date
     const datePoolCounts: Record<string, number> = {};
@@ -69,7 +81,7 @@ export async function GET(request: Request) {
 
     const favoriteMatches: any[] = [];
 
-    for (const m of allMatches) {
+    for (const m of matchesList) {
       const matchDate = m.match_date;
       if (datePoolCounts[matchDate] !== undefined) {
         datePoolCounts[matchDate]++;
@@ -173,15 +185,27 @@ export async function GET(request: Request) {
       return a.time.localeCompare(b.time);
     });
 
-    return NextResponse.json({
+    const responsePayload = {
       success: true,
       distinctDates: targetDates,
-      totalMatchesInPool: allMatches.length,
+      totalMatchesInPool: matchesList.length,
       datePoolCounts,
       favorites: favoriteMatches
+    };
+
+    if (isDefaultQuery) {
+      cachedData = responsePayload;
+      lastCacheTime = now;
+    }
+
+    return NextResponse.json(responsePayload, {
+      headers: {
+        'Cache-Control': 'public, max-age=120, stale-while-revalidate=300'
+      }
     });
   } catch (error: any) {
     console.error('Patlayan oranlar api error:', error);
+    if (cachedData) return NextResponse.json(cachedData);
     return NextResponse.json({ error: error.message || 'Sunucu hatası' }, { status: 500 });
   }
 }

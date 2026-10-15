@@ -751,36 +751,42 @@ export async function GET(request: Request) {
         triggerBackgroundRefresh();
       }
 
-      // If cache has upcoming dates and past matches, return immediately
-      if (hasCurrentOrFuture && !isPastOutdated) {
-        return NextResponse.json({
-          success: true,
-          cachedAt: new Date(memoryCache.timestamp).toISOString(),
-          isRefreshing: !!inProgressPromise,
-          stats: memoryCache.stats,
-          availableDates: memoryCache.dates,
-          availableLeagues: memoryCache.leagues,
-          matches: memoryCache.matches,
-          pastStats: memoryPastCache?.stats?.overallRates,
-          pastMatches: memoryPastCache?.matches || []
-        });
-      }
+      // Return immediately without blocking!
+      return NextResponse.json({
+        success: true,
+        cachedAt: new Date(memoryCache.timestamp).toISOString(),
+        isRefreshing: !!inProgressPromise,
+        stats: memoryCache.stats,
+        availableDates: memoryCache.dates,
+        availableLeagues: memoryCache.leagues,
+        matches: memoryCache.matches,
+        pastStats: memoryPastCache?.stats?.overallRates,
+        pastMatches: memoryPastCache?.matches || []
+      }, {
+        headers: {
+          'Cache-Control': 'public, max-age=60, stale-while-revalidate=300'
+        }
+      });
     }
 
-    // 2. If no valid cache or outdated past date, perform scan and await
+    // 2. If memoryCache is empty or not yet loaded, trigger background and race with short timeout
     triggerBackgroundRefresh();
-    const freshData = await inProgressPromise!;
+    const timeoutPromise = new Promise(resolve => setTimeout(resolve, 600));
+    await Promise.race([inProgressPromise, timeoutPromise]);
+
+    const finalCache = memoryCache || loadCacheFromDisk();
+    const finalPast = memoryPastCache || loadPastCacheFromDisk();
 
     return NextResponse.json({
       success: true,
-      cachedAt: new Date(freshData.upcoming.timestamp).toISOString(),
-      isRefreshing: false,
-      stats: freshData.upcoming.stats,
-      availableDates: freshData.upcoming.dates,
-      availableLeagues: freshData.upcoming.leagues,
-      matches: freshData.upcoming.matches,
-      pastStats: freshData.past?.stats?.overallRates,
-      pastMatches: freshData.past?.matches || []
+      cachedAt: new Date(finalCache?.timestamp || now).toISOString(),
+      isRefreshing: !!inProgressPromise,
+      stats: finalCache?.stats || { totalUnplayed: 0, totalWithBothOdds: 0, diff020Count: 0, diff010Count: 0, exactMatchCount: 0 },
+      availableDates: finalCache?.dates || [],
+      availableLeagues: finalCache?.leagues || [],
+      matches: finalCache?.matches || [],
+      pastStats: finalPast?.stats?.overallRates,
+      pastMatches: finalPast?.matches || []
     });
   } catch (error: any) {
     console.error('Gol Analizi API Hatası:', error);
