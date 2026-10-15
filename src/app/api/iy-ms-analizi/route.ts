@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { fetchMackolikMatches } from '../fetch-iddaa/route';
 import { supabase } from '@/lib/supabase';
+import { getDynamicIyMsPastMatches } from '@/lib/dynamic-past-matches';
 import fs from 'fs';
 import path from 'path';
 
@@ -339,7 +340,23 @@ export async function GET(request: Request) {
       };
 
       const validUpcoming = (cachedData.matches || []).filter((m: any) => isStrictValidMatch(m) && isUpcomingDate(m.date));
-      const validPast = (cachedData.pastMatches || []).filter(isStrictValidMatch);
+      let validPast = (cachedData.pastMatches || []).filter(isStrictValidMatch);
+      let pastStats = cachedData.pastStats || {
+        date: '14.10.2026',
+        totalFinished: validPast.length,
+        topHitCount: validPast.filter((m: any) => m.isTopHit).length,
+        topHitRate: 0
+      };
+
+      try {
+        const dynamicPast = await getDynamicIyMsPastMatches();
+        if (dynamicPast && dynamicPast.pastMatches && dynamicPast.pastMatches.length > 0) {
+          validPast = dynamicPast.pastMatches.filter(isStrictValidMatch);
+          pastStats = dynamicPast.pastStats;
+        }
+      } catch (err) {
+        console.warn('Dynamic past query fallback to cache in iy-ms:', err);
+      }
 
       // Canlı Maçkolik Oran Senkronizasyonu
       try {
@@ -404,7 +421,7 @@ export async function GET(request: Request) {
           surpriseCount: validUpcoming.filter((m: any) => !!m.surpriseOutcome).length
         },
         matches: validUpcoming,
-        pastStats: cachedData.pastStats,
+        pastStats: pastStats,
         pastMatches: validPast
       };
 

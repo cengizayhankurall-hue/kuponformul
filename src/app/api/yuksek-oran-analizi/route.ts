@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { fetchMackolikMatches } from '../fetch-iddaa/route';
 import { supabase } from '@/lib/supabase';
+import { getDynamicYuksekOranPastMatches } from '@/lib/dynamic-past-matches';
 import fs from 'fs';
 import path from 'path';
 
@@ -174,9 +175,27 @@ export async function GET(request: Request) {
         .map(enrichComboMatch)
         .filter((m: any) => m && m.combos && m.combos.length > 0 && isUpcomingDate(m.date));
 
-      const validPast = (cachedData.pastMatches || [])
+      let validPast = (cachedData.pastMatches || [])
         .map(enrichComboMatch)
         .filter((m: any) => m && m.combos && m.combos.length > 0);
+      let pastStats = cachedData.pastStats || {
+        date: '14.10.2026',
+        totalFinished: validPast.length,
+        comboHitCount: validPast.filter((p: any) => p.isComboHit).length,
+        comboHitRate: 0,
+        scoreHitCount: validPast.filter((p: any) => p.isExactScoreHit).length,
+        scoreHitRate: 0
+      };
+
+      try {
+        const dynamicPast = await getDynamicYuksekOranPastMatches();
+        if (dynamicPast && dynamicPast.pastMatches && dynamicPast.pastMatches.length > 0) {
+          validPast = dynamicPast.pastMatches.map(enrichComboMatch);
+          pastStats = dynamicPast.pastStats;
+        }
+      } catch (err) {
+        console.warn('Dynamic past query fallback to cache:', err);
+      }
 
       // Canlı Maçkolik Oran Senkronizasyonu
       try {
@@ -226,18 +245,6 @@ export async function GET(request: Request) {
         const [d2, m2, y2] = b.split('.').map(Number);
         return new Date(y1, m1 - 1, d1).getTime() - new Date(y2, m2 - 1, d2).getTime();
       });
-
-      const comboHits = validPast.filter((p: any) => p.isComboHit).length;
-      const scoreHits = validPast.filter((p: any) => p.isExactScoreHit).length;
-
-      const pastStats = {
-        date: cachedData.pastStats?.date || validPast[0]?.date || '14.10.2026',
-        totalFinished: validPast.length,
-        comboHitCount: comboHits,
-        comboHitRate: validPast.length > 0 ? Math.round((comboHits / validPast.length) * 100) : 0,
-        scoreHitCount: scoreHits,
-        scoreHitRate: validPast.length > 0 ? Math.round((scoreHits / validPast.length) * 100) : 0
-      };
 
       return NextResponse.json({
         success: true,

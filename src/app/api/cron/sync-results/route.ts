@@ -56,7 +56,7 @@ function cleanOdds(val: any): number | null {
   return isNaN(num) || num === 0 ? null : num;
 }
 
-async function fetchAndSyncDay(dStr: string, isoDate: string) {
+export async function fetchAndSyncDay(dStr: string, isoDate: string) {
   const url = `https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`;
 
   let txt = '';
