@@ -179,7 +179,7 @@ export async function GET(request: Request) {
         .map(enrichComboMatch)
         .filter((m: any) => m && m.combos && m.combos.length > 0);
       let pastStats = cachedData.pastStats || {
-        date: '14.10.2026',
+        date: '15.10.2026',
         totalFinished: validPast.length,
         comboHitCount: validPast.filter((p: any) => p.isComboHit).length,
         comboHitRate: 0,

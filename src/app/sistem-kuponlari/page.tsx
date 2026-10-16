@@ -138,9 +138,15 @@ export default function SistemKuponlariPage() {
       const saved = localStorage.getItem('sistem_kuponlari_cache');
       if (saved) {
         const parsed: ApiResponse = JSON.parse(saved);
-        if (parsed && parsed.coupons && parsed.coupons.length > 0) {
+        const now = new Date();
+        const todayYmd = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Istanbul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
+        const [ty, tm, td] = todayYmd.split('-');
+        const todayDot = `${td}.${tm}.${ty}`;
+        if (parsed && parsed.date === todayDot && parsed.coupons && parsed.coupons.length > 0) {
           setData(parsed);
           setLoading(false);
+        } else {
+          localStorage.removeItem('sistem_kuponlari_cache');
         }
       }
     } catch (e) {}

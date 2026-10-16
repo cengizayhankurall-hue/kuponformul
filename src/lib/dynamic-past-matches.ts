@@ -13,12 +13,18 @@ const CACHE_TTL = 3 * 60 * 1000; // 3 minutes
 
 function getYesterdayInfo() {
   const now = new Date();
-  const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
-  const yyyy = yesterday.getFullYear();
-  const mm = String(yesterday.getMonth() + 1).padStart(2, '0');
-  const dd = String(yesterday.getDate()).padStart(2, '0');
+  const todayYmd = new Intl.DateTimeFormat('en-CA', { 
+    timeZone: 'Europe/Istanbul', 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit' 
+  }).format(now);
+  const dYesterday = new Date(`${todayYmd}T12:00:00Z`);
+  dYesterday.setDate(dYesterday.getDate() - 1);
+  const yesterdayYmd = dYesterday.toISOString().split('T')[0];
+  const [yyyy, mm, dd] = yesterdayYmd.split('-');
   return {
-    isoDate: `${yyyy}-${mm}-${dd}`,
+    isoDate: yesterdayYmd,
     dotDate: `${dd}.${mm}.${yyyy}`,
     dStr: `${dd}/${mm}/${yyyy}`
   };
@@ -43,7 +49,7 @@ function calculateOutcome(iyScore: any, msScore: any): string {
 }
 
 const PRIORITY_LEAGUES = [
-  'ŞMP', 'UEGL', 'T1L', 'TSL', 'İNCL', 'İNP', 'İTA', 'İSP', 'AL1', 'AL2',
+  'AVL', 'AVKL', 'ŞMP', 'UEGL', 'T1L', 'TSL', 'SUUD', 'AFCŞL2', 'İNCL', 'İNP', 'İTA', 'İSP', 'AL1', 'AL2',
   'FRA', 'ÇEK', 'BLR', 'AL3', 'ABD', 'HOL', 'POR'
 ];
 

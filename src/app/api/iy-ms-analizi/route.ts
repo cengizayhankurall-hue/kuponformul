@@ -342,7 +342,7 @@ export async function GET(request: Request) {
       const validUpcoming = (cachedData.matches || []).filter((m: any) => isStrictValidMatch(m) && isUpcomingDate(m.date));
       let validPast = (cachedData.pastMatches || []).filter(isStrictValidMatch);
       let pastStats = cachedData.pastStats || {
-        date: '14.10.2026',
+        date: '15.10.2026',
         totalFinished: validPast.length,
         topHitCount: validPast.filter((m: any) => m.isTopHit).length,
         topHitRate: 0
