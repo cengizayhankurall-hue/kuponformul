@@ -97,7 +97,19 @@ function loadStoredCoupons(dateStr: string): SystemCoupon[] | null {
   return null;
 }
 
-function saveStoredCoupons(dateStr: string, coupons: SystemCoupon[]) {
+function loadStoredPayload(dateStr: string): any | null {
+  try {
+    if (fs.existsSync(STORE_FILE)) {
+      const data = JSON.parse(fs.readFileSync(STORE_FILE, 'utf-8'));
+      if (data && data[dateStr] && Array.isArray(data[dateStr].coupons) && data[dateStr].coupons.length >= 4) {
+        return data[dateStr];
+      }
+    }
+  } catch (e) {}
+  return null;
+}
+
+function saveStoredCoupons(dateStr: string, coupons: SystemCoupon[], yesterday?: any) {
   try {
     const dir = path.dirname(STORE_FILE);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -109,7 +121,8 @@ function saveStoredCoupons(dateStr: string, coupons: SystemCoupon[]) {
     }
     data[dateStr] = {
       timestamp: Date.now(),
-      coupons
+      coupons,
+      ...(yesterday ? { yesterday } : (data[dateStr]?.yesterday ? { yesterday: data[dateStr].yesterday } : {}))
     };
     fs.writeFileSync(STORE_FILE, JSON.stringify(data, null, 2), 'utf-8');
   } catch (e) {}
@@ -703,6 +716,25 @@ function createEvaluatedPastCoupon(
 export async function GET() {
   const dates = getIstanbulDates();
   const now = Date.now();
+
+  // 1. Önce hafıza veya kalıcı disk deposunu kontrol et (Sunucu yeniden başlasa bile kupon asla değişmez/kaybolmaz!)
+  if (!cachedSystemResponse || cachedSystemResponse.dateKey !== dates.todayDot) {
+    const stored = loadStoredPayload(dates.todayDot);
+    if (stored && Array.isArray(stored.coupons) && stored.coupons.length >= 4 && stored.coupons.every((c: any) => Array.isArray(c.matches) && c.matches.length === 9)) {
+      cachedSystemResponse = {
+        dateKey: dates.todayDot,
+        timestamp: stored.timestamp || now,
+        lastLiveScoreUpdate: 0,
+        payload: {
+          success: true,
+          timestamp: stored.timestamp || now,
+          date: dates.todayDot,
+          coupons: stored.coupons,
+          yesterday: stored.yesterday || null
+        }
+      };
+    }
+  }
 
   // Gün boyunca sabit kupon kontrolü: Aynı gün içindeyse kuponlar ve maçlar ASLA değişmez!
   if (cachedSystemResponse && cachedSystemResponse.dateKey === dates.todayDot) {
@@ -2345,7 +2377,7 @@ export async function GET() {
       yesterday: yesterdaySummary
     };
 
-    // Cache kaydet (4 kupon da tamamsa)
+    // Cache ve diske kalıcı kaydet (4 kupon da tamamsa)
     if (todayCoupons.length >= 4 && todayCoupons.every(c => c.matches.length === 9)) {
       cachedSystemResponse = {
         dateKey: dates.todayDot,
@@ -2353,6 +2385,7 @@ export async function GET() {
         lastLiveScoreUpdate: Date.now(),
         payload
       };
+      saveStoredCoupons(dates.todayDot, todayCoupons, yesterdaySummary);
     }
 
     return NextResponse.json(payload);
