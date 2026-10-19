@@ -142,7 +142,11 @@ export default function SistemKuponlariPage() {
         const todayYmd = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Istanbul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
         const [ty, tm, td] = todayYmd.split('-');
         const todayDot = `${td}.${tm}.${ty}`;
-        if (parsed && parsed.date === todayDot && parsed.coupons && parsed.coupons.length > 0) {
+        const dYesterday = new Date(`${todayYmd}T12:00:00Z`);
+        dYesterday.setDate(dYesterday.getDate() - 1);
+        const [yy, ym, yd] = dYesterday.toISOString().split('T')[0].split('-');
+        const yesterdayDot = `${yd}.${ym}.${yy}`;
+        if (parsed && parsed.date === todayDot && parsed.yesterday?.date === yesterdayDot && parsed.coupons && parsed.coupons.length > 0) {
           setData(parsed);
           setLoading(false);
         } else {

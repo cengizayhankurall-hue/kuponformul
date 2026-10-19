@@ -77280,46 +77280,46 @@
   ],
   "pastMatches": [
     {
-      "id": "542a9a35-f8ba-40a2-9495-ef9483dfef23",
-      "eventId": "542a9a3",
-      "code": "542a9",
-      "homeTeam": "Union St.G",
-      "awayTeam": "Real Sociedad",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 1",
-      "iyScore": "0-0",
-      "actualOutcome": "X/X",
+      "id": "4c1ccfda-8202-44d9-9357-ec06899b951f",
+      "eventId": "4c1ccfd",
+      "code": "4c1cc",
+      "homeTeam": "Kasimpaşa",
+      "awayTeam": "Samsunspor",
+      "league": "TSL",
+      "date": "18.10.2026",
+      "time": "13:30",
+      "score": "4 - 1",
+      "iyScore": "2-1",
+      "actualOutcome": "1/1",
       "status": "MS",
       "odds": {
-        "ms1": 2.29,
-        "ms0": 3.24,
-        "ms2": 2.32,
-        "iy1": 2.79,
-        "iy0": 2.16,
-        "iy2": 2.81
+        "ms1": 2.24,
+        "ms0": 2.94,
+        "ms2": 2.49,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "3.44",
+        "1/1": "3.36",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "5.27",
-        "X/X": "5.18",
-        "X/2": "5.34",
+        "X/1": "5.15",
+        "X/X": "4.70",
+        "X/2": "5.73",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "3.48"
+        "2/2": "3.74"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
       "topOutcome": {
-        "key": "X/X",
+        "key": "1/1",
         "count": 18,
         "rate": 64
       },
       "surpriseOutcome": {
-        "key": "X/X",
+        "key": "X/1",
         "count": 8,
         "rate": 22
       },
@@ -77329,8 +77329,8 @@
         "1/1": {
           "key": "1/1",
           "label": "1/1",
-          "count": 4,
-          "rate": 12
+          "count": 18,
+          "rate": 64
         },
         "X/1": {
           "key": "X/1",
@@ -77353,8 +77353,8 @@
         "X/X": {
           "key": "X/X",
           "label": "X/X",
-          "count": 16,
-          "rate": 55
+          "count": 5,
+          "rate": 15
         },
         "2/X": {
           "key": "2/X",
@@ -77383,36 +77383,36 @@
       }
     },
     {
-      "id": "3c56dad6-9092-4911-b30a-89afb35c3d85",
-      "eventId": "3c56dad",
-      "code": "3c56d",
-      "homeTeam": "Lech Poznan",
-      "awayTeam": "B.Leverkusen",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "0 - 4",
-      "iyScore": "0-3",
+      "id": "3eaea599-6044-4c3b-9519-d64287e2d8db",
+      "eventId": "3eaea59",
+      "code": "3eaea",
+      "homeTeam": "Kocaelispor",
+      "awayTeam": "Göztepe",
+      "league": "TSL",
+      "date": "18.10.2026",
+      "time": "16:00",
+      "score": "1 - 2",
+      "iyScore": "0-1",
       "actualOutcome": "2/2",
       "status": "MS",
       "odds": {
-        "ms1": 5.45,
-        "ms0": 4.59,
-        "ms2": 1.29,
-        "iy1": 5.22,
-        "iy0": 2.58,
-        "iy2": 1.67
+        "ms1": 2.51,
+        "ms0": 2.95,
+        "ms2": 2.22,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "8.18",
+        "1/1": "3.76",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "12.54",
-        "X/X": "7.34",
-        "X/2": "2.97",
+        "X/1": "5.77",
+        "X/X": "4.72",
+        "X/2": "5.11",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "1.94"
+        "2/2": "3.33"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
@@ -77486,46 +77486,46 @@
       }
     },
     {
-      "id": "64b8d051-8b79-422d-81cb-e58f87754bc4",
-      "eventId": "64b8d05",
-      "code": "64b8d",
-      "homeTeam": "Torreense",
-      "awayTeam": "Sunderland",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 2",
+      "id": "b071ff7f-f343-42fe-a065-ca55652d1796",
+      "eventId": "b071ff7",
+      "code": "b071f",
+      "homeTeam": "Başakşehir Fk",
+      "awayTeam": "Gaziantep Fk",
+      "league": "TSL",
+      "date": "18.10.2026",
+      "time": "19:00",
+      "score": "2 - 1",
       "iyScore": "1-0",
-      "actualOutcome": "1/2",
+      "actualOutcome": "1/1",
       "status": "MS",
       "odds": {
-        "ms1": 9.67,
-        "ms0": 5.21,
-        "ms2": 1.14,
-        "iy1": 8.63,
-        "iy0": 2.47,
-        "iy2": 1.52
+        "ms1": 1.54,
+        "ms0": 3.69,
+        "ms2": 3.77,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "14.50",
+        "1/1": "2.31",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "22.24",
-        "X/X": "8.34",
-        "X/2": "2.62",
+        "X/1": "3.54",
+        "X/X": "5.90",
+        "X/2": "8.67",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "1.71"
+        "2/2": "5.66"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
       "topOutcome": {
-        "key": "1/2",
+        "key": "1/1",
         "count": 18,
         "rate": 64
       },
       "surpriseOutcome": {
-        "key": "X/2",
+        "key": "X/1",
         "count": 8,
         "rate": 22
       },
@@ -77535,8 +77535,8 @@
         "1/1": {
           "key": "1/1",
           "label": "1/1",
-          "count": 4,
-          "rate": 12
+          "count": 18,
+          "rate": 64
         },
         "X/1": {
           "key": "X/1",
@@ -77571,8 +77571,8 @@
         "1/2": {
           "key": "1/2",
           "label": "1/2",
-          "count": 7,
-          "rate": 25
+          "count": 2,
+          "rate": 4
         },
         "X/2": {
           "key": "X/2",
@@ -77589,36 +77589,139 @@
       }
     },
     {
-      "id": "751e5147-edb1-4d06-b62a-fabf50a5d989",
-      "eventId": "751e514",
-      "code": "751e5",
-      "homeTeam": "Hoffenheim",
-      "awayTeam": "Beşiktaş",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 3",
+      "id": "d0065dcf-741b-4c39-9ef6-99bbb84cdf98",
+      "eventId": "d0065dc",
+      "code": "d0065",
+      "homeTeam": "Iğdır Fk",
+      "awayTeam": "Boluspor",
+      "league": "T1L",
+      "date": "18.10.2026",
+      "time": "13:30",
+      "score": "1 - 0",
+      "iyScore": "0-0",
+      "actualOutcome": "X/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 2.1,
+        "ms0": 6.07,
+        "ms2": 11.9,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "3.15",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "4.83",
+        "X/X": "9.71",
+        "X/2": "27.37",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "17.85"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "X/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 15,
+          "rate": 52
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "e111caa6-5651-43df-b8da-d516a9184dac",
+      "eventId": "e111caa",
+      "code": "e111c",
+      "homeTeam": "Van Spor Fk",
+      "awayTeam": "Ümraniyespor",
+      "league": "T1L",
+      "date": "18.10.2026",
+      "time": "16:00",
+      "score": "0 - 2",
       "iyScore": "0-0",
       "actualOutcome": "X/2",
       "status": "MS",
       "odds": {
-        "ms1": 1.65,
-        "ms0": 3.56,
-        "ms2": 3.44,
-        "iy1": 2.11,
-        "iy0": 2.28,
-        "iy2": 3.78
+        "ms1": 1.93,
+        "ms0": 2.97,
+        "ms2": 2.72,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "2.47",
+        "1/1": "2.90",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "3.79",
-        "X/X": "5.70",
-        "X/2": "7.91",
+        "X/1": "4.44",
+        "X/X": "4.75",
+        "X/2": "6.26",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "5.16"
+        "2/2": "4.08"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
@@ -77692,345 +77795,36 @@
       }
     },
     {
-      "id": "256addb7-c160-480d-96e0-8632dbfcf7f7",
-      "eventId": "256addb",
-      "code": "256ad",
-      "homeTeam": "Benfica",
-      "awayTeam": "Celtic",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "4 - 1",
-      "iyScore": "3-0",
-      "actualOutcome": "1/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1,
-        "ms0": 7.48,
-        "ms2": 11.85,
-        "iy1": 1.33,
-        "iy0": 3.23,
-        "iy2": 8.75
-      },
-      "openedOdds": {
-        "1/1": "1.50",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.30",
-        "X/X": "11.97",
-        "X/2": "27.25",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "17.77"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "1/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 18,
-          "rate": 64
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "815dc3a0-1995-4048-b2e6-7870ffcd691b",
-      "eventId": "815dc3a",
-      "code": "815dc",
-      "homeTeam": "Ferencvaros",
-      "awayTeam": "Viktoria Plzen",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 1",
-      "iyScore": "0-0",
-      "actualOutcome": "X/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.63,
-        "ms0": 3.5,
-        "ms2": 3.61,
-        "iy1": 2.11,
-        "iy0": 2.21,
-        "iy2": 3.99
-      },
-      "openedOdds": {
-        "1/1": "2.44",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "3.75",
-        "X/X": "5.60",
-        "X/2": "8.30",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "5.42"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 15,
-          "rate": 52
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "9e0efbb4-e20f-4ff4-82dc-297f661209c0",
-      "eventId": "9e0efbb",
-      "code": "9e0ef",
-      "homeTeam": "Rennes",
-      "awayTeam": "Ofi",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 1",
-      "iyScore": "0-1",
-      "actualOutcome": "2/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.09,
-        "ms0": 6.26,
-        "ms2": 10.25,
-        "iy1": 1.41,
-        "iy0": 2.88,
-        "iy2": 8.24
-      },
-      "openedOdds": {
-        "1/1": "1.64",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.51",
-        "X/X": "10.02",
-        "X/2": "23.57",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "15.38"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "2/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 8,
-          "rate": 30
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "a15b17f6-34f8-4ac2-9413-33d02094ab3c",
-      "eventId": "a15b17f",
-      "code": "a15b1",
-      "homeTeam": "Nijmegen",
-      "awayTeam": "Levski Sofya",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "1 - 1",
+      "id": "be91c090-e49f-4e0b-bf9b-39b818fe1180",
+      "eventId": "be91c09",
+      "code": "be91c",
+      "homeTeam": "Kayserispor",
+      "awayTeam": "Batman Petrol",
+      "league": "T1L",
+      "date": "18.10.2026",
+      "time": "16:00",
+      "score": "2 - 2",
       "iyScore": "0-1",
       "actualOutcome": "2/X",
       "status": "MS",
       "odds": {
-        "ms1": 1.67,
-        "ms0": 3.2,
-        "ms2": 3.75,
-        "iy1": 2.23,
-        "iy0": 2.01,
-        "iy2": 4.31
+        "ms1": 1.47,
+        "ms0": 3.39,
+        "ms2": 3.99,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "2.50",
+        "1/1": "2.21",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "3.84",
-        "X/X": "5.12",
-        "X/2": "8.63",
+        "X/1": "3.38",
+        "X/X": "5.42",
+        "X/2": "9.18",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "5.63"
+        "2/2": "5.99"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
@@ -78104,345 +77898,36 @@
       }
     },
     {
-      "id": "719107bf-c2f0-4702-b479-09a16b02fd8f",
-      "eventId": "719107b",
-      "code": "71910",
-      "homeTeam": "Dinamo Zagreb",
-      "awayTeam": "Anderlecht",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "1 - 0",
-      "iyScore": "0-0",
-      "actualOutcome": "X/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.67,
-        "ms0": 3.38,
-        "ms2": 3.55,
-        "iy1": 2.16,
-        "iy0": 2.16,
-        "iy2": 3.97
-      },
-      "openedOdds": {
-        "1/1": "2.50",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "3.84",
-        "X/X": "5.41",
-        "X/2": "8.16",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "5.32"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 15,
-          "rate": 52
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "1483ae05-cc9e-421e-ac77-ac0c382c7b8a",
-      "eventId": "1483ae0",
-      "code": "1483a",
-      "homeTeam": "Celta Vigo",
-      "awayTeam": "Juventus",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "1 - 2",
-      "iyScore": "1-0",
-      "actualOutcome": "1/2",
-      "status": "MS",
-      "odds": {
-        "ms1": 3.04,
-        "ms0": 2.84,
-        "ms2": 2.02,
-        "iy1": 3.82,
-        "iy0": 1.83,
-        "iy2": 2.72
-      },
-      "openedOdds": {
-        "1/1": "4.56",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "6.99",
-        "X/X": "4.54",
-        "X/2": "4.65",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "3.03"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "1/2",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/2",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 7,
-          "rate": 25
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "0d4eba8c-ea58-4d43-b50b-3c8418e34764",
-      "eventId": "0d4eba8",
-      "code": "0d4eb",
-      "homeTeam": "Jagiellonia",
-      "awayTeam": "Ararat-Armenia",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "3 - 1",
-      "iyScore": "2-1",
-      "actualOutcome": "1/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.27,
-        "ms0": 4.43,
-        "ms2": 6.15,
-        "iy1": 1.67,
-        "iy0": 2.43,
-        "iy2": 5.92
-      },
-      "openedOdds": {
-        "1/1": "1.91",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.92",
-        "X/X": "7.09",
-        "X/2": "14.14",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "9.23"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "1/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 18,
-          "rate": 64
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "1766f7fe-6264-4dae-9999-b1f24b6a6d25",
-      "eventId": "1766f7f",
-      "code": "1766f",
-      "homeTeam": "Marsilya",
-      "awayTeam": "Olympiakos",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "0 - 1",
+      "id": "5f920226-e0de-42f6-aa94-8cef8ac45736",
+      "eventId": "5f92022",
+      "code": "5f920",
+      "homeTeam": "İstanbulspor",
+      "awayTeam": "Antalyaspor",
+      "league": "T1L",
+      "date": "18.10.2026",
+      "time": "19:00",
+      "score": "0 - 2",
       "iyScore": "0-1",
       "actualOutcome": "2/2",
       "status": "MS",
       "odds": {
-        "ms1": 2.55,
-        "ms0": 3.03,
-        "ms2": 2.2,
-        "iy1": 3.14,
-        "iy0": 2,
-        "iy2": 2.78
+        "ms1": 2.65,
+        "ms0": 2.98,
+        "ms2": 1.97,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "3.82",
+        "1/1": "3.97",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "5.86",
-        "X/X": "4.85",
-        "X/2": "5.06",
+        "X/1": "6.09",
+        "X/X": "4.77",
+        "X/2": "4.53",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "3.30"
+        "2/2": "2.96"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
@@ -78516,36 +78001,242 @@
       }
     },
     {
-      "id": "2aa8c6f2-7280-4fb7-b390-0c6c9f72dfca",
-      "eventId": "2aa8c6f",
-      "code": "2aa8c",
-      "homeTeam": "Bournemouth",
-      "awayTeam": "Sturm Graz",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "3 - 0",
-      "iyScore": "1-0",
+      "id": "6104a4d9-0a53-4430-b34d-7fb614b53abf",
+      "eventId": "6104a4d",
+      "code": "6104a",
+      "homeTeam": "Udinese",
+      "awayTeam": "Lecce",
+      "league": "İTA",
+      "date": "18.10.2026",
+      "time": "13:30",
+      "score": "0 - 3",
+      "iyScore": "0-2",
+      "actualOutcome": "2/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.6,
+        "ms0": 3.15,
+        "ms2": 4.09,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.40",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "3.68",
+        "X/X": "5.04",
+        "X/2": "9.41",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "6.13"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/2",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/2",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 19,
+          "rate": 66
+        }
+      }
+    },
+    {
+      "id": "de2d9643-f455-4ad0-94b6-166f43b9c6ba",
+      "eventId": "de2d964",
+      "code": "de2d9",
+      "homeTeam": "Fiorentina",
+      "awayTeam": "Como",
+      "league": "İTA",
+      "date": "18.10.2026",
+      "time": "16:00",
+      "score": "1 - 3",
+      "iyScore": "1-2",
+      "actualOutcome": "2/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 2.69,
+        "ms0": 3.14,
+        "ms2": 2.01,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "4.04",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "6.19",
+        "X/X": "5.02",
+        "X/2": "4.62",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "3.01"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/2",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/2",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 19,
+          "rate": 66
+        }
+      }
+    },
+    {
+      "id": "e34baa69-9645-432f-ac6e-7667639bc6dd",
+      "eventId": "e34baa6",
+      "code": "e34ba",
+      "homeTeam": "Ac Milan",
+      "awayTeam": "Atalanta",
+      "league": "İTA",
+      "date": "18.10.2026",
+      "time": "19:00",
+      "score": "3 - 2",
+      "iyScore": "2-0",
       "actualOutcome": "1/1",
       "status": "MS",
       "odds": {
-        "ms1": 1,
-        "ms0": 7.4,
-        "ms2": 12.75,
-        "iy1": 1.34,
-        "iy0": 3.08,
-        "iy2": 9.58
+        "ms1": 1.45,
+        "ms0": 3.7,
+        "ms2": 4.37,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "1.50",
+        "1/1": "2.17",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "2.30",
-        "X/X": "11.84",
-        "X/2": "29.32",
+        "X/1": "3.33",
+        "X/X": "5.92",
+        "X/2": "10.05",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "19.13"
+        "2/2": "6.55"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
@@ -78619,36 +78310,1169 @@
       }
     },
     {
-      "id": "4302c9ce-5401-459f-8461-7299372f7131",
-      "eventId": "4302c9c",
-      "code": "4302c",
-      "homeTeam": "Az Alkmaar",
-      "awayTeam": "Hapoel Beer She",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
+      "id": "7449da17-d055-494e-b2a6-86b9c63715f2",
+      "eventId": "7449da1",
+      "code": "7449d",
+      "homeTeam": "Juventus",
+      "awayTeam": "Lazio",
+      "league": "İTA",
+      "date": "18.10.2026",
+      "time": "21:45",
+      "score": "0 - 3",
+      "iyScore": "0-1",
+      "actualOutcome": "2/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.44,
+        "ms0": 3.55,
+        "ms2": 4.74,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.16",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "3.31",
+        "X/X": "5.68",
+        "X/2": "10.90",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "7.11"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/2",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/2",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 19,
+          "rate": 66
+        }
+      }
+    },
+    {
+      "id": "7abe6701-ff56-4e48-b53d-17b7f80d12ab",
+      "eventId": "7abe670",
+      "code": "7abe6",
+      "homeTeam": "Zwolle",
+      "awayTeam": "Go Ahead Eagles",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "13:15",
+      "score": "4 - 1",
+      "iyScore": "0-1",
+      "actualOutcome": "2/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 3.24,
+        "ms0": 3.5,
+        "ms2": 1.68,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "4.86",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "7.45",
+        "X/X": "5.60",
+        "X/2": "3.86",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "2.52"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 8,
+          "rate": 30
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "cc422450-9ef2-48a1-ba63-e793f44a2227",
+      "eventId": "cc42245",
+      "code": "cc422",
+      "homeTeam": "Cambuur",
+      "awayTeam": "Az Alkmaar",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "15:30",
+      "score": "2 - 2",
+      "iyScore": "2-1",
+      "actualOutcome": "1/X",
+      "status": "MS",
+      "odds": {
+        "ms1": 5.25,
+        "ms0": 4.42,
+        "ms2": 1.3,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "7.88",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "12.07",
+        "X/X": "7.07",
+        "X/2": "2.99",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "1.95"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "1/X",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/X",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 10,
+          "rate": 35
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "572a0d1f-4660-43c2-b296-decaa229f2cc",
+      "eventId": "572a0d1",
+      "code": "572a0",
+      "homeTeam": "Groningen",
+      "awayTeam": "Ajax",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "17:45",
+      "score": "2 - 5",
+      "iyScore": "0-2",
+      "actualOutcome": "2/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 3.07,
+        "ms0": 3.6,
+        "ms2": 1.71,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "4.60",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "7.06",
+        "X/X": "5.76",
+        "X/2": "3.93",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "2.56"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/2",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/2",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 19,
+          "rate": 66
+        }
+      }
+    },
+    {
+      "id": "9cd674da-dc49-43a0-b919-225228de8789",
+      "eventId": "9cd674d",
+      "code": "9cd67",
+      "homeTeam": "Nijmegen",
+      "awayTeam": "Fortuna Sittard",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "21:00",
+      "score": "2 - 2",
+      "iyScore": "1-1",
+      "actualOutcome": "X/X",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.53,
+        "ms0": 3.63,
+        "ms2": 3.9,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.29",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "3.52",
+        "X/X": "5.81",
+        "X/2": "8.97",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "5.85"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "X/X",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/X",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 16,
+          "rate": 55
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "dfbd0231-09c1-4dcc-a5a7-4ba1d36222e6",
+      "eventId": "dfbd023",
+      "code": "dfbd0",
+      "homeTeam": "Twente",
+      "awayTeam": "Utrecht",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "21:00",
+      "score": "1 - 2",
+      "iyScore": "1-0",
+      "actualOutcome": "1/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.19,
+        "ms0": 5.01,
+        "ms2": 6.91,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "1.78",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "2.74",
+        "X/X": "8.02",
+        "X/2": "15.89",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "10.37"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "1/2",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/2",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 7,
+          "rate": 25
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "05b2460c-e254-4899-bb80-774afc087120",
+      "eventId": "05b2460",
+      "code": "05b24",
+      "homeTeam": "Cincinnati",
+      "awayTeam": "Columbus",
+      "league": "ABD",
+      "date": "18.10.2026",
+      "time": "00:00",
+      "score": "0 - 2",
+      "iyScore": "0-1",
+      "actualOutcome": "2/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 2.06,
+        "ms0": 3.59,
+        "ms2": 2.36,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "3.09",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "4.74",
+        "X/X": "5.74",
+        "X/2": "5.43",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "3.54"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/2",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/2",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 19,
+          "rate": 66
+        }
+      }
+    },
+    {
+      "id": "ee6e20ab-bcad-4c45-a5a2-0a8eafd8001b",
+      "eventId": "ee6e20a",
+      "code": "ee6e2",
+      "homeTeam": "Chattanooga",
+      "awayTeam": "New York City I",
+      "league": "ABD-NP",
+      "date": "18.10.2026",
+      "time": "00:00",
+      "score": "3 - 1",
+      "iyScore": "1-0",
+      "actualOutcome": "1/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.68,
+        "ms0": 3.27,
+        "ms2": 3,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.52",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "3.86",
+        "X/X": "5.23",
+        "X/2": "6.90",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "4.50"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "1/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 18,
+          "rate": 64
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "e93f5872-3abc-458e-88da-2258b2d54e03",
+      "eventId": "e93f587",
+      "code": "e93f5",
+      "homeTeam": "Houston Dynamo",
+      "awayTeam": "Los Angeles Ii",
+      "league": "ABD-NP",
+      "date": "18.10.2026",
+      "time": "02:00",
+      "score": "2 - 2",
+      "iyScore": "0-1",
+      "actualOutcome": "2/X",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.74,
+        "ms0": 3.17,
+        "ms2": 2.92,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.61",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "4.00",
+        "X/X": "5.07",
+        "X/2": "6.72",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "4.38"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/X",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/X",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 9,
+          "rate": 32
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "b3639667-8d72-464f-8ef6-7f05ccb365cd",
+      "eventId": "b363966",
+      "code": "b3639",
+      "homeTeam": "Crown Legacy",
+      "awayTeam": "New York Rb Ii",
+      "league": "ABD-NP",
+      "date": "18.10.2026",
+      "time": "02:00",
       "score": "2 - 1",
-      "iyScore": "0-0",
+      "iyScore": "2-0",
+      "actualOutcome": "1/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.96,
+        "ms0": 3.34,
+        "ms2": 2.35,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.94",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "4.51",
+        "X/X": "5.34",
+        "X/2": "5.40",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "3.53"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "1/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 18,
+          "rate": 64
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "998a3a44-fc48-4e4b-bdb2-9e227196f7ff",
+      "eventId": "998a3a4",
+      "code": "998a3",
+      "homeTeam": "Austin Ii",
+      "awayTeam": "San Jose Earthq",
+      "league": "ABD-NP",
+      "date": "18.10.2026",
+      "time": "03:30",
+      "score": "2 - 1",
+      "iyScore": "0-1",
+      "actualOutcome": "2/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.7,
+        "ms0": 3.07,
+        "ms2": 3.13,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.55",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "3.91",
+        "X/X": "4.91",
+        "X/2": "7.20",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "4.70"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 8,
+          "rate": 30
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "8257bf35-040e-456a-a81f-0900d01fb4eb",
+      "eventId": "8257bf3",
+      "code": "8257b",
+      "homeTeam": "B.Leverkusen",
+      "awayTeam": "Freiburg",
+      "league": "AL1",
+      "date": "18.10.2026",
+      "time": "16:30",
+      "score": "2 - 1",
+      "iyScore": "1-1",
       "actualOutcome": "X/1",
       "status": "MS",
       "odds": {
-        "ms1": 1.31,
-        "ms0": 4.39,
-        "ms2": 5.31,
-        "iy1": 1.72,
-        "iy0": 2.48,
-        "iy2": 5.22
+        "ms1": 1.43,
+        "ms0": 3.98,
+        "ms2": 4.19,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "1.97",
+        "1/1": "2.15",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "3.01",
-        "X/X": "7.02",
-        "X/2": "12.21",
+        "X/1": "3.29",
+        "X/X": "6.37",
+        "X/2": "9.64",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "7.96"
+        "2/2": "6.29"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
@@ -78722,32 +79546,341 @@
       }
     },
     {
-      "id": "f8019173-bf44-4de6-8570-3a5055ea6dda",
-      "eventId": "f801917",
-      "code": "f8019",
-      "homeTeam": "Lyon",
-      "awayTeam": "Crystal Palace",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "3 - 2",
+      "id": "f77f7cb0-12e7-4bfa-9a67-1c7b6dcdfb2b",
+      "eventId": "f77f7cb",
+      "code": "f77f7",
+      "homeTeam": "M Gladbach",
+      "awayTeam": "Hoffenheim",
+      "league": "AL1",
+      "date": "18.10.2026",
+      "time": "18:30",
+      "score": "1 - 2",
+      "iyScore": "0-1",
+      "actualOutcome": "2/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 2.52,
+        "ms0": 3.54,
+        "ms2": 1.96,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "3.78",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "5.80",
+        "X/X": "5.66",
+        "X/2": "4.51",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "2.94"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/2",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/2",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 19,
+          "rate": 66
+        }
+      }
+    },
+    {
+      "id": "b31226e8-3410-4fb0-a786-353756b9d6f9",
+      "eventId": "b31226e",
+      "code": "b3122",
+      "homeTeam": "Arminia Bielef",
+      "awayTeam": "Osnabruck",
+      "league": "AL2",
+      "date": "18.10.2026",
+      "time": "14:30",
+      "score": "2 - 1",
+      "iyScore": "1-1",
+      "actualOutcome": "X/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.68,
+        "ms0": 3.27,
+        "ms2": 3.49,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.52",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "3.86",
+        "X/X": "5.23",
+        "X/2": "8.03",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "5.24"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "X/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 15,
+          "rate": 52
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "82b6f948-6a6f-433a-b88b-6140544673c6",
+      "eventId": "82b6f94",
+      "code": "82b6f",
+      "homeTeam": "Karlsruhe",
+      "awayTeam": "Darmstadt",
+      "league": "AL2",
+      "date": "18.10.2026",
+      "time": "14:30",
+      "score": "4 - 0",
       "iyScore": "2-0",
       "actualOutcome": "1/1",
       "status": "MS",
       "odds": {
-        "ms1": 2.34,
-        "ms0": 3.26,
-        "ms2": 2.26,
-        "iy1": 2.84,
-        "iy0": 2.16,
-        "iy2": 2.77
+        "ms1": 2.06,
+        "ms0": 3.25,
+        "ms2": 2.53,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "3.51",
+        "1/1": "3.09",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "5.38",
-        "X/X": "5.22",
+        "X/1": "4.74",
+        "X/X": "5.20",
+        "X/2": "5.82",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "3.79"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "1/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 18,
+          "rate": 64
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "f46d6219-254b-4e4e-aef5-de1f969a98d7",
+      "eventId": "f46d621",
+      "code": "f46d6",
+      "homeTeam": "Dynamo Dresden",
+      "awayTeam": "Magdeburg",
+      "league": "AL2",
+      "date": "18.10.2026",
+      "time": "14:30",
+      "score": "2 - 0",
+      "iyScore": "1-0",
+      "actualOutcome": "1/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 2.32,
+        "ms0": 3.19,
+        "ms2": 2.26,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "3.48",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "5.34",
+        "X/X": "5.10",
         "X/2": "5.20",
         "2/1": "26.00",
         "2/X": "14.50",
@@ -78825,345 +79958,36 @@
       }
     },
     {
-      "id": "b8e9996d-3586-4c7f-b9b3-76fdf618c4cb",
-      "eventId": "b8e9996",
-      "code": "b8e99",
-      "homeTeam": "Salzburg",
-      "awayTeam": "Ac Milan",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "0 - 4",
-      "iyScore": "0-2",
-      "actualOutcome": "2/2",
-      "status": "MS",
-      "odds": {
-        "ms1": 3.39,
-        "ms0": 3.26,
-        "ms2": 1.74,
-        "iy1": 3.82,
-        "iy0": 2.14,
-        "iy2": 2.22
-      },
-      "openedOdds": {
-        "1/1": "5.08",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "7.80",
-        "X/X": "5.22",
-        "X/2": "4.00",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "2.61"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "2/2",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/2",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 19,
-          "rate": 66
-        }
-      }
-    },
-    {
-      "id": "0f4247e5-231a-4615-8e0c-4caf21f889e5",
-      "eventId": "0f4247e",
-      "code": "0f424",
-      "homeTeam": "Celje",
-      "awayTeam": "Omonia",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "0 - 3",
-      "iyScore": "0-1",
-      "actualOutcome": "2/2",
-      "status": "MS",
-      "odds": {
-        "ms1": 2.76,
-        "ms0": 3.04,
-        "ms2": 2.06,
-        "iy1": 3.3,
-        "iy0": 2.04,
-        "iy2": 2.61
-      },
-      "openedOdds": {
-        "1/1": "4.14",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "6.35",
-        "X/X": "4.86",
-        "X/2": "4.74",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "3.09"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "2/2",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/2",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 19,
-          "rate": 66
-        }
-      }
-    },
-    {
-      "id": "7d546f8a-8da2-46aa-b712-33a17d88b9b6",
-      "eventId": "7d546f8",
-      "code": "7d546",
-      "homeTeam": "Sparta Prag",
-      "awayTeam": "Lillestrom",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 1",
-      "iyScore": "0-0",
-      "actualOutcome": "X/X",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.24,
-        "ms0": 4.8,
-        "ms2": 6.04,
-        "iy1": 1.62,
-        "iy0": 2.62,
-        "iy2": 5.63
-      },
-      "openedOdds": {
-        "1/1": "1.86",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.85",
-        "X/X": "7.68",
-        "X/2": "13.89",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "9.06"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/X",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/X",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 16,
-          "rate": 55
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "21a61a7b-fe3a-46dd-839c-73da06d54fbb",
-      "eventId": "21a61a7",
-      "code": "21a61",
-      "homeTeam": "Panathinaikos",
-      "awayTeam": "Borac Banja Luk",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
+      "id": "1edc93fc-bb49-4e5c-a79f-822dc0ff07a1",
+      "eventId": "1edc93f",
+      "code": "1edc9",
+      "homeTeam": "Hoffenheim Ii",
+      "awayTeam": "Verl 1924",
+      "league": "AL3",
+      "date": "18.10.2026",
+      "time": "14:30",
       "score": "2 - 1",
-      "iyScore": "1-0",
+      "iyScore": "2-1",
       "actualOutcome": "1/1",
       "status": "MS",
       "odds": {
-        "ms1": 1.07,
-        "ms0": 6.4,
-        "ms2": 12.15,
-        "iy1": 1.4,
-        "iy0": 2.76,
-        "iy2": 9.8
+        "ms1": 1.67,
+        "ms0": 3.72,
+        "ms2": 3.11,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "1.60",
+        "1/1": "2.50",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "2.46",
-        "X/X": "10.24",
-        "X/2": "27.95",
+        "X/1": "3.84",
+        "X/X": "5.95",
+        "X/2": "7.15",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "18.23"
+        "2/2": "4.67"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
@@ -79237,654 +80061,36 @@
       }
     },
     {
-      "id": "5ab5d3b3-76b6-4212-b1c1-fa626b6d612d",
-      "eventId": "5ab5d3b",
-      "code": "5ab5d",
-      "homeTeam": "Hajduk Split",
-      "awayTeam": "Ajax",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "2 - 1",
-      "iyScore": "1-0",
-      "actualOutcome": "1/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 3.74,
-        "ms0": 3.69,
-        "ms2": 1.57,
-        "iy1": 4.08,
-        "iy0": 2.27,
-        "iy2": 2.04
-      },
-      "openedOdds": {
-        "1/1": "5.61",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "8.60",
-        "X/X": "5.90",
-        "X/2": "3.61",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "2.35"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "1/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 18,
-          "rate": 64
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "40fef11d-ff7f-407e-a769-bbbf95e167f8",
-      "eventId": "40fef11",
-      "code": "40fef",
-      "homeTeam": "Egnatia",
-      "awayTeam": "Midtjylland",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 1",
-      "iyScore": "1-1",
-      "actualOutcome": "X/X",
-      "status": "MS",
-      "odds": {
-        "ms1": 5.82,
-        "ms0": 4.13,
-        "ms2": 1.31,
-        "iy1": 5.85,
-        "iy0": 2.29,
-        "iy2": 1.76
-      },
-      "openedOdds": {
-        "1/1": "8.73",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "13.39",
-        "X/X": "6.61",
-        "X/2": "3.01",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "1.97"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/X",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/X",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 16,
-          "rate": 55
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "65749069-743a-4070-9379-1944aa87f15b",
-      "eventId": "6574906",
-      "code": "65749",
-      "homeTeam": "Mjallby",
-      "awayTeam": "Inter Escaldes",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "2 - 0",
-      "iyScore": "0-0",
-      "actualOutcome": "X/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.3,
-        "ms0": 4.1,
-        "ms2": 6.11,
-        "iy1": 1.75,
-        "iy0": 2.26,
-        "iy2": 6.13
-      },
-      "openedOdds": {
-        "1/1": "1.95",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.99",
-        "X/X": "6.56",
-        "X/2": "14.05",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "9.17"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 15,
-          "rate": 52
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "101e6771-7767-473a-b46e-d11e9d2afd82",
-      "eventId": "101e677",
-      "code": "101e6",
-      "homeTeam": "Universitatea",
-      "awayTeam": "Getafe",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 1",
-      "iyScore": "0-0",
-      "actualOutcome": "X/X",
-      "status": "MS",
-      "odds": {
-        "ms1": 2.44,
-        "ms0": 2.72,
-        "ms2": 2.49,
-        "iy1": 3.26,
-        "iy0": 1.76,
-        "iy2": 3.32
-      },
-      "openedOdds": {
-        "1/1": "3.66",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "5.61",
-        "X/X": "4.35",
-        "X/2": "5.73",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "3.74"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/X",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/X",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 16,
-          "rate": 55
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "72d1cadd-e9a1-40c0-b2f1-ab9b70032727",
-      "eventId": "72d1cad",
-      "code": "72d1c",
-      "homeTeam": "Freiburg",
-      "awayTeam": "Jablonec",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "3 - 2",
-      "iyScore": "1-1",
-      "actualOutcome": "X/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.1,
-        "ms0": 5.63,
-        "ms2": 10.8,
-        "iy1": 1.47,
-        "iy0": 2.58,
-        "iy2": 9.23
-      },
-      "openedOdds": {
-        "1/1": "1.65",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.53",
-        "X/X": "9.01",
-        "X/2": "24.84",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "16.20"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 15,
-          "rate": 52
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "13adad7c-c781-42b1-bbb8-a0886bfccc29",
-      "eventId": "13adad7",
-      "code": "13ada",
-      "homeTeam": "Atalanta",
-      "awayTeam": "Pafos Fc",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "3 - 1",
-      "iyScore": "3-0",
-      "actualOutcome": "1/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.21,
-        "ms0": 5.01,
-        "ms2": 6.8,
-        "iy1": 1.58,
-        "iy0": 2.62,
-        "iy2": 6.2
-      },
-      "openedOdds": {
-        "1/1": "1.81",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.78",
-        "X/X": "8.02",
-        "X/2": "15.64",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "10.20"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "1/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 18,
-          "rate": 64
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "8c77ea97-6d68-4732-a7b5-0555d5160581",
-      "eventId": "8c77ea9",
-      "code": "8c77e",
-      "homeTeam": "Hearts",
-      "awayTeam": "Nordsjaelland",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
+      "id": "a8f7abac-e892-4965-936e-7cbb4553a32b",
+      "eventId": "a8f7aba",
+      "code": "a8f7a",
+      "homeTeam": "Duisburg",
+      "awayTeam": "Viktoria Köln",
+      "league": "AL3",
+      "date": "18.10.2026",
+      "time": "17:30",
       "score": "1 - 1",
       "iyScore": "1-0",
       "actualOutcome": "1/X",
       "status": "MS",
       "odds": {
-        "ms1": 2.59,
-        "ms0": 3.38,
-        "ms2": 2.02,
-        "iy1": 3.05,
-        "iy0": 2.23,
-        "iy2": 2.49
+        "ms1": 2.02,
+        "ms0": 3.3,
+        "ms2": 2.58,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "3.88",
+        "1/1": "3.03",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "5.96",
-        "X/X": "5.41",
-        "X/2": "4.65",
+        "X/1": "4.65",
+        "X/X": "5.28",
+        "X/2": "5.93",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "3.03"
+        "2/2": "3.87"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
@@ -79958,561 +80164,46 @@
       }
     },
     {
-      "id": "2a321e58-3457-4b1b-a092-26d04862e7ca",
-      "eventId": "2a321e5",
-      "code": "2a321",
-      "homeTeam": "St. Truidense",
-      "awayTeam": "Fc Iberia",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 0",
-      "iyScore": "1-0",
-      "actualOutcome": "1/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.06,
-        "ms0": 6.61,
-        "ms2": 12,
-        "iy1": 1.37,
-        "iy0": 2.91,
-        "iy2": 9.36
-      },
-      "openedOdds": {
-        "1/1": "1.59",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.44",
-        "X/X": "10.58",
-        "X/2": "27.60",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "18.00"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "1/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 18,
-          "rate": 64
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "0faa2b70-1646-4650-9f95-b3c79ffb1c67",
-      "eventId": "0faa2b7",
-      "code": "0faa2",
-      "homeTeam": "Twente",
-      "awayTeam": "Thun",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "1 - 0",
-      "iyScore": "0-0",
-      "actualOutcome": "X/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1,
-        "ms0": 8.19,
-        "ms2": 12.25,
-        "iy1": 1.3,
-        "iy0": 3.4,
-        "iy2": 8.79
-      },
-      "openedOdds": {
-        "1/1": "1.50",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.30",
-        "X/X": "13.10",
-        "X/2": "28.17",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "18.38"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 15,
-          "rate": 52
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "cb93c5f7-7238-4cee-be00-9eaa60ef6cb9",
-      "eventId": "cb93c5f",
-      "code": "cb93c",
-      "homeTeam": "Brighton",
-      "awayTeam": "Kauno Zalgiris",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "4 - 0",
-      "iyScore": "2-0",
-      "actualOutcome": "1/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1,
-        "ms0": 17.5,
-        "ms2": 17.5,
-        "iy1": 1.07,
-        "iy0": 4.73,
-        "iy2": 26
-      },
-      "openedOdds": {
-        "1/1": "1.50",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.30",
-        "X/X": "28.00",
-        "X/2": "40.25",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "26.25"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "1/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 18,
-          "rate": 64
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 6,
-          "rate": 18
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "314983d5-8019-46da-b8de-b483f74a00d9",
-      "eventId": "314983d",
-      "code": "31498",
-      "homeTeam": "Brann",
-      "awayTeam": "Lincoln Red Imp",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 1",
-      "iyScore": "0-0",
-      "actualOutcome": "X/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1,
-        "ms0": 8.23,
-        "ms2": 16.35,
-        "iy1": 1.3,
-        "iy0": 3.16,
-        "iy2": 11.7
-      },
-      "openedOdds": {
-        "1/1": "1.50",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "2.30",
-        "X/X": "13.17",
-        "X/2": "37.60",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "24.53"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 15,
-          "rate": 52
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "24067a4c-ab76-4ef7-a81d-f94d42570d45",
-      "eventId": "24067a4",
-      "code": "24067",
-      "homeTeam": "Kopenhag",
-      "awayTeam": "Braga",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "3 - 0",
-      "iyScore": "0-0",
-      "actualOutcome": "X/1",
-      "status": "MS",
-      "odds": {
-        "ms1": 1.98,
-        "ms0": 2.94,
-        "ms2": 3.02,
-        "iy1": 2.59,
-        "iy0": 1.93,
-        "iy2": 3.67
-      },
-      "openedOdds": {
-        "1/1": "2.97",
-        "1/X": "14.00",
-        "1/2": "30.00",
-        "X/1": "4.55",
-        "X/X": "4.70",
-        "X/2": "6.95",
-        "2/1": "26.00",
-        "2/X": "14.50",
-        "2/2": "4.53"
-      },
-      "sampleSize": 48,
-      "matchTier": "exact_ms_iy",
-      "topOutcome": {
-        "key": "X/1",
-        "count": 18,
-        "rate": 64
-      },
-      "surpriseOutcome": {
-        "key": "X/1",
-        "count": 8,
-        "rate": 22
-      },
-      "isTopHit": true,
-      "isSurpriseHit": false,
-      "stats": {
-        "1/1": {
-          "key": "1/1",
-          "label": "1/1",
-          "count": 4,
-          "rate": 12
-        },
-        "X/1": {
-          "key": "X/1",
-          "label": "X/1",
-          "count": 15,
-          "rate": 52
-        },
-        "2/1": {
-          "key": "2/1",
-          "label": "2/1",
-          "count": 2,
-          "rate": 5
-        },
-        "1/X": {
-          "key": "1/X",
-          "label": "1/X",
-          "count": 3,
-          "rate": 8
-        },
-        "X/X": {
-          "key": "X/X",
-          "label": "X/X",
-          "count": 5,
-          "rate": 15
-        },
-        "2/X": {
-          "key": "2/X",
-          "label": "2/X",
-          "count": 2,
-          "rate": 6
-        },
-        "1/2": {
-          "key": "1/2",
-          "label": "1/2",
-          "count": 2,
-          "rate": 4
-        },
-        "X/2": {
-          "key": "X/2",
-          "label": "X/2",
-          "count": 6,
-          "rate": 18
-        },
-        "2/2": {
-          "key": "2/2",
-          "label": "2/2",
-          "count": 5,
-          "rate": 14
-        }
-      }
-    },
-    {
-      "id": "aff8f914-441f-4ed1-983a-1dd79b50e4f1",
-      "eventId": "aff8f91",
-      "code": "aff8f",
-      "homeTeam": "Lugano",
-      "awayTeam": "Kizilyildiz",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "3 - 2",
+      "id": "52150b10-f20f-47d2-b19a-adad5bde3356",
+      "eventId": "52150b1",
+      "code": "52150",
+      "homeTeam": "Sv Meppen",
+      "awayTeam": "Havelse",
+      "league": "AL3",
+      "date": "18.10.2026",
+      "time": "20:30",
+      "score": "1 - 1",
       "iyScore": "1-1",
-      "actualOutcome": "X/1",
+      "actualOutcome": "X/X",
       "status": "MS",
       "odds": {
-        "ms1": 1.93,
-        "ms0": 3.3,
-        "ms2": 2.82,
-        "iy1": 2.43,
-        "iy0": 2.16,
-        "iy2": 3.3
+        "ms1": 1.4,
+        "ms0": 4.12,
+        "ms2": 4.4,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "2.90",
+        "1/1": "2.10",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "4.44",
-        "X/X": "5.28",
-        "X/2": "6.49",
+        "X/1": "3.22",
+        "X/X": "6.59",
+        "X/2": "10.12",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "4.23"
+        "2/2": "6.60"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
       "topOutcome": {
-        "key": "X/1",
+        "key": "X/X",
         "count": 18,
         "rate": 64
       },
       "surpriseOutcome": {
-        "key": "X/1",
+        "key": "X/X",
         "count": 8,
         "rate": 22
       },
@@ -80528,8 +80219,111 @@
         "X/1": {
           "key": "X/1",
           "label": "X/1",
-          "count": 15,
-          "rate": 52
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 16,
+          "rate": 55
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "b1b747c7-6bea-450e-aae3-fd7a076f054e",
+      "eventId": "b1b747c",
+      "code": "b1b74",
+      "homeTeam": "Union Berlin (",
+      "awayTeam": "Nürnberg (K)",
+      "league": "ALKB",
+      "date": "18.10.2026",
+      "time": "15:00",
+      "score": "2 - 1",
+      "iyScore": "2-1",
+      "actualOutcome": "1/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.38,
+        "ms0": 3.82,
+        "ms2": 4.03,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.07",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "3.17",
+        "X/X": "6.11",
+        "X/2": "9.27",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "6.04"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "1/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 18,
+          "rate": 64
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
         },
         "2/1": {
           "key": "2/1",
@@ -80576,32 +80370,238 @@
       }
     },
     {
-      "id": "57ad1da6-7637-4f2c-acec-55b33cc96b77",
-      "eventId": "57ad1da",
-      "code": "57ad1",
-      "homeTeam": "Cska Sofia",
-      "awayTeam": "Monaco",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 2",
+      "id": "b6872f22-882d-4936-bf83-59f156e3a38b",
+      "eventId": "b6872f2",
+      "code": "b6872",
+      "homeTeam": "Mainz 05 (K)",
+      "awayTeam": "Wolfsburg (K)",
+      "league": "ALKB",
+      "date": "18.10.2026",
+      "time": "19:30",
+      "score": "0 - 5",
       "iyScore": "0-2",
       "actualOutcome": "2/2",
       "status": "MS",
       "odds": {
-        "ms1": 5.5,
-        "ms0": 4.31,
-        "ms2": 1.31,
-        "iy1": 5.43,
-        "iy0": 2.41,
-        "iy2": 1.73
+        "ms1": 17.35,
+        "ms0": 12.6,
+        "ms2": 3.1,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "8.25",
+        "1/1": "26.03",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "12.65",
-        "X/X": "6.90",
+        "X/1": "39.91",
+        "X/X": "20.16",
+        "X/2": "7.13",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "4.65"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/2",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/2",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 19,
+          "rate": 66
+        }
+      }
+    },
+    {
+      "id": "1054b506-bea8-4951-b8d5-68b2b8c62e65",
+      "eventId": "1054b50",
+      "code": "1054b",
+      "homeTeam": "Eintracht Trie",
+      "awayTeam": "Fsv Frankfurt",
+      "league": "ALMBÖL",
+      "date": "18.10.2026",
+      "time": "15:00",
+      "score": "3 - 2",
+      "iyScore": "0-1",
+      "actualOutcome": "2/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.75,
+        "ms0": 3.32,
+        "ms2": 2.77,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.63",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "4.02",
+        "X/X": "5.31",
+        "X/2": "6.37",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "4.16"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "2/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 8,
+          "rate": 30
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "8a1f5a61-229d-4eb6-bf7b-549b5558c46e",
+      "eventId": "8a1f5a6",
+      "code": "8a1f5",
+      "homeTeam": "Hamburger Sv (",
+      "awayTeam": "Vfb Oldenburg",
+      "league": "ALMBÖL",
+      "date": "18.10.2026",
+      "time": "15:00",
+      "score": "1 - 2",
+      "iyScore": "0-0",
+      "actualOutcome": "X/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 4.37,
+        "ms0": 4.17,
+        "ms2": 1.31,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "6.55",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "10.05",
+        "X/X": "6.67",
         "X/2": "3.01",
         "2/1": "26.00",
         "2/X": "14.50",
@@ -80610,7 +80610,7 @@
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
       "topOutcome": {
-        "key": "2/2",
+        "key": "X/2",
         "count": 18,
         "rate": 64
       },
@@ -80667,53 +80667,156 @@
         "X/2": {
           "key": "X/2",
           "label": "X/2",
-          "count": 6,
-          "rate": 18
+          "count": 16,
+          "rate": 54
         },
         "2/2": {
           "key": "2/2",
           "label": "2/2",
-          "count": 19,
-          "rate": 66
+          "count": 5,
+          "rate": 14
         }
       }
     },
     {
-      "id": "a158d246-7fcd-4469-a8ac-dcba2219e1e9",
-      "eventId": "a158d24",
-      "code": "a158d",
-      "homeTeam": "Kuopion",
-      "awayTeam": "Trabzonspor",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "2 - 4",
-      "iyScore": "0-2",
-      "actualOutcome": "2/2",
+      "id": "5c264d3c-f31a-48ec-af2a-378e5bf250b5",
+      "eventId": "5c264d3",
+      "code": "5c264",
+      "homeTeam": "Homburg",
+      "awayTeam": "Freiburg Ii",
+      "league": "ALMBÖL",
+      "date": "18.10.2026",
+      "time": "15:00",
+      "score": "2 - 1",
+      "iyScore": "2-0",
+      "actualOutcome": "1/1",
       "status": "MS",
       "odds": {
-        "ms1": 5.99,
-        "ms0": 4.33,
-        "ms2": 1.29,
-        "iy1": 5.88,
-        "iy0": 2.37,
-        "iy2": 1.71
+        "ms1": 1.81,
+        "ms0": 3.36,
+        "ms2": 2.6,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "8.98",
+        "1/1": "2.71",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "13.78",
-        "X/X": "6.93",
-        "X/2": "2.97",
+        "X/1": "4.16",
+        "X/X": "5.38",
+        "X/2": "5.98",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "1.94"
+        "2/2": "3.90"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
       "topOutcome": {
-        "key": "2/2",
+        "key": "1/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 18,
+          "rate": 64
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "56d52dc3-c340-49d0-a845-69a6f4bbf176",
+      "eventId": "56d52dc",
+      "code": "56d52",
+      "homeTeam": "Rot-Weiss Esse",
+      "awayTeam": "Fortuna Düsseld",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "12:00",
+      "score": "1 - 4",
+      "iyScore": "0-0",
+      "actualOutcome": "X/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.8,
+        "ms0": 3.74,
+        "ms2": 2.44,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.70",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "4.14",
+        "X/X": "5.98",
+        "X/2": "5.61",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "3.66"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "X/2",
         "count": 18,
         "rate": 64
       },
@@ -80770,48 +80873,460 @@
         "X/2": {
           "key": "X/2",
           "label": "X/2",
+          "count": 16,
+          "rate": 54
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "c14e2f8c-f599-4b50-905a-38a81bd7de0a",
+      "eventId": "c14e2f8",
+      "code": "c14e2",
+      "homeTeam": "Köln U19",
+      "awayTeam": "Mainz 05 U19",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "12:00",
+      "score": "3 - 1",
+      "iyScore": "0-0",
+      "actualOutcome": "X/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.46,
+        "ms0": 4.12,
+        "ms2": 3.26,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.19",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "3.36",
+        "X/X": "6.59",
+        "X/2": "7.50",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "4.89"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "X/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 15,
+          "rate": 52
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
           "count": 6,
           "rate": 18
         },
         "2/2": {
           "key": "2/2",
           "label": "2/2",
-          "count": 19,
-          "rate": 66
+          "count": 5,
+          "rate": 14
         }
       }
     },
     {
-      "id": "d15eb93d-6dac-48dc-b7a0-6bfd8aadd469",
-      "eventId": "d15eb93",
-      "code": "d15eb",
-      "homeTeam": "Gent",
-      "awayTeam": "Aarhus",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 0",
+      "id": "35039500-1644-4f5a-bfb8-63443f89e6b6",
+      "eventId": "3503950",
+      "code": "35039",
+      "homeTeam": "Msv Duisburg U",
+      "awayTeam": "Schalke 04 (U19",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "12:00",
+      "score": "3 - 1",
       "iyScore": "0-0",
       "actualOutcome": "X/1",
       "status": "MS",
       "odds": {
-        "ms1": 1.45,
-        "ms0": 3.68,
-        "ms2": 4.61,
-        "iy1": 1.97,
-        "iy0": 2.14,
-        "iy2": 5.01
+        "ms1": 1.81,
+        "ms0": 3.12,
+        "ms2": 2.76,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
       },
       "openedOdds": {
-        "1/1": "2.17",
+        "1/1": "2.71",
         "1/X": "14.00",
         "1/2": "30.00",
-        "X/1": "3.33",
-        "X/X": "5.89",
-        "X/2": "10.60",
+        "X/1": "4.16",
+        "X/X": "4.99",
+        "X/2": "6.35",
         "2/1": "26.00",
         "2/X": "14.50",
-        "2/2": "6.92"
+        "2/2": "4.14"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "X/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 15,
+          "rate": 52
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "ed78b8ba-ab38-4a27-abaf-e08323a23674",
+      "eventId": "ed78b8b",
+      "code": "ed78b",
+      "homeTeam": "Hamburger Sv U",
+      "awayTeam": "St. Pauli U19",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "12:00",
+      "score": "3 - 2",
+      "iyScore": "1-0",
+      "actualOutcome": "1/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 1.56,
+        "ms0": 3.91,
+        "ms2": 2.97,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "2.34",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "3.59",
+        "X/X": "6.26",
+        "X/2": "6.83",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "4.46"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "1/1",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/1",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 18,
+          "rate": 64
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 6,
+          "rate": 18
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "615e4b81-e220-4a14-ae1e-ce43ea6ad7c8",
+      "eventId": "615e4b8",
+      "code": "615e4",
+      "homeTeam": "Bochum U19",
+      "awayTeam": "B. Leverkusen U",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "13:00",
+      "score": "3 - 4",
+      "iyScore": "0-0",
+      "actualOutcome": "X/2",
+      "status": "MS",
+      "odds": {
+        "ms1": 3.82,
+        "ms0": 4.22,
+        "ms2": 1.36,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "5.73",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "8.79",
+        "X/X": "6.75",
+        "X/2": "3.13",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "2.04"
+      },
+      "sampleSize": 48,
+      "matchTier": "exact_ms_iy",
+      "topOutcome": {
+        "key": "X/2",
+        "count": 18,
+        "rate": 64
+      },
+      "surpriseOutcome": {
+        "key": "X/2",
+        "count": 8,
+        "rate": 22
+      },
+      "isTopHit": true,
+      "isSurpriseHit": false,
+      "stats": {
+        "1/1": {
+          "key": "1/1",
+          "label": "1/1",
+          "count": 4,
+          "rate": 12
+        },
+        "X/1": {
+          "key": "X/1",
+          "label": "X/1",
+          "count": 6,
+          "rate": 18
+        },
+        "2/1": {
+          "key": "2/1",
+          "label": "2/1",
+          "count": 2,
+          "rate": 5
+        },
+        "1/X": {
+          "key": "1/X",
+          "label": "1/X",
+          "count": 3,
+          "rate": 8
+        },
+        "X/X": {
+          "key": "X/X",
+          "label": "X/X",
+          "count": 5,
+          "rate": 15
+        },
+        "2/X": {
+          "key": "2/X",
+          "label": "2/X",
+          "count": 2,
+          "rate": 6
+        },
+        "1/2": {
+          "key": "1/2",
+          "label": "1/2",
+          "count": 2,
+          "rate": 4
+        },
+        "X/2": {
+          "key": "X/2",
+          "label": "X/2",
+          "count": 16,
+          "rate": 54
+        },
+        "2/2": {
+          "key": "2/2",
+          "label": "2/2",
+          "count": 5,
+          "rate": 14
+        }
+      }
+    },
+    {
+      "id": "f34afe44-056a-455e-ba7c-e975cad64fb3",
+      "eventId": "f34afe4",
+      "code": "f34af",
+      "homeTeam": "Hannover 96 U1",
+      "awayTeam": "Havelse U19",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "14:00",
+      "score": "4 - 1",
+      "iyScore": "0-0",
+      "actualOutcome": "X/1",
+      "status": "MS",
+      "odds": {
+        "ms1": 2.1,
+        "ms0": 9.37,
+        "ms2": 17.35,
+        "iy1": 2.7,
+        "iy0": 2.1,
+        "iy2": 3.6
+      },
+      "openedOdds": {
+        "1/1": "3.15",
+        "1/X": "14.00",
+        "1/2": "30.00",
+        "X/1": "4.83",
+        "X/X": "14.99",
+        "X/2": "39.91",
+        "2/1": "26.00",
+        "2/X": "14.50",
+        "2/2": "26.03"
       },
       "sampleSize": 48,
       "matchTier": "exact_ms_iy",
@@ -80886,9 +81401,9 @@
     }
   ],
   "pastStats": {
-    "date": "15.10.2026",
-    "totalFinished": 35,
-    "topHitCount": 35,
+    "date": "18.10.2026",
+    "totalFinished": 40,
+    "topHitCount": 40,
     "topHitRate": 100
   }
 }

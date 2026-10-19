@@ -178,8 +178,14 @@ export async function GET(request: Request) {
       let validPast = (cachedData.pastMatches || [])
         .map(enrichComboMatch)
         .filter((m: any) => m && m.combos && m.combos.length > 0);
+      const nowTR = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Istanbul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+      const dYest = new Date(`${nowTR}T12:00:00Z`);
+      dYest.setDate(dYest.getDate() - 1);
+      const [yy, ym, yd] = dYest.toISOString().split('T')[0].split('-');
+      const defaultYestDot = `${yd}.${ym}.${yy}`;
+
       let pastStats = cachedData.pastStats || {
-        date: '15.10.2026',
+        date: defaultYestDot,
         totalFinished: validPast.length,
         comboHitCount: validPast.filter((p: any) => p.isComboHit).length,
         comboHitRate: 0,

@@ -341,8 +341,14 @@ export async function GET(request: Request) {
 
       const validUpcoming = (cachedData.matches || []).filter((m: any) => isStrictValidMatch(m) && isUpcomingDate(m.date));
       let validPast = (cachedData.pastMatches || []).filter(isStrictValidMatch);
+      const nowTR = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Istanbul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+      const dYest = new Date(`${nowTR}T12:00:00Z`);
+      dYest.setDate(dYest.getDate() - 1);
+      const [yy, ym, yd] = dYest.toISOString().split('T')[0].split('-');
+      const defaultYestDot = `${yd}.${ym}.${yy}`;
+
       let pastStats = cachedData.pastStats || {
-        date: '15.10.2026',
+        date: defaultYestDot,
         totalFinished: validPast.length,
         topHitCount: validPast.filter((m: any) => m.isTopHit).length,
         topHitRate: 0

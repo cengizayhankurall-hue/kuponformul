@@ -49,8 +49,8 @@ function calculateOutcome(iyScore: any, msScore: any): string {
 }
 
 const PRIORITY_LEAGUES = [
-  'AVL', 'AVKL', 'ŞMP', 'UEGL', 'T1L', 'TSL', 'SUUD', 'AFCŞL2', 'İNCL', 'İNP', 'İTA', 'İSP', 'AL1', 'AL2',
-  'FRA', 'ÇEK', 'BLR', 'AL3', 'ABD', 'HOL', 'POR'
+  'TSL', 'T1L', 'İNG', 'İNCL', 'İTA', 'İSP', 'AL1', 'AL2', 'HOL', 'POR', 'ŞMP', 'AVL', 'AVKL', 'UEGL', 'FRA',
+  'SUUD', 'AFCŞL2', 'İNP', 'ÇEK', 'BLR', 'AL3', 'ABD'
 ];
 
 async function getRawPastMatches(): Promise<{ matches: any[]; resolvedDateDot: string }> {

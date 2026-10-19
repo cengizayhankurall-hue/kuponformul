@@ -70920,450 +70920,66 @@
   ],
   "pastMatches": [
     {
-      "id": "542a9a35-f8ba-40a2-9495-ef9483dfef23",
-      "eventId": "542a9a3",
-      "code": "542a9",
-      "homeTeam": "Union St.G",
-      "awayTeam": "Real Sociedad",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 1",
-      "iyScore": "0-0",
-      "odds": {
-        "ms1": 2.29,
-        "ms0": 3.24,
-        "ms2": 2.32,
-        "alt25": 2.06,
-        "ust25": 1.44,
-        "kgVar": 1.37,
-        "kgYok": 2.24
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "3.66",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "4.01",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "3.71",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "4.06",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "4.86",
-          "rate": 35,
-          "won": true
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "4.70",
-          "rate": 30,
-          "won": true
-        }
-      ],
-      "topCombo": {
-        "name": "MS X & KG VAR",
-        "estOdd": "4.86",
-        "rate": 35,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "1 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "1 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "3c56dad6-9092-4911-b30a-89afb35c3d85",
-      "eventId": "3c56dad",
-      "code": "3c56d",
-      "homeTeam": "Lech Poznan",
-      "awayTeam": "B.Leverkusen",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "0 - 4",
-      "iyScore": "0-3",
-      "odds": {
-        "ms1": 5.45,
-        "ms0": 4.59,
-        "ms2": 1.29,
-        "alt25": 2.63,
-        "ust25": 1.25,
-        "kgVar": 1.41,
-        "kgYok": 2.15
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "8.72",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "9.54",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "2.06",
-          "rate": 45,
-          "won": true
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "2.26",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "6.88",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "6.66",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "estOdd": "2.06",
-        "rate": 45,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "0 - 4",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 4",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "0 - 4",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 4",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "64b8d051-8b79-422d-81cb-e58f87754bc4",
-      "eventId": "64b8d05",
-      "code": "64b8d",
-      "homeTeam": "Torreense",
-      "awayTeam": "Sunderland",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 2",
-      "iyScore": "1-0",
-      "odds": {
-        "ms1": 9.67,
-        "ms0": 5.21,
-        "ms2": 1.14,
-        "alt25": 1.92,
-        "ust25": 1.52,
-        "kgVar": 2.04,
-        "kgYok": 1.45
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "15.47",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "16.92",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "1.82",
-          "rate": 45,
-          "won": true
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "1.99",
-          "rate": 42,
-          "won": true
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "7.81",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "7.55",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "estOdd": "1.82",
-        "rate": 45,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "1 - 2",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "2 - 2",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "1 - 2",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "2 - 2",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "751e5147-edb1-4d06-b62a-fabf50a5d989",
-      "eventId": "751e514",
-      "code": "751e5",
-      "homeTeam": "Hoffenheim",
-      "awayTeam": "Beşiktaş",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 3",
-      "iyScore": "0-0",
-      "odds": {
-        "ms1": 1.65,
-        "ms0": 3.56,
-        "ms2": 3.44,
-        "alt25": 2.25,
-        "ust25": 1.37,
-        "kgVar": 1.36,
-        "kgYok": 2.26
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.64",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "2.89",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "5.50",
-          "rate": 45,
-          "won": true
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "6.02",
-          "rate": 42,
-          "won": true
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "5.34",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "5.16",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "estOdd": "5.50",
-        "rate": 45,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "2 - 3",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "3 - 3",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "2 - 3",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "3 - 3",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "256addb7-c160-480d-96e0-8632dbfcf7f7",
-      "eventId": "256addb",
-      "code": "256ad",
-      "homeTeam": "Benfica",
-      "awayTeam": "Celtic",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
+      "id": "4c1ccfda-8202-44d9-9357-ec06899b951f",
+      "eventId": "4c1ccfd",
+      "code": "4c1cc",
+      "homeTeam": "Kasimpaşa",
+      "awayTeam": "Samsunspor",
+      "league": "TSL",
+      "date": "18.10.2026",
+      "time": "13:30",
       "score": "4 - 1",
-      "iyScore": "3-0",
+      "iyScore": "2-1",
       "odds": {
-        "ms1": 1,
-        "ms0": 7.48,
-        "ms2": 11.85,
-        "alt25": 3.46,
-        "ust25": 1.13,
-        "kgVar": 1.56,
-        "kgYok": 1.86
+        "ms1": 2.24,
+        "ms0": 2.94,
+        "ms2": 2.49,
+        "alt25": 1.52,
+        "ust25": 1.89,
+        "kgVar": 1.67,
+        "kgYok": 1.71
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.60",
+          "estOdd": "3.58",
           "rate": 52,
           "won": true
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "1.75",
+          "estOdd": "3.92",
           "rate": 48,
           "won": true
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "18.96",
+          "estOdd": "3.98",
           "rate": 45,
           "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "20.74",
+          "estOdd": "4.36",
           "rate": 42,
           "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "11.22",
+          "estOdd": "4.41",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "10.85",
+          "estOdd": "4.26",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.60",
+        "estOdd": "3.58",
         "rate": 52,
         "won": true
       },
@@ -71400,450 +71016,66 @@
       "isExactScoreHit": true
     },
     {
-      "id": "815dc3a0-1995-4048-b2e6-7870ffcd691b",
-      "eventId": "815dc3a",
-      "code": "815dc",
-      "homeTeam": "Ferencvaros",
-      "awayTeam": "Viktoria Plzen",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 1",
-      "iyScore": "0-0",
-      "odds": {
-        "ms1": 1.63,
-        "ms0": 3.5,
-        "ms2": 3.61,
-        "alt25": 2.05,
-        "ust25": 1.45,
-        "kgVar": 1.44,
-        "kgYok": 2.08
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.61",
-          "rate": 52,
-          "won": true
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "2.85",
-          "rate": 48,
-          "won": true
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "5.78",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "6.32",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "5.25",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "5.08",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.61",
-        "rate": 52,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "3 - 1",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "3 - 1",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "9e0efbb4-e20f-4ff4-82dc-297f661209c0",
-      "eventId": "9e0efbb",
-      "code": "9e0ef",
-      "homeTeam": "Rennes",
-      "awayTeam": "Ofi",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 1",
-      "iyScore": "0-1",
-      "odds": {
-        "ms1": 1.09,
-        "ms0": 6.26,
-        "ms2": 10.25,
-        "alt25": 2.69,
-        "ust25": 1.24,
-        "kgVar": 1.68,
-        "kgYok": 1.72
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.74",
-          "rate": 52,
-          "won": true
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "1.91",
-          "rate": 48,
-          "won": true
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "16.40",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "17.94",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "9.39",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "9.08",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.74",
-        "rate": 52,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "3 - 1",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "3 - 1",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "a15b17f6-34f8-4ac2-9413-33d02094ab3c",
-      "eventId": "a15b17f",
-      "code": "a15b1",
-      "homeTeam": "Nijmegen",
-      "awayTeam": "Levski Sofya",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "1 - 1",
-      "iyScore": "0-1",
-      "odds": {
-        "ms1": 1.67,
-        "ms0": 3.2,
-        "ms2": 3.75,
-        "alt25": 1.65,
-        "ust25": 1.74,
-        "kgVar": 1.65,
-        "kgYok": 1.75
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.67",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "2.92",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "6.00",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "6.56",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "4.80",
-          "rate": 35,
-          "won": true
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "4.64",
-          "rate": 30,
-          "won": true
-        }
-      ],
-      "topCombo": {
-        "name": "MS X & KG VAR",
-        "estOdd": "4.80",
-        "rate": 35,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "1 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "1 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "719107bf-c2f0-4702-b479-09a16b02fd8f",
-      "eventId": "719107b",
-      "code": "71910",
-      "homeTeam": "Dinamo Zagreb",
-      "awayTeam": "Anderlecht",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "1 - 0",
-      "iyScore": "0-0",
-      "odds": {
-        "ms1": 1.67,
-        "ms0": 3.38,
-        "ms2": 3.55,
-        "alt25": 1.94,
-        "ust25": 1.51,
-        "kgVar": 1.47,
-        "kgYok": 2.01
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.67",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "2.92",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "5.68",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "6.21",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "5.07",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "4.90",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.67",
-        "rate": 52,
-        "won": false
-      },
-      "isComboHit": false,
-      "isTopHit": false,
-      "primaryScore": {
-        "score": "1 - 0",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "1 - 0",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "1483ae05-cc9e-421e-ac77-ac0c382c7b8a",
-      "eventId": "1483ae0",
-      "code": "1483a",
-      "homeTeam": "Celta Vigo",
-      "awayTeam": "Juventus",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
+      "id": "3eaea599-6044-4c3b-9519-d64287e2d8db",
+      "eventId": "3eaea59",
+      "code": "3eaea",
+      "homeTeam": "Kocaelispor",
+      "awayTeam": "Göztepe",
+      "league": "TSL",
+      "date": "18.10.2026",
+      "time": "16:00",
       "score": "1 - 2",
-      "iyScore": "1-0",
+      "iyScore": "0-1",
       "odds": {
-        "ms1": 3.04,
-        "ms0": 2.84,
-        "ms2": 2.02,
-        "alt25": 1.43,
-        "ust25": 2.11,
-        "kgVar": 1.81,
-        "kgYok": 1.6
+        "ms1": 2.51,
+        "ms0": 2.95,
+        "ms2": 2.22,
+        "alt25": 1.54,
+        "ust25": 1.85,
+        "kgVar": 1.64,
+        "kgYok": 1.74
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "4.86",
+          "estOdd": "4.02",
           "rate": 52,
           "won": false
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "5.32",
+          "estOdd": "4.39",
           "rate": 48,
           "won": false
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "3.23",
+          "estOdd": "3.55",
           "rate": 45,
           "won": true
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "3.54",
+          "estOdd": "3.89",
           "rate": 42,
           "won": true
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.26",
+          "estOdd": "4.43",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.12",
+          "estOdd": "4.28",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
         "name": "MS 2 & 2.5 ÜST",
-        "estOdd": "3.23",
+        "estOdd": "3.55",
         "rate": 45,
         "won": true
       },
@@ -71880,354 +71112,66 @@
       "isExactScoreHit": true
     },
     {
-      "id": "0d4eba8c-ea58-4d43-b50b-3c8418e34764",
-      "eventId": "0d4eba8",
-      "code": "0d4eb",
-      "homeTeam": "Jagiellonia",
-      "awayTeam": "Ararat-Armenia",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "3 - 1",
-      "iyScore": "2-1",
-      "odds": {
-        "ms1": 1.27,
-        "ms0": 4.43,
-        "ms2": 6.15,
-        "alt25": 2.15,
-        "ust25": 1.4,
-        "kgVar": 1.6,
-        "kgYok": 1.81
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.03",
-          "rate": 52,
-          "won": true
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "2.22",
-          "rate": 48,
-          "won": true
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "9.84",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "10.76",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "6.64",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "6.42",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.03",
-        "rate": 52,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "3 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "4 - 1",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "3 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "4 - 1",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "1766f7fe-6264-4dae-9999-b1f24b6a6d25",
-      "eventId": "1766f7f",
-      "code": "1766f",
-      "homeTeam": "Marsilya",
-      "awayTeam": "Olympiakos",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "0 - 1",
-      "iyScore": "0-1",
-      "odds": {
-        "ms1": 2.55,
-        "ms0": 3.03,
-        "ms2": 2.2,
-        "alt25": 1.72,
-        "ust25": 1.68,
-        "kgVar": 1.52,
-        "kgYok": 1.93
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "4.08",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "4.46",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "3.52",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "3.85",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "4.54",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "4.39",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "4.08",
-        "rate": 52,
-        "won": false
-      },
-      "isComboHit": false,
-      "isTopHit": false,
-      "primaryScore": {
-        "score": "0 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "0 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "2aa8c6f2-7280-4fb7-b390-0c6c9f72dfca",
-      "eventId": "2aa8c6f",
-      "code": "2aa8c",
-      "homeTeam": "Bournemouth",
-      "awayTeam": "Sturm Graz",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "3 - 0",
+      "id": "b071ff7f-f343-42fe-a065-ca55652d1796",
+      "eventId": "b071ff7",
+      "code": "b071f",
+      "homeTeam": "Başakşehir Fk",
+      "awayTeam": "Gaziantep Fk",
+      "league": "TSL",
+      "date": "18.10.2026",
+      "time": "19:00",
+      "score": "2 - 1",
       "iyScore": "1-0",
       "odds": {
-        "ms1": 1,
-        "ms0": 7.4,
-        "ms2": 12.75,
-        "alt25": 2.91,
-        "ust25": 1.2,
-        "kgVar": 1.74,
-        "kgYok": 1.65
+        "ms1": 1.54,
+        "ms0": 3.69,
+        "ms2": 3.77,
+        "alt25": 2.27,
+        "ust25": 1.34,
+        "kgVar": 1.36,
+        "kgYok": 2.2
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.60",
+          "estOdd": "2.46",
           "rate": 52,
           "won": true
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "1.75",
+          "estOdd": "2.70",
           "rate": 48,
-          "won": false
+          "won": true
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "20.40",
+          "estOdd": "6.03",
           "rate": 45,
           "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "22.31",
+          "estOdd": "6.60",
           "rate": 42,
           "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "11.10",
+          "estOdd": "5.54",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "10.73",
+          "estOdd": "5.35",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.60",
-        "rate": 52,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "3 - 0",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "4 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "3 - 0",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "4 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "4302c9ce-5401-459f-8461-7299372f7131",
-      "eventId": "4302c9c",
-      "code": "4302c",
-      "homeTeam": "Az Alkmaar",
-      "awayTeam": "Hapoel Beer She",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "2 - 1",
-      "iyScore": "0-0",
-      "odds": {
-        "ms1": 1.31,
-        "ms0": 4.39,
-        "ms2": 5.31,
-        "alt25": 2.37,
-        "ust25": 1.32,
-        "kgVar": 1.46,
-        "kgYok": 2.02
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.10",
-          "rate": 52,
-          "won": true
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "2.29",
-          "rate": 48,
-          "won": true
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "8.50",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "9.29",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "6.58",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "6.37",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.10",
+        "estOdd": "2.46",
         "rate": 52,
         "won": true
       },
@@ -72264,92 +71208,92 @@
       "isExactScoreHit": true
     },
     {
-      "id": "f8019173-bf44-4de6-8570-3a5055ea6dda",
-      "eventId": "f801917",
-      "code": "f8019",
-      "homeTeam": "Lyon",
-      "awayTeam": "Crystal Palace",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "3 - 2",
-      "iyScore": "2-0",
+      "id": "d0065dcf-741b-4c39-9ef6-99bbb84cdf98",
+      "eventId": "d0065dc",
+      "code": "d0065",
+      "homeTeam": "Iğdır Fk",
+      "awayTeam": "Boluspor",
+      "league": "T1L",
+      "date": "18.10.2026",
+      "time": "13:30",
+      "score": "1 - 0",
+      "iyScore": "0-0",
       "odds": {
-        "ms1": 2.34,
-        "ms0": 3.26,
-        "ms2": 2.26,
-        "alt25": 2.07,
-        "ust25": 1.44,
-        "kgVar": 1.37,
-        "kgYok": 2.25
+        "ms1": 2.1,
+        "ms0": 6.07,
+        "ms2": 11.9,
+        "alt25": 2.05,
+        "ust25": 1.36,
+        "kgVar": 1.95,
+        "kgYok": 1.41
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "3.74",
+          "estOdd": "3.36",
           "rate": 52,
-          "won": true
+          "won": false
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "4.09",
+          "estOdd": "3.68",
           "rate": 48,
-          "won": true
+          "won": false
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "3.62",
+          "estOdd": "19.04",
           "rate": 45,
           "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "3.95",
+          "estOdd": "20.82",
           "rate": 42,
           "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.89",
+          "estOdd": "9.11",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.73",
+          "estOdd": "8.80",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "3.74",
+        "estOdd": "3.36",
         "rate": 52,
-        "won": true
+        "won": false
       },
-      "isComboHit": true,
-      "isTopHit": true,
+      "isComboHit": false,
+      "isTopHit": false,
       "primaryScore": {
-        "score": "3 - 2",
+        "score": "1 - 0",
         "count": 18,
         "rate": 32,
         "estOdd": "7.50"
       },
       "secondaryScore": {
-        "score": "4 - 2",
+        "score": "1 - 0",
         "count": 12,
         "rate": 20,
         "estOdd": "8.50"
       },
       "topScores": [
         {
-          "score": "3 - 2",
+          "score": "1 - 0",
           "count": 18,
           "rate": 32,
           "estOdd": "7.50"
         },
         {
-          "score": "4 - 2",
+          "score": "1 - 0",
           "count": 12,
           "rate": 20,
           "estOdd": "8.50"
@@ -72360,92 +71304,92 @@
       "isExactScoreHit": true
     },
     {
-      "id": "b8e9996d-3586-4c7f-b9b3-76fdf618c4cb",
-      "eventId": "b8e9996",
-      "code": "b8e99",
-      "homeTeam": "Salzburg",
-      "awayTeam": "Ac Milan",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "0 - 4",
-      "iyScore": "0-2",
+      "id": "e111caa6-5651-43df-b8da-d516a9184dac",
+      "eventId": "e111caa",
+      "code": "e111c",
+      "homeTeam": "Van Spor Fk",
+      "awayTeam": "Ümraniyespor",
+      "league": "T1L",
+      "date": "18.10.2026",
+      "time": "16:00",
+      "score": "0 - 2",
+      "iyScore": "0-0",
       "odds": {
-        "ms1": 3.39,
-        "ms0": 3.26,
-        "ms2": 1.74,
-        "alt25": 1.93,
-        "ust25": 1.51,
-        "kgVar": 1.45,
-        "kgYok": 2.04
+        "ms1": 1.93,
+        "ms0": 2.97,
+        "ms2": 2.72,
+        "alt25": 1.58,
+        "ust25": 1.7,
+        "kgVar": 1.54,
+        "kgYok": 1.74
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "5.42",
+          "estOdd": "3.09",
           "rate": 52,
           "won": false
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "5.93",
+          "estOdd": "3.38",
           "rate": 48,
           "won": false
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "2.78",
+          "estOdd": "4.35",
           "rate": 45,
-          "won": true
+          "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "3.04",
+          "estOdd": "4.76",
           "rate": 42,
           "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.89",
+          "estOdd": "4.46",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.73",
+          "estOdd": "4.31",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "estOdd": "2.78",
-        "rate": 45,
-        "won": true
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.09",
+        "rate": 52,
+        "won": false
       },
-      "isComboHit": true,
-      "isTopHit": true,
+      "isComboHit": false,
+      "isTopHit": false,
       "primaryScore": {
-        "score": "0 - 4",
+        "score": "0 - 2",
         "count": 18,
         "rate": 32,
         "estOdd": "7.50"
       },
       "secondaryScore": {
-        "score": "1 - 4",
+        "score": "1 - 0",
         "count": 12,
         "rate": 20,
         "estOdd": "8.50"
       },
       "topScores": [
         {
-          "score": "0 - 4",
+          "score": "0 - 2",
           "count": 18,
           "rate": 32,
           "estOdd": "7.50"
         },
         {
-          "score": "1 - 4",
+          "score": "1 - 0",
           "count": 12,
           "rate": 20,
           "estOdd": "8.50"
@@ -72456,66 +71400,258 @@
       "isExactScoreHit": true
     },
     {
-      "id": "0f4247e5-231a-4615-8e0c-4caf21f889e5",
-      "eventId": "0f4247e",
-      "code": "0f424",
-      "homeTeam": "Celje",
-      "awayTeam": "Omonia",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "0 - 3",
+      "id": "be91c090-e49f-4e0b-bf9b-39b818fe1180",
+      "eventId": "be91c09",
+      "code": "be91c",
+      "homeTeam": "Kayserispor",
+      "awayTeam": "Batman Petrol",
+      "league": "T1L",
+      "date": "18.10.2026",
+      "time": "16:00",
+      "score": "2 - 2",
       "iyScore": "0-1",
       "odds": {
-        "ms1": 2.76,
-        "ms0": 3.04,
-        "ms2": 2.06,
-        "alt25": 1.78,
-        "ust25": 1.63,
-        "kgVar": 1.49,
-        "kgYok": 1.98
+        "ms1": 1.47,
+        "ms0": 3.39,
+        "ms2": 3.99,
+        "alt25": 1.85,
+        "ust25": 1.47,
+        "kgVar": 1.47,
+        "kgYok": 1.83
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "4.42",
+          "estOdd": "2.35",
           "rate": 52,
           "won": false
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "4.83",
+          "estOdd": "2.57",
           "rate": 48,
           "won": false
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "3.30",
+          "estOdd": "6.38",
           "rate": 45,
-          "won": true
+          "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "3.60",
+          "estOdd": "6.98",
           "rate": 42,
           "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.56",
+          "estOdd": "5.08",
+          "rate": 35,
+          "won": true
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.92",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS X & KG VAR",
+        "estOdd": "5.08",
+        "rate": 35,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "2 - 2",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "3 - 2",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "2 - 2",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "3 - 2",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "5f920226-e0de-42f6-aa94-8cef8ac45736",
+      "eventId": "5f92022",
+      "code": "5f920",
+      "homeTeam": "İstanbulspor",
+      "awayTeam": "Antalyaspor",
+      "league": "T1L",
+      "date": "18.10.2026",
+      "time": "19:00",
+      "score": "0 - 2",
+      "iyScore": "0-1",
+      "odds": {
+        "ms1": 2.65,
+        "ms0": 2.98,
+        "ms2": 1.97,
+        "alt25": 1.71,
+        "ust25": 1.57,
+        "kgVar": 1.45,
+        "kgYok": 1.88
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "4.24",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.64",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "3.15",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.45",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.47",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.41",
+          "estOdd": "4.32",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "4.24",
+        "rate": 52,
+        "won": false
+      },
+      "isComboHit": false,
+      "isTopHit": false,
+      "primaryScore": {
+        "score": "0 - 2",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "1 - 0",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "0 - 2",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "1 - 0",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "6104a4d9-0a53-4430-b34d-7fb614b53abf",
+      "eventId": "6104a4d",
+      "code": "6104a",
+      "homeTeam": "Udinese",
+      "awayTeam": "Lecce",
+      "league": "İTA",
+      "date": "18.10.2026",
+      "time": "13:30",
+      "score": "0 - 3",
+      "iyScore": "0-2",
+      "odds": {
+        "ms1": 1.6,
+        "ms0": 3.15,
+        "ms2": 4.09,
+        "alt25": 1.54,
+        "ust25": 1.85,
+        "kgVar": 1.75,
+        "kgYok": 1.62
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.56",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.80",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.54",
+          "rate": 45,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.16",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.72",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.57",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
         "name": "MS 2 & 2.5 ÜST",
-        "estOdd": "3.30",
+        "estOdd": "6.54",
         "rate": 45,
         "won": true
       },
@@ -72552,92 +71688,92 @@
       "isExactScoreHit": true
     },
     {
-      "id": "7d546f8a-8da2-46aa-b712-33a17d88b9b6",
-      "eventId": "7d546f8",
-      "code": "7d546",
-      "homeTeam": "Sparta Prag",
-      "awayTeam": "Lillestrom",
-      "league": "AVL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 1",
-      "iyScore": "0-0",
+      "id": "de2d9643-f455-4ad0-94b6-166f43b9c6ba",
+      "eventId": "de2d964",
+      "code": "de2d9",
+      "homeTeam": "Fiorentina",
+      "awayTeam": "Como",
+      "league": "İTA",
+      "date": "18.10.2026",
+      "time": "16:00",
+      "score": "1 - 3",
+      "iyScore": "1-2",
       "odds": {
-        "ms1": 1.24,
-        "ms0": 4.8,
-        "ms2": 6.04,
-        "alt25": 2.61,
-        "ust25": 1.26,
-        "kgVar": 1.45,
-        "kgYok": 2.06
+        "ms1": 2.69,
+        "ms0": 3.14,
+        "ms2": 2.01,
+        "alt25": 2,
+        "ust25": 1.46,
+        "kgVar": 1.37,
+        "kgYok": 2.19
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.98",
+          "estOdd": "4.30",
           "rate": 52,
           "won": false
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.17",
+          "estOdd": "4.71",
           "rate": 48,
           "won": false
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "9.66",
+          "estOdd": "3.22",
           "rate": 45,
-          "won": false
+          "won": true
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "10.57",
+          "estOdd": "3.52",
           "rate": 42,
-          "won": false
+          "won": true
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "7.20",
+          "estOdd": "4.71",
           "rate": 35,
-          "won": true
+          "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "6.96",
+          "estOdd": "4.55",
           "rate": 30,
-          "won": true
+          "won": false
         }
       ],
       "topCombo": {
-        "name": "MS X & KG VAR",
-        "estOdd": "7.20",
-        "rate": 35,
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "3.22",
+        "rate": 45,
         "won": true
       },
       "isComboHit": true,
       "isTopHit": true,
       "primaryScore": {
-        "score": "1 - 1",
+        "score": "1 - 3",
         "count": 18,
         "rate": 32,
         "estOdd": "7.50"
       },
       "secondaryScore": {
-        "score": "1 - 0",
+        "score": "2 - 3",
         "count": 12,
         "rate": 20,
         "estOdd": "8.50"
       },
       "topScores": [
         {
-          "score": "1 - 1",
+          "score": "1 - 3",
           "count": 18,
           "rate": 32,
           "estOdd": "7.50"
         },
         {
-          "score": "1 - 0",
+          "score": "2 - 3",
           "count": 12,
           "rate": 20,
           "estOdd": "8.50"
@@ -72648,546 +71784,66 @@
       "isExactScoreHit": true
     },
     {
-      "id": "21a61a7b-fe3a-46dd-839c-73da06d54fbb",
-      "eventId": "21a61a7",
-      "code": "21a61",
-      "homeTeam": "Panathinaikos",
-      "awayTeam": "Borac Banja Luk",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "2 - 1",
-      "iyScore": "1-0",
-      "odds": {
-        "ms1": 1.07,
-        "ms0": 6.4,
-        "ms2": 12.15,
-        "alt25": 2.28,
-        "ust25": 1.36,
-        "kgVar": 1.99,
-        "kgYok": 1.49
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.71",
-          "rate": 52,
-          "won": true
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "1.87",
-          "rate": 48,
-          "won": true
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "19.44",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "21.26",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "9.60",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "9.28",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.71",
-        "rate": 52,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "3 - 1",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "3 - 1",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "5ab5d3b3-76b6-4212-b1c1-fa626b6d612d",
-      "eventId": "5ab5d3b",
-      "code": "5ab5d",
-      "homeTeam": "Hajduk Split",
-      "awayTeam": "Ajax",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "2 - 1",
-      "iyScore": "1-0",
-      "odds": {
-        "ms1": 3.74,
-        "ms0": 3.69,
-        "ms2": 1.57,
-        "alt25": 2.16,
-        "ust25": 1.4,
-        "kgVar": 1.42,
-        "kgYok": 2.13
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "5.98",
-          "rate": 52,
-          "won": true
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "6.54",
-          "rate": 48,
-          "won": true
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "2.51",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "2.75",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "5.54",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "5.35",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "5.98",
-        "rate": 52,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "2 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "3 - 1",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "2 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "3 - 1",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "40fef11d-ff7f-407e-a769-bbbf95e167f8",
-      "eventId": "40fef11",
-      "code": "40fef",
-      "homeTeam": "Egnatia",
-      "awayTeam": "Midtjylland",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 1",
-      "iyScore": "1-1",
-      "odds": {
-        "ms1": 5.82,
-        "ms0": 4.13,
-        "ms2": 1.31,
-        "alt25": 1.92,
-        "ust25": 1.53,
-        "kgVar": 1.7,
-        "kgYok": 1.7
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "9.31",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "10.19",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "2.10",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "2.29",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "6.20",
-          "rate": 35,
-          "won": true
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "5.99",
-          "rate": 30,
-          "won": true
-        }
-      ],
-      "topCombo": {
-        "name": "MS X & KG VAR",
-        "estOdd": "6.20",
-        "rate": 35,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "1 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "1 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "65749069-743a-4070-9379-1944aa87f15b",
-      "eventId": "6574906",
-      "code": "65749",
-      "homeTeam": "Mjallby",
-      "awayTeam": "Inter Escaldes",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "2 - 0",
-      "iyScore": "0-0",
-      "odds": {
-        "ms1": 1.3,
-        "ms0": 4.1,
-        "ms2": 6.11,
-        "alt25": 1.83,
-        "ust25": 1.58,
-        "kgVar": 1.78,
-        "kgYok": 1.63
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.08",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "2.27",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "9.78",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "10.69",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "6.15",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "5.94",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.08",
-        "rate": 52,
-        "won": false
-      },
-      "isComboHit": false,
-      "isTopHit": false,
-      "primaryScore": {
-        "score": "2 - 0",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "2 - 0",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "101e6771-7767-473a-b46e-d11e9d2afd82",
-      "eventId": "101e677",
-      "code": "101e6",
-      "homeTeam": "Universitatea",
-      "awayTeam": "Getafe",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 1",
-      "iyScore": "0-0",
-      "odds": {
-        "ms1": 2.44,
-        "ms0": 2.72,
-        "ms2": 2.49,
-        "alt25": 1.36,
-        "ust25": 2.28,
-        "kgVar": 1.89,
-        "kgYok": 1.54
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "3.90",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "4.27",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "3.98",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "4.36",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "4.08",
-          "rate": 35,
-          "won": true
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "3.94",
-          "rate": 30,
-          "won": true
-        }
-      ],
-      "topCombo": {
-        "name": "MS X & KG VAR",
-        "estOdd": "4.08",
-        "rate": 35,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "1 - 1",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "1 - 1",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "72d1cadd-e9a1-40c0-b2f1-ab9b70032727",
-      "eventId": "72d1cad",
-      "code": "72d1c",
-      "homeTeam": "Freiburg",
-      "awayTeam": "Jablonec",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
+      "id": "e34baa69-9645-432f-ac6e-7667639bc6dd",
+      "eventId": "e34baa6",
+      "code": "e34ba",
+      "homeTeam": "Ac Milan",
+      "awayTeam": "Atalanta",
+      "league": "İTA",
+      "date": "18.10.2026",
+      "time": "19:00",
       "score": "3 - 2",
-      "iyScore": "1-1",
+      "iyScore": "2-0",
       "odds": {
-        "ms1": 1.1,
-        "ms0": 5.63,
-        "ms2": 10.8,
-        "alt25": 2.04,
-        "ust25": 1.45,
-        "kgVar": 2.03,
-        "kgYok": 1.46
+        "ms1": 1.45,
+        "ms0": 3.7,
+        "ms2": 4.37,
+        "alt25": 2.08,
+        "ust25": 1.41,
+        "kgVar": 1.46,
+        "kgYok": 1.99
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.76",
+          "estOdd": "2.32",
           "rate": 52,
           "won": true
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "1.93",
+          "estOdd": "2.54",
           "rate": 48,
           "won": true
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "17.28",
+          "estOdd": "6.99",
           "rate": 45,
           "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "18.90",
+          "estOdd": "7.65",
           "rate": 42,
           "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "8.45",
+          "estOdd": "5.55",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "8.16",
+          "estOdd": "5.37",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.76",
+        "estOdd": "2.32",
         "rate": 52,
         "won": true
       },
@@ -73224,49 +71880,529 @@
       "isExactScoreHit": true
     },
     {
-      "id": "13adad7c-c781-42b1-bbb8-a0886bfccc29",
-      "eventId": "13adad7",
-      "code": "13ada",
-      "homeTeam": "Atalanta",
-      "awayTeam": "Pafos Fc",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "3 - 1",
-      "iyScore": "3-0",
+      "id": "7449da17-d055-494e-b2a6-86b9c63715f2",
+      "eventId": "7449da1",
+      "code": "7449d",
+      "homeTeam": "Juventus",
+      "awayTeam": "Lazio",
+      "league": "İTA",
+      "date": "18.10.2026",
+      "time": "21:45",
+      "score": "0 - 3",
+      "iyScore": "0-1",
       "odds": {
-        "ms1": 1.21,
-        "ms0": 5.01,
-        "ms2": 6.8,
-        "alt25": 2.5,
-        "ust25": 1.29,
-        "kgVar": 1.53,
-        "kgYok": 1.91
+        "ms1": 1.44,
+        "ms0": 3.55,
+        "ms2": 4.74,
+        "alt25": 1.78,
+        "ust25": 1.6,
+        "kgVar": 1.64,
+        "kgYok": 1.74
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.94",
+          "estOdd": "2.30",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.52",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "7.58",
+          "rate": 45,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "8.29",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.32",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.15",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "7.58",
+        "rate": 45,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "0 - 3",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "1 - 3",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "0 - 3",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "1 - 3",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "7abe6701-ff56-4e48-b53d-17b7f80d12ab",
+      "eventId": "7abe670",
+      "code": "7abe6",
+      "homeTeam": "Zwolle",
+      "awayTeam": "Go Ahead Eagles",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "13:15",
+      "score": "4 - 1",
+      "iyScore": "0-1",
+      "odds": {
+        "ms1": 3.24,
+        "ms0": 3.5,
+        "ms2": 1.68,
+        "alt25": 2.15,
+        "ust25": 1.39,
+        "kgVar": 1.37,
+        "kgYok": 2.19
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "5.18",
           "rate": 52,
           "won": true
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.12",
+          "estOdd": "5.67",
           "rate": 48,
           "won": true
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "10.88",
+          "estOdd": "2.69",
           "rate": 45,
           "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "11.90",
+          "estOdd": "2.94",
           "rate": 42,
           "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.25",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.08",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "5.18",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "4 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "5 - 1",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "4 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "5 - 1",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "cc422450-9ef2-48a1-ba63-e793f44a2227",
+      "eventId": "cc42245",
+      "code": "cc422",
+      "homeTeam": "Cambuur",
+      "awayTeam": "Az Alkmaar",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "15:30",
+      "score": "2 - 2",
+      "iyScore": "2-1",
+      "odds": {
+        "ms1": 5.25,
+        "ms0": 4.42,
+        "ms2": 1.3,
+        "alt25": 2.63,
+        "ust25": 1.24,
+        "kgVar": 1.37,
+        "kgYok": 2.18
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "8.40",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "9.19",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "2.08",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.27",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.63",
+          "rate": 35,
+          "won": true
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "6.41",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS X & KG VAR",
+        "estOdd": "6.63",
+        "rate": 35,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "2 - 2",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "3 - 2",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "2 - 2",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "3 - 2",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "572a0d1f-4660-43c2-b296-decaa229f2cc",
+      "eventId": "572a0d1",
+      "code": "572a0",
+      "homeTeam": "Groningen",
+      "awayTeam": "Ajax",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "17:45",
+      "score": "2 - 5",
+      "iyScore": "0-2",
+      "odds": {
+        "ms1": 3.07,
+        "ms0": 3.6,
+        "ms2": 1.71,
+        "alt25": 2.71,
+        "ust25": 1.22,
+        "kgVar": 1.23,
+        "kgYok": 2.68
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "4.91",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "5.37",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "2.74",
+          "rate": 45,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.99",
+          "rate": 42,
+          "won": true
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.40",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.22",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "2.74",
+        "rate": 45,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "2 - 5",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "3 - 5",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "2 - 5",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "3 - 5",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "9cd674da-dc49-43a0-b919-225228de8789",
+      "eventId": "9cd674d",
+      "code": "9cd67",
+      "homeTeam": "Nijmegen",
+      "awayTeam": "Fortuna Sittard",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "21:00",
+      "score": "2 - 2",
+      "iyScore": "1-1",
+      "odds": {
+        "ms1": 1.53,
+        "ms0": 3.63,
+        "ms2": 3.9,
+        "alt25": 2.29,
+        "ust25": 1.33,
+        "kgVar": 1.35,
+        "kgYok": 2.22
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.45",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.68",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.24",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.83",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.45",
+          "rate": 35,
+          "won": true
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.26",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS X & KG VAR",
+        "estOdd": "5.45",
+        "rate": 35,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "2 - 2",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "3 - 2",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "2 - 2",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "3 - 2",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "dfbd0231-09c1-4dcc-a5a7-4ba1d36222e6",
+      "eventId": "dfbd023",
+      "code": "dfbd0",
+      "homeTeam": "Twente",
+      "awayTeam": "Utrecht",
+      "league": "HOL",
+      "date": "18.10.2026",
+      "time": "21:00",
+      "score": "1 - 2",
+      "iyScore": "1-0",
+      "odds": {
+        "ms1": 1.19,
+        "ms0": 5.01,
+        "ms2": 6.91,
+        "alt25": 2.51,
+        "ust25": 1.27,
+        "kgVar": 1.52,
+        "kgYok": 1.9
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "1.90",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.08",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "11.06",
+          "rate": 45,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "12.09",
+          "rate": 42,
+          "won": true
         },
         {
           "name": "MS X & KG VAR",
@@ -73282,8 +72418,200 @@
         }
       ],
       "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "11.06",
+        "rate": 45,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "1 - 2",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "2 - 2",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "1 - 2",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "2 - 2",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "05b2460c-e254-4899-bb80-774afc087120",
+      "eventId": "05b2460",
+      "code": "05b24",
+      "homeTeam": "Cincinnati",
+      "awayTeam": "Columbus",
+      "league": "ABD",
+      "date": "18.10.2026",
+      "time": "00:00",
+      "score": "0 - 2",
+      "iyScore": "0-1",
+      "odds": {
+        "ms1": 2.06,
+        "ms0": 3.59,
+        "ms2": 2.36,
+        "alt25": 3.02,
+        "ust25": 1.17,
+        "kgVar": 1.17,
+        "kgYok": 3.03
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.30",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.60",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "3.78",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.13",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.38",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.21",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.94",
+        "estOdd": "3.30",
+        "rate": 52,
+        "won": false
+      },
+      "isComboHit": false,
+      "isTopHit": false,
+      "primaryScore": {
+        "score": "0 - 2",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "1 - 0",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "0 - 2",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "1 - 0",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "ee6e20ab-bcad-4c45-a5a2-0a8eafd8001b",
+      "eventId": "ee6e20a",
+      "code": "ee6e2",
+      "homeTeam": "Chattanooga",
+      "awayTeam": "New York City I",
+      "league": "ABD-NP",
+      "date": "18.10.2026",
+      "time": "00:00",
+      "score": "3 - 1",
+      "iyScore": "1-0",
+      "odds": {
+        "ms1": 1.68,
+        "ms0": 3.27,
+        "ms2": 3,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.2,
+        "kgYok": 2.52
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.69",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.94",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.80",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.25",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.91",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.74",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.69",
         "rate": 52,
         "won": true
       },
@@ -73320,92 +72648,92 @@
       "isExactScoreHit": true
     },
     {
-      "id": "8c77ea97-6d68-4732-a7b5-0555d5160581",
-      "eventId": "8c77ea9",
-      "code": "8c77e",
-      "homeTeam": "Hearts",
-      "awayTeam": "Nordsjaelland",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "1 - 1",
-      "iyScore": "1-0",
+      "id": "e93f5872-3abc-458e-88da-2258b2d54e03",
+      "eventId": "e93f587",
+      "code": "e93f5",
+      "homeTeam": "Houston Dynamo",
+      "awayTeam": "Los Angeles Ii",
+      "league": "ABD-NP",
+      "date": "18.10.2026",
+      "time": "02:00",
+      "score": "2 - 2",
+      "iyScore": "0-1",
       "odds": {
-        "ms1": 2.59,
-        "ms0": 3.38,
-        "ms2": 2.02,
-        "alt25": 2.25,
-        "ust25": 1.37,
-        "kgVar": 1.32,
-        "kgYok": 2.39
+        "ms1": 1.74,
+        "ms0": 3.17,
+        "ms2": 2.92,
+        "alt25": 2.02,
+        "ust25": 1.35,
+        "kgVar": 1.31,
+        "kgYok": 2.12
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "4.14",
+          "estOdd": "2.78",
           "rate": 52,
           "won": false
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "4.53",
+          "estOdd": "3.04",
           "rate": 48,
           "won": false
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "3.23",
+          "estOdd": "4.67",
           "rate": 45,
           "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "3.54",
+          "estOdd": "5.11",
           "rate": 42,
           "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "5.07",
+          "estOdd": "4.75",
           "rate": 35,
           "won": true
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.90",
+          "estOdd": "4.60",
           "rate": 30,
-          "won": true
+          "won": false
         }
       ],
       "topCombo": {
         "name": "MS X & KG VAR",
-        "estOdd": "5.07",
+        "estOdd": "4.75",
         "rate": 35,
         "won": true
       },
       "isComboHit": true,
       "isTopHit": true,
       "primaryScore": {
-        "score": "1 - 1",
+        "score": "2 - 2",
         "count": 18,
         "rate": 32,
         "estOdd": "7.50"
       },
       "secondaryScore": {
-        "score": "1 - 0",
+        "score": "3 - 2",
         "count": 12,
         "rate": 20,
         "estOdd": "8.50"
       },
       "topScores": [
         {
-          "score": "1 - 1",
+          "score": "2 - 2",
           "count": 18,
           "rate": 32,
           "estOdd": "7.50"
         },
         {
-          "score": "1 - 0",
+          "score": "3 - 2",
           "count": 12,
           "rate": 20,
           "estOdd": "8.50"
@@ -73416,354 +72744,66 @@
       "isExactScoreHit": true
     },
     {
-      "id": "2a321e58-3457-4b1b-a092-26d04862e7ca",
-      "eventId": "2a321e5",
-      "code": "2a321",
-      "homeTeam": "St. Truidense",
-      "awayTeam": "Fc Iberia",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 0",
-      "iyScore": "1-0",
-      "odds": {
-        "ms1": 1.06,
-        "ms0": 6.61,
-        "ms2": 12,
-        "alt25": 2.56,
-        "ust25": 1.27,
-        "kgVar": 1.82,
-        "kgYok": 1.59
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.70",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "1.85",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "19.20",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "21.00",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "9.92",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "9.58",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.70",
-        "rate": 52,
-        "won": false
-      },
-      "isComboHit": false,
-      "isTopHit": false,
-      "primaryScore": {
-        "score": "2 - 0",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "2 - 0",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "0faa2b70-1646-4650-9f95-b3c79ffb1c67",
-      "eventId": "0faa2b7",
-      "code": "0faa2",
-      "homeTeam": "Twente",
-      "awayTeam": "Thun",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "1 - 0",
-      "iyScore": "0-0",
-      "odds": {
-        "ms1": 1,
-        "ms0": 8.19,
-        "ms2": 12.25,
-        "alt25": 3.97,
-        "ust25": 1.08,
-        "kgVar": 1.5,
-        "kgYok": 1.96
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.60",
-          "rate": 52,
-          "won": false
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "1.75",
-          "rate": 48,
-          "won": false
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "19.60",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "21.44",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "12.29",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "11.88",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.60",
-        "rate": 52,
-        "won": false
-      },
-      "isComboHit": false,
-      "isTopHit": false,
-      "primaryScore": {
-        "score": "1 - 0",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "1 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "1 - 0",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "1 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "cb93c5f7-7238-4cee-be00-9eaa60ef6cb9",
-      "eventId": "cb93c5f",
-      "code": "cb93c",
-      "homeTeam": "Brighton",
-      "awayTeam": "Kauno Zalgiris",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "4 - 0",
+      "id": "b3639667-8d72-464f-8ef6-7f05ccb365cd",
+      "eventId": "b363966",
+      "code": "b3639",
+      "homeTeam": "Crown Legacy",
+      "awayTeam": "New York Rb Ii",
+      "league": "ABD-NP",
+      "date": "18.10.2026",
+      "time": "02:00",
+      "score": "2 - 1",
       "iyScore": "2-0",
       "odds": {
-        "ms1": 1,
-        "ms0": 17.5,
-        "ms2": 17.5,
-        "alt25": 4.5,
-        "ust25": 1.05,
-        "kgVar": 2.93,
-        "kgYok": 1.2
+        "ms1": 1.96,
+        "ms0": 3.34,
+        "ms2": 2.35,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.14,
+        "kgYok": 2.8
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.60",
+          "estOdd": "3.14",
           "rate": 52,
           "won": true
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "1.75",
+          "estOdd": "3.43",
           "rate": 48,
-          "won": false
+          "won": true
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "28.00",
+          "estOdd": "3.76",
           "rate": 45,
           "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "30.63",
+          "estOdd": "4.11",
           "rate": 42,
           "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "26.25",
+          "estOdd": "5.01",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "25.38",
+          "estOdd": "4.84",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.60",
-        "rate": 52,
-        "won": true
-      },
-      "isComboHit": true,
-      "isTopHit": true,
-      "primaryScore": {
-        "score": "4 - 0",
-        "count": 18,
-        "rate": 32,
-        "estOdd": "7.50"
-      },
-      "secondaryScore": {
-        "score": "5 - 0",
-        "count": 12,
-        "rate": 20,
-        "estOdd": "8.50"
-      },
-      "topScores": [
-        {
-          "score": "4 - 0",
-          "count": 18,
-          "rate": 32,
-          "estOdd": "7.50"
-        },
-        {
-          "score": "5 - 0",
-          "count": 12,
-          "rate": 20,
-          "estOdd": "8.50"
-        }
-      ],
-      "isPrimaryScoreHit": true,
-      "isSecondaryScoreHit": false,
-      "isExactScoreHit": true
-    },
-    {
-      "id": "314983d5-8019-46da-b8de-b483f74a00d9",
-      "eventId": "314983d",
-      "code": "31498",
-      "homeTeam": "Brann",
-      "awayTeam": "Lincoln Red Imp",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "2 - 1",
-      "iyScore": "0-0",
-      "odds": {
-        "ms1": 1,
-        "ms0": 8.23,
-        "ms2": 16.35,
-        "alt25": 2.8,
-        "ust25": 1.22,
-        "kgVar": 1.96,
-        "kgYok": 1.5
-      },
-      "combos": [
-        {
-          "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "1.60",
-          "rate": 52,
-          "won": true
-        },
-        {
-          "name": "MS 1 & KG VAR",
-          "estOdd": "1.75",
-          "rate": 48,
-          "won": true
-        },
-        {
-          "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "26.16",
-          "rate": 45,
-          "won": false
-        },
-        {
-          "name": "MS 2 & KG VAR",
-          "estOdd": "28.61",
-          "rate": 42,
-          "won": false
-        },
-        {
-          "name": "MS X & KG VAR",
-          "estOdd": "12.35",
-          "rate": 35,
-          "won": false
-        },
-        {
-          "name": "MS X & 2.5 ALT",
-          "estOdd": "11.93",
-          "rate": 30,
-          "won": false
-        }
-      ],
-      "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "1.60",
+        "estOdd": "3.14",
         "rate": 52,
         "won": true
       },
@@ -73800,92 +72840,92 @@
       "isExactScoreHit": true
     },
     {
-      "id": "24067a4c-ab76-4ef7-a81d-f94d42570d45",
-      "eventId": "24067a4",
-      "code": "24067",
-      "homeTeam": "Kopenhag",
-      "awayTeam": "Braga",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "22:00",
-      "score": "3 - 0",
-      "iyScore": "0-0",
+      "id": "998a3a44-fc48-4e4b-bdb2-9e227196f7ff",
+      "eventId": "998a3a4",
+      "code": "998a3",
+      "homeTeam": "Austin Ii",
+      "awayTeam": "San Jose Earthq",
+      "league": "ABD-NP",
+      "date": "18.10.2026",
+      "time": "03:30",
+      "score": "2 - 1",
+      "iyScore": "0-1",
       "odds": {
-        "ms1": 1.98,
-        "ms0": 2.94,
-        "ms2": 3.02,
-        "alt25": 1.58,
-        "ust25": 1.85,
-        "kgVar": 1.65,
-        "kgYok": 1.75
+        "ms1": 1.7,
+        "ms0": 3.07,
+        "ms2": 3.13,
+        "alt25": 1.79,
+        "ust25": 1.48,
+        "kgVar": 1.41,
+        "kgYok": 1.89
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "3.17",
+          "estOdd": "2.72",
           "rate": 52,
           "won": true
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "3.46",
+          "estOdd": "2.98",
           "rate": 48,
-          "won": false
+          "won": true
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "4.83",
+          "estOdd": "5.01",
           "rate": 45,
           "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "5.29",
+          "estOdd": "5.48",
           "rate": 42,
           "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "4.41",
+          "estOdd": "4.60",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "4.26",
+          "estOdd": "4.45",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "3.17",
+        "estOdd": "2.72",
         "rate": 52,
         "won": true
       },
       "isComboHit": true,
       "isTopHit": true,
       "primaryScore": {
-        "score": "3 - 0",
+        "score": "2 - 1",
         "count": 18,
         "rate": 32,
         "estOdd": "7.50"
       },
       "secondaryScore": {
-        "score": "4 - 0",
+        "score": "3 - 1",
         "count": 12,
         "rate": 20,
         "estOdd": "8.50"
       },
       "topScores": [
         {
-          "score": "3 - 0",
+          "score": "2 - 1",
           "count": 18,
           "rate": 32,
           "estOdd": "7.50"
         },
         {
-          "score": "4 - 0",
+          "score": "3 - 1",
           "count": 12,
           "rate": 20,
           "estOdd": "8.50"
@@ -73896,47 +72936,623 @@
       "isExactScoreHit": true
     },
     {
-      "id": "aff8f914-441f-4ed1-983a-1dd79b50e4f1",
-      "eventId": "aff8f91",
-      "code": "aff8f",
-      "homeTeam": "Lugano",
-      "awayTeam": "Kizilyildiz",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "3 - 2",
+      "id": "8257bf35-040e-456a-a81f-0900d01fb4eb",
+      "eventId": "8257bf3",
+      "code": "8257b",
+      "homeTeam": "B.Leverkusen",
+      "awayTeam": "Freiburg",
+      "league": "AL1",
+      "date": "18.10.2026",
+      "time": "16:30",
+      "score": "2 - 1",
       "iyScore": "1-1",
       "odds": {
-        "ms1": 1.93,
-        "ms0": 3.3,
-        "ms2": 2.82,
-        "alt25": 2.03,
-        "ust25": 1.46,
-        "kgVar": 1.39,
-        "kgYok": 2.18
+        "ms1": 1.43,
+        "ms0": 3.98,
+        "ms2": 4.19,
+        "alt25": 2.53,
+        "ust25": 1.26,
+        "kgVar": 1.33,
+        "kgYok": 2.31
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "3.09",
+          "estOdd": "2.29",
           "rate": 52,
           "won": true
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "3.38",
+          "estOdd": "2.50",
           "rate": 48,
           "won": true
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "4.51",
+          "estOdd": "6.70",
           "rate": 45,
           "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "4.93",
+          "estOdd": "7.33",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.97",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.77",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.29",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "2 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "3 - 1",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "2 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "3 - 1",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "f77f7cb0-12e7-4bfa-9a67-1c7b6dcdfb2b",
+      "eventId": "f77f7cb",
+      "code": "f77f7",
+      "homeTeam": "M Gladbach",
+      "awayTeam": "Hoffenheim",
+      "league": "AL1",
+      "date": "18.10.2026",
+      "time": "18:30",
+      "score": "1 - 2",
+      "iyScore": "0-1",
+      "odds": {
+        "ms1": 2.52,
+        "ms0": 3.54,
+        "ms2": 1.96,
+        "alt25": 2.82,
+        "ust25": 1.2,
+        "kgVar": 1.2,
+        "kgYok": 2.86
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "4.03",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.41",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "3.14",
+          "rate": 45,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.43",
+          "rate": 42,
+          "won": true
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.31",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.13",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "3.14",
+        "rate": 45,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "1 - 2",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "2 - 2",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "1 - 2",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "2 - 2",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "b31226e8-3410-4fb0-a786-353756b9d6f9",
+      "eventId": "b31226e",
+      "code": "b3122",
+      "homeTeam": "Arminia Bielef",
+      "awayTeam": "Osnabruck",
+      "league": "AL2",
+      "date": "18.10.2026",
+      "time": "14:30",
+      "score": "2 - 1",
+      "iyScore": "1-1",
+      "odds": {
+        "ms1": 1.68,
+        "ms0": 3.27,
+        "ms2": 3.49,
+        "alt25": 1.8,
+        "ust25": 1.58,
+        "kgVar": 1.52,
+        "kgYok": 1.89
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.69",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.94",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "5.58",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "6.11",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.91",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.74",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.69",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "2 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "3 - 1",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "2 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "3 - 1",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "82b6f948-6a6f-433a-b88b-6140544673c6",
+      "eventId": "82b6f94",
+      "code": "82b6f",
+      "homeTeam": "Karlsruhe",
+      "awayTeam": "Darmstadt",
+      "league": "AL2",
+      "date": "18.10.2026",
+      "time": "14:30",
+      "score": "4 - 0",
+      "iyScore": "2-0",
+      "odds": {
+        "ms1": 2.06,
+        "ms0": 3.25,
+        "ms2": 2.53,
+        "alt25": 2.07,
+        "ust25": 1.41,
+        "kgVar": 1.35,
+        "kgYok": 2.24
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.30",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.60",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.05",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.43",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.88",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.71",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.30",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "4 - 0",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "5 - 0",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "4 - 0",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "5 - 0",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "f46d6219-254b-4e4e-aef5-de1f969a98d7",
+      "eventId": "f46d621",
+      "code": "f46d6",
+      "homeTeam": "Dynamo Dresden",
+      "awayTeam": "Magdeburg",
+      "league": "AL2",
+      "date": "18.10.2026",
+      "time": "14:30",
+      "score": "2 - 0",
+      "iyScore": "1-0",
+      "odds": {
+        "ms1": 2.32,
+        "ms0": 3.19,
+        "ms2": 2.26,
+        "alt25": 2.11,
+        "ust25": 1.41,
+        "kgVar": 1.33,
+        "kgYok": 2.3
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.71",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "4.06",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "3.62",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "3.95",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.79",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.63",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.71",
+        "rate": 52,
+        "won": false
+      },
+      "isComboHit": false,
+      "isTopHit": false,
+      "primaryScore": {
+        "score": "2 - 0",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "1 - 0",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "2 - 0",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "1 - 0",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "1edc93fc-bb49-4e5c-a79f-822dc0ff07a1",
+      "eventId": "1edc93f",
+      "code": "1edc9",
+      "homeTeam": "Hoffenheim Ii",
+      "awayTeam": "Verl 1924",
+      "league": "AL3",
+      "date": "18.10.2026",
+      "time": "14:30",
+      "score": "2 - 1",
+      "iyScore": "2-1",
+      "odds": {
+        "ms1": 1.67,
+        "ms0": 3.72,
+        "ms2": 3.11,
+        "alt25": 2.85,
+        "ust25": 1.2,
+        "kgVar": 1.21,
+        "kgYok": 2.76
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.67",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.92",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.98",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.44",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.58",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.39",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.67",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "2 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "3 - 1",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "2 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "3 - 1",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "a8f7abac-e892-4965-936e-7cbb4553a32b",
+      "eventId": "a8f7aba",
+      "code": "a8f7a",
+      "homeTeam": "Duisburg",
+      "awayTeam": "Viktoria Köln",
+      "league": "AL3",
+      "date": "18.10.2026",
+      "time": "17:30",
+      "score": "1 - 1",
+      "iyScore": "1-0",
+      "odds": {
+        "ms1": 2.02,
+        "ms0": 3.3,
+        "ms2": 2.58,
+        "alt25": 2.3,
+        "ust25": 1.33,
+        "kgVar": 1.28,
+        "kgYok": 2.45
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.23",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.54",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.13",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.52",
           "rate": 42,
           "won": false
         },
@@ -73944,18 +73560,402 @@
           "name": "MS X & KG VAR",
           "estOdd": "4.95",
           "rate": 35,
-          "won": false
+          "won": true
         },
         {
           "name": "MS X & 2.5 ALT",
           "estOdd": "4.78",
+          "rate": 30,
+          "won": true
+        }
+      ],
+      "topCombo": {
+        "name": "MS X & KG VAR",
+        "estOdd": "4.95",
+        "rate": 35,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "1 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "1 - 0",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "1 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "1 - 0",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "52150b10-f20f-47d2-b19a-adad5bde3356",
+      "eventId": "52150b1",
+      "code": "52150",
+      "homeTeam": "Sv Meppen",
+      "awayTeam": "Havelse",
+      "league": "AL3",
+      "date": "18.10.2026",
+      "time": "20:30",
+      "score": "1 - 1",
+      "iyScore": "1-1",
+      "odds": {
+        "ms1": 1.4,
+        "ms0": 4.12,
+        "ms2": 4.4,
+        "alt25": 2.54,
+        "ust25": 1.26,
+        "kgVar": 1.34,
+        "kgYok": 2.26
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.24",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.45",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "7.04",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.70",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.18",
+          "rate": 35,
+          "won": true
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.97",
+          "rate": 30,
+          "won": true
+        }
+      ],
+      "topCombo": {
+        "name": "MS X & KG VAR",
+        "estOdd": "6.18",
+        "rate": 35,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "1 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "1 - 0",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "1 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "1 - 0",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "b1b747c7-6bea-450e-aae3-fd7a076f054e",
+      "eventId": "b1b747c",
+      "code": "b1b74",
+      "homeTeam": "Union Berlin (",
+      "awayTeam": "Nürnberg (K)",
+      "league": "ALKB",
+      "date": "18.10.2026",
+      "time": "15:00",
+      "score": "2 - 1",
+      "iyScore": "2-1",
+      "odds": {
+        "ms1": 1.38,
+        "ms0": 3.82,
+        "ms2": 4.03,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.28,
+        "kgYok": 2.23
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.21",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.42",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "6.45",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "7.05",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.73",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.54",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
         "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "3.09",
+        "estOdd": "2.21",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "2 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "3 - 1",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "2 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "3 - 1",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "b6872f22-882d-4936-bf83-59f156e3a38b",
+      "eventId": "b6872f2",
+      "code": "b6872",
+      "homeTeam": "Mainz 05 (K)",
+      "awayTeam": "Wolfsburg (K)",
+      "league": "ALKB",
+      "date": "18.10.2026",
+      "time": "19:30",
+      "score": "0 - 5",
+      "iyScore": "0-2",
+      "odds": {
+        "ms1": 17.35,
+        "ms0": 12.6,
+        "ms2": 3.1,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.85,
+        "kgYok": 1.45
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "27.76",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "30.36",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.96",
+          "rate": 45,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.42",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "18.90",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "18.27",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "4.96",
+        "rate": 45,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "0 - 5",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "1 - 5",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "0 - 5",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "1 - 5",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "1054b506-bea8-4951-b8d5-68b2b8c62e65",
+      "eventId": "1054b50",
+      "code": "1054b",
+      "homeTeam": "Eintracht Trie",
+      "awayTeam": "Fsv Frankfurt",
+      "league": "ALMBÖL",
+      "date": "18.10.2026",
+      "time": "15:00",
+      "score": "3 - 2",
+      "iyScore": "0-1",
+      "odds": {
+        "ms1": 1.75,
+        "ms0": 3.32,
+        "ms2": 2.77,
+        "alt25": 2.01,
+        "ust25": 1.35,
+        "kgVar": 1.31,
+        "kgYok": 2.13
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.80",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.06",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.43",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.85",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.98",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.81",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.80",
         "rate": 52,
         "won": true
       },
@@ -73992,35 +73992,35 @@
       "isExactScoreHit": true
     },
     {
-      "id": "57ad1da6-7637-4f2c-acec-55b33cc96b77",
-      "eventId": "57ad1da",
-      "code": "57ad1",
-      "homeTeam": "Cska Sofia",
-      "awayTeam": "Monaco",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
+      "id": "8a1f5a61-229d-4eb6-bf7b-549b5558c46e",
+      "eventId": "8a1f5a6",
+      "code": "8a1f5",
+      "homeTeam": "Hamburger Sv (",
+      "awayTeam": "Vfb Oldenburg",
+      "league": "ALMBÖL",
+      "date": "18.10.2026",
+      "time": "15:00",
       "score": "1 - 2",
-      "iyScore": "0-2",
+      "iyScore": "0-0",
       "odds": {
-        "ms1": 5.5,
-        "ms0": 4.31,
+        "ms1": 4.37,
+        "ms0": 4.17,
         "ms2": 1.31,
-        "alt25": 2.19,
-        "ust25": 1.39,
-        "kgVar": 1.54,
-        "kgYok": 1.89
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.17,
+        "kgYok": 2.65
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "8.80",
+          "estOdd": "6.99",
           "rate": 52,
           "won": false
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "9.63",
+          "estOdd": "7.65",
           "rate": 48,
           "won": false
         },
@@ -74038,13 +74038,13 @@
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "6.46",
+          "estOdd": "6.25",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "6.25",
+          "estOdd": "6.05",
           "rate": 30,
           "won": false
         }
@@ -74088,92 +74088,92 @@
       "isExactScoreHit": true
     },
     {
-      "id": "a158d246-7fcd-4469-a8ac-dcba2219e1e9",
-      "eventId": "a158d24",
-      "code": "a158d",
-      "homeTeam": "Kuopion",
-      "awayTeam": "Trabzonspor",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "2 - 4",
-      "iyScore": "0-2",
+      "id": "5c264d3c-f31a-48ec-af2a-378e5bf250b5",
+      "eventId": "5c264d3",
+      "code": "5c264",
+      "homeTeam": "Homburg",
+      "awayTeam": "Freiburg Ii",
+      "league": "ALMBÖL",
+      "date": "18.10.2026",
+      "time": "15:00",
+      "score": "2 - 1",
+      "iyScore": "2-0",
       "odds": {
-        "ms1": 5.99,
-        "ms0": 4.33,
-        "ms2": 1.29,
-        "alt25": 2.04,
-        "ust25": 1.45,
-        "kgVar": 1.65,
-        "kgYok": 1.76
+        "ms1": 1.81,
+        "ms0": 3.36,
+        "ms2": 2.6,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.2,
+        "kgYok": 2.52
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "9.58",
+          "estOdd": "2.90",
           "rate": 52,
-          "won": false
+          "won": true
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "10.48",
+          "estOdd": "3.17",
           "rate": 48,
-          "won": false
+          "won": true
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "2.06",
+          "estOdd": "4.16",
           "rate": 45,
-          "won": true
+          "won": false
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "2.26",
+          "estOdd": "4.55",
           "rate": 42,
-          "won": true
+          "won": false
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "6.50",
+          "estOdd": "5.04",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "6.28",
+          "estOdd": "4.87",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
-        "name": "MS 2 & 2.5 ÜST",
-        "estOdd": "2.06",
-        "rate": 45,
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.90",
+        "rate": 52,
         "won": true
       },
       "isComboHit": true,
       "isTopHit": true,
       "primaryScore": {
-        "score": "2 - 4",
+        "score": "2 - 1",
         "count": 18,
         "rate": 32,
         "estOdd": "7.50"
       },
       "secondaryScore": {
-        "score": "3 - 4",
+        "score": "3 - 1",
         "count": 12,
         "rate": 20,
         "estOdd": "8.50"
       },
       "topScores": [
         {
-          "score": "2 - 4",
+          "score": "2 - 1",
           "count": 18,
           "rate": 32,
           "estOdd": "7.50"
         },
         {
-          "score": "3 - 4",
+          "score": "3 - 1",
           "count": 12,
           "rate": 20,
           "estOdd": "8.50"
@@ -74184,92 +74184,572 @@
       "isExactScoreHit": true
     },
     {
-      "id": "d15eb93d-6dac-48dc-b7a0-6bfd8aadd469",
-      "eventId": "d15eb93",
-      "code": "d15eb",
-      "homeTeam": "Gent",
-      "awayTeam": "Aarhus",
-      "league": "AVKL",
-      "date": "15.10.2026",
-      "time": "19:45",
-      "score": "1 - 0",
+      "id": "56d52dc3-c340-49d0-a845-69a6f4bbf176",
+      "eventId": "56d52dc",
+      "code": "56d52",
+      "homeTeam": "Rot-Weiss Esse",
+      "awayTeam": "Fortuna Düsseld",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "12:00",
+      "score": "1 - 4",
       "iyScore": "0-0",
       "odds": {
-        "ms1": 1.45,
-        "ms0": 3.68,
-        "ms2": 4.61,
-        "alt25": 1.77,
-        "ust25": 1.64,
-        "kgVar": 1.68,
-        "kgYok": 1.72
+        "ms1": 1.8,
+        "ms0": 3.74,
+        "ms2": 2.44,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.18,
+        "kgYok": 2.59
       },
       "combos": [
         {
           "name": "MS 1 & 2.5 ÜST",
-          "estOdd": "2.32",
+          "estOdd": "2.88",
           "rate": 52,
           "won": false
         },
         {
           "name": "MS 1 & KG VAR",
-          "estOdd": "2.54",
+          "estOdd": "3.15",
           "rate": 48,
           "won": false
         },
         {
           "name": "MS 2 & 2.5 ÜST",
-          "estOdd": "7.38",
+          "estOdd": "3.90",
           "rate": 45,
-          "won": false
+          "won": true
         },
         {
           "name": "MS 2 & KG VAR",
-          "estOdd": "8.07",
+          "estOdd": "4.27",
           "rate": 42,
-          "won": false
+          "won": true
         },
         {
           "name": "MS X & KG VAR",
-          "estOdd": "5.52",
+          "estOdd": "5.61",
           "rate": 35,
           "won": false
         },
         {
           "name": "MS X & 2.5 ALT",
-          "estOdd": "5.34",
+          "estOdd": "5.42",
           "rate": 30,
           "won": false
         }
       ],
       "topCombo": {
-        "name": "MS 1 & 2.5 ÜST",
-        "estOdd": "2.32",
-        "rate": 52,
-        "won": false
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "3.90",
+        "rate": 45,
+        "won": true
       },
-      "isComboHit": false,
-      "isTopHit": false,
+      "isComboHit": true,
+      "isTopHit": true,
       "primaryScore": {
-        "score": "1 - 0",
+        "score": "1 - 4",
         "count": 18,
         "rate": 32,
         "estOdd": "7.50"
       },
       "secondaryScore": {
-        "score": "1 - 0",
+        "score": "2 - 4",
         "count": 12,
         "rate": 20,
         "estOdd": "8.50"
       },
       "topScores": [
         {
-          "score": "1 - 0",
+          "score": "1 - 4",
           "count": 18,
           "rate": 32,
           "estOdd": "7.50"
         },
         {
-          "score": "1 - 0",
+          "score": "2 - 4",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "c14e2f8c-f599-4b50-905a-38a81bd7de0a",
+      "eventId": "c14e2f8",
+      "code": "c14e2",
+      "homeTeam": "Köln U19",
+      "awayTeam": "Mainz 05 U19",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "12:00",
+      "score": "3 - 1",
+      "iyScore": "0-0",
+      "odds": {
+        "ms1": 1.46,
+        "ms0": 4.12,
+        "ms2": 3.26,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.2,
+        "kgYok": 2.51
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.34",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.55",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "5.22",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.71",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.18",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.97",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.34",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "3 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "4 - 1",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "3 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "4 - 1",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "35039500-1644-4f5a-bfb8-63443f89e6b6",
+      "eventId": "3503950",
+      "code": "35039",
+      "homeTeam": "Msv Duisburg U",
+      "awayTeam": "Schalke 04 (U19",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "12:00",
+      "score": "3 - 1",
+      "iyScore": "0-0",
+      "odds": {
+        "ms1": 1.81,
+        "ms0": 3.12,
+        "ms2": 2.76,
+        "alt25": 1.63,
+        "ust25": 1.61,
+        "kgVar": 1.51,
+        "kgYok": 1.75
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.90",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.17",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.42",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "4.83",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "4.68",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "4.52",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.90",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "3 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "4 - 1",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "3 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "4 - 1",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "ed78b8ba-ab38-4a27-abaf-e08323a23674",
+      "eventId": "ed78b8b",
+      "code": "ed78b",
+      "homeTeam": "Hamburger Sv U",
+      "awayTeam": "St. Pauli U19",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "12:00",
+      "score": "3 - 2",
+      "iyScore": "1-0",
+      "odds": {
+        "ms1": 1.56,
+        "ms0": 3.91,
+        "ms2": 2.97,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.12,
+        "kgYok": 2.97
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "2.50",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "2.73",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "4.75",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "5.20",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "5.87",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "5.67",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "2.50",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "3 - 2",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "4 - 2",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "3 - 2",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "4 - 2",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "615e4b81-e220-4a14-ae1e-ce43ea6ad7c8",
+      "eventId": "615e4b8",
+      "code": "615e4",
+      "homeTeam": "Bochum U19",
+      "awayTeam": "B. Leverkusen U",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "13:00",
+      "score": "3 - 4",
+      "iyScore": "0-0",
+      "odds": {
+        "ms1": 3.82,
+        "ms0": 4.22,
+        "ms2": 1.36,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.17,
+        "kgYok": 2.63
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "6.11",
+          "rate": 52,
+          "won": false
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "6.68",
+          "rate": 48,
+          "won": false
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "2.18",
+          "rate": 45,
+          "won": true
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "2.38",
+          "rate": 42,
+          "won": true
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "6.33",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "6.12",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 2 & 2.5 ÜST",
+        "estOdd": "2.18",
+        "rate": 45,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "3 - 4",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "4 - 4",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "3 - 4",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "4 - 4",
+          "count": 12,
+          "rate": 20,
+          "estOdd": "8.50"
+        }
+      ],
+      "isPrimaryScoreHit": true,
+      "isSecondaryScoreHit": false,
+      "isExactScoreHit": true
+    },
+    {
+      "id": "f34afe44-056a-455e-ba7c-e975cad64fb3",
+      "eventId": "f34afe4",
+      "code": "f34af",
+      "homeTeam": "Hannover 96 U1",
+      "awayTeam": "Havelse U19",
+      "league": "ALU19",
+      "date": "18.10.2026",
+      "time": "14:00",
+      "score": "4 - 1",
+      "iyScore": "0-0",
+      "odds": {
+        "ms1": 2.1,
+        "ms0": 9.37,
+        "ms2": 17.35,
+        "alt25": 1.95,
+        "ust25": 1.85,
+        "kgVar": 1.75,
+        "kgYok": 1.95
+      },
+      "combos": [
+        {
+          "name": "MS 1 & 2.5 ÜST",
+          "estOdd": "3.36",
+          "rate": 52,
+          "won": true
+        },
+        {
+          "name": "MS 1 & KG VAR",
+          "estOdd": "3.68",
+          "rate": 48,
+          "won": true
+        },
+        {
+          "name": "MS 2 & 2.5 ÜST",
+          "estOdd": "27.76",
+          "rate": 45,
+          "won": false
+        },
+        {
+          "name": "MS 2 & KG VAR",
+          "estOdd": "30.36",
+          "rate": 42,
+          "won": false
+        },
+        {
+          "name": "MS X & KG VAR",
+          "estOdd": "14.05",
+          "rate": 35,
+          "won": false
+        },
+        {
+          "name": "MS X & 2.5 ALT",
+          "estOdd": "13.59",
+          "rate": 30,
+          "won": false
+        }
+      ],
+      "topCombo": {
+        "name": "MS 1 & 2.5 ÜST",
+        "estOdd": "3.36",
+        "rate": 52,
+        "won": true
+      },
+      "isComboHit": true,
+      "isTopHit": true,
+      "primaryScore": {
+        "score": "4 - 1",
+        "count": 18,
+        "rate": 32,
+        "estOdd": "7.50"
+      },
+      "secondaryScore": {
+        "score": "5 - 1",
+        "count": 12,
+        "rate": 20,
+        "estOdd": "8.50"
+      },
+      "topScores": [
+        {
+          "score": "4 - 1",
+          "count": 18,
+          "rate": 32,
+          "estOdd": "7.50"
+        },
+        {
+          "score": "5 - 1",
           "count": 12,
           "rate": 20,
           "estOdd": "8.50"
@@ -74281,11 +74761,11 @@
     }
   ],
   "pastStats": {
-    "date": "15.10.2026",
-    "totalFinished": 35,
-    "comboHitCount": 29,
-    "comboHitRate": 83,
-    "scoreHitCount": 35,
+    "date": "18.10.2026",
+    "totalFinished": 40,
+    "comboHitCount": 35,
+    "comboHitRate": 88,
+    "scoreHitCount": 40,
     "scoreHitRate": 100
   }
 }
