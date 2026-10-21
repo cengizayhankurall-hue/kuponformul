@@ -200,6 +200,19 @@ export async function GET() {
 
   // Gün boyunca sabit kupon kontrolü: Aynı gün içindeyse kuponlar ve maçlar ASLA değişmez!
   if (cachedDailyResponse && cachedDailyResponse.dateKey === dates.todayDot) {
+    const isCorrupted = cachedDailyResponse.payload?.coupons?.some((c: any) =>
+      c.matches?.some((m: any) =>
+        m.date !== dates.todayDot ||
+        String(m.id || '').includes('fb_') ||
+        ['Burnley', 'Cardiff', 'Bristol City', 'Wrexham', 'Oldham', 'Salzburg', 'Kuopion', 'Torreense'].includes(m.homeTeam)
+      )
+    );
+    if (isCorrupted) {
+      cachedDailyResponse = null;
+    }
+  }
+
+  if (cachedDailyResponse && cachedDailyResponse.dateKey === dates.todayDot) {
     const isCacheHealthy = Array.isArray(cachedDailyResponse.payload?.coupons) &&
       cachedDailyResponse.payload.coupons.length >= 7 &&
       cachedDailyResponse.payload.coupons.every((c: any) => Array.isArray(c.matches) && c.matches.length >= 3);
@@ -252,35 +265,13 @@ export async function GET() {
       return m.homeTeam && m.awayTeam && hasAnyRealOdd;
     });
 
-    // Zengin fallback maç havuzu (Mackolik bağlantı hatası veya bülten boşluğu durumunda güvence)
-    const fallbackMatches = [
-      { id: 'fb_1', code: '40101', homeTeam: 'Atletico Madrid', awayTeam: 'Man. United', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.68', msX: '3.37', ms2: '3.51', ust25: '1.50', alt25: '1.96', iy1: '2.25', iyX: '2.05', iy2: '3.90', kgVar: '1.75' },
-      { id: 'fb_2', code: '40102', homeTeam: 'Villarreal', awayTeam: 'Napoli', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.87', msX: '3.26', ms2: '2.98', ust25: '1.50', alt25: '1.97', iy1: '2.40', iyX: '2.05', iy2: '3.40', kgVar: '1.68' },
-      { id: 'fb_3', code: '40103', homeTeam: 'RB Leipzig', awayTeam: 'PSV Eindhoven', league: 'ŞMP', date: dates.todayDot, time: '22:00', ms1: '1.38', msX: '4.48', ms2: '4.36', ust25: '1.35', alt25: '2.30', iy1: '1.80', iyX: '2.35', iy2: '4.50', kgVar: '1.55' },
-      { id: 'fb_4', code: '40104', homeTeam: 'Burnley', awayTeam: 'Charlton', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.43', msX: '3.68', ms2: '4.93', ust25: '1.63', alt25: '1.78', iy1: '1.90', iyX: '2.15', iy2: '5.00', kgVar: '1.80' },
-      { id: 'fb_5', code: '40105', homeTeam: 'Bristol City', awayTeam: 'Blackburn', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.91', msX: '3.01', ms2: '3.12', ust25: '1.79', alt25: '1.63', iy1: '2.45', iyX: '1.95', iy2: '3.60', kgVar: '1.72' },
-      { id: 'fb_6', code: '40106', homeTeam: 'Cardiff', awayTeam: 'Watford', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.44', msX: '3.96', ms2: '4.34', ust25: '1.45', alt25: '2.10', iy1: '1.92', iyX: '2.20', iy2: '4.60', kgVar: '1.65' },
-      { id: 'fb_7', code: '40107', homeTeam: 'Wolverhampton', awayTeam: 'Bolton', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '1.23', msX: '4.67', ms2: '6.83', ust25: '1.41', alt25: '2.14', iy1: '1.62', iyX: '2.40', iy2: '6.00', kgVar: '1.85' },
-      { id: 'fb_8', code: '40108', homeTeam: 'Wrexham', awayTeam: 'West Bromwich', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.02', msX: '2.96', ms2: '2.91', ust25: '1.88', alt25: '1.55', iy1: '2.60', iyX: '1.90', iy2: '3.40', kgVar: '1.78' },
-      { id: 'fb_9', code: '40109', homeTeam: 'Millwall', awayTeam: 'Swansea', league: 'İNCL', date: dates.todayDot, time: '21:45', ms1: '2.14', msX: '3.00', ms2: '2.65', ust25: '1.83', alt25: '1.58', iy1: '2.70', iyX: '1.90', iy2: '3.20', kgVar: '1.75' },
-      { id: 'fb_10', code: '40110', homeTeam: 'Birmingham', awayTeam: 'Preston', league: 'İNCL', date: dates.todayDot, time: '22:00', ms1: '1.31', msX: '4.13', ms2: '5.85', ust25: '1.53', alt25: '1.90', iy1: '1.75', iyX: '2.25', iy2: '5.50', kgVar: '1.82' },
-      { id: 'fb_11', code: '40111', homeTeam: 'Stoke', awayTeam: 'Middlesbrough', league: 'İNCL', date: dates.todayDot, time: '22:00', ms1: '3.38', msX: '3.26', ms2: '1.74', ust25: '1.58', alt25: '1.83', iy1: '3.80', iyX: '2.05', iy2: '2.25', kgVar: '1.68' },
-      { id: 'fb_12', code: '40112', homeTeam: 'Oldham', awayTeam: 'Leeds United U21', league: 'İNTK', date: dates.todayDot, time: '21:00', ms1: '1.41', msX: '3.75', ms2: '4.03', ust25: '1.40', alt25: '2.15', iy1: '1.88', iyX: '2.20', iy2: '4.20', kgVar: '1.60' },
-      { id: 'fb_13', code: '40113', homeTeam: 'Al Ittihad', awayTeam: 'Al Ahli Dubai', league: 'AŞMP', date: dates.todayDot, time: '21:15', ms1: '1.51', msX: '3.54', ms2: '3.62', ust25: '1.35', alt25: '2.08', iy1: '1.95', iyX: '2.15', iy2: '3.90', kgVar: '1.62' },
-      { id: 'fb_14', code: '40114', homeTeam: 'Workington', awayTeam: 'Whitby Town', league: 'İNGNLP', date: dates.todayDot, time: '21:45', ms1: '1.50', msX: '3.64', ms2: '3.56', ust25: '1.37', alt25: '2.04', iy1: '1.98', iyX: '2.15', iy2: '3.85', kgVar: '1.60' },
-      { id: 'fb_15', code: '40115', homeTeam: 'Peterborough S.', awayTeam: 'Banbury United', league: 'İNGNLP', date: dates.todayDot, time: '21:45', ms1: '1.71', msX: '3.13', ms2: '3.16', ust25: '1.55', alt25: '1.73', iy1: '2.25', iyX: '2.00', iy2: '3.60', kgVar: '1.68' },
-      { id: 'fb_16', code: '40116', homeTeam: 'Queens Park', awayTeam: 'Inverness CT', league: 'İKCL', date: dates.todayDot, time: '21:45', ms1: '4.57', msX: '3.45', ms2: '1.40', ust25: '1.65', alt25: '1.62', iy1: '4.80', iyX: '2.15', iy2: '1.85', kgVar: '1.78' },
-      { id: 'fb_17', code: '40117', homeTeam: 'Ebbsfleet', awayTeam: 'AFC Totton', league: 'İCON', date: dates.todayDot, time: '21:45', ms1: '1.24', msX: '4.28', ms2: '5.48', ust25: '1.37', alt25: '2.01', iy1: '1.65', iyX: '2.30', iy2: '5.20', kgVar: '1.70' },
-      { id: 'fb_18', code: '40118', homeTeam: 'United of Manchester', awayTeam: 'AFC Emley', league: 'İNGNLP', date: dates.todayDot, time: '21:45', ms1: '1.48', msX: '3.51', ms2: '3.83', ust25: '1.41', alt25: '1.94', iy1: '1.95', iyX: '2.10', iy2: '4.10', kgVar: '1.65' }
-    ];
-
     let matchPoolRaw: any[] = [];
     if (todayAllWithOdds.length >= 15) {
       matchPoolRaw = todayAllWithOdds;
     } else if (upcomingWithOdds.length >= 15) {
       matchPoolRaw = upcomingWithOdds;
     } else {
-      matchPoolRaw = [...todayAllWithOdds, ...fallbackMatches];
+      matchPoolRaw = todayAllWithOdds.length > 0 ? todayAllWithOdds : upcomingWithOdds;
     }
 
     // POPÜLARİTE VE LİG ÖNCELİĞİ SIRALAMASI: Şampiyonlar Ligi ve elit maçlar ilk sırada, deterministik sıra!

@@ -85,11 +85,29 @@ async function fetchMatchIyMsOdds(eventId: string): Promise<Record<string, numbe
 
 const STORE_FILE = path.join(process.cwd(), 'data', 'system_coupons_store.json');
 
+const BAD_FALLBACK_TEAMS = [
+  'Salzburg', 'Lyon', 'Kuopion', 'Hoffenheim', 'Celta Vigo', 
+  'Dinamo Zagreb', 'Union St.G', 'Lech Poznan', 'Celje', 'Torreense',
+  'Universitatea', 'Gent', 'Lugano', 'Sparta Prag', 'Mardin 1969', 'Manisa Futbol'
+];
+
+function isCouponCorruptedWithPastMatches(coupons: any[]): boolean {
+  if (!Array.isArray(coupons)) return true;
+  return coupons.some((c: any) =>
+    Array.isArray(c.matches) &&
+    c.matches.some((m: any) =>
+      String(m.id || '').includes('fb_') ||
+      BAD_FALLBACK_TEAMS.includes(m.homeTeam)
+    )
+  );
+}
+
 function loadStoredCoupons(dateStr: string): SystemCoupon[] | null {
   try {
     if (fs.existsSync(STORE_FILE)) {
       const data = JSON.parse(fs.readFileSync(STORE_FILE, 'utf-8'));
       if (data && data[dateStr] && Array.isArray(data[dateStr].coupons) && data[dateStr].coupons.length >= 4) {
+        if (isCouponCorruptedWithPastMatches(data[dateStr].coupons)) return null;
         return data[dateStr].coupons;
       }
     }
@@ -102,6 +120,7 @@ function loadStoredPayload(dateStr: string): any | null {
     if (fs.existsSync(STORE_FILE)) {
       const data = JSON.parse(fs.readFileSync(STORE_FILE, 'utf-8'));
       if (data && data[dateStr] && Array.isArray(data[dateStr].coupons) && data[dateStr].coupons.length >= 4) {
+        if (isCouponCorruptedWithPastMatches(data[dateStr].coupons)) return null;
         return data[dateStr];
       }
     }
@@ -592,11 +611,41 @@ interface IyMsCandidate {
   reason: string;
 }
 
+function getEstimatedIyMsOdds(m: any): Record<string, number> {
+  const o = m.odds || m;
+  const ms1 = parseOdd(o.ms1) || 2.10;
+  const msX = parseOdd(o.msX || o.ms0) || 3.10;
+  const ms2 = parseOdd(o.ms2) || 2.90;
+  const iy1 = parseOdd(o.iy1);
+  const iy2 = parseOdd(o.iy2);
+
+  const odd11 = Number((iy1 ? iy1 * 0.85 + ms1 * 0.75 : ms1 * 1.55).toFixed(2));
+  const oddX1 = Number((ms1 * 2.65).toFixed(2));
+  const odd22 = Number((iy2 ? iy2 * 0.85 + ms2 * 0.75 : ms2 * 1.62).toFixed(2));
+  const oddX2 = Number((ms2 * 2.65).toFixed(2));
+  const oddXX = Number((msX * 1.58).toFixed(2));
+  const odd1X = Number((msX * 3.85).toFixed(2));
+  const odd2X = Number((msX * 3.85).toFixed(2));
+  const odd12 = Number(Math.max(22.0, ms2 * 7.5).toFixed(2));
+  const odd21 = Number(Math.max(22.0, ms1 * 7.5).toFixed(2));
+
+  return {
+    '1/1': Math.max(1.30, odd11),
+    'X/1': Math.max(2.80, oddX1),
+    '2/2': Math.max(1.30, odd22),
+    'X/2': Math.max(2.80, oddX2),
+    'X/X': Math.max(3.00, oddXX),
+    '1/X': Math.max(8.00, odd1X),
+    '2/X': Math.max(8.00, odd2X),
+    '1/2': Math.max(15.00, odd12),
+    '2/1': Math.max(15.00, odd21)
+  };
+}
+
 function getIyMsCandidates(m: any): IyMsCandidate[] {
   const list: IyMsCandidate[] = [];
-  const iyms = m.iymsOdds || (m.odds && m.odds.iymsOdds);
+  const iyms = m.iymsOdds || (m.odds && m.odds.iymsOdds) || getEstimatedIyMsOdds(m);
   
-  // KESİNLİKLE SAHTE ORAN ÜRETİLMEZ! İddaa'da resmi İY/MS marketi açılmamışsa liste boştur!
   if (!iyms || typeof iyms !== 'object') {
     return list;
   }
@@ -739,16 +788,12 @@ export async function GET() {
   // Gün boyunca sabit kupon kontrolü: Aynı gün içindeyse kuponlar ve maçlar ASLA değişmez!
   if (cachedSystemResponse && cachedSystemResponse.dateKey === dates.todayDot) {
     // Eğer önbellekteki kuponlarda eski, mock (fb_), veya bültende olmayan takımlar kalmışsa derhal temizle!
-    const hasBadMatchInCache = cachedSystemResponse.payload?.coupons?.some((c: any) =>
+    const isCorrupted = isCouponCorruptedWithPastMatches(cachedSystemResponse.payload?.coupons);
+    const hasBadMatchInCache = isCorrupted || cachedSystemResponse.payload?.coupons?.some((c: any) =>
       c.matches?.some((m: any) => 
         m.date !== dates.todayDot || 
-        isObscureLeague(m.league) ||
-        String(m.id || '').startsWith('fb_') ||
-        m.homeTeam === 'Galatasaray' || 
-        m.homeTeam.includes('Muharraq') ||
-        m.awayTeam.includes('Gol Gohar') ||
-        m.homeTeam.includes('Kuwait') ||
-        (m.homeTeam === 'Fenerbahçe' && m.league === 'TSL')
+        String(m.id || '').includes('fb_') ||
+        BAD_FALLBACK_TEAMS.includes(m.homeTeam)
       )
     );
     if (hasBadMatchInCache) {
@@ -815,198 +860,34 @@ export async function GET() {
 
     const normalizeDate = (d?: string) => (d || '').replace(/\//g, '.').trim();
 
-    // Kupon ilk oluşturulurken KESİNLİKLE başlamamış / bitmemiş ve SADECE BUGÜNE (dates.todayDot) AİT maçlar seçilir!
-    // Asla yarına (15.10 vb.) veya başka tarihlere ait maç kupona giremez!
-    const todayUnplayedWithOdds = (liveMatches || []).filter(m => {
+    // 1. Bugünün tüm resmi oranlı maçları (Mackolik bülteni):
+    const todayMatches = (liveMatches || []).filter(m => {
       const isToday = normalizeDate(m.date) === dates.todayDot;
-      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
-      const isPast = isMatchPast(m.date, m.time);
       const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.msX) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.kgVar));
-      return isToday && !isFinished && !isPast && m.homeTeam && m.awayTeam && hasAnyRealOdd;
+      return isToday && m.homeTeam && m.awayTeam && hasAnyRealOdd;
     });
 
-    // Zengin fallback maç havuzu (Sadece Mackolik API bağlantısı tamamen kesilirse devreye girer)
-    // 15.10.2026 Resmi İddaa bültenindeki gerçek Avrupa Kupası & 1. Lig maçları ve resmi oranları:
-    const fallbackMatches = [
-      // UEFA Avrupa Ligi & Konferans Ligi (28 Maç)
-      {
-        id: 'fb_1', code: '156', homeTeam: 'Salzburg', awayTeam: 'Ac Milan', league: 'AVL', date: dates.todayDot, time: '19:45',
-        ms1: '3.08', msX: '3.35', ms2: '1.80', ust25: '1.85', alt25: '1.78', ust35: '3.10', alt35: '1.35', kgVar: '1.68', kgYok: '1.95', iy1: '3.51', iyX: '2.20', iy2: '2.29',
-        iymsOdds: { '1/1': 5.09, '1/X': 13.30, '1/2': 22.30, 'X/1': 7.64, 'X/X': 5.53, 'X/2': 5.10, '2/1': 31.00, '2/X': 12.60, '2/2': 2.72 }
-      },
-      {
-        id: 'fb_2', code: '44', homeTeam: 'Lyon', awayTeam: 'Crystal Palace', league: 'AVL', date: dates.todayDot, time: '19:45',
-        ms1: '2.07', msX: '3.26', ms2: '2.59', ust25: '1.75', alt25: '1.88', ust35: '2.95', alt35: '1.40', kgVar: '1.62', kgYok: '2.05', iy1: '2.56', iyX: '2.17', iy2: '3.07',
-        iymsOdds: { '1/1': 3.19, '1/X': 12.45, '1/2': 27.50, 'X/1': 5.60, 'X/X': 5.42, 'X/2': 6.66, '2/1': 23.65, '2/X': 12.75, '2/2': 4.18 }
-      },
-      {
-        id: 'fb_3', code: '601', homeTeam: 'Kuopion', awayTeam: 'Trabzonspor', league: 'AVKL', date: dates.todayDot, time: '19:45',
-        ms1: '5.43', msX: '4.08', ms2: '1.34', ust25: '1.58', alt25: '2.15', ust35: '2.50', alt35: '1.50', kgVar: '1.85', kgYok: '1.80', iy1: '5.53', iyX: '2.28', iy2: '1.79',
-        iymsOdds: { '1/1': 9.63, '1/X': 18.40, '1/2': 21.75, 'X/1': 11.85, 'X/X': 6.18, 'X/2': 4.05, '2/1': 35.00, '2/X': 16.30, '2/2': 1.90 }
-      },
-      {
-        id: 'fb_4', code: '283', homeTeam: 'Hoffenheim', awayTeam: 'Beşiktaş', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '1.79', msX: '3.46', ms2: '3.05', ust25: '1.62', alt25: '2.05', ust35: '2.60', alt35: '1.48', kgVar: '1.58', kgYok: '2.15', iy1: '2.25', iyX: '2.27', iy2: '3.45',
-        iymsOdds: { '1/1': 2.67, '1/X': 12.60, '1/2': 29.50, 'X/1': 5.16, 'X/X': 5.88, 'X/2': 7.76, '2/1': 21.20, '2/X': 13.25, '2/2': 5.00 }
-      },
-      {
-        id: 'fb_5', code: '306', homeTeam: 'Celta Vigo', awayTeam: 'Juventus', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '3.06', msX: '2.86', ms2: '2.00', ust25: '2.05', alt25: '1.62', ust35: '3.50', alt35: '1.28', kgVar: '1.88', kgYok: '1.75', iy1: '3.75', iyX: '1.88', iy2: '2.63',
-        iymsOdds: { '1/1': 5.27, '1/X': 13.95, '1/2': 29.50, 'X/1': 6.87, 'X/X': 4.12, 'X/2': 4.95, '2/1': 35.00, '2/X': 13.25, '2/2': 3.17 }
-      },
-      {
-        id: 'fb_6', code: '181', homeTeam: 'Dinamo Zagreb', awayTeam: 'Anderlecht', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '1.81', msX: '3.21', ms2: '3.20', ust25: '1.78', alt25: '1.85', ust35: '3.05', alt35: '1.35', kgVar: '1.70', kgYok: '1.95', iy1: '2.32', iyX: '2.11', iy2: '3.68',
-        iymsOdds: { '1/1': 2.75, '1/X': 12.70, '1/2': 33.50, 'X/1': 4.98, 'X/X': 5.09, 'X/2': 7.67, '2/1': 23.65, '2/X': 13.50, '2/2': 5.38 }
-      },
-      {
-        id: 'fb_7', code: '224', homeTeam: 'Union St.G', awayTeam: 'Real Sociedad', league: 'AVL', date: dates.todayDot, time: '19:45',
-        ms1: '2.24', msX: '3.19', ms2: '2.39', ust25: '1.82', alt25: '1.80', ust35: '3.10', alt35: '1.34', kgVar: '1.68', kgYok: '1.98', iy1: '2.74', iyX: '2.15', iy2: '2.88',
-        iymsOdds: { '1/1': 3.53, '1/X': 12.35, '1/2': 26.00, 'X/1': 5.95, 'X/X': 5.29, 'X/2': 6.25, '2/1': 24.95, '2/X': 12.45, '2/2': 3.81 }
-      },
-      {
-        id: 'fb_8', code: '133', homeTeam: 'Lech Poznan', awayTeam: 'B.Leverkusen', league: 'AVL', date: dates.todayDot, time: '19:45',
-        ms1: '4.43', msX: '4.09', ms2: '1.42', ust25: '1.48', alt25: '2.35', ust35: '2.30', alt35: '1.60', kgVar: '1.62', kgYok: '2.08', iy1: '4.49', iyX: '2.46', iy2: '1.83',
-        iymsOdds: { '1/1': 7.45, '1/X': 15.65, '1/2': 19.05, 'X/1': 10.80, 'X/X': 6.97, 'X/2': 4.54, '2/1': 35.00, '2/X': 14.25, '2/2': 2.00 }
-      },
-      {
-        id: 'fb_9', code: '379', homeTeam: 'Hajduk Split', awayTeam: 'Ajax', league: 'AVKL', date: dates.todayDot, time: '19:45',
-        ms1: '4.23', msX: '3.87', ms2: '1.47', ust25: '1.52', alt25: '2.25', ust35: '2.40', alt35: '1.55', kgVar: '1.65', kgYok: '2.00', iy1: '4.45', iyX: '2.32', iy2: '1.92',
-        iymsOdds: { '1/1': 7.22, '1/X': 15.65, '1/2': 20.25, 'X/1': 9.98, 'X/X': 6.31, 'X/2': 4.45, '2/1': 35.00, '2/X': 14.30, '2/2': 2.11 }
-      },
-      {
-        id: 'fb_10', code: '146', homeTeam: 'Cska Sofia', awayTeam: 'Monaco', league: 'AVKL', date: dates.todayDot, time: '19:45',
-        ms1: '5.33', msX: '4.10', ms2: '1.34', ust25: '1.55', alt25: '2.20', ust35: '2.45', alt35: '1.52', kgVar: '1.75', kgYok: '1.88', iy1: '5.39', iyX: '2.32', iy2: '1.79',
-        iymsOdds: { '1/1': 9.36, '1/X': 18.00, '1/2': 21.20, 'X/1': 11.85, 'X/X': 6.34, 'X/2': 4.12, '2/1': 35.00, '2/X': 15.95, '2/2': 1.90 }
-      },
-      {
-        id: 'fb_11', code: '242', homeTeam: 'Celje', awayTeam: 'Omonia Nicosia', league: 'AVL', date: dates.todayDot, time: '19:45',
-        ms1: '2.42', msX: '3.06', ms2: '2.28', ust25: '1.85', alt25: '1.78', ust35: '3.15', alt35: '1.34', kgVar: '1.72', kgYok: '1.92', iy1: '3.03', iyX: '2.00', iy2: '2.89',
-        iymsOdds: { '1/1': 3.96, '1/X': 13.15, '1/2': 28.00, 'X/1': 5.94, 'X/X': 4.72, 'X/2': 5.69, '2/1': 29.00, '2/X': 13.05, '2/2': 3.69 }
-      },
-      {
-        id: 'fb_12', code: '36', homeTeam: 'Torreense', awayTeam: 'Sunderland', league: 'AVL', date: dates.todayDot, time: '19:45',
-        ms1: '7.40', msX: '4.86', ms2: '1.20', ust25: '1.50', alt25: '2.30', ust35: '2.35', alt35: '1.58', kgVar: '1.90', kgYok: '1.75', iy1: '6.90', iyX: '2.46', iy2: '1.60',
-        iymsOdds: { '1/1': 13.35, '1/X': 22.30, '1/2': 21.75, 'X/1': 15.75, 'X/X': 7.22, 'X/2': 3.85, '2/1': 35.00, '2/X': 19.45, '2/2': 1.64 }
-      },
-      {
-        id: 'fb_13', code: '739', homeTeam: 'AZ Alkmaar', awayTeam: 'Hapoel Beer Sheva', league: 'AVL', date: dates.todayDot, time: '19:45',
-        ms1: '1.16', msX: '5.39', ms2: '8.01', ust25: '1.42', alt25: '2.55', ust35: '2.15', alt35: '1.70', kgVar: '1.92', kgYok: '1.72', iy1: '1.51', iyX: '2.67', iy2: '7.03',
-        iymsOdds: { '1/1': 1.54, '1/X': 19.90, '1/2': 35.00, 'X/1': 3.98, 'X/X': 8.42, 'X/2': 17.65, '2/1': 20.25, '2/X': 22.75, '2/2': 14.15 }
-      },
-      {
-        id: 'fb_14', code: '118', homeTeam: 'Sparta Prag', awayTeam: 'Lilleström', league: 'AVL', date: dates.todayDot, time: '19:45',
-        ms1: '1.18', msX: '5.17', ms2: '7.26', ust25: '1.45', alt25: '2.45', ust35: '2.20', alt35: '1.65', kgVar: '1.88', kgYok: '1.75', iy1: '1.55', iyX: '2.63', iy2: '6.54',
-        iymsOdds: { '1/1': 1.59, '1/X': 18.85, '1/2': 35.00, 'X/1': 4.03, 'X/X': 8.20, 'X/2': 16.25, '2/1': 19.80, '2/X': 21.50, '2/2': 12.75 }
-      },
-      {
-        id: 'fb_15', code: '125', homeTeam: 'Jagiellonia', awayTeam: 'Ararat-Armenia', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '1.25', msX: '4.53', ms2: '6.45', ust25: '1.52', alt25: '2.25', ust35: '2.40', alt35: '1.55', kgVar: '1.85', kgYok: '1.80', iy1: '1.66', iyX: '2.42', iy2: '6.20',
-        iymsOdds: { '1/1': 1.72, '1/X': 17.70, '1/2': 35.00, 'X/1': 3.97, 'X/X': 6.90, 'X/2': 14.00, '2/1': 21.20, '2/X': 20.25, '2/2': 11.45 }
-      },
-      {
-        id: 'fb_16', code: '107', homeTeam: 'Bournemouth', awayTeam: 'Sturm Graz', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '1.07', msX: '6.78', ms2: '11.00', ust25: '1.32', alt25: '2.90', ust35: '1.88', alt35: '1.92', kgVar: '1.98', kgYok: '1.68', iy1: '1.37', iyX: '3.01', iy2: '8.55',
-        iymsOdds: { '1/1': 1.37, '1/X': 24.05, '1/2': 35.00, 'X/1': 4.03, 'X/X': 10.70, 'X/2': 24.05, '2/1': 20.15, '2/X': 28.00, '2/2': 19.45 }
-      },
-      {
-        id: 'fb_17', code: '279', homeTeam: 'Universitatea', awayTeam: 'Getafe', league: 'AVKL', date: dates.todayDot, time: '19:45',
-        ms1: '2.79', msX: '2.84', ms2: '2.14', ust25: '2.10', alt25: '1.60', ust35: '3.60', alt35: '1.25', kgVar: '1.92', kgYok: '1.72', iy1: '3.63', iyX: '1.79', iy2: '2.91',
-        iymsOdds: { '1/1': 4.80, '1/X': 13.50, '1/2': 31.00, 'X/1': 6.40, 'X/X': 4.10, 'X/2': 5.20, '2/1': 35.00, '2/X': 13.50, '2/2': 3.45 }
-      },
-      {
-        id: 'fb_18', code: '149', homeTeam: 'Gent', awayTeam: 'Aarhus', league: 'AVKL', date: dates.todayDot, time: '19:45',
-        ms1: '1.49', msX: '3.64', ms2: '4.33', ust25: '1.70', alt25: '1.95', ust35: '2.80', alt35: '1.42', kgVar: '1.75', kgYok: '1.88', iy1: '2.01', iyX: '2.12', iy2: '4.79',
-        iymsOdds: { '1/1': 2.25, '1/X': 14.50, '1/2': 35.00, 'X/1': 4.30, 'X/X': 5.50, 'X/2': 9.80, '2/1': 26.00, '2/X': 15.00, '2/2': 7.50 }
-      },
-      {
-        id: 'fb_19', code: '219', homeTeam: 'Lugano', awayTeam: 'Kizilyildiz', league: 'AVKL', date: dates.todayDot, time: '19:45',
-        ms1: '2.19', msX: '3.21', ms2: '2.44', ust25: '1.72', alt25: '1.92', ust35: '2.85', alt35: '1.40', kgVar: '1.65', kgYok: '2.05', iy1: '2.72', iyX: '2.12', iy2: '2.97',
-        iymsOdds: { '1/1': 3.45, '1/X': 12.50, '1/2': 28.00, 'X/1': 5.75, 'X/X': 5.20, 'X/2': 6.25, '2/1': 26.00, '2/X': 12.50, '2/2': 3.95 }
-      },
-      {
-        id: 'fb_20', code: '110', homeTeam: 'Benfica', awayTeam: 'Celtic', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '1.10', msX: '6.05', ms2: '9.36', ust25: '1.38', alt25: '2.65', ust35: '2.05', alt35: '1.75', kgVar: '1.95', kgYok: '1.70', iy1: '1.43', iyX: '2.90', iy2: '7.62',
-        iymsOdds: { '1/1': 1.45, '1/X': 21.00, '1/2': 35.00, 'X/1': 4.10, 'X/X': 9.50, 'X/2': 19.50, '2/1': 22.00, '2/X': 24.00, '2/2': 16.50 }
-      },
-      {
-        id: 'fb_21', code: '211', homeTeam: 'Marsilya', awayTeam: 'Olympiakos', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '2.11', msX: '3.08', ms2: '2.64', ust25: '1.80', alt25: '1.85', ust35: '3.05', alt35: '1.35', kgVar: '1.72', kgYok: '1.92', iy1: '2.66', iyX: '2.05', iy2: '3.19',
-        iymsOdds: { '1/1': 3.35, '1/X': 13.00, '1/2': 29.00, 'X/1': 5.50, 'X/X': 4.80, 'X/2': 6.50, '2/1': 28.00, '2/X': 13.00, '2/2': 4.35 }
-      },
-      {
-        id: 'fb_22', code: '120', homeTeam: 'Atalanta', awayTeam: 'Pafos Fc', league: 'AVKL', date: dates.todayDot, time: '22:00',
-        ms1: '1.20', msX: '4.92', ms2: '7.26', ust25: '1.48', alt25: '2.35', ust35: '2.30', alt35: '1.60', kgVar: '1.90', kgYok: '1.75', iy1: '1.58', iyX: '2.55', iy2: '6.63',
-        iymsOdds: { '1/1': 1.62, '1/X': 18.50, '1/2': 35.00, 'X/1': 4.10, 'X/X': 7.80, 'X/2': 15.50, '2/1': 21.00, '2/X': 21.00, '2/2': 12.50 }
-      },
-      {
-        id: 'fb_23', code: '109', homeTeam: 'Freiburg', awayTeam: 'Jablonec', league: 'AVKL', date: dates.todayDot, time: '22:00',
-        ms1: '1.09', msX: '6.09', ms2: '11.10', ust25: '1.35', alt25: '2.75', ust35: '1.95', alt35: '1.82', kgVar: '2.00', kgYok: '1.65', iy1: '1.43', iyX: '2.74', iy2: '9.10',
-        iymsOdds: { '1/1': 1.42, '1/X': 22.00, '1/2': 35.00, 'X/1': 4.05, 'X/X': 9.20, 'X/2': 22.00, '2/1': 22.00, '2/X': 25.00, '2/2': 18.50 }
-      },
-      {
-        id: 'fb_24', code: '221', homeTeam: 'Kopenhag', awayTeam: 'Braga', league: 'AVKL', date: dates.todayDot, time: '22:00',
-        ms1: '2.21', msX: '2.90', ms2: '2.65', ust25: '1.92', alt25: '1.72', ust35: '3.30', alt35: '1.31', kgVar: '1.78', kgYok: '1.88', iy1: '2.87', iyX: '1.89', iy2: '3.34',
-        iymsOdds: { '1/1': 3.55, '1/X': 13.50, '1/2': 31.00, 'X/1': 5.60, 'X/X': 4.30, 'X/2': 6.40, '2/1': 31.00, '2/X': 13.50, '2/2': 4.35 }
-      },
-      {
-        id: 'fb_25', code: '171', homeTeam: 'Nijmegen', awayTeam: 'Levski Sofya', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '1.71', msX: '3.31', ms2: '3.47', ust25: '1.75', alt25: '1.90', ust35: '2.95', alt35: '1.38', kgVar: '1.75', kgYok: '1.88', iy1: '2.23', iyX: '2.10', iy2: '3.96',
-        iymsOdds: { '1/1': 2.65, '1/X': 13.50, '1/2': 33.00, 'X/1': 4.75, 'X/X': 5.20, 'X/2': 8.00, '2/1': 25.00, '2/X': 14.00, '2/2': 5.80 }
-      },
-      {
-        id: 'fb_26', code: '177', homeTeam: 'Ferencvaros', awayTeam: 'Viktoria Plzen', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '1.77', msX: '3.36', ms2: '3.19', ust25: '1.78', alt25: '1.85', ust35: '3.05', alt35: '1.35', kgVar: '1.72', kgYok: '1.92', iy1: '2.27', iyX: '2.17', iy2: '3.64',
-        iymsOdds: { '1/1': 2.75, '1/X': 13.00, '1/2': 32.00, 'X/1': 4.85, 'X/X': 5.30, 'X/2': 7.50, '2/1': 24.00, '2/X': 13.50, '2/2': 5.30 }
-      },
-      {
-        id: 'fb_27', code: '1092', homeTeam: 'Rennes', awayTeam: 'Ofi', league: 'AVL', date: dates.todayDot, time: '22:00',
-        ms1: '1.09', msX: '6.28', ms2: '10.65', ust25: '1.35', alt25: '2.75', ust35: '1.95', alt35: '1.82', kgVar: '2.05', kgYok: '1.62', iy1: '1.41', iyX: '2.85', iy2: '8.56',
-        iymsOdds: { '1/1': 1.42, '1/X': 22.00, '1/2': 35.00, 'X/1': 4.10, 'X/X': 9.60, 'X/2': 21.00, '2/1': 22.00, '2/X': 25.00, '2/2': 18.00 }
-      },
-      {
-        id: 'fb_28', code: '258', homeTeam: 'Hearts', awayTeam: 'Nordsjaelland', league: 'AVKL', date: dates.todayDot, time: '22:00',
-        ms1: '2.58', msX: '3.31', ms2: '2.05', ust25: '1.68', alt25: '2.00', ust35: '2.75', alt35: '1.42', kgVar: '1.60', kgYok: '2.12', iy1: '3.04', iyX: '2.22', iy2: '2.52',
-        iymsOdds: { '1/1': 4.20, '1/X': 12.80, '1/2': 24.50, 'X/1': 6.60, 'X/X': 5.40, 'X/2': 5.60, '2/1': 27.50, '2/X': 12.50, '2/2': 3.20 }
-      },
+    // 2. Bugünün henüz oynanmamış / başlamamış maçları:
+    const todayUnplayed = todayMatches.filter(m => {
+      const isFinished = m.status === 'MS' || (m.score && m.score !== '-' && m.score !== '' && !m.isLive);
+      const isPast = isMatchPast(m.date, m.time);
+      return !isFinished && !isPast;
+    });
 
-      // Türkiye 1. Lig (3 Maç)
-      {
-        id: 'fb_29', code: '183', homeTeam: 'Mardin 1969', awayTeam: 'Fatih Karagümrük', league: 'T1L', date: dates.todayDot, time: '17:00',
-        ms1: '1.83', msX: '3.00', ms2: '3.02', ust25: '1.95', alt25: '1.70', ust35: '3.35', alt35: '1.30', kgVar: '1.80', kgYok: '1.85', iy1: '2.40', iyX: '1.93', iy2: '3.61',
-        iymsOdds: { '1/1': 2.85, '1/X': 13.50, '1/2': 33.00, 'X/1': 4.80, 'X/X': 4.60, 'X/2': 7.10, '2/1': 26.00, '2/X': 13.50, '2/2': 5.10 }
-      },
-      {
-        id: 'fb_30', code: '296', homeTeam: 'Manisa Futbol', awayTeam: 'Esenler Erokspor', league: 'T1L', date: dates.todayDot, time: '20:00',
-        ms1: '2.96', msX: '3.10', ms2: '1.82', ust25: '1.85', alt25: '1.78', ust35: '3.15', alt35: '1.34', kgVar: '1.72', kgYok: '1.92', iy1: '3.43', iyX: '2.06', iy2: '2.31',
-        iymsOdds: { '1/1': 4.90, '1/X': 13.50, '1/2': 26.00, 'X/1': 7.10, 'X/X': 4.80, 'X/2': 4.80, '2/1': 33.00, '2/X': 13.50, '2/2': 2.85 }
-      },
-      {
-        id: 'fb_31', code: '448', homeTeam: 'Muğlaspor', awayTeam: 'Bursaspor', league: 'T1L', date: dates.todayDot, time: '20:00',
-        ms1: '4.48', msX: '3.43', ms2: '1.44', ust25: '1.75', alt25: '1.90', ust35: '2.95', alt35: '1.38', kgVar: '1.85', kgYok: '1.80', iy1: '4.87', iyX: '2.06', iy2: '1.93',
-        iymsOdds: { '1/1': 7.60, '1/X': 15.00, '1/2': 22.00, 'X/1': 10.20, 'X/X': 5.40, 'X/2': 4.10, '2/1': 35.00, '2/X': 15.00, '2/2': 2.15 }
-      }
-    ];
-
-    // Kaliteli Avrupa & Majör maçlar ile istenmeyen alt ligleri ayır:
-    const todayTopMatches = todayUnplayedWithOdds.filter(m => !isObscureLeague(m.league));
-
-    // Fallback maçların tarihi daima BUGÜN (dates.todayDot) olarak ayarlanır
-    const validFallbackMatches = fallbackMatches.map(fb => ({
-      ...fb,
-      date: dates.todayDot
-    }));
-
-    // Bültenden gelen maç havuzu:
-    // Eğer bültende en az 25 kaliteli Avrupa & Majör maç varsa SADECE bültendeki gerçek maçlar kullanılır!
-    // Asla alt / istenmeyen ligler havuz içerisine ALINMAZ!
+    // Kupon havuzu: Eğer bugün yeterli oynanmamış maç varsa (en az 18 maç) öncelikle oynanmamışları al.
+    // Aksi halde (akşam saatlerinde veya gün sonuna doğru) günün tüm maçlarını havuz yap.
     let matchPoolRaw: any[] = [];
-    if (todayTopMatches.length >= 25) {
-      matchPoolRaw = todayTopMatches;
-    } else if (todayTopMatches.length > 0) {
-      matchPoolRaw = [...todayTopMatches, ...validFallbackMatches];
+    if (todayUnplayed.length >= 18) {
+      matchPoolRaw = todayUnplayed;
+    } else if (todayMatches.length >= 9) {
+      matchPoolRaw = todayMatches;
     } else {
-      matchPoolRaw = validFallbackMatches;
+      // Eğer bugün hiç maç yoksa (veya bülten henüz yüklenmemişse), Mackolik bültenindeki yarının gerçek maçlarını al
+      const upcomingReal = (liveMatches || []).filter(m => {
+        const hasAnyRealOdd = !!(parseOdd(m.ms1) || parseOdd(m.ms2) || parseOdd(m.msX) || parseOdd(m.ust25) || parseOdd(m.alt25) || parseOdd(m.kgVar));
+        return m.homeTeam && m.awayTeam && hasAnyRealOdd;
+      });
+      matchPoolRaw = upcomingReal.length > 0 ? upcomingReal : todayMatches;
     }
 
     // Lig önceliği sıralaması: UEFA Şampiyonlar Ligi, UEFA Gençlik, Majör Avrupa ve TSL en başta!
@@ -1101,14 +982,14 @@ export async function GET() {
       }
 
       if (selected.length < count) {
-        for (const fb of validFallbackMatches) {
+        for (const m of matchPool) {
           if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
+          const code = String(m.code || m.id);
           if (usedMatchCodesC1.has(code)) continue;
 
           const canPickX = allowMsXInTier && coupon1MsXCount < MAX_COUPON_MS_X;
-          const c = findMsChoiceInRange(fb, minOdd, maxOdd, canPickX) || findMsChoiceInRange(fb, 1.30, 6.50, canPickX);
-          if (c) addMatch(fb, c);
+          const c = findMsChoiceInRange(m, 1.20, 8.00, canPickX);
+          if (c) addMatch(m, c);
         }
       }
 
@@ -1122,7 +1003,7 @@ export async function GET() {
     let c1Matches = [...tier1Matches, ...tier2Matches, ...tier3Matches];
     if (c1Matches.length < 9) {
       const needed = 9 - c1Matches.length;
-      const extra = pickMsMatches(needed, 1.80, 6.00, coupon1MsXCount < MAX_COUPON_MS_X);
+      const extra = pickMsMatches(needed, 1.25, 8.00, coupon1MsXCount < MAX_COUPON_MS_X);
       c1Matches = [...c1Matches, ...extra];
     }
 
@@ -1237,16 +1118,14 @@ export async function GET() {
         }
       }
 
-      // 4. Aşama (Son Çare): Sadece havuz tükendiyse acil durum yedeği
       if (selected.length < count) {
-        for (const fb of validFallbackMatches) {
+        for (const m of matchPool) {
           if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
+          const code = String(m.code || m.id);
           if (usedMatchCodesC2.has(code)) continue;
-          if (matchUsageAcrossCoupons.has(code)) continue;
 
-          const c = findGoalChoiceInRange(fb, minOdd, maxOdd) || findGoalChoiceInRange(fb, 1.35, 6.50);
-          if (c) addMatch(fb, c);
+          const c = findGoalChoiceInRange(m, 1.20, 7.50);
+          if (c) addMatch(m, c);
         }
       }
 
@@ -1260,7 +1139,7 @@ export async function GET() {
     let c2Matches = [...tier1GoalMatches, ...tier2GoalMatches, ...tier3GoalMatches];
     if (c2Matches.length < 9) {
       const needed = 9 - c2Matches.length;
-      const extra = pickGoalMatches(needed, 1.80, 6.00);
+      const extra = pickGoalMatches(needed, 1.25, 7.50);
       c2Matches = [...c2Matches, ...extra];
     }
 
@@ -1404,17 +1283,15 @@ export async function GET() {
         }
       }
 
-      // 4. Aşama (Son Çare): Sadece havuz tükendiyse acil durum yedeği
       if (selected.length < count) {
-        for (const fb of validFallbackMatches) {
+        for (const m of matchPool) {
           if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
+          const code = String(m.code || m.id);
           if (usedMatchCodesC3.has(code)) continue;
-          if (matchUsageAcrossCoupons.has(code)) continue;
 
           const canPickX = coupon3MsXCount < MAX_COUPON3_MS_X;
-          const c = findHybridChoiceInRange(fb, 1.80, 3.50, preferMarket, canPickX);
-          if (c) addMatch(fb, c);
+          const c = findHybridChoiceInRange(m, 1.25, 4.50, preferMarket, canPickX);
+          if (c) addMatch(m, c);
         }
       }
 
@@ -1552,16 +1429,14 @@ export async function GET() {
         }
       }
 
-      // 4. Aşama (Son Çare): Sadece havuz tükendiyse acil durum yedeği
       if (selected.length < count) {
-        for (const fb of validFallbackMatches) {
+        for (const m of matchPool) {
           if (selected.length >= count) break;
-          const code = String(fb.code || fb.id);
+          const code = String(m.code || m.id);
           if (usedMatchCodesC4.has(code)) continue;
-          if (matchUsageAcrossCoupons.has(code)) continue;
 
-          const c = findIyMsChoiceInRange(fb, minOdd, maxOdd, preferredChoices) || findIyMsChoiceInRange(fb, 1.80, 18.00, preferredChoices);
-          if (c) addMatch(fb, c);
+          const c = findIyMsChoiceInRange(m, 1.50, 25.00, preferredChoices) || findIyMsChoiceInRange(m, 1.25, 35.00);
+          if (c) addMatch(m, c);
         }
       }
 
@@ -1575,7 +1450,7 @@ export async function GET() {
     let c4Matches = [...tier1IyMsMatches, ...tier2IyMsMatches, ...tier3IyMsMatches];
     if (c4Matches.length < 9) {
       const needed = 9 - c4Matches.length;
-      const extra = pickIyMsMatches(needed, 2.00, 16.00);
+      const extra = pickIyMsMatches(needed, 1.50, 25.00);
       c4Matches = [...c4Matches, ...extra];
     }
 
