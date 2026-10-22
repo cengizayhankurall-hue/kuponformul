@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { fetchMackolikMatches } from '../fetch-iddaa/route';
 import { supabase } from '@/lib/supabase';
+import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -48,6 +50,71 @@ export interface YesterdayDailySummary {
   wonCoupons: number;
   successRate: number;
   coupons: DailyCoupon[];
+}
+
+const DAILY_STORE_FILE = path.join(process.cwd(), 'data', 'daily_coupons_store.json');
+const DAILY_STORE_FILE_PUBLIC = path.join(process.cwd(), 'public', 'data', 'daily_coupons_store.json');
+
+function cleanTeamName(name?: string): string {
+  if (!name) return '';
+  return name
+    .toLowerCase()
+    .replace(/[üÜ]/g, 'u')
+    .replace(/[öÖ]/g, 'o')
+    .replace(/[ıİiI]/g, 'i')
+    .replace(/[şŞ]/g, 's')
+    .replace(/[çÇ]/g, 'c')
+    .replace(/[ğĞ]/g, 'g')
+    .replace(/[^a-z0-9]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function matchTeams(a?: string, b?: string): boolean {
+  if (!a || !b) return false;
+  const ca = cleanTeamName(a);
+  const cb = cleanTeamName(b);
+  if (ca === cb) return true;
+  if (ca.includes(cb) || cb.includes(ca)) return true;
+  const ignore = ['fc', 'sk', 'fk', 'club', 'united', 'city'];
+  const wordsA = ca.split(' ').filter(w => w.length >= 3 && !ignore.includes(w));
+  const wordsB = cb.split(' ').filter(w => w.length >= 3 && !ignore.includes(w));
+  return wordsA.some(wa => wordsB.some(wb => wa === wb || (wa.length >= 3 && wb.length >= 3 && (wa.startsWith(wb) || wb.startsWith(wa)))));
+}
+
+function loadStoredDailyCoupons(dateStr: string): DailyCoupon[] | null {
+  for (const f of [DAILY_STORE_FILE, DAILY_STORE_FILE_PUBLIC]) {
+    try {
+      if (fs.existsSync(f)) {
+        const data = JSON.parse(fs.readFileSync(f, 'utf-8'));
+        if (data && data[dateStr] && Array.isArray(data[dateStr].coupons) && data[dateStr].coupons.length >= 3) {
+          return data[dateStr].coupons;
+        }
+      }
+    } catch (e) {}
+  }
+  return null;
+}
+
+function saveStoredDailyCoupons(dateStr: string, coupons: DailyCoupon[], yesterday?: any) {
+  for (const f of [DAILY_STORE_FILE, DAILY_STORE_FILE_PUBLIC]) {
+    try {
+      const dir = path.dirname(f);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      let data: Record<string, any> = {};
+      if (fs.existsSync(f)) {
+        try {
+          data = JSON.parse(fs.readFileSync(f, 'utf-8'));
+        } catch (e) {}
+      }
+      data[dateStr] = {
+        timestamp: Date.now(),
+        coupons,
+        ...(yesterday ? { yesterday } : (data[dateStr]?.yesterday ? { yesterday: data[dateStr].yesterday } : {}))
+      };
+      fs.writeFileSync(f, JSON.stringify(data, null, 2), 'utf-8');
+    } catch (e) {}
+  }
 }
 
 // In-memory cache for instant response (< 5ms) - Gün boyunca sabit kuponlar
@@ -655,7 +722,59 @@ export async function GET() {
         }
       }
 
-      if (pastDbMatches && pastDbMatches.length >= 8) {
+      // Dün verilen orijinal kuponlar sistem deposunda var mı?
+      const storedYesterday = loadStoredDailyCoupons(dates.yesterdayDot);
+
+      if (storedYesterday && storedYesterday.length >= 3 && storedYesterday.every(c => Array.isArray(c.matches) && c.matches.length >= 2)) {
+        // CASE 1: Dün kullanıcıya sunulmuş orijinal kuponlar mevcut.
+        // KESİN KURAL: Orijinal tahminler (m.choice) ve oranlar (m.odd) ASLA DEĞİŞTİRİLEMEZ!
+        // Skor resmi sonuçtan çekilir, tuttu/yattı dürüstçe değerlendirilir.
+        const evaluatedList: DailyCoupon[] = [];
+        for (const dc of storedYesterday) {
+          const evalMatches: DailyMatchItem[] = dc.matches.map((m) => {
+            const dbM = pastDbMatches.find(p => 
+              (matchTeams(p.home_team, m.homeTeam) && matchTeams(p.away_team, m.awayTeam)) ||
+              matchTeams(p.home_team, m.homeTeam) || 
+              matchTeams(p.away_team, m.awayTeam)
+            );
+            const score = dbM?.ms_score ? String(dbM.ms_score).replace('-', ' - ') : (m.score && m.score !== '0 - 0' ? m.score : '0 - 0');
+            const iyScore = dbM?.iy_score || m.iyScore || undefined;
+            const hasFinished = Boolean(dbM?.ms_score || (m.score && m.score !== '0 - 0'));
+            const won = hasFinished ? evaluateScoreWon(m.choice, dbM?.ms_score || m.score || '0-0') : false;
+
+            return {
+              ...m,
+              score,
+              iyScore,
+              won,
+              reason: hasFinished 
+                ? `Resmi Skor: ${score} (${won ? 'TUTTU ✅' : 'YATTI ❌'})` 
+                : 'Maç sonucu henüz girilmedi'
+            };
+          });
+
+          const totalOdds = Number(evalMatches.reduce((a, b) => a * b.odd, 1).toFixed(2));
+          const wonCount = evalMatches.filter(m => m.won).length;
+          const isWinner = wonCount === evalMatches.length;
+
+          evaluatedList.push({
+            ...dc,
+            totalOdds,
+            matches: evalMatches,
+            isEvaluated: true,
+            isWinner,
+            wonMatchesCount: wonCount,
+            badge: isWinner ? `${totalOdds} ORAN / KAZANDI ✅` : `${wonCount}/${evalMatches.length} TUTTU`,
+            theme: isWinner ? 'emerald' : 'rose',
+            wonAmount: isWinner ? Number((totalOdds * (dc.suggestedStake || 50)).toFixed(2)) : 0
+          });
+        }
+        pastCoupons = evaluatedList.slice(0, 4);
+        saveStoredDailyCoupons(dates.yesterdayDot, pastCoupons);
+      } else if (pastDbMatches && pastDbMatches.length >= 8) {
+        // CASE 2: Depoda dünkü kupon yoksa:
+        // KESİN KURAL: Asla biten skora bakarak tahmin seçilmez!
+        // Tahminler maç önü oranlarına göre objektif olarak belirlenir, ardından dürüstçe değerlendirilir.
         const PRIORITY_LEAGUES = ['TSL', 'T1L', 'İNG', 'İNCL', 'İTA', 'İSP', 'ALM', 'FRA', 'HOL', 'POR', 'ŞMP', 'AVL', 'AVKL'];
         const sorted = [...pastDbMatches].sort((a, b) => {
           const aP = PRIORITY_LEAGUES.indexOf(a.league);
@@ -666,8 +785,34 @@ export async function GET() {
           return (a.league || '').localeCompare(b.league || '');
         });
 
+        // Maç önü oran tahmin ediciler (Biten skora ASLA bakmaz!)
+        const predictPreMatchMS = (m: any, variant: number = 0): 'MS 1' | 'MS X' | 'MS 2' => {
+          const o1 = parseOdd(m.ms_1_odd) ?? 99;
+          const oX = parseOdd(m.ms_0_odd) ?? 99;
+          const o2 = parseOdd(m.ms_2_odd) ?? 99;
+
+          if (variant === 1 && oX <= 3.35 && Math.abs(o1 - o2) < 0.6) return 'MS X';
+          if (o1 <= 2.20 && o1 <= o2) return 'MS 1';
+          if (o2 <= 2.20 && o2 < o1) return 'MS 2';
+          if (oX <= 3.25 && Math.abs(o1 - o2) < 0.5) return 'MS X';
+          return o1 <= o2 ? 'MS 1' : 'MS 2';
+        };
+
+        const predictPreMatchOU = (m: any, variant: number = 0): '2.5 ÜST' | '2.5 ALT' | 'KG VAR' => {
+          const oUst = parseOdd(m.ust_25_odd) ?? 99;
+          const oAlt = parseOdd(m.alt_25_odd) ?? 99;
+          const oKg = parseOdd(m.kg_var_odd) ?? 99;
+
+          if (variant === 1 && oKg <= 1.95) return 'KG VAR';
+          if (variant === 2 && oAlt <= 2.05) return '2.5 ALT';
+          if (oUst <= 1.85) return '2.5 ÜST';
+          if (oKg <= 1.85 && oKg < oAlt) return 'KG VAR';
+          if (oAlt <= 1.95) return '2.5 ALT';
+          return oUst <= oAlt ? '2.5 ÜST' : '2.5 ALT';
+        };
+
         const buildItem = (m: any, preferredChoice: string, fallbackOdd: number): DailyMatchItem => {
-          let won = evaluateScoreWon(preferredChoice, m.ms_score);
+          let won = evaluateScoreWon(preferredChoice, m.ms_score || '0-0');
 
           let odd = fallbackOdd;
           if (preferredChoice === 'MS 1' && m.ms_1_odd) odd = Number(m.ms_1_odd);
@@ -678,6 +823,8 @@ export async function GET() {
           else if (preferredChoice === 'KG VAR' && m.kg_var_odd) odd = Number(m.kg_var_odd);
 
           if (!odd || isNaN(odd) || odd <= 1.05) odd = fallbackOdd;
+
+          const score = m.ms_score ? String(m.ms_score).replace('-', ' - ') : '0 - 0';
 
           return {
             id: `past_${m.id || Math.random()}`,
@@ -690,32 +837,18 @@ export async function GET() {
             marketName: preferredChoice.includes('ÜST') || preferredChoice.includes('ALT') ? 'Toplam Gol' : (preferredChoice.includes('KG') ? 'Karşılıklı Gol' : 'Maç Sonucu'),
             choice: preferredChoice,
             odd,
-            score: m.ms_score,
+            score,
             iyScore: m.iy_score || undefined,
             won,
-            reason: `Resmi Skor: ${m.ms_score} (${won ? 'TUTTU ✅' : 'YATTI ❌'})`
+            reason: `Resmi Skor: ${score} (${won ? 'TUTTU ✅' : 'YATTI ❌'})`
           };
-        };
-
-        const chooseBestMS = (m: any) => {
-          const parts = (m.ms_score || '0-0').replace(':', '-').split('-').map((s: string) => parseInt(s.trim(), 10));
-          if (parts[0] > parts[1]) return 'MS 1';
-          if (parts[1] > parts[0]) return 'MS 2';
-          return 'MS 0';
-        };
-
-        const chooseBestOU = (m: any) => {
-          const parts = (m.ms_score || '0-0').replace(':', '-').split('-').map((s: string) => parseInt(s.trim(), 10));
-          if ((parts[0] + parts[1]) >= 3) return '2.5 ÜST';
-          if (parts[0] > 0 && parts[1] > 0) return 'KG VAR';
-          return '2.5 ALT';
         };
 
         // Kupon 1: İdeal Banko Kombine (3 Maç)
         const pC1Matches = [
-          buildItem(sorted[2] || sorted[0], chooseBestMS(sorted[2] || sorted[0]), 1.54),
-          buildItem(sorted[9] || sorted[1], chooseBestMS(sorted[9] || sorted[1]), 1.45),
-          buildItem(sorted[13] || sorted[2], chooseBestMS(sorted[13] || sorted[2]), 1.71)
+          buildItem(sorted[2] || sorted[0], predictPreMatchMS(sorted[2] || sorted[0]), 1.54),
+          buildItem(sorted[9] || sorted[1], predictPreMatchMS(sorted[9] || sorted[1]), 1.45),
+          buildItem(sorted[13] || sorted[2], predictPreMatchMS(sorted[13] || sorted[2]), 1.71)
         ];
         const pC1_odds = Number(pC1Matches.reduce((a, b) => a * b.odd, 1).toFixed(2));
         const pC1_wonCount = pC1Matches.filter(m => m.won).length;
@@ -742,10 +875,10 @@ export async function GET() {
 
         // Kupon 2: İdeal Değer & Form Kuponu (Dün) (4 Maç)
         const pC2Matches = [
-          buildItem(sorted[0], chooseBestMS(sorted[0]), 2.24),
-          buildItem(sorted[1], chooseBestMS(sorted[1]), 2.22),
-          buildItem(sorted[6] || sorted[3], chooseBestMS(sorted[6] || sorted[3]), 1.97),
-          buildItem(sorted[8] || sorted[4], chooseBestMS(sorted[8] || sorted[4]), 2.01)
+          buildItem(sorted[0], predictPreMatchMS(sorted[0]), 2.24),
+          buildItem(sorted[1], predictPreMatchMS(sorted[1]), 2.22),
+          buildItem(sorted[6] || sorted[3], predictPreMatchMS(sorted[6] || sorted[3], 1), 1.97),
+          buildItem(sorted[8] || sorted[4], predictPreMatchMS(sorted[8] || sorted[4]), 2.01)
         ];
         const pC2_odds = Number(pC2Matches.reduce((a, b) => a * b.odd, 1).toFixed(2));
         const pC2_wonCount = pC2Matches.filter(m => m.won).length;
@@ -772,10 +905,10 @@ export async function GET() {
 
         // Kupon 3: Gol & Taraf Kuponu (Dün) (4 Maç)
         const pC3Matches = [
-          buildItem(sorted[9] || sorted[5], chooseBestOU(sorted[9] || sorted[5]), 1.41),
-          buildItem(sorted[0], chooseBestOU(sorted[0]), 1.89),
-          buildItem(sorted[12] || sorted[6], chooseBestOU(sorted[12] || sorted[6]), 1.60),
-          buildItem(sorted[2] || sorted[7], chooseBestMS(sorted[2] || sorted[7]), 1.54)
+          buildItem(sorted[9] || sorted[5], predictPreMatchOU(sorted[9] || sorted[5]), 1.41),
+          buildItem(sorted[0], predictPreMatchOU(sorted[0], 1), 1.89),
+          buildItem(sorted[12] || sorted[6], predictPreMatchOU(sorted[12] || sorted[6], 2), 1.60),
+          buildItem(sorted[2] || sorted[7], predictPreMatchMS(sorted[2] || sorted[7]), 1.54)
         ];
         const pC3_odds = Number(pC3Matches.reduce((a, b) => a * b.odd, 1).toFixed(2));
         const pC3_wonCount = pC3Matches.filter(m => m.won).length;
@@ -802,10 +935,10 @@ export async function GET() {
 
         // Kupon 4: Özel Zirve Kombini (Dün) (4 Maç)
         const pC4Matches = [
-          buildItem(sorted[13] || sorted[8], chooseBestOU(sorted[13] || sorted[8]), 1.22),
-          buildItem(sorted[11] || sorted[9], chooseBestMS(sorted[11] || sorted[9]), 3.24),
-          buildItem(sorted[3] || sorted[10], chooseBestMS(sorted[3] || sorted[10]), 1.85),
-          buildItem(sorted[4] || sorted[11], chooseBestMS(sorted[4] || sorted[11]), 2.72)
+          buildItem(sorted[13] || sorted[8], predictPreMatchOU(sorted[13] || sorted[8]), 1.22),
+          buildItem(sorted[11] || sorted[9], predictPreMatchMS(sorted[11] || sorted[9], 1), 3.24),
+          buildItem(sorted[3] || sorted[10], predictPreMatchMS(sorted[3] || sorted[10]), 1.85),
+          buildItem(sorted[4] || sorted[11], predictPreMatchMS(sorted[4] || sorted[11]), 2.72)
         ];
         const pC4_odds = Number(pC4Matches.reduce((a, b) => a * b.odd, 1).toFixed(2));
         const pC4_wonCount = pC4Matches.filter(m => m.won).length;
@@ -831,6 +964,7 @@ export async function GET() {
         };
 
         pastCoupons = [pastCoupon1, pastCoupon2, pastCoupon3, pastCoupon4];
+        saveStoredDailyCoupons(evaluatedYesterdayDateDot, pastCoupons);
       }
     } catch (e) {
       console.warn('Past matches evaluation error:', e);
@@ -865,6 +999,7 @@ export async function GET() {
         timestamp: Date.now(),
         payload
       };
+      saveStoredDailyCoupons(dates.todayDot, todayCoupons, yesterdaySummary);
     }
 
     return NextResponse.json(payload);

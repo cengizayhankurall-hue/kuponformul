@@ -84,6 +84,34 @@ async function fetchMatchIyMsOdds(eventId: string): Promise<Record<string, numbe
 }
 
 const STORE_FILE = path.join(process.cwd(), 'data', 'system_coupons_store.json');
+const STORE_FILE_PUBLIC = path.join(process.cwd(), 'public', 'data', 'system_coupons_store.json');
+
+function cleanTeamName(name?: string): string {
+  if (!name) return '';
+  return name
+    .toLowerCase()
+    .replace(/[üÜ]/g, 'u')
+    .replace(/[öÖ]/g, 'o')
+    .replace(/[ıİiI]/g, 'i')
+    .replace(/[şŞ]/g, 's')
+    .replace(/[çÇ]/g, 'c')
+    .replace(/[ğĞ]/g, 'g')
+    .replace(/[^a-z0-9]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function matchTeams(a?: string, b?: string): boolean {
+  if (!a || !b) return false;
+  const ca = cleanTeamName(a);
+  const cb = cleanTeamName(b);
+  if (ca === cb) return true;
+  if (ca.includes(cb) || cb.includes(ca)) return true;
+  const ignore = ['fc', 'sk', 'fk', 'club', 'united', 'city'];
+  const wordsA = ca.split(' ').filter(w => w.length >= 3 && !ignore.includes(w));
+  const wordsB = cb.split(' ').filter(w => w.length >= 3 && !ignore.includes(w));
+  return wordsA.some(wa => wordsB.some(wb => wa === wb || (wa.length >= 3 && wb.length >= 3 && (wa.startsWith(wb) || wb.startsWith(wa)))));
+}
 
 const BAD_FALLBACK_TEAMS = [
   'Salzburg', 'Lyon', 'Kuopion', 'Hoffenheim', 'Celta Vigo', 
@@ -103,49 +131,56 @@ function isCouponCorruptedWithPastMatches(coupons: any[]): boolean {
 }
 
 function loadStoredCoupons(dateStr: string): SystemCoupon[] | null {
-  try {
-    if (fs.existsSync(STORE_FILE)) {
-      const data = JSON.parse(fs.readFileSync(STORE_FILE, 'utf-8'));
-      if (data && data[dateStr] && Array.isArray(data[dateStr].coupons) && data[dateStr].coupons.length >= 4) {
-        if (isCouponCorruptedWithPastMatches(data[dateStr].coupons)) return null;
-        return data[dateStr].coupons;
+  for (const f of [STORE_FILE, STORE_FILE_PUBLIC]) {
+    try {
+      if (fs.existsSync(f)) {
+        const data = JSON.parse(fs.readFileSync(f, 'utf-8'));
+        if (data && data[dateStr] && Array.isArray(data[dateStr].coupons) && data[dateStr].coupons.length >= 4) {
+          if (isCouponCorruptedWithPastMatches(data[dateStr].coupons)) continue;
+          return data[dateStr].coupons;
+        }
       }
-    }
-  } catch (e) {}
+    } catch (e) {}
+  }
   return null;
 }
 
 function loadStoredPayload(dateStr: string): any | null {
-  try {
-    if (fs.existsSync(STORE_FILE)) {
-      const data = JSON.parse(fs.readFileSync(STORE_FILE, 'utf-8'));
-      if (data && data[dateStr] && Array.isArray(data[dateStr].coupons) && data[dateStr].coupons.length >= 4) {
-        if (isCouponCorruptedWithPastMatches(data[dateStr].coupons)) return null;
-        return data[dateStr];
+  for (const f of [STORE_FILE, STORE_FILE_PUBLIC]) {
+    try {
+      if (fs.existsSync(f)) {
+        const data = JSON.parse(fs.readFileSync(f, 'utf-8'));
+        if (data && data[dateStr] && Array.isArray(data[dateStr].coupons) && data[dateStr].coupons.length >= 4) {
+          if (isCouponCorruptedWithPastMatches(data[dateStr].coupons)) continue;
+          return data[dateStr];
+        }
       }
-    }
-  } catch (e) {}
+    } catch (e) {}
+  }
   return null;
 }
 
 function saveStoredCoupons(dateStr: string, coupons: SystemCoupon[], yesterday?: any) {
-  try {
-    const dir = path.dirname(STORE_FILE);
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    let data: Record<string, any> = {};
-    if (fs.existsSync(STORE_FILE)) {
-      try {
-        data = JSON.parse(fs.readFileSync(STORE_FILE, 'utf-8'));
-      } catch (e) {}
-    }
-    data[dateStr] = {
-      timestamp: Date.now(),
-      coupons,
-      ...(yesterday ? { yesterday } : (data[dateStr]?.yesterday ? { yesterday: data[dateStr].yesterday } : {}))
-    };
-    fs.writeFileSync(STORE_FILE, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (e) {}
+  for (const f of [STORE_FILE, STORE_FILE_PUBLIC]) {
+    try {
+      const dir = path.dirname(f);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      let data: Record<string, any> = {};
+      if (fs.existsSync(f)) {
+        try {
+          data = JSON.parse(fs.readFileSync(f, 'utf-8'));
+        } catch (e) {}
+      }
+      data[dateStr] = {
+        timestamp: Date.now(),
+        coupons,
+        ...(yesterday ? { yesterday } : (data[dateStr]?.yesterday ? { yesterday: data[dateStr].yesterday } : {}))
+      };
+      fs.writeFileSync(f, JSON.stringify(data, null, 2), 'utf-8');
+    } catch (e) {}
+  }
 }
+
 
 export interface SystemMatch {
   id: string;
@@ -1499,7 +1534,7 @@ export async function GET() {
       title: string,
       badge: string,
       description: string,
-      theme: 'amber' | 'emerald' | 'purple' | 'rose',
+      theme: 'amber' | 'emerald' | 'purple' | 'cyan' | 'indigo' | 'rose' | 'blue',
       systemSizes: number[],
       systemLabel: string,
       matches: SystemMatch[]
@@ -1550,222 +1585,269 @@ export async function GET() {
     let evaluatedYesterdayFormatted = dates.formattedYesterday;
 
     try {
+      // 1. Dünün Gerçekleşen Resmi Maçlarını Supabase'den Çek
+      let pastDbMatches: any[] = [];
+      if (supabase) {
+        const res: any = await supabase
+          .from('past_matches')
+          .select('*')
+          .eq('match_date', dates.yesterdayYmd)
+          .not('ms_score', 'is', null);
+
+        pastDbMatches = res?.data || [];
+
+        // Eğer dün maç sayısı azsa Mackolik'ten anında sync etmeyi dene
+        if (!pastDbMatches || pastDbMatches.length < 15) {
+          try {
+            const { fetchAndSyncDay } = await import('@/app/api/cron/sync-results/route');
+            await fetchAndSyncDay(dates.yesterdayDot.replace(/\./g, '/'), dates.yesterdayYmd);
+            const refetchRes: any = await supabase
+              .from('past_matches')
+              .select('*')
+              .eq('match_date', dates.yesterdayYmd)
+              .not('ms_score', 'is', null);
+            pastDbMatches = refetchRes?.data || [];
+          } catch(e) {}
+        }
+
+        // Eğer hala yoksa past_matches tablosundaki en son tarihi al
+        if (!pastDbMatches || pastDbMatches.length < 15) {
+          const latestRes: any = await supabase
+            .from('past_matches')
+            .select('match_date')
+            .not('ms_score', 'is', null)
+            .order('match_date', { ascending: false })
+            .limit(1);
+
+          const latestDate = latestRes?.data?.[0]?.match_date;
+          if (latestDate) {
+            const [ly, lm, ld] = latestDate.split('-');
+            evaluatedYesterdayDateDot = `${ld}.${lm}.${ly}`;
+            const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+            evaluatedYesterdayFormatted = `${parseInt(ld, 10)} ${months[parseInt(lm, 10) - 1]} ${ly} Dün`;
+
+            const fallbackRes: any = await supabase
+              .from('past_matches')
+              .select('*')
+              .eq('match_date', latestDate)
+              .not('ms_score', 'is', null);
+            pastDbMatches = fallbackRes?.data || [];
+          }
+        }
+      }
+
+      // 2. Dün verilen gerçek kuponlar sistem deposunda var mı?
       const storedYesterday = loadStoredCoupons(dates.yesterdayDot);
 
-      if (storedYesterday && storedYesterday.length >= 4 && storedYesterday.every(c => c.matches.length === 9 && typeof c.hitCount === 'number')) {
-        pastCoupons = storedYesterday;
-      } else {
-        // Dinamik Olarak Dünün Gerçekleşen Resmi Maçlarını Supabase'den Çek
-        let pastDbMatches: any[] = [];
-        if (supabase) {
-          const res: any = await supabase
-            .from('past_matches')
-            .select('*')
-            .eq('match_date', dates.yesterdayYmd)
-            .not('ms_score', 'is', null);
+      if (storedYesterday && storedYesterday.length >= 4 && storedYesterday.every(c => Array.isArray(c.matches) && c.matches.length === 9)) {
+        // CASE 1: Dün kullanıcıya sunulmuş orijinal kuponlar var.
+        // KESİN KURAL: Orijinal tahminler (m.choice) ve oranlar (m.odd) ASLA DEĞİŞTİRİLEMEZ!
+        // Resmi skor eşleştirilir ve tuttu/yattı dürüstçe değerlendirilir.
+        const evaluatedList: SystemCoupon[] = [];
 
-          pastDbMatches = res?.data || [];
+        for (const sc of storedYesterday) {
+          const evaluatedMatches: SystemMatch[] = sc.matches.map((m) => {
+            const dbM = pastDbMatches.find(p => 
+              (matchTeams(p.home_team, m.homeTeam) && matchTeams(p.away_team, m.awayTeam)) ||
+              matchTeams(p.home_team, m.homeTeam) || 
+              matchTeams(p.away_team, m.awayTeam)
+            );
 
-          // Eğer dün maç sayısı azsa Mackolik'ten anında sync etmeyi dene
-          if (!pastDbMatches || pastDbMatches.length < 15) {
-            try {
-              const { fetchAndSyncDay } = await import('@/app/api/cron/sync-results/route');
-              await fetchAndSyncDay(dates.yesterdayDot.replace(/\./g, '/'), dates.yesterdayYmd);
-              const refetchRes: any = await supabase
-                .from('past_matches')
-                .select('*')
-                .eq('match_date', dates.yesterdayYmd)
-                .not('ms_score', 'is', null);
-              pastDbMatches = refetchRes?.data || [];
-            } catch(e) {}
-          }
-
-          // Eğer hala yoksa past_matches tablosundaki en son tarihi al
-          if (!pastDbMatches || pastDbMatches.length < 15) {
-            const latestRes: any = await supabase
-              .from('past_matches')
-              .select('match_date')
-              .not('ms_score', 'is', null)
-              .order('match_date', { ascending: false })
-              .limit(1);
-
-            const latestDate = latestRes?.data?.[0]?.match_date;
-            if (latestDate) {
-              const [ly, lm, ld] = latestDate.split('-');
-              evaluatedYesterdayDateDot = `${ld}.${lm}.${ly}`;
-              const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-              evaluatedYesterdayFormatted = `${parseInt(ld, 10)} ${months[parseInt(lm, 10) - 1]} ${ly} Dün`;
-
-              const fallbackRes: any = await supabase
-                .from('past_matches')
-                .select('*')
-                .eq('match_date', latestDate)
-                .not('ms_score', 'is', null);
-              pastDbMatches = fallbackRes?.data || [];
-            }
-          }
-        }
-
-        if (pastDbMatches && pastDbMatches.length >= 9) {
-          const PRIORITY_LEAGUES = ['TSL', 'T1L', 'İNG', 'İNCL', 'İTA', 'İSP', 'ALM', 'FRA', 'HOL', 'POR', 'ŞMP', 'AVL', 'AVKL'];
-          const sorted = [...pastDbMatches].sort((a, b) => {
-            const aP = PRIORITY_LEAGUES.indexOf(a.league);
-            const bP = PRIORITY_LEAGUES.indexOf(b.league);
-            if (aP !== -1 && bP !== -1) return aP - bP;
-            if (aP !== -1) return -1;
-            if (bP !== -1) return 1;
-            return (a.league || '').localeCompare(b.league || '');
-          });
-
-          const buildSysMatch = (m: any, preferredChoice: string, marketType: 'ms' | 'goals' | 'iyms', fallbackOdd: number): SystemMatch => {
-            const score = m.ms_score ? String(m.ms_score).replace('-', ' - ') : '0 - 0';
-            const parts = (m.ms_score || '0-0').replace(':', '-').split('-').map((s: string) => parseInt(s.trim(), 10));
-            const h = parts[0] || 0;
-            const a = parts[1] || 0;
-            let won = false;
-
-            if (preferredChoice === 'MS 1') won = h > a;
-            else if (preferredChoice === 'MS 2') won = a > h;
-            else if (preferredChoice === 'MS 0' || preferredChoice === 'MS X') won = h === a;
-            else if (preferredChoice === '2.5 ÜST') won = (h + a) >= 3;
-            else if (preferredChoice === '2.5 ALT') won = (h + a) <= 2;
-            else if (preferredChoice === 'KG VAR') won = h > 0 && a > 0;
-            else if (preferredChoice === 'KG YOK') won = h === 0 || a === 0;
-            else if (preferredChoice.startsWith('1/1')) won = h > a;
-            else if (preferredChoice.startsWith('2/2')) won = a > h;
-
-            let odd = fallbackOdd;
-            if (preferredChoice === 'MS 1' && m.ms_1_odd) odd = Number(m.ms_1_odd);
-            else if (preferredChoice === 'MS 2' && m.ms_2_odd) odd = Number(m.ms_2_odd);
-            else if ((preferredChoice === 'MS 0' || preferredChoice === 'MS X') && m.ms_0_odd) odd = Number(m.ms_0_odd);
-            else if (preferredChoice === '2.5 ÜST' && m.ust_25_odd) odd = Number(m.ust_25_odd);
-            else if (preferredChoice === '2.5 ALT' && m.alt_25_odd) odd = Number(m.alt_25_odd);
-            else if (preferredChoice === 'KG VAR' && m.kg_var_odd) odd = Number(m.kg_var_odd);
-
-            if (!odd || isNaN(odd) || odd <= 1.05) odd = fallbackOdd;
-
-            const marketName = marketType === 'goals' ? 'Toplam Gol' : (marketType === 'iyms' ? 'İlk Yarı / Maç Sonu' : 'Maç Sonucu');
+            const score = dbM?.ms_score ? String(dbM.ms_score).replace('-', ' - ') : (m.score && m.score !== '0 - 0' ? m.score : '0 - 0');
+            const iyScore = dbM?.iy_score || m.iyScore || undefined;
+            const hasFinished = Boolean(dbM?.ms_score || (m.score && m.score !== '0 - 0'));
+            const won = hasFinished ? evaluateScoreWon(m.choice, dbM?.ms_score || m.score || '0-0', iyScore) : false;
 
             return {
-              id: `past_sys_${m.id || Math.random()}`,
-              code: String(m.id || '80000').slice(0, 5),
-              homeTeam: m.home_team,
-              awayTeam: m.away_team,
-              league: m.league || 'Lig',
-              date: evaluatedYesterdayDateDot,
-              time: (m.match_time || '20:00').slice(0, 5),
-              marketType,
-              marketName,
-              choice: preferredChoice,
-              odd,
+              ...m,
               score,
-              iyScore: m.iy_score || undefined,
+              iyScore,
               won,
-              reason: `Resmi Skor: ${score} (${won ? 'TUTTU ✅' : 'YATTI ❌'})`
+              reason: hasFinished 
+                ? `Resmi Skor: ${score} (${won ? 'TUTTU ✅' : 'YATTI ❌'})` 
+                : 'Maç sonucu henüz girilmedi'
             };
-          };
+          });
 
-          const chooseMS = (m: any) => {
-            const parts = (m.ms_score || '0-0').replace(':', '-').split('-').map((s: string) => parseInt(s.trim(), 10));
-            if (parts[0] > parts[1]) return 'MS 1';
-            if (parts[1] > parts[0]) return 'MS 2';
-            return 'MS 0';
-          };
-
-          const chooseOU = (m: any) => {
-            const parts = (m.ms_score || '0-0').replace(':', '-').split('-').map((s: string) => parseInt(s.trim(), 10));
-            if ((parts[0] + parts[1]) >= 3) return '2.5 ÜST';
-            if (parts[0] > 0 && parts[1] > 0) return 'KG VAR';
-            return '2.5 ALT';
-          };
-
-          const chooseIYMS = (m: any) => {
-            const parts = (m.ms_score || '0-0').replace(':', '-').split('-').map((s: string) => parseInt(s.trim(), 10));
-            if (parts[0] > parts[1]) return '1/1';
-            if (parts[1] > parts[0]) return '2/2';
-            return 'X/X';
-          };
-
-          // 4 kupon için 9'ar maçlık havuzlar
-          const getBatch = (startIdx: number) => {
-            const list: any[] = [];
-            for (let i = 0; i < 9; i++) {
-              list.push(sorted[(startIdx + i) % sorted.length]);
-            }
-            return list;
-          };
-
-          // Kupon 1: MS Odaklı (Sistem 4, 5, 6)
-          const pastC1Matches: SystemMatch[] = getBatch(0).map((m, idx) => 
-            buildSysMatch(m, chooseMS(m), 'ms', idx % 2 === 0 ? 1.65 : 2.15)
+          const evaluatedCoupon = createEvaluatedPastCoupon(
+            sc.id,
+            sc.title,
+            `${dates.yesterdayDot} DEĞERLENDİRİLDİ`,
+            sc.description,
+            sc.theme,
+            sc.systemSizes || [4, 5, 6],
+            sc.systemLabel || 'Sistem 4, 5, 6',
+            evaluatedMatches
           );
-
-          // Kupon 2: Gol / KG Odaklı (Sistem 4, 5, 6)
-          const pastC2Matches: SystemMatch[] = getBatch(3).map((m, idx) => 
-            buildSysMatch(m, chooseOU(m), 'goals', idx % 2 === 0 ? 1.75 : 1.85)
-          );
-
-          // Kupon 3: Karma / Hibrit (Sistem 4, 5, 6)
-          const pastC3Matches: SystemMatch[] = getBatch(6).map((m, idx) => 
-            idx % 2 === 0 
-              ? buildSysMatch(m, chooseMS(m), 'ms', 1.95)
-              : buildSysMatch(m, chooseOU(m), 'goals', 1.80)
-          );
-
-          // Kupon 4: İY / MS & Sürpriz (Sistem 4, 5, 6)
-          const pastC4Matches: SystemMatch[] = getBatch(9).map((m, idx) => 
-            idx % 3 === 0 
-              ? buildSysMatch(m, chooseIYMS(m), 'iyms', 3.20)
-              : (idx % 3 === 1 ? buildSysMatch(m, chooseMS(m), 'ms', 2.30) : buildSysMatch(m, chooseOU(m), 'goals', 1.90))
-          );
-
-          const pastCoupon1 = createEvaluatedPastCoupon(
-            'past-kupon-1',
-            '1. Sistem Kuponu (Dün - Maç Sonucu Odaklı)',
-            `${evaluatedYesterdayDateDot} DEĞERLENDİRİLDİ`,
-            'Dün resmi bültendeki Maç Sonucu (MS) açılış oranlarından oluşan 9 maçlık Sistem 4, 5, 6 sonuçları.',
-            'amber',
-            [4, 5, 6],
-            'Sistem 4, 5, 6',
-            pastC1Matches
-          );
-
-          const pastCoupon2 = createEvaluatedPastCoupon(
-            'past-kupon-2',
-            '2. Sistem Kuponu (Dün - Gol / KG Odaklı)',
-            `${evaluatedYesterdayDateDot} DEĞERLENDİRİLDİ`,
-            'Dün resmi bültendeki 2.5 Alt/Üst ve KG açılış oranlarından oluşan 9 maçlık Sistem 4, 5, 6 sonuçları.',
-            'emerald',
-            [4, 5, 6],
-            'Sistem 4, 5, 6',
-            pastC2Matches
-          );
-
-          const pastCoupon3 = createEvaluatedPastCoupon(
-            'past-kupon-3',
-            '3. Sistem Kuponu (Dün - Karma / Hibrit)',
-            `${evaluatedYesterdayDateDot} DEĞERLENDİRİLDİ`,
-            'Dün bültendeki MS 1-X-2 ile 2.5 ve 3.5 Alt/Üst açılış oranlarından oluşan 9 maçlık Sistem 4, 5, 6 sonuçları.',
-            'purple',
-            [4, 5, 6],
-            'Sistem 4, 5, 6',
-            pastC3Matches
-          );
-
-          const pastCoupon4 = createEvaluatedPastCoupon(
-            'past-kupon-4',
-            '4. Sistem Kuponu (Dün - İY / MS Odaklı)',
-            `${evaluatedYesterdayDateDot} DEĞERLENDİRİLDİ`,
-            'Dün bültendeki İlk Yarı / Maç Sonu oranlarından oluşan 9 maçlık Sistem 4, 5, 6 sonuçları.',
-            'rose',
-            [4, 5, 6],
-            'Sistem 4, 5, 6',
-            pastC4Matches
-          );
-
-          pastCoupons = [pastCoupon1, pastCoupon2, pastCoupon3, pastCoupon4];
-          saveStoredCoupons(evaluatedYesterdayDateDot, pastCoupons);
+          evaluatedList.push(evaluatedCoupon);
         }
+
+        pastCoupons = evaluatedList;
+        saveStoredCoupons(dates.yesterdayDot, pastCoupons);
+      } else if (pastDbMatches && pastDbMatches.length >= 9) {
+        // CASE 2: Depoda dünkü kupon henüz yoksa (ilk gün veya silinmişse):
+        // KESİN KURAL: Asla biten skora bakarak tahmin seçilmez! (Skora göre tahmin hilesi YASAKTIR)
+        // Tahminler maç önü oranlarına göre objektif olarak belirlenir, ardından dürüstçe değerlendirilir.
+        const PRIORITY_LEAGUES = ['TSL', 'T1L', 'İNG', 'İNCL', 'İTA', 'İSP', 'ALM', 'FRA', 'HOL', 'POR', 'ŞMP', 'AVL', 'AVKL'];
+        const sorted = [...pastDbMatches].sort((a, b) => {
+          const aP = PRIORITY_LEAGUES.indexOf(a.league);
+          const bP = PRIORITY_LEAGUES.indexOf(b.league);
+          if (aP !== -1 && bP !== -1) return aP - bP;
+          if (aP !== -1) return -1;
+          if (bP !== -1) return 1;
+          return (a.league || '').localeCompare(b.league || '');
+        });
+
+        // Maç önü oranlarına göre objektif tahmin üreteçleri (Sonuca bakmaz!)
+        const predictPreMatchMS = (m: any, variant: number = 0): 'MS 1' | 'MS X' | 'MS 2' => {
+          const o1 = parseOdd(m.ms_1_odd) ?? 99;
+          const oX = parseOdd(m.ms_0_odd) ?? 99;
+          const o2 = parseOdd(m.ms_2_odd) ?? 99;
+
+          if (variant === 1 && oX <= 3.35 && Math.abs(o1 - o2) < 0.6) return 'MS X';
+          if (o1 <= 2.20 && o1 <= o2) return 'MS 1';
+          if (o2 <= 2.20 && o2 < o1) return 'MS 2';
+          if (oX <= 3.25 && Math.abs(o1 - o2) < 0.5) return 'MS X';
+          return o1 <= o2 ? 'MS 1' : 'MS 2';
+        };
+
+        const predictPreMatchOU = (m: any, variant: number = 0): '2.5 ÜST' | '2.5 ALT' | 'KG VAR' => {
+          const oUst = parseOdd(m.ust_25_odd) ?? 99;
+          const oAlt = parseOdd(m.alt_25_odd) ?? 99;
+          const oKg = parseOdd(m.kg_var_odd) ?? 99;
+
+          if (variant === 1 && oKg <= 1.95) return 'KG VAR';
+          if (variant === 2 && oAlt <= 2.05) return '2.5 ALT';
+          if (oUst <= 1.85) return '2.5 ÜST';
+          if (oKg <= 1.85 && oKg < oAlt) return 'KG VAR';
+          if (oAlt <= 1.95) return '2.5 ALT';
+          return oUst <= oAlt ? '2.5 ÜST' : '2.5 ALT';
+        };
+
+        const predictPreMatchIYMS = (m: any): string => {
+          const o1 = parseOdd(m.ms_1_odd) ?? 99;
+          const o2 = parseOdd(m.ms_2_odd) ?? 99;
+          if (o1 <= 1.70) return '1/1';
+          if (o2 <= 1.70) return '2/2';
+          if (o1 <= 2.20) return 'X/1';
+          if (o2 <= 2.20) return 'X/2';
+          return 'X/X';
+        };
+
+        const buildSysMatch = (m: any, preferredChoice: string, marketType: 'ms' | 'goals' | 'iyms', fallbackOdd: number): SystemMatch => {
+          const score = m.ms_score ? String(m.ms_score).replace('-', ' - ') : '0 - 0';
+          const won = evaluateScoreWon(preferredChoice, m.ms_score || '0-0', m.iy_score);
+
+          let odd = fallbackOdd;
+          if (preferredChoice === 'MS 1' && m.ms_1_odd) odd = Number(m.ms_1_odd);
+          else if (preferredChoice === 'MS 2' && m.ms_2_odd) odd = Number(m.ms_2_odd);
+          else if ((preferredChoice === 'MS 0' || preferredChoice === 'MS X') && m.ms_0_odd) odd = Number(m.ms_0_odd);
+          else if (preferredChoice === '2.5 ÜST' && m.ust_25_odd) odd = Number(m.ust_25_odd);
+          else if (preferredChoice === '2.5 ALT' && m.alt_25_odd) odd = Number(m.alt_25_odd);
+          else if (preferredChoice === 'KG VAR' && m.kg_var_odd) odd = Number(m.kg_var_odd);
+
+          if (!odd || isNaN(odd) || odd <= 1.05) odd = fallbackOdd;
+
+          const marketName = marketType === 'goals' ? 'Toplam Gol' : (marketType === 'iyms' ? 'İlk Yarı / Maç Sonu' : 'Maç Sonucu');
+
+          return {
+            id: `past_sys_${m.id || Math.random()}`,
+            code: String(m.id || '80000').slice(0, 5),
+            homeTeam: m.home_team,
+            awayTeam: m.away_team,
+            league: m.league || 'Lig',
+            date: evaluatedYesterdayDateDot,
+            time: (m.match_time || '20:00').slice(0, 5),
+            marketType,
+            marketName,
+            choice: preferredChoice,
+            odd,
+            score,
+            iyScore: m.iy_score || undefined,
+            won,
+            reason: `Resmi Skor: ${score} (${won ? 'TUTTU ✅' : 'YATTI ❌'})`
+          };
+        };
+
+        // 4 kupon için 9'ar maçlık havuzlar
+        const getBatch = (startIdx: number) => {
+          const list: any[] = [];
+          for (let i = 0; i < 9; i++) {
+            list.push(sorted[(startIdx + i) % sorted.length]);
+          }
+          return list;
+        };
+
+        // Kupon 1: MS Odaklı (Sistem 4, 5, 6)
+        const pastC1Matches: SystemMatch[] = getBatch(0).map((m, idx) => 
+          buildSysMatch(m, predictPreMatchMS(m, idx % 3 === 2 ? 1 : 0), 'ms', idx % 2 === 0 ? 1.65 : 2.15)
+        );
+
+        // Kupon 2: Gol / KG Odaklı (Sistem 4, 5, 6)
+        const pastC2Matches: SystemMatch[] = getBatch(3).map((m, idx) => 
+          buildSysMatch(m, predictPreMatchOU(m, idx % 3), 'goals', idx % 2 === 0 ? 1.75 : 1.85)
+        );
+
+        // Kupon 3: Karma / Hibrit (Sistem 4, 5, 6)
+        const pastC3Matches: SystemMatch[] = getBatch(6).map((m, idx) => 
+          idx % 2 === 0 
+            ? buildSysMatch(m, predictPreMatchMS(m, 0), 'ms', 1.95)
+            : buildSysMatch(m, predictPreMatchOU(m, 0), 'goals', 1.80)
+        );
+
+        // Kupon 4: İY / MS & Sürpriz (Sistem 4, 5, 6)
+        const pastC4Matches: SystemMatch[] = getBatch(9).map((m, idx) => 
+          idx % 3 === 0 
+            ? buildSysMatch(m, predictPreMatchIYMS(m), 'iyms', 3.20)
+            : (idx % 3 === 1 ? buildSysMatch(m, predictPreMatchMS(m, 0), 'ms', 2.30) : buildSysMatch(m, predictPreMatchOU(m, 0), 'goals', 1.90))
+        );
+
+        const pastCoupon1 = createEvaluatedPastCoupon(
+          'past-kupon-1',
+          '1. Sistem Kuponu (Dün - Maç Sonucu Odaklı)',
+          `${evaluatedYesterdayDateDot} DEĞERLENDİRİLDİ`,
+          'Dün resmi bültendeki Maç Sonucu (MS) açılış oranlarından oluşan 9 maçlık Sistem 4, 5, 6 sonuçları.',
+          'amber',
+          [4, 5, 6],
+          'Sistem 4, 5, 6',
+          pastC1Matches
+        );
+
+        const pastCoupon2 = createEvaluatedPastCoupon(
+          'past-kupon-2',
+          '2. Sistem Kuponu (Dün - Gol / KG Odaklı)',
+          `${evaluatedYesterdayDateDot} DEĞERLENDİRİLDİ`,
+          'Dün resmi bültendeki 2.5 Alt/Üst ve KG açılış oranlarından oluşan 9 maçlık Sistem 4, 5, 6 sonuçları.',
+          'emerald',
+          [4, 5, 6],
+          'Sistem 4, 5, 6',
+          pastC2Matches
+        );
+
+        const pastCoupon3 = createEvaluatedPastCoupon(
+          'past-kupon-3',
+          '3. Sistem Kuponu (Dün - Karma / Hibrit)',
+          `${evaluatedYesterdayDateDot} DEĞERLENDİRİLDİ`,
+          'Dün bültendeki MS 1-X-2 ile 2.5 ve 3.5 Alt/Üst açılış oranlarından oluşan 9 maçlık Sistem 4, 5, 6 sonuçları.',
+          'purple',
+          [4, 5, 6],
+          'Sistem 4, 5, 6',
+          pastC3Matches
+        );
+
+        const pastCoupon4 = createEvaluatedPastCoupon(
+          'past-kupon-4',
+          '4. Sistem Kuponu (Dün - İY / MS Odaklı)',
+          `${evaluatedYesterdayDateDot} DEĞERLENDİRİLDİ`,
+          'Dün bültendeki İlk Yarı / Maç Sonu oranlarından oluşan 9 maçlık Sistem 4, 5, 6 sonuçları.',
+          'rose',
+          [4, 5, 6],
+          'Sistem 4, 5, 6',
+          pastC4Matches
+        );
+
+        pastCoupons = [pastCoupon1, pastCoupon2, pastCoupon3, pastCoupon4];
+        saveStoredCoupons(evaluatedYesterdayDateDot, pastCoupons);
       }
     } catch (e) {
       console.warn('System past evaluation error:', e);
