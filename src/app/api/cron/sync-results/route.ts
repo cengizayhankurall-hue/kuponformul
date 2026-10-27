@@ -2,51 +2,70 @@ import { NextResponse } from 'next/server';
 import https from 'https';
 import { supabase } from '@/lib/supabase';
 
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
+
 const agent = new https.Agent({
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
+  keepAlive: false
 });
 
-function httpGet(urlStr: string, retries = 3): Promise<{ status: number; text: string }> {
+function httpGet(urlStr: string, retries = 2): Promise<{ status: number; text: string }> {
   return new Promise((resolve, reject) => {
-    const u = new URL(urlStr);
-    const options = {
-      hostname: u.hostname,
-      path: u.pathname + u.search,
-      method: 'GET',
-      agent: agent,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'application/json, text/javascript, */*; q=0.01',
-        'Referer': 'https://arsiv.mackolik.com/Genis-Iddaa-Programi',
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    };
+    try {
+      const u = new URL(urlStr);
+      const options = {
+        hostname: u.hostname,
+        path: u.pathname + u.search,
+        method: 'GET',
+        agent: agent,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'application/json, text/javascript, */*; q=0.01',
+          'Referer': 'https://arsiv.mackolik.com/Genis-Iddaa-Programi',
+          'X-Requested-With': 'XMLHttpRequest',
+          'Connection': 'close'
+        },
+        timeout: 10000
+      };
 
-    const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => {
-        if ((res.statusCode === 502 || res.statusCode === 503) && retries > 0) {
-          setTimeout(() => {
-            httpGet(urlStr, retries - 1).then(resolve).catch(reject);
-          }, 1500);
+      const req = https.request(options, (res) => {
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => {
+          if ((res.statusCode === 502 || res.statusCode === 503) && retries > 0) {
+            setTimeout(() => {
+              httpGet(urlStr, retries - 1).then(resolve).catch(reject);
+            }, 800);
+          } else {
+            resolve({ status: res.statusCode || 200, text: data });
+          }
+        });
+      });
+
+      req.on('timeout', () => {
+        req.destroy();
+        if (retries > 0) {
+          httpGet(urlStr, retries - 1).then(resolve).catch(reject);
         } else {
-          resolve({ status: res.statusCode || 200, text: data });
+          resolve({ status: 504, text: '' });
         }
       });
-    });
 
-    req.on('error', (err) => {
-      if (retries > 0) {
-        setTimeout(() => {
-          httpGet(urlStr, retries - 1).then(resolve).catch(reject);
-        }, 1500);
-      } else {
-        reject(err);
-      }
-    });
+      req.on('error', (err) => {
+        if (retries > 0) {
+          setTimeout(() => {
+            httpGet(urlStr, retries - 1).then(resolve).catch(reject);
+          }, 800);
+        } else {
+          resolve({ status: 500, text: '' });
+        }
+      });
 
-    req.end();
+      req.end();
+    } catch (e: any) {
+      resolve({ status: 500, text: '' });
+    }
   });
 }
 
@@ -86,33 +105,35 @@ export async function fetchAndSyncDay(dStr: string, isoDate: string) {
   const url = `https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`;
 
   let txt = '';
+  // 1. First try fast direct httpGet with Connection: close (takes ~150-1000ms)
   try {
-    const res = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'application/json, text/javascript, */*; q=0.01',
-        'Referer': 'https://arsiv.mackolik.com/Genis-Iddaa-Programi',
-        'X-Requested-With': 'XMLHttpRequest'
-      },
-      signal: AbortSignal.timeout(20000),
-      cache: 'no-store'
-    });
-    if (res.ok) {
-      txt = await res.text();
+    const getRes = await httpGet(url, 2);
+    if (getRes.status === 200 && getRes.text && getRes.text.includes('m:[')) {
+      txt = getRes.text;
     }
   } catch (err: any) {
-    console.warn(`[Sync Cron] Fetch error for ${dStr}:`, err.message);
+    console.warn(`[Sync Cron] httpGet error for ${dStr}:`, err.message);
   }
 
-  // Fallback to resilient httpGet if fetch was empty or failed
+  // 2. Fallback to native fetch if httpGet was empty
   if (!txt || txt.length < 100 || !txt.includes('m:[')) {
     try {
-      const fallback = await httpGet(url, 2);
-      if (fallback.status === 200 && fallback.text && fallback.text.includes('m:[')) {
-        txt = fallback.text;
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'application/json, text/javascript, */*; q=0.01',
+          'Referer': 'https://arsiv.mackolik.com/Genis-Iddaa-Programi',
+          'X-Requested-With': 'XMLHttpRequest',
+          'Connection': 'close'
+        },
+        signal: AbortSignal.timeout(8000),
+        cache: 'no-store'
+      });
+      if (res.ok) {
+        txt = await res.text();
       }
-    } catch (fbErr: any) {
-      console.warn(`[Sync Cron] httpGet fallback error for ${dStr}:`, fbErr.message);
+    } catch (err: any) {
+      console.warn(`[Sync Cron] Fetch fallback error for ${dStr}:`, err.message);
     }
   }
 
@@ -219,8 +240,8 @@ export async function fetchAndSyncDay(dStr: string, isoDate: string) {
     const uniqueMatches = Array.from(uniqueMap.values());
 
     if (uniqueMatches.length > 0) {
-      for (let i = 0; i < uniqueMatches.length; i += 50) {
-        const chunk = uniqueMatches.slice(i, i + 50);
+      for (let i = 0; i < uniqueMatches.length; i += 200) {
+        const chunk = uniqueMatches.slice(i, i + 200);
         const { error: upsertErr } = await supabase!
           .from('past_matches')
           .upsert(chunk, { onConflict: 'home_team,away_team,match_date' });
@@ -300,9 +321,10 @@ export async function GET(request: Request) {
       });
     }
 
+    const detailsStr = details.map(d => `${d.dStr}: ${d.matchesSynced} maç`).join(', ');
     return NextResponse.json({
       success: true,
-      message: `Toplam ${totalSynced} maç veritabanına başarıyla aktarıldı.`,
+      message: `Toplam ${totalSynced} maç veritabanına başarıyla aktarıldı. (${detailsStr})`,
       totalSynced,
       details
     });
