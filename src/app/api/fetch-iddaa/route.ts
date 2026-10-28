@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import https from 'https';
+import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
@@ -276,8 +278,29 @@ async function doFetch(): Promise<any[]> {
   const sorted = deduplicated.sort((a, b) => parseDateTime(a.date, a.time) - parseDateTime(b.date, b.time));
   if (sorted && sorted.length >= 10) {
     iddaaCache = { timestamp: Date.now(), data: sorted };
+  } else if (!sorted || sorted.length === 0) {
+    const fallback = getFallbackBulletin();
+    if (fallback.length > 0) {
+      iddaaCache = { timestamp: Date.now(), data: fallback };
+      return fallback;
+    }
   }
   return sorted;
+}
+
+function getFallbackBulletin(): any[] {
+  try {
+    const p = path.join(process.cwd(), 'public', 'data', 'iddaa_bulletin.json');
+    if (fs.existsSync(p)) {
+      const data = JSON.parse(fs.readFileSync(p, 'utf-8'));
+      if (Array.isArray(data) && data.length > 0) {
+        return data;
+      }
+    }
+  } catch (e) {
+    console.warn('Fallback bulletin read failed:', e);
+  }
+  return [];
 }
 
 export async function fetchMackolikMatches(): Promise<any[]> {
@@ -299,7 +322,15 @@ export async function fetchMackolikMatches(): Promise<any[]> {
   }
 
   inFlightPromise = doFetch().catch(() => []).finally(() => { inFlightPromise = null; });
-  return inFlightPromise;
+  const result = await inFlightPromise;
+  if (!result || result.length === 0) {
+    const fallback = getFallbackBulletin();
+    if (fallback.length > 0) {
+      iddaaCache = { timestamp: Date.now(), data: fallback };
+      return fallback;
+    }
+  }
+  return result;
 }
 
 export async function GET() {

@@ -54,14 +54,38 @@ window.addEventListener("message", function(event) {
     chrome.runtime.sendMessage({ action: "GET_IDDAA_BULLETIN" }, (response) => {
       if (response && response.success) {
         logDebug("GET_IDDAA_BULLETIN yanıtı başarılı. Bülten web sayfasına iletiliyor.");
-        window.postMessage({ type: "ST_IDDAA_BULLETIN_SUCCESS", payload: response.data }, "*");
+        const payload = response.source ? response : (response.data || response);
+        window.postMessage({ type: "ST_IDDAA_BULLETIN_SUCCESS", payload: payload }, "*");
       } else {
         logDebug("GET_IDDAA_BULLETIN yanıtı başarısız: " + (response ? response.error : "Bilinmeyen hata"));
         window.postMessage({ type: "ST_IDDAA_BULLETIN_ERROR", error: response ? response.error : "Bilinmeyen hata" }, "*");
       }
     });
   }
+
+  // 4. Eklenti Varlık Kontrolü (Ping-Pong)
+  if (event.data.type === "ST_PING_EXTENSION") {
+    window.postMessage({ type: "ST_PONG_EXTENSION", version: "1.0.0" }, "*");
+  }
+
+  // 5. Çoklu Gün / Geçmiş Maç Çekme Mesajı
+  if (event.data.type === "ST_FETCH_MACKOLIK_DAYS") {
+    const dates = event.data.payload?.dates || [];
+    logDebug("Web sayfasından gün sonuçları çekme talebi alındı. Gün sayısı: " + dates.length);
+    chrome.runtime.sendMessage({ action: "FETCH_MACKOLIK_DAYS", dates: dates }, (response) => {
+      if (response && response.success) {
+        logDebug("FETCH_MACKOLIK_DAYS yanıtı başarılı.");
+        window.postMessage({ type: "ST_FETCH_MACKOLIK_DAYS_SUCCESS", payload: response.results }, "*");
+      } else {
+        logDebug("FETCH_MACKOLIK_DAYS yanıtı başarısız: " + (response ? response.error : "Bilinmeyen hata"));
+        window.postMessage({ type: "ST_FETCH_MACKOLIK_DAYS_ERROR", error: response ? response.error : "Bilinmeyen hata" }, "*");
+      }
+    });
+  }
 });
+
+// Sayfa yüklendiğinde eklentinin hazır olduğunu bildir
+window.postMessage({ type: "ST_EXTENSION_READY", version: "1.0.0" }, "*");
 
 // Günlükleri her 3 saniyede bir sitemizin konsoluna yazdırarak hata ayıklamayı kolaylaştıralım
 setInterval(() => {

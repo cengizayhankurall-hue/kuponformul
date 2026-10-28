@@ -124,4 +124,34 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       });
     return true; // Asenkron yanıt için
   }
+
+  if (request.action === "FETCH_MACKOLIK_DAYS") {
+    const dates = request.dates || [];
+    logDebug("FETCH_MACKOLIK_DAYS başladı. Gün sayısı: " + dates.length);
+
+    const fetchSingleDay = (dItem) => {
+      const url = `https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dItem.dStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`;
+      return fetch(url, {
+        headers: {
+          'Accept': 'application/json, text/javascript, */*; q=0.01',
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(res => res.text())
+      .then(text => ({ dStr: dItem.dStr, isoDate: dItem.isoDate, text }))
+      .catch(err => ({ dStr: dItem.dStr, isoDate: dItem.isoDate, text: '', error: err.message }));
+    };
+
+    Promise.all(dates.map(fetchSingleDay))
+      .then(results => {
+        logDebug("FETCH_MACKOLIK_DAYS tamamlandı. Dönen gün sayısı: " + results.length);
+        sendResponse({ success: true, results });
+      })
+      .catch(err => {
+        logDebug("FETCH_MACKOLIK_DAYS hata: " + err.message);
+        sendResponse({ success: false, error: err.message });
+      });
+    return true;
+  }
 });
+

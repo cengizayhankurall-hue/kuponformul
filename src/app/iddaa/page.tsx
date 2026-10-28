@@ -744,7 +744,9 @@ export default function IddaaPage() {
           setLoading(false);
           return;
         } else {
-          // If empty array on initial boot, retry once after 1.5 seconds
+          // Sunucudan 0 maç döndüyse (örneğin Vercel IP engeli), eklentiye sor
+          window.postMessage({ type: 'ST_GET_IDDAA_BULLETIN' }, '*');
+
           setTimeout(async () => {
             try {
               const retryRes = await fetch('/api/fetch-iddaa');
@@ -753,8 +755,11 @@ export default function IddaaPage() {
                 setMatches(retryData.matches);
                 setLastUpdated(new Date().toLocaleTimeString('tr-TR'));
                 setActiveSource('Bülten (Doğrudan)');
+              } else {
+                window.postMessage({ type: 'ST_GET_IDDAA_BULLETIN' }, '*');
               }
             } catch (e) {
+              window.postMessage({ type: 'ST_GET_IDDAA_BULLETIN' }, '*');
             } finally {
               setLoading(false);
             }
@@ -762,11 +767,13 @@ export default function IddaaPage() {
           return;
         }
       } else {
+        window.postMessage({ type: 'ST_GET_IDDAA_BULLETIN' }, '*');
         throw new Error(data.error || 'Bülten verisi alınamadı');
       }
     } catch (err: any) {
       console.error('Bülten çekim hatası:', err);
-      setError('Bülten ve canlı maçlar çekilirken bir hata oluştu: ' + (err.message || 'Bağlantı hatası'));
+      window.postMessage({ type: 'ST_GET_IDDAA_BULLETIN' }, '*');
+      setError('Bülten yüklenemedi: ' + (err.message || 'Bağlantı hatası'));
       setLoading(false);
     }
   };

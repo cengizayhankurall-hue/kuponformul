@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RefreshCw, UploadCloud, Calendar, CheckCircle2, AlertCircle, Database } from 'lucide-react';
 
 export default function DataImportPage() {
@@ -17,6 +17,25 @@ export default function DataImportPage() {
   });
   const [loadingSync, setLoadingSync] = useState(false);
   const [syncMessage, setSyncMessage] = useState('');
+  const [hasExtension, setHasExtension] = useState(false);
+
+  useEffect(() => {
+    const handleMsg = (e: MessageEvent) => {
+      if (e.data?.type === 'ST_PONG_EXTENSION' || e.data?.type === 'ST_EXTENSION_READY') {
+        setHasExtension(true);
+      }
+    };
+    window.addEventListener('message', handleMsg);
+    window.postMessage({ type: 'ST_PING_EXTENSION' }, '*');
+    const timer = setTimeout(() => {
+      window.postMessage({ type: 'ST_PING_EXTENSION' }, '*');
+    }, 1500);
+
+    return () => {
+      window.removeEventListener('message', handleMsg);
+      clearTimeout(timer);
+    };
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -59,13 +78,80 @@ export default function DataImportPage() {
     setLoadingSync(true);
     setSyncMessage('');
 
+    const datesToSync: { dStr: string; isoDate: string }[] = [];
+    if (days) {
+      for (let i = 1; i <= Math.min(days, 7); i++) {
+        const t = new Date();
+        t.setDate(t.getDate() - i);
+        const dd = String(t.getDate()).padStart(2, '0');
+        const mm = String(t.getMonth() + 1).padStart(2, '0');
+        const yyyy = t.getFullYear();
+        datesToSync.push({ dStr: `${dd}/${mm}/${yyyy}`, isoDate: `${yyyy}-${mm}-${dd}` });
+      }
+    } else {
+      const [y, m, d] = syncDate.split('-');
+      datesToSync.push({ dStr: `${d}/${m}/${y}`, isoDate: syncDate });
+    }
+
+    // 1. Önce eklenti köprüsü deneniyor (Yerel IP, sıfır engel)
+    if (hasExtension) {
+      try {
+        setSyncMessage('⚡ ST Formül Eklentisi üzerinden Maçkolik verileri çekiliyor...');
+        const fetchPromise = new Promise<any[]>((resolve, reject) => {
+          const timeout = setTimeout(() => {
+            window.removeEventListener('message', onExtensionMsg);
+            reject(new Error('Eklenti yanıt süresi aşıldı (15 saniye).'));
+          }, 15000);
+
+          const onExtensionMsg = (ev: MessageEvent) => {
+            if (ev.data?.type === 'ST_FETCH_MACKOLIK_DAYS_SUCCESS') {
+              clearTimeout(timeout);
+              window.removeEventListener('message', onExtensionMsg);
+              resolve(ev.data.payload);
+            } else if (ev.data?.type === 'ST_FETCH_MACKOLIK_DAYS_ERROR') {
+              clearTimeout(timeout);
+              window.removeEventListener('message', onExtensionMsg);
+              reject(new Error(ev.data.error || 'Eklenti veri çekme hatası'));
+            }
+          };
+          window.addEventListener('message', onExtensionMsg);
+          window.postMessage({ type: 'ST_FETCH_MACKOLIK_DAYS', payload: { dates: datesToSync } }, '*');
+        });
+
+        const dayResults = await fetchPromise;
+        setSyncMessage('⚡ Maçlar alındı, veritabanına aktarılıyor...');
+
+        const saveRes = await fetch('/api/admin/save-scraped-matches', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ days: dayResults })
+        });
+        const saveData = await saveRes.json();
+        if (saveData.success) {
+          setSyncMessage(`✅ ${saveData.message}`);
+          setLoadingSync(false);
+          return;
+        } else {
+          setSyncMessage(`❌ Veritabanı kayıt hatası: ${saveData.error}`);
+          setLoadingSync(false);
+          return;
+        }
+      } catch (extErr: any) {
+        console.warn('Eklenti üzerinden çekim başarısız oldu, sunucu deneniyor:', extErr);
+      }
+    }
+
+    // 2. Eklenti yoksa veya başarısız olursa sunucu üzerinden dene
     try {
+      setSyncMessage('⚡ Sunucu üzerinden Maçkolik senkronizasyonu deneniyor...');
       const url = days ? `/api/cron/sync-results?days=${days}` : `/api/cron/sync-results?date=${syncDate}`;
       const res = await fetch(url, { method: 'POST' });
       const data = await res.json();
 
-      if (data.success) {
+      if (data.success && data.matchesSynced > 0) {
         setSyncMessage(`✅ ${data.message}`);
+      } else if (data.success && data.matchesSynced === 0) {
+        setSyncMessage('⚠️ Vercel sunucusunun doğrudan Maçkolik erişimi engellendi (IP engeli). Lütfen ST Formül Chrome eklentisinin açık olduğundan emin olun.');
       } else {
         setSyncMessage('❌ Hata: ' + (data.error || 'Sonuçlar çekilemedi.'));
       }
@@ -90,7 +176,7 @@ export default function DataImportPage() {
 
       {/* 1. CANLI MAÇKOLİK SONUÇ EŞİTLEME (TEK TIKLA GÜNCELLEME) */}
       <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl shadow-xl space-y-6">
-        <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-neutral-800 pb-4 gap-3">
           <div>
             <h2 className="text-xl font-bold text-sky-400 flex items-center gap-2">
               <RefreshCw className="w-5 h-5" />
@@ -99,6 +185,14 @@ export default function DataImportPage() {
             <p className="text-xs text-neutral-400 mt-1">
               Canlıda bu işlem her gece otomatik çalışır. Dilerseniz buradan istediğiniz günün veya son günlerin tüm sonuç ve oranlarını tek tıkla veritabanına aktarabilirsiniz.
             </p>
+          </div>
+          <div className={`px-3 py-1.5 rounded-full text-xs font-bold border flex items-center gap-2 shrink-0 ${
+            hasExtension 
+              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' 
+              : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+          }`}>
+            <span className={`w-2 h-2 rounded-full ${hasExtension ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+            {hasExtension ? 'Eklenti Devrede (Yerel IP)' : 'Sunucu Modu'}
           </div>
         </div>
 
