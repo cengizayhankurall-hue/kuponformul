@@ -13,10 +13,7 @@ export default function DataImportPage() {
   const [syncDate, setSyncDate] = useState(() => {
     const d = new Date();
     d.setDate(d.getDate() - 1);
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
+    return d.toISOString().split('T')[0];
   });
   const [loadingSync, setLoadingSync] = useState(false);
   const [syncMessage, setSyncMessage] = useState('');
@@ -59,25 +56,18 @@ export default function DataImportPage() {
   };
 
   const handleLiveSync = async (days?: number) => {
-    if (!days && !syncDate) {
-      setSyncMessage('⚠️ Lütfen bir tarih seçin.');
-      return;
-    }
-
     setLoadingSync(true);
     setSyncMessage('');
 
     try {
-      const url = days ? `/api/cron/sync-results?days=${days}` : `/api/cron/sync-results?date=${encodeURIComponent(syncDate)}`;
+      const url = days ? `/api/cron/sync-results?days=${days}` : `/api/cron/sync-results?date=${syncDate}`;
       const res = await fetch(url, { method: 'POST' });
       const data = await res.json();
 
-      if (data.success && data.totalSynced > 0) {
+      if (data.success) {
         setSyncMessage(`✅ ${data.message}`);
-      } else if (data.totalSynced === 0) {
-        setSyncMessage(`⚠️ ${data.message || 'Seçili gün için Maçkolik arşivinde henüz sonuçlanmış maç bulunamadı.'}`);
       } else {
-        setSyncMessage('❌ Hata: ' + (data.message || data.error || 'Sonuçlar çekilemedi.'));
+        setSyncMessage('❌ Hata: ' + (data.error || 'Sonuçlar çekilemedi.'));
       }
     } catch (err: any) {
       setSyncMessage('❌ Bağlantı hatası: ' + err.message);
@@ -149,19 +139,11 @@ export default function DataImportPage() {
 
         {syncMessage && (
           <div className={`p-4 rounded-xl text-sm font-medium border flex items-center gap-2 ${
-            syncMessage.startsWith('✅') 
+            syncMessage.includes('✅') 
               ? 'bg-emerald-950/40 border-emerald-800/80 text-emerald-300' 
-              : syncMessage.startsWith('⚠️')
-              ? 'bg-amber-950/40 border-amber-800/80 text-amber-300'
               : 'bg-rose-950/40 border-rose-800/80 text-rose-300'
           }`}>
-            {syncMessage.startsWith('✅') ? (
-              <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-400" />
-            ) : syncMessage.startsWith('⚠️') ? (
-              <AlertCircle className="w-5 h-5 shrink-0 text-amber-400" />
-            ) : (
-              <AlertCircle className="w-5 h-5 shrink-0 text-rose-400" />
-            )}
+            {syncMessage.includes('✅') ? <CheckCircle2 className="w-5 h-5 shrink-0" /> : <AlertCircle className="w-5 h-5 shrink-0" />}
             <span>{syncMessage}</span>
           </div>
         )}

@@ -2,70 +2,51 @@ import { NextResponse } from 'next/server';
 import https from 'https';
 import { supabase } from '@/lib/supabase';
 
-export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
-
 const agent = new https.Agent({
-  rejectUnauthorized: false,
-  keepAlive: false
+  rejectUnauthorized: false
 });
 
-function httpGet(urlStr: string, retries = 2): Promise<{ status: number; text: string }> {
+function httpGet(urlStr: string, retries = 3): Promise<{ status: number; text: string }> {
   return new Promise((resolve, reject) => {
-    try {
-      const u = new URL(urlStr);
-      const options = {
-        hostname: u.hostname,
-        path: u.pathname + u.search,
-        method: 'GET',
-        agent: agent,
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'application/json, text/javascript, */*; q=0.01',
-          'Referer': 'https://arsiv.mackolik.com/Genis-Iddaa-Programi',
-          'X-Requested-With': 'XMLHttpRequest',
-          'Connection': 'close'
-        },
-        timeout: 10000
-      };
+    const u = new URL(urlStr);
+    const options = {
+      hostname: u.hostname,
+      path: u.pathname + u.search,
+      method: 'GET',
+      agent: agent,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/javascript, */*; q=0.01',
+        'Referer': 'https://arsiv.mackolik.com/Genis-Iddaa-Programi',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    };
 
-      const req = https.request(options, (res) => {
-        let data = '';
-        res.on('data', chunk => data += chunk);
-        res.on('end', () => {
-          if ((res.statusCode === 502 || res.statusCode === 503) && retries > 0) {
-            setTimeout(() => {
-              httpGet(urlStr, retries - 1).then(resolve).catch(reject);
-            }, 800);
-          } else {
-            resolve({ status: res.statusCode || 200, text: data });
-          }
-        });
-      });
-
-      req.on('timeout', () => {
-        req.destroy();
-        if (retries > 0) {
-          httpGet(urlStr, retries - 1).then(resolve).catch(reject);
-        } else {
-          resolve({ status: 504, text: '' });
-        }
-      });
-
-      req.on('error', (err) => {
-        if (retries > 0) {
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        if ((res.statusCode === 502 || res.statusCode === 503) && retries > 0) {
           setTimeout(() => {
             httpGet(urlStr, retries - 1).then(resolve).catch(reject);
-          }, 800);
+          }, 1500);
         } else {
-          resolve({ status: 500, text: '' });
+          resolve({ status: res.statusCode || 200, text: data });
         }
       });
+    });
 
-      req.end();
-    } catch (e: any) {
-      resolve({ status: 500, text: '' });
-    }
+    req.on('error', (err) => {
+      if (retries > 0) {
+        setTimeout(() => {
+          httpGet(urlStr, retries - 1).then(resolve).catch(reject);
+        }, 1500);
+      } else {
+        reject(err);
+      }
+    });
+
+    req.end();
   });
 }
 
@@ -75,187 +56,145 @@ function cleanOdds(val: any): number | null {
   return isNaN(num) || num === 0 ? null : num;
 }
 
-export function parseDateInput(input?: string | null): { dStr: string; isoDate: string } | null {
-  if (!input) return null;
-  const str = input.trim();
-  if (!str) return null;
-
-  // 1. YYYY-MM-DD or YYYY/MM/DD or YYYY.MM.DD (e.g. 2026-10-27)
-  let m = str.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);
-  if (m) {
-    const y = m[1];
-    const mo = m[2].padStart(2, '0');
-    const d = m[3].padStart(2, '0');
-    return { dStr: `${d}/${mo}/${y}`, isoDate: `${y}-${mo}-${d}` };
-  }
-
-  // 2. DD-MM-YYYY or DD/MM/YYYY or DD.MM.YYYY (e.g. 27.10.2026 or 27/10/2026)
-  m = str.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})/);
-  if (m) {
-    const d = m[1].padStart(2, '0');
-    const mo = m[2].padStart(2, '0');
-    const y = m[3];
-    return { dStr: `${d}/${mo}/${y}`, isoDate: `${y}-${mo}-${d}` };
-  }
-
-  return null;
-}
-
 export async function fetchAndSyncDay(dStr: string, isoDate: string) {
   const url = `https://arsiv.mackolik.com/AjaxHandlers/ProgramDataHandler.ashx?type=6&sortValue=DATE&day=${dStr}&sort=-1&sortDir=-1&groupId=-1&np=0&sport=1`;
 
   let txt = '';
-  // 1. First try fast direct httpGet with Connection: close (takes ~150-1000ms)
   try {
-    const getRes = await httpGet(url, 2);
-    if (getRes.status === 200 && getRes.text && getRes.text.includes('m:[')) {
-      txt = getRes.text;
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/javascript, */*; q=0.01',
+        'Referer': 'https://arsiv.mackolik.com/Genis-Iddaa-Programi',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      signal: AbortSignal.timeout(10000),
+      cache: 'no-store'
+    });
+    if (res.ok) {
+      txt = await res.text();
     }
   } catch (err: any) {
-    console.warn(`[Sync Cron] httpGet error for ${dStr}:`, err.message);
-  }
-
-  // 2. Fallback to native fetch if httpGet was empty
-  if (!txt || txt.length < 100 || !txt.includes('m:[')) {
-    try {
-      const res = await fetch(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'application/json, text/javascript, */*; q=0.01',
-          'Referer': 'https://arsiv.mackolik.com/Genis-Iddaa-Programi',
-          'X-Requested-With': 'XMLHttpRequest',
-          'Connection': 'close'
-        },
-        signal: AbortSignal.timeout(8000),
-        cache: 'no-store'
-      });
-      if (res.ok) {
-        txt = await res.text();
-      }
-    } catch (err: any) {
-      console.warn(`[Sync Cron] Fetch fallback error for ${dStr}:`, err.message);
-    }
+    console.warn(`[Sync Cron] Fetch error for ${dStr}:`, err.message);
   }
 
   if (!txt || txt.length < 100 || !txt.includes('m:[')) {
     return 0;
   }
 
-  try {
-    const obj = new Function(`return ${txt}`)();
-    const groups = obj.m || [];
-    const parsedMatches: any[] = [];
+  // 1. Delete existing records for isoDate so fresh results replace them
+  await supabase!
+    .from('past_matches')
+    .delete()
+    .eq('match_date', isoDate);
 
-    groups.forEach((g: any) => {
-      const matchesList = g.m || [];
-      matchesList.forEach((m: any) => {
-        if (m && m[1] && m[3]) {
-          const homeTeam = String(m[1]).trim();
-          const awayTeam = String(m[3]).trim();
-          const rawTime = String(m[6] || '00:00').trim();
-          const matchTime = rawTime.length === 5 ? `${rawTime}:00` : rawTime;
-          const league = String(m[26] || 'Diger').trim();
+  const obj = new Function(`return ${txt}`)();
+  const groups = obj.m || [];
+  const parsedMatches: any[] = [];
 
-          // Match State & Finished Validation:
-          // m[5] === 4 -> Finished (MS)
-          // m[11] / m[12] !== '' -> Halftime/fulltime scores exist
-          const state = typeof m[5] === 'number' ? m[5] : parseInt(m[5]) || 0;
-          const hasIyScore = (m[11] !== undefined && m[11] !== null && m[11] !== '' && m[12] !== undefined && m[12] !== null && m[12] !== '');
-          const isFinished = state === 4 || hasIyScore || m[13] === '2' || (m[13] === '3' && state === 4);
+  groups.forEach((g: any) => {
+    const matchesList = g.m || [];
+    matchesList.forEach((m: any) => {
+      if (m && m[1] && m[3]) {
+        const homeTeam = String(m[1]).trim();
+        const awayTeam = String(m[3]).trim();
+        const rawTime = String(m[6] || '00:00').trim();
+        const matchTime = rawTime.length === 5 ? `${rawTime}:00` : rawTime;
+        const league = String(m[26] || 'Diger').trim();
 
-          // MS & IY scores
-          const homeMS = m[8] !== undefined && m[8] !== null && m[8] !== '' ? String(m[8]).trim() : null;
-          const awayMS = m[9] !== undefined && m[9] !== null && m[9] !== '' ? String(m[9]).trim() : null;
-          
-          // Sadece gerçekten bitmiş maçların skorunu al
-          const msScore = (isFinished && homeMS !== null && awayMS !== null && homeMS !== '-1' && awayMS !== '-1') 
-            ? `${homeMS} - ${awayMS}` 
-            : null;
+        // Match State & Finished Validation:
+        // m[5] === 4 -> Finished (MS)
+        // m[11] / m[12] !== '' -> Halftime/fulltime scores exist
+        const state = typeof m[5] === 'number' ? m[5] : parseInt(m[5]) || 0;
+        const hasIyScore = (m[11] !== undefined && m[11] !== null && m[11] !== '' && m[12] !== undefined && m[12] !== null && m[12] !== '');
+        const isFinished = state === 4 || hasIyScore || m[13] === '2' || (m[13] === '3' && state === 4);
 
-          const homeIY = m[11] !== undefined && m[11] !== null && m[11] !== '' ? String(m[11]).trim() : null;
-          const awayIY = m[12] !== undefined && m[12] !== null && m[12] !== '' ? String(m[12]).trim() : null;
-          const iyScore = (homeIY !== null && awayIY !== null && homeIY !== '-1' && awayIY !== '-1') 
-            ? `${homeIY}-${awayIY}` 
-            : null;
+        // MS & IY scores
+        const homeMS = m[8] !== undefined && m[8] !== null && m[8] !== '' ? String(m[8]).trim() : null;
+        const awayMS = m[9] !== undefined && m[9] !== null && m[9] !== '' ? String(m[9]).trim() : null;
+        
+        // CRITICAL FIX: Sadece gerçekten bitmiş maçların skorunu al! Oynanmamış maçlara kesinlikle '0 - 0' yazma!
+        const msScore = (isFinished && homeMS !== null && awayMS !== null && homeMS !== '-1' && awayMS !== '-1') 
+          ? `${homeMS} - ${awayMS}` 
+          : null;
 
-          // Odds
-          const ms1 = cleanOdds(m[16]);
-          const msX = cleanOdds(m[17]);
-          const ms2 = cleanOdds(m[18]);
-          const cs1X = cleanOdds(m[19]);
-          const cs12 = cleanOdds(m[20]);
-          const csX2 = cleanOdds(m[21]);
-          const alt25 = cleanOdds(m[22]);
-          const ust25 = cleanOdds(m[23]);
-          const iy1 = cleanOdds(m[33]);
-          const iyX = cleanOdds(m[34]);
-          const iy2 = cleanOdds(m[35]);
-          const kgVar = cleanOdds(m[39]);
-          const kgYok = cleanOdds(m[40]);
-          const iy15Alt = cleanOdds(m[42]);
-          const iy15Ust = cleanOdds(m[43]);
-          const alt15 = cleanOdds(m[44]);
-          const ust15 = cleanOdds(m[45]);
-          const alt35 = cleanOdds(m[46]);
-          const ust35 = cleanOdds(m[47]);
+        const homeIY = m[11] !== undefined && m[11] !== null && m[11] !== '' ? String(m[11]).trim() : null;
+        const awayIY = m[12] !== undefined && m[12] !== null && m[12] !== '' ? String(m[12]).trim() : null;
+        const iyScore = (homeIY !== null && awayIY !== null && homeIY !== '-1' && awayIY !== '-1') 
+          ? `${homeIY}-${awayIY}` 
+          : null;
 
-          parsedMatches.push({
-            match_date: isoDate,
-            match_time: matchTime,
-            league: league,
-            home_team: homeTeam,
-            away_team: awayTeam,
-            ms_score: msScore,
-            iy_score: iyScore,
-            ms_1_odd: ms1,
-            ms_0_odd: msX,
-            ms_2_odd: ms2,
-            cs_1x_odd: cs1X,
-            cs_12_odd: cs12,
-            cs_x2_odd: csX2,
-            alt_25_odd: alt25,
-            ust_25_odd: ust25,
-            iy_1_odd: iy1,
-            iy_0_odd: iyX,
-            iy_2_odd: iy2,
-            kg_var_odd: kgVar,
-            kg_yok_odd: kgYok,
-            iy_15_alt_odd: iy15Alt,
-            iy_15_ust_odd: iy15Ust,
-            alt_15_odd: alt15,
-            ust_15_odd: ust15,
-            alt_35_odd: alt35,
-            ust_35_odd: ust35
-          });
-        }
-      });
-    });
+        // Odds
+        const ms1 = cleanOdds(m[16]);
+        const msX = cleanOdds(m[17]);
+        const ms2 = cleanOdds(m[18]);
+        const cs1X = cleanOdds(m[19]);
+        const cs12 = cleanOdds(m[20]);
+        const csX2 = cleanOdds(m[21]);
+        const alt25 = cleanOdds(m[22]);
+        const ust25 = cleanOdds(m[23]);
+        const iy1 = cleanOdds(m[33]);
+        const iyX = cleanOdds(m[34]);
+        const iy2 = cleanOdds(m[35]);
+        const kgVar = cleanOdds(m[39]);
+        const kgYok = cleanOdds(m[40]);
+        const iy15Alt = cleanOdds(m[42]);
+        const iy15Ust = cleanOdds(m[43]);
+        const alt15 = cleanOdds(m[44]);
+        const ust15 = cleanOdds(m[45]);
+        const alt35 = cleanOdds(m[46]);
+        const ust35 = cleanOdds(m[47]);
 
-    // Deduplicate
-    const uniqueMap = new Map();
-    parsedMatches.forEach(m => {
-      const key = `${m.home_team}__${m.away_team}__${m.match_date}`;
-      uniqueMap.set(key, m);
-    });
-    const uniqueMatches = Array.from(uniqueMap.values());
-
-    if (uniqueMatches.length > 0) {
-      for (let i = 0; i < uniqueMatches.length; i += 200) {
-        const chunk = uniqueMatches.slice(i, i + 200);
-        const { error: upsertErr } = await supabase!
-          .from('past_matches')
-          .upsert(chunk, { onConflict: 'home_team,away_team,match_date' });
-        if (upsertErr) {
-          console.error(`[Sync Cron] Upsert chunk error for ${isoDate}:`, upsertErr.message);
-        }
+        parsedMatches.push({
+          match_date: isoDate,
+          match_time: matchTime,
+          league: league,
+          home_team: homeTeam,
+          away_team: awayTeam,
+          ms_score: msScore,
+          iy_score: iyScore,
+          ms_1_odd: ms1,
+          ms_0_odd: msX,
+          ms_2_odd: ms2,
+          cs_1x_odd: cs1X,
+          cs_12_odd: cs12,
+          cs_x2_odd: csX2,
+          alt_25_odd: alt25,
+          ust_25_odd: ust25,
+          iy_1_odd: iy1,
+          iy_0_odd: iyX,
+          iy_2_odd: iy2,
+          kg_var_odd: kgVar,
+          kg_yok_odd: kgYok,
+          iy_15_alt_odd: iy15Alt,
+          iy_15_ust_odd: iy15Ust,
+          alt_15_odd: alt15,
+          ust_15_odd: ust15,
+          alt_35_odd: alt35,
+          ust_35_odd: ust35
+        });
       }
-    }
+    });
+  });
 
-    return uniqueMatches.length;
-  } catch (parseErr: any) {
-    console.error(`[Sync Cron] Parse/Process error for ${dStr}:`, parseErr.message);
-    return 0;
+  // Deduplicate
+  const uniqueMap = new Map();
+  parsedMatches.forEach(m => {
+    const key = `${m.home_team}__${m.away_team}__${m.match_date}`;
+    uniqueMap.set(key, m);
+  });
+  const uniqueMatches = Array.from(uniqueMap.values());
+
+  if (uniqueMatches.length > 0) {
+    for (let i = 0; i < uniqueMatches.length; i += 50) {
+      const chunk = uniqueMatches.slice(i, i + 50);
+      await supabase!
+        .from('past_matches')
+        .upsert(chunk, { onConflict: 'home_team,away_team,match_date' });
+    }
   }
+
+  return uniqueMatches.length;
 }
 
 export async function GET(request: Request) {
@@ -267,15 +206,11 @@ export async function GET(request: Request) {
     const datesToSync: { dStr: string; isoDate: string }[] = [];
 
     if (dateParam) {
-      const parsed = parseDateInput(dateParam);
-      if (parsed) {
-        datesToSync.push(parsed);
-      } else {
-        return NextResponse.json({
-          success: false,
-          error: `Geçersiz tarih formatı: "${dateParam}". Lütfen YYYY-AA-GG veya GG.AA.YYYY formatında bir tarih girin.`
-        }, { status: 400 });
-      }
+      const [y, m, d] = dateParam.split('-');
+      datesToSync.push({
+        dStr: `${d}/${m}/${y}`,
+        isoDate: dateParam
+      });
     } else if (daysParam !== null) {
       // Toplu gün çekme: Biten geçmiş günleri çek (1: Dün, 2: 2 Gün Önce, 3: 3 Gün Önce)
       for (let i = 1; i <= Math.min(daysParam, 7); i++) {
@@ -308,23 +243,12 @@ export async function GET(request: Request) {
     for (const item of datesToSync) {
       const count = await fetchAndSyncDay(item.dStr, item.isoDate);
       totalSynced += count;
-      details.push({ date: item.isoDate, dStr: item.dStr, matchesSynced: count });
+      details.push({ date: item.isoDate, matchesSynced: count });
     }
 
-    if (totalSynced === 0) {
-      const datesStr = datesToSync.map(d => d.dStr).join(', ');
-      return NextResponse.json({
-        success: false,
-        message: `Seçilen tarih (${datesStr}) için Maçkolik bülteninde henüz sonuçlanmış maç bulunamadı veya bağlantı zaman aşımına uğradı.`,
-        totalSynced: 0,
-        details
-      });
-    }
-
-    const detailsStr = details.map(d => `${d.dStr}: ${d.matchesSynced} maç`).join(', ');
     return NextResponse.json({
       success: true,
-      message: `Toplam ${totalSynced} maç veritabanına başarıyla aktarıldı. (${detailsStr})`,
+      message: `Toplam ${totalSynced} maç veritabanına başarıyla aktarıldı.`,
       totalSynced,
       details
     });
